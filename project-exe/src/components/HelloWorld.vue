@@ -39,22 +39,24 @@ export default {
     }
   },
    mounted() {
-    // 
     // console.log(111);
-    // let formData = new FormData();
-    // formData.append('item', 'hi');
-
-    // formData.has('item');
-    // formData.has('money');
-
-    // formData.get('item');
-
-    // formData.append('item', 'hello');
-    // formData.getAll('item');
+    const formData = new FormData();
+    formData.append('name', 'JiYu');
+    formData.append('country', 'Korea');
+    console.log(formData);
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
 
   },
   methods: {
-    
+    // showData() {
+    //   const formData = new FormData();
+    //   formData.append('name', 'JiYu');
+    //   formData.append('country', 'Korea');
+    //   console.log(formData);
+      
+    // }
   },
   props: {
     msg: String
