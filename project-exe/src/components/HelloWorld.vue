@@ -41,14 +41,23 @@ export default {
    mounted() {
     // console.log(111);
     const formData = new FormData();
-    formData.append('name', 'JiYu');
-    formData.append('country', 'Korea');
+    //formData.append('name', 'JiYu');
+    //formData.append('country', 'Korea');
+    formData.append('type', 'test');
+    formData.append('id', 'test0000');
+    formData.append('pw', '1234');
     console.log(formData);
     for (let [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);
     }
 
-  },
+      fetch('https://cmbarter.com/api/test_api.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => console.log(data));
+    },
   methods: {
     // showData() {
     //   const formData = new FormData();
