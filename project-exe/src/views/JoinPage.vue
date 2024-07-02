@@ -16,53 +16,102 @@
 
                 <div class="agreement">
                     <div>
-                        <input type="checkbox" id="all_agreed">
-                        <label for="all_agreed">약관 전체 동의</label>
+                        <Checkbox v-model="AllCheck" :binary="true" inputId="all_agreed" @click="checkAll()"/>
+                        <label for="all_agreed"> 약관 전체 동의 </label>
 
                         <div class="underline"></div>
                     </div>
-
+ 
                     <div>
-                        <input type="checkbox" id="all_agreed">
-                        <label for="all_agreed">[필수] 이용약관 동의</label>
+                        <Checkbox v-model="service" :binary="true" inputId="service_agreed" @change="handleChange()"/>
+                        <label for="service_agreed"> [필수] 이용약관 동의 </label>
                         <button type="button"><img src="../assets/go_for_btn.png"></button>
                     </div>
                     <div>
-                        <input type="checkbox" id="all_agreed">
-                        <label for="all_agreed">[필수] 개인정보 수집 및 이용 동의</label>
+                        <Checkbox v-model="privacy" :binary="true" inputId="privacy_agreed" @change="handleChange()"/>
+                        <label for="privacy_agreed"> [필수] 개인정보 수집 및 이용 동의 </label>
                         <button type="button"><img src="../assets/go_for_btn.png"></button>
                     </div>
                     <div>
-                        <input type="checkbox" id="all_agreed">
-                        <label for="all_agreed">[선택] 마케팅 정보 수집/이용 동의</label>
+                        <Checkbox v-model="marketing" :binary="true" inputId="marketing_agreed" @change="handleChange()"/>
+                        <label for="marketing_agreed"> [선택] 마케팅 정보 수집/이용 동의 </label>
                         <button type="button"><img src="../assets/go_for_btn.png"></button>
                     </div>
                     <div>
-                        <input type="checkbox" id="all_agreed">
-                        <label for="all_agreed">[선택] 광고성 정보 수신 동의</label>
+                        <Checkbox v-model="advertise" :binary="true" inputId="advertise_agreed" @change="handleChange()"/>
+                        <label for="advertise_agreed"> [선택] 광고성 정보 수신 동의 </label>
                         <button type="button"><img src="../assets/go_for_btn.png"></button>
                     </div>
                     <div>
-                        <input type="checkbox" id="all_agreed">
-                        <label for="all_agreed">[선택] 위치기반 서비스 이용 약관 동의</label>
+                        <Checkbox v-model="location" :binary="true" inputId="location_agreed" @change="handleChange()"/>
+                        <label for="location_agreed"> [선택] 위치기반 서비스 이용 약관 동의 </label>
                         <button type="button"><img src="../assets/go_for_btn.png"></button>
                     </div>
                 </div>
             </div>
 
-            <button type="button" class="confirm_btn">확인</button>
-
+            <div class="confirm_btn_holder" @click="confirmCheck()">
+                <button type="button" class="confirm_btn" :style="{ backgroundColor : buttonColor, color : fontColor }">확인</button>
+            </div>
         </main>
     </div>
 </template>
 
+<!-- <script setup>
+import { ref } from "vue";
+
+const all = ref(false);
+
+</script> -->
+
+
 <script>
+
 export default {
     data() {
         return {
-            
+            AllCheck : false,
+            service : false,
+            privacy : false,
+            marketing : false,
+            advertise : false,
+            location : false
+        }
+    },
+    methods: {
+      checkAll() {
+        const allChecked = !this.AllCheck;
+        this.service = allChecked;
+        this.privacy = allChecked;
+        this.marketing = allChecked;
+        this.advertise = allChecked;
+        this.location = allChecked;
+      },
+      confirmCheck() {
+        if(this.service === false || this.privacy === false) {
+            alert('필수항목을 체크해주세요.');
+            return false;
+        }
+      },
+      handleChange() {
+        if (this.service && this.privacy && this.marketing && this.advertise && this.location) {
+            this.AllCheck = true;
+        } else {
+            this.AllCheck = false;
         }
     }
+    },
+    computed: {
+        buttonColor() {
+            return this.AllCheck || (this.service && this.privacy) ? '#1bce0b' : '#ccc';
+        },
+        fontColor() {
+            return this.AllCheck || (this.service && this.privacy) ? '#fff' : '#000';
+        }
+    },
+    mounted() {
+
+    },
 }
 </script>
 
@@ -71,27 +120,27 @@ export default {
     margin: 0; padding: 0;
     box-sizing: border-box;
     text-decoration: none;
+    font-size: 1rem;
     color: #000;
 }
-main {
-    position: relative;
-}
 .wrap {
-    width: 100%; height: 852px;
+    position: relative;
+    width: 100%; height: 100vh;
     border: 1px solid red;
 }
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 40px;
-    padding: 0 180px 0 10px;
+    width: 100%; height: 40px;
+    padding: 0 10px;
     border: 1px solid #ccc;
 }
 header > p {
     line-height: 40px;
-    font-size: 1rem;
-    /* color: blue; */
+    color: blue;
+    /* border: 1px solid red; */
+    margin: 0 auto;
 }
 .goback_btn {
     width: 30px; height: 30px;
@@ -110,49 +159,48 @@ header > p {
     width: 120px; height: 100px;
 }
 .join_content {
+    width: 100%;
     padding: 20px;
-    /* border: 1px solid red; */
+    /* border: 1px solid orange; */
 }
 .join_content > p {
-    font-size: 31px;
+    font-size: 2rem;
     font-weight: 500;
 }
 .agreement {
+    /* border: 1px solid red; */
 }
 .agreement > div {
     position: relative;
-    height: 40px;
+    margin: 30px 0;
+    font-size: 1rem;
     /* border: 1px solid blue; */
 }
-.agreement > div label {
-    margin-left: 10px;
-}
-.agreement > div {
-    line-height: 40px;
-    margin-top: 20px;
-}
-.agreement > div > button {
+.agreement button {
     position: absolute;
-    right: 10px;
-    background-color: #fff;
-    border: 1px solid #fff;
+    right: 5px;
 }
-.agreement > div > button > img {
-    width: 25px; height: 25px;
+.agreement button, img {
+    width: 20px; height: 20px;
+    border: none;
+    background-color: #fff;
 }
 .underline {
     width: 100%; height: 1px;
     background-color: #ccc;
+    margin-top: 20px
 }
-.agreement > div:nth-of-type(1) {
-    height: 50px;
-    padding-top: 5px;
+.confirm_btn_holder {
+    position: absolute;
+    left: 50%; bottom: 10px;
+    transform: translateX(-50%);
+    width: 95%; height: 40px;
+    border-radius: 25px;
+    /* border: 1px solid blue; */
 }
 .confirm_btn {
-    position: absolute;
-    /* bottom: 0; */
-    width: 100%; height: 40px;
-    color: #fff; background-color: #1bce0b;
-    border: 1px solid red;
+    width: 100%; height: 100%;
+    border: none; border-radius: 10px;
+    /* border: 1px solid red; */
 }
 </style>

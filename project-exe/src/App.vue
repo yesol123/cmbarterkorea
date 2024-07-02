@@ -22,23 +22,7 @@ export default {
 </script>
 
 <style>
-/* #app {
-  position: relative;
-  border: 1px solid red;
-  box-sizing: border-box;
-  max-width: 480px; height: 700px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  margin: 0 auto;
-}
-.header {
-  position: absolute;
-  top: 0px;
-}
-.footer {
-  position: absolute;
-  bottom: 0px;
-} */
-
+  button {
+    cursor: pointer;
+  }
 </style>

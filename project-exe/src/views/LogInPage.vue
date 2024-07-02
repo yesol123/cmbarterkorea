@@ -38,36 +38,37 @@
     margin: 0; padding: 0;
     box-sizing: border-box;
     text-decoration: none;
+    font-size: 1rem;
     color: #000;
 }
 .wrap {
-    width: 100%; height: 852px;
+    width: 100%; height: 100vh;
     border: 1px solid red;
 }
 header {
-    height: 40px;
+    width: 100%; height: 40px;
     border: 1px solid #ccc;
 }
 header > p {
     text-align: center; line-height: 40px;
-    font-size: 1rem;
     color: blue;
 }
 .img_holder {
     text-align: center;
-    /* width: 233px; height: 226px; */
-    margin: 80px 0 50px 0;
+    width: 100%; height: 226px;
+    margin: 50px 0 50px 0;
     /* border: 1px solid #000; */
 }
 .img_holder > img {
     width: 250px; height: 220px;
 }
 .input_holder {
+    width: 100%;
     /* padding: 0 20px 0; */
     /* border: 1px solid red; */
 }
 .input_holder > div {
-    width: 300px; height: 70px;
+    width: 70%; height: 70px;
     margin: 0 auto;
     /* border: 1px solid blue; */
 }
@@ -80,22 +81,23 @@ label {
     display: block;
 }
 input {
-    width: 300px; height: 40px;
+    width: 100%; height: 40px;
     border: 1px solid #ccc;
     border-radius: 10px;
     margin-top: 5px;
 }
 .login_btn {
     display: block;
-    width: 300px; height: 40px;
+    width: 70%; height: 40px;
     margin: 40px auto 0;
     background-color: #1bce0b;
     color: #fff;
     border-radius: 10px;
-    border: #1bce0b;
+    border: none;
 }
 .link_holder {
     text-align: center;
     margin-top: 20px;
+    /* border: 1px solid red; */
 }
 </style>
