@@ -6,18 +6,28 @@ const router = createRouter({
         {      
             path: "/",      
             name: "LogInPage",      
-            component: () => import("../views/LogInPage.vue"),    
+            component: () => import("@/views/LogInPage.vue"),    
         },
         {      
             path: "/join",      
             name: "JoinPage",      
-            component: () => import("../views/JoinPage.vue"),    
-        },       
+            component: () => import("@/views/JoinPage.vue"),    
+        },
+        {      
+            path: "/auth",      
+            name: "AuthPage",      
+            component: () => import("@/views/AuthPage.vue"),    
+        },          
         // {      
         //     path: "/",      
         //     name: "HelloWorld",      
         //     component: () => import("../components/HelloWorld.vue"),    
         // },  
+        {      
+            path: "/test",      
+            name: "TestingPinia",      
+            component: () => import("@/views/TestingPinia.vue"),    
+        },       
     ],
 }); 
 

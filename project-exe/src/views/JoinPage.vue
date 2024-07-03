@@ -22,35 +22,35 @@
                         <div class="underline"></div>
                     </div>
  
-                    <div>
-                        <Checkbox v-model="service" :binary="true" inputId="service_agreed" @change="handleChange()"/>
+                    <div >
+                        <Checkbox v-model="service" :binary="true" inputId="service_agreed" name="service_agreed"  @change="handleChange()"/>
                         <label for="service_agreed"> [필수] 이용약관 동의 </label>
                         <button type="button"><img src="../assets/go_for_btn.png"></button>
                     </div>
                     <div>
-                        <Checkbox v-model="privacy" :binary="true" inputId="privacy_agreed" @change="handleChange()"/>
+                        <Checkbox v-model="privacy" :binary="true" inputId="privacy_agreed" name="privacy_agreed" @change="handleChange()"/>
                         <label for="privacy_agreed"> [필수] 개인정보 수집 및 이용 동의 </label>
                         <button type="button"><img src="../assets/go_for_btn.png"></button>
                     </div>
                     <div>
-                        <Checkbox v-model="marketing" :binary="true" inputId="marketing_agreed" @change="handleChange()"/>
+                        <Checkbox v-model="marketing" :binary="true" inputId="marketing_agreed" name="marketing_agreed" @change="handleChange()"/>
                         <label for="marketing_agreed"> [선택] 마케팅 정보 수집/이용 동의 </label>
                         <button type="button"><img src="../assets/go_for_btn.png"></button>
                     </div>
                     <div>
-                        <Checkbox v-model="advertise" :binary="true" inputId="advertise_agreed" @change="handleChange()"/>
+                        <Checkbox v-model="advertise" :binary="true" inputId="advertise_agreed" name="advertise_agreed" @change="handleChange()"/>
                         <label for="advertise_agreed"> [선택] 광고성 정보 수신 동의 </label>
                         <button type="button"><img src="../assets/go_for_btn.png"></button>
                     </div>
                     <div>
-                        <Checkbox v-model="location" :binary="true" inputId="location_agreed" @change="handleChange()"/>
+                        <Checkbox v-model="location" :binary="true" inputId="location_agreed" name="location_agreed" @change="handleChange()"/>
                         <label for="location_agreed"> [선택] 위치기반 서비스 이용 약관 동의 </label>
                         <button type="button"><img src="../assets/go_for_btn.png"></button>
                     </div>
                 </div>
             </div>
 
-            <div class="confirm_btn_holder" @click="confirmCheck()">
+            <div class="confirm_btn_holder" @click="[confirmCheck(), checkAfter()]">
                 <button type="button" class="confirm_btn" :style="{ backgroundColor : buttonColor, color : fontColor }">확인</button>
             </div>
         </main>
@@ -66,6 +66,8 @@ const all = ref(false);
 
 
 <script>
+// import Checkbox from 'primevue/checkbox';
+
 
 export default {
     data() {
@@ -79,27 +81,111 @@ export default {
         }
     },
     methods: {
-      checkAll() {
-        const allChecked = !this.AllCheck;
-        this.service = allChecked;
-        this.privacy = allChecked;
-        this.marketing = allChecked;
-        this.advertise = allChecked;
-        this.location = allChecked;
-      },
-      confirmCheck() {
-        if(this.service === false || this.privacy === false) {
-            alert('필수항목을 체크해주세요.');
-            return false;
+        checkAll() {
+            const allChecked = !this.AllCheck;
+            this.service = allChecked;
+            this.privacy = allChecked;
+            this.marketing = allChecked;
+            this.advertise = allChecked;
+            this.location = allChecked;
+        },
+        confirmCheck() {
+            if(this.service === false || this.privacy === false) {
+                alert('필수항목을 체크해주세요.');
+                return false;
+            } else {
+                this.$router.push({ path : 'auth' });
+            }
+        },
+        handleChange() {
+            if (this.service && this.privacy && this.marketing && this.advertise && this.location) {
+                this.AllCheck = true;
+            } else {
+                this.AllCheck = false;
+            }
+        },
+        // 약관체크 전
+        checkBefore() {
+            let jsonArr = [];
+
+            jsonArr.push({
+                service_agreed : 'N',
+                privacy_agreed : 'N',
+                marketing_agreed : 'N',
+                advertise_agreed : 'N',
+                location_agreed : 'N'
+            })
+
+            console.log(jsonArr);
+       
+        },
+        // 약관체크 후
+        checkAfter() {
+            let jsonArr = [];
+
+            if(this.AllCheck == false) {
+            
+                if(this.service == true) {
+                    jsonArr.push({
+                        service_agreed : 'Y'
+                    })
+                } else {
+                    jsonArr.push({
+                        service_agreed : 'N'
+                    })
+                }
+
+                if(this.privacy == true) {
+                    jsonArr.push({
+                        privacy_agreed : 'Y'
+                    })
+                } else {
+                    jsonArr.push({
+                        privacy_agreed : 'N'
+                    })
+                }
+
+                if(this.marketing == true) {
+                    jsonArr.push({
+                        marketing_agreed : 'Y'
+                    })
+                } else {
+                    jsonArr.push({
+                        marketing_agreed : 'N'
+                    })
+                }
+
+                if(this.advertise == true) {
+                    jsonArr.push({
+                        advertise_agreed : 'Y'
+                    })
+                } else {
+                    jsonArr.push({
+                        advertise_agreed : 'N'
+                    })
+                }
+
+                if(this.location == true) {
+                    jsonArr.push({
+                        location_agreed : 'Y'
+                    })
+                } else {
+                    jsonArr.push({
+                        location_agreed : 'N'
+                    })
+                } 
+            } else {
+                jsonArr.push({
+                    service_agreed : 'Y',
+                    privacy_agreed : 'Y',
+                    marketing_agreed : 'Y',
+                    advertise_agreed : 'Y',
+                    location_agreed : 'Y'
+                })
+            }
+
+            console.log(jsonArr);
         }
-      },
-      handleChange() {
-        if (this.service && this.privacy && this.marketing && this.advertise && this.location) {
-            this.AllCheck = true;
-        } else {
-            this.AllCheck = false;
-        }
-    }
     },
     computed: {
         buttonColor() {
@@ -110,7 +196,7 @@ export default {
         }
     },
     mounted() {
-
+       this.checkBefore();
     },
 }
 </script>
