@@ -1,13 +1,13 @@
 <template>
     <div class="wrap">
         <header>
-            <button type="button" class="goback_btn"><router-link to="/"><img src="../assets/go_back_btn.png"></router-link></button>
+            <button type="button" class="goback_btn"><router-link to="/"><img src="@/assets/go_back_btn.png"></router-link></button>
             <p>회원가입</p>
         </header>
 
         <main>
             <div class="img_holder">
-                <img src="../assets/cmblogo.png">
+                <img src="@/assets/cmblogo.png">
             </div>
 
             <div class="join_content">
@@ -25,27 +25,27 @@
                     <div >
                         <Checkbox v-model="service" :binary="true" inputId="service_agreed" name="service_agreed"  @change="handleChange()"/>
                         <label for="service_agreed"> [필수] 이용약관 동의 </label>
-                        <button type="button"><img src="../assets/go_for_btn.png"></button>
+                        <button type="button"><img src="@/assets/go_for_btn.png"></button>
                     </div>
                     <div>
                         <Checkbox v-model="privacy" :binary="true" inputId="privacy_agreed" name="privacy_agreed" @change="handleChange()"/>
                         <label for="privacy_agreed"> [필수] 개인정보 수집 및 이용 동의 </label>
-                        <button type="button"><img src="../assets/go_for_btn.png"></button>
+                        <button type="button"><img src="@/assets/go_for_btn.png"></button>
                     </div>
                     <div>
                         <Checkbox v-model="marketing" :binary="true" inputId="marketing_agreed" name="marketing_agreed" @change="handleChange()"/>
                         <label for="marketing_agreed"> [선택] 마케팅 정보 수집/이용 동의 </label>
-                        <button type="button"><img src="../assets/go_for_btn.png"></button>
+                        <button type="button"><img src="@/assets/go_for_btn.png"></button>
                     </div>
                     <div>
                         <Checkbox v-model="advertise" :binary="true" inputId="advertise_agreed" name="advertise_agreed" @change="handleChange()"/>
                         <label for="advertise_agreed"> [선택] 광고성 정보 수신 동의 </label>
-                        <button type="button"><img src="../assets/go_for_btn.png"></button>
+                        <button type="button"><img src="@/assets/go_for_btn.png"></button>
                     </div>
                     <div>
                         <Checkbox v-model="location" :binary="true" inputId="location_agreed" name="location_agreed" @change="handleChange()"/>
                         <label for="location_agreed"> [선택] 위치기반 서비스 이용 약관 동의 </label>
-                        <button type="button"><img src="../assets/go_for_btn.png"></button>
+                        <button type="button"><img src="@/assets/go_for_btn.png"></button>
                     </div>
                 </div>
             </div>
@@ -67,9 +67,10 @@ const all = ref(false);
 
 <script>
 // import Checkbox from 'primevue/checkbox';
-
+import { useResponseStore } from '@/store/response.js';
 
 export default {
+    name : 'JoinPage',
     data() {
         return {
             AllCheck : false,
@@ -123,68 +124,32 @@ export default {
         checkAfter() {
             let jsonArr = [];
 
+            // 약관 전체 동의 체크안되었을 경우
             if(this.AllCheck == false) {
-            
-                if(this.service == true) {
-                    jsonArr.push({
-                        service_agreed : 'Y'
-                    })
-                } else {
-                    jsonArr.push({
-                        service_agreed : 'N'
-                    })
-                }
+                jsonArr.push({ service_agreed: this.service ? 'Y' : 'N' });
+                jsonArr.push({ privacy_agreed: this.privacy ? 'Y' : 'N' });
+                jsonArr.push({ marketing_agreed: this.marketing ? 'Y' : 'N' });
+                jsonArr.push({ advertise_agreed: this.advertise ? 'Y' : 'N' });
+                jsonArr.push({ location_agreed: this.location ? 'Y' : 'N' });
 
-                if(this.privacy == true) {
-                    jsonArr.push({
-                        privacy_agreed : 'Y'
-                    })
-                } else {
-                    jsonArr.push({
-                        privacy_agreed : 'N'
-                    })
-                }
-
-                if(this.marketing == true) {
-                    jsonArr.push({
-                        marketing_agreed : 'Y'
-                    })
-                } else {
-                    jsonArr.push({
-                        marketing_agreed : 'N'
-                    })
-                }
-
-                if(this.advertise == true) {
-                    jsonArr.push({
-                        advertise_agreed : 'Y'
-                    })
-                } else {
-                    jsonArr.push({
-                        advertise_agreed : 'N'
-                    })
-                }
-
-                if(this.location == true) {
-                    jsonArr.push({
-                        location_agreed : 'Y'
-                    })
-                } else {
-                    jsonArr.push({
-                        location_agreed : 'N'
-                    })
-                } 
             } else {
+                // 약관 전체 동의 체크되었을 경우
                 jsonArr.push({
                     service_agreed : 'Y',
                     privacy_agreed : 'Y',
                     marketing_agreed : 'Y',
                     advertise_agreed : 'Y',
                     location_agreed : 'Y'
-                })
+                });
             }
 
             console.log(jsonArr);
+
+            const store = useResponseStore();
+            store.setResponseData(jsonArr);
+
+            console.log(111);
+            console.log(store.datas);
         }
     },
     computed: {

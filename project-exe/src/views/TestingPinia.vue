@@ -11,7 +11,7 @@
   </template>
   
 <script setup>
-import { useCounterStore } from "@/stores/counter.js";
+import { useCounterStore } from "@/store/counter.js";
   
   // 여기가 pinia로 저장된 상태 가져오는 코드!
   const store = useCounterStore();

@@ -1,11 +1,10 @@
 import { createApp } from 'vue';
-import App from './App.vue';
-
-// 라우터
-import router from "./router/index.js";
-
 // Pinia
 import { createPinia } from 'pinia';
+import App from '@/App.vue';
+
+// router
+import router from "@/router/index.js";
 
 // 부트스트랩
 // import 'bootstrap';

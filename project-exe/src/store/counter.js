@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
 export const useCounterStore = defineStore('counter', {
   // 화살표 함수는 객체 반환시 소괄호 사용 (= return기능)

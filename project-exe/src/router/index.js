@@ -11,12 +11,12 @@ const router = createRouter({
         {      
             path: "/join",      
             name: "JoinPage",      
-            component: () => import("@/views/JoinPage.vue"),    
+            component: () => import("@/views/join/JoinPage.vue"),    
         },
         {      
             path: "/auth",      
             name: "AuthPage",      
-            component: () => import("@/views/AuthPage.vue"),    
+            component: () => import("@/views/join/AuthPage.vue"),    
         },          
         // {      
         //     path: "/",      
@@ -27,7 +27,7 @@ const router = createRouter({
             path: "/test",      
             name: "TestingPinia",      
             component: () => import("@/views/TestingPinia.vue"),    
-        },       
+        },      
     ],
 }); 
 
