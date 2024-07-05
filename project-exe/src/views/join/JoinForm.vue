@@ -36,6 +36,24 @@
     </div>
 </template>
 
+<script>
+import { useResponseStore } from '@/store/response.js';
+
+export default {
+    data() {
+        return {
+
+        }
+    },
+    mounted() {
+        let store = useResponseStore();
+        console.log(store.datas);
+    }
+}
+
+
+</script>
+
 <style scoped>
 * {
     margin: 0; padding: 0;
