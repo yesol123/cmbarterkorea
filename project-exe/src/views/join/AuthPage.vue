@@ -21,6 +21,7 @@
 
 <script>
 import { useResponseStore } from '@/store/response.js';
+import router from '@/router/index.js'
 
 export default {
     data() {
@@ -120,6 +121,7 @@ export default {
 
                             if(data.code == '200') {
                                 alert('본인인증 완료되었습니다.');
+                                router.push({ path : '/joinform' });
                                 return false;
                             }
                             if(data.code == '500') {

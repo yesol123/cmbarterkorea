@@ -81,6 +81,9 @@ export default {
             location : false
         }
     },
+    mounted() {
+       this.checkBefore();
+    },
     methods: {
         checkAll() {
             const allChecked = !this.AllCheck;
@@ -95,7 +98,7 @@ export default {
                 alert('필수항목을 체크해주세요.');
                 return false;
             } else {
-                this.$router.push({ path : 'auth' });
+                this.$router.push({ path : '/auth' });
             }
         },
         handleChange() {
@@ -159,9 +162,6 @@ export default {
         fontColor() {
             return this.AllCheck || (this.service && this.privacy) ? '#fff' : '#000';
         }
-    },
-    mounted() {
-       this.checkBefore();
     },
 }
 </script>

@@ -20,7 +20,7 @@ const router = createRouter({
         },
         {      
             path: "/joinform",      
-            name: "joinForm",      
+            name: "JoinForm",      
             component: () => import("@/views/join/JoinForm.vue"),    
         },            
         // {      

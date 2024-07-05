@@ -47,6 +47,7 @@ export default {
     },
     mounted() {
         let store = useResponseStore();
+        console.log(333);
         console.log(store.datas);
     }
 }

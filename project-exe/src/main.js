@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { createApp } from 'vue';
 // Pinia
 import { createPinia } from 'pinia';
@@ -16,5 +18,13 @@ import router from "@/router/index.js";
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
 import Checkbox from 'primevue/checkbox';
+import Dialog from 'primevue/dialog';
 
-createApp(App).use(router).use(createPinia()).use(PrimeVue, {theme : {preset: Aura}}).component('Checkbox', Checkbox).mount('#app');
+const app = createApp(App);
+
+app.use(router);
+app.use(createPinia());
+app.use(PrimeVue, {theme : {preset: Aura}});
+app.component('Checkbox', Checkbox);
+app.component('Dialog', Dialog);
+app.mount('#app');
