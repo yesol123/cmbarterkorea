@@ -29,10 +29,10 @@ export default {
         }
     },
     mounted() {
-        let store = useResponseStore();
+        // let store = useResponseStore();
 
-        console.log(222);
-        console.log(store.datas);
+        // console.log(222);
+        // console.log(store.datas);
 
         // const jsonArr = store.datas;
         // jsonArr.push({
@@ -88,11 +88,9 @@ export default {
                     console.log(rsp);
                     console.log(rsp.success);
 
-                    
-
                     if (rsp.success) {
 
-                        let a;
+                        let store = useResponseStore();
 
                         console.log(rsp);
                         const formData = new FormData();
@@ -107,8 +105,19 @@ export default {
                         .then(response => response.json())
                         .then(data => {
                             console.log(data);
-                            a = data;
-                            console.dir(a.msg.response);
+                            const authData = data.msg.response;
+                            // console.log(authData);
+
+                            const jsonArr = store.datas;
+                            jsonArr.push({
+                                '생일' : authData.birthday,
+                                '성별' : authData.gender,
+                                '이름' : authData.name,
+                                '전화번호' : authData.phone
+                            })
+
+                            console.log(jsonArr);
+
                         });
 
                     } else {
