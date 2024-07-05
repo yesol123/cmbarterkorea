@@ -17,7 +17,12 @@ const router = createRouter({
             path: "/auth",      
             name: "AuthPage",      
             component: () => import("@/views/join/AuthPage.vue"),    
-        },          
+        },
+        {      
+            path: "/joinform",      
+            name: "joinForm",      
+            component: () => import("@/views/join/JoinForm.vue"),    
+        },            
         // {      
         //     path: "/",      
         //     name: "HelloWorld",      

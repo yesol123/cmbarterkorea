@@ -118,6 +118,15 @@ export default {
 
                             console.log(jsonArr);
 
+                            if(data.code == '200') {
+                                alert('본인인증 완료되었습니다.');
+                                return false;
+                            }
+                            if(data.code == '500') {
+                                alert('이미 가입된 회원입니다.');
+                                return false;
+                            }
+
                         });
 
                     } else {
