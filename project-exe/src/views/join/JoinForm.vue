@@ -31,7 +31,7 @@
         </main>
 
         <div class="join_btn_holder">
-            <button type="button" class="join_btn">회원가입하기</button>
+            <button type="button" class="join_btn" @click="join()">회원가입하기</button>
         </div>
     </div>
 </template>
@@ -49,6 +49,15 @@ export default {
         let store = useResponseStore();
         console.log(333);
         console.log(store.datas);
+        console.log(444);
+        console.log(FormData);
+    },
+    methods : {
+        join() {
+            // params..로 넘겨줘야 함. 결국은 FormData에 더해주어야 함. + 유효성 검사 + 페이지이동
+            // FormData 필요정보 : 아이디, 비밀번호, 핀번호, 추천인아이디
+            // 뒤로가기 버튼 누르면 로그인페이지로 이동하고 저장된 데이터는 모두 클리어.
+        }
     }
 }
 

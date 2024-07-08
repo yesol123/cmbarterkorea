@@ -23,7 +23,7 @@
             <button type="button" class="login_btn">로그인</button>
 
             <div class="link_holder">
-                <a href="#">아이디 및 비밀번호 찾기 | </a>
+                <a href="#"><router-link to="/findid">아이디 및 비밀번호 찾기 | </router-link></a>
                 <a href="#"><router-link to="/join">회원가입</router-link></a>
             </div>
         </main>

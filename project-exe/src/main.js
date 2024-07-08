@@ -18,7 +18,17 @@ import router from "@/router/index.js";
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
 import Checkbox from 'primevue/checkbox';
+import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
+// import Toast from 'primevue/toast';
+// import ToastService from 'primevue/toastservice';
+// import ConfirmDialog from 'primevue/confirmdialog';
+// import ConfirmationService from 'primevue/confirmationservice';
+import InputText from 'primevue/inputtext';
+
+// SweetAlert
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 const app = createApp(App);
 
@@ -26,5 +36,12 @@ app.use(router);
 app.use(createPinia());
 app.use(PrimeVue, {theme : {preset: Aura}});
 app.component('Checkbox', Checkbox);
+app.component('Button', Button);
+// app.component('Toast', Toast);
+// app.use(ToastService);
 app.component('Dialog', Dialog);
+// app.component('ConfirmDialog', ConfirmDialog);
+// app.use(ConfirmationService);
+app.component('InputText', InputText);
+app.use(VueSweetalert2);
 app.mount('#app');

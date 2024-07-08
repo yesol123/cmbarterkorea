@@ -21,7 +21,7 @@
 
 <script>
 import { useResponseStore } from '@/store/response.js';
-import router from '@/router/index.js'
+import router from '@/router/index.js';
 
 export default {
     data() {
@@ -106,26 +106,28 @@ export default {
                         .then(response => response.json())
                         .then(data => {
                             console.log(data);
-                            const authData = data.msg.response;
-                            // console.log(authData);
-
-                            const jsonArr = store.datas;
-                            jsonArr.push({
-                                '생일' : authData.birthday,
-                                '성별' : authData.gender,
-                                '이름' : authData.name,
-                                '전화번호' : authData.phone
-                            })
-
-                            console.log(jsonArr);
 
                             if(data.code == '200') {
+                                const authData = data.msg.response;
+                                console.log(authData);
+
+                                const jsonArr = store.datas;
+                                jsonArr.push({
+                                    'birthday' : authData.birthday,
+                                    'gender' : authData.gender,
+                                    'name' : authData.name,
+                                    'phone' : authData.phone
+                                })
+
+                                console.log(jsonArr);
+
                                 alert('본인인증 완료되었습니다.');
                                 router.push({ path : '/joinform' });
                                 return false;
                             }
                             if(data.code == '500') {
                                 alert('이미 가입된 회원입니다.');
+                                // router 걸어서 로그인페이지로 이동.
                                 return false;
                             }
 
