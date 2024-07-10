@@ -9,23 +9,28 @@
             <div class="join_form">
                 <div>
                     <label for="id">아이디</label>
-                    <input type="text" id="id">
+                    <input type="text" id="id" v-model="id" placeholder=" 영문,숫자 조합 6자리" :class="idError ? 'error' : 'no'" @click="reset('id')">
+                    <p id="error_code" v-show="idShow">아이디를 정확히 입력해주세요.</p>
                 </div>
                 <div>
                     <label for="password">비밀번호</label>
-                    <input type="text" id="password" placeholder=" 문자,숫자 조합 8자리">
+                    <input type="password" id="password" v-model="password" placeholder=" 영문,숫자 조합 8자리" :class="pwError ? 'error' : 'no'" @click="reset('pw')">
+                    <p id="error_code" v-show="pwShow">비밀번호를 정확히 입력해주세요.</p>
                 </div>
                 <div>
                     <label for="confirm_pw">비밀번호 확인</label>
-                    <input type="text" id="confirm_pw">
+                    <input type="password" id="confirm_pw" v-model="confirm_pw" :class="cpwError ? 'error' : 'no'" @click="reset('cpw')">
+                    <p id="error_code" v-show="cpwShow">일치하지 않는 비밀번호입니다.</p>
                 </div>
                 <div>
                     <label for="pin">핀번호</label>
-                    <input type="text" id="pin" placeholder=" 숫자 6자리">
+                    <input type="number" id="pin" v-model="pin" placeholder=" 숫자 6자리" :class="pinError ? 'error' : 'no'" @click="reset('pin')">
+                    <p id="error_code" v-show="pinShow">핀번호를 정확히 입력해주세요.</p>
                 </div>
                 <div>
                     <label for="recommend_id">추천인 아이디</label>
-                    <input type="text" id="recommend_id">
+                    <p>*해당하는 경우에만 작성해주세요.</p>
+                    <input type="text" id="recommend_id" v-model="recommend_id" style="border: 1px solid #ccc;">
                 </div>
             </div>    
         </main>
@@ -40,25 +45,102 @@
 import { useResponseStore } from '@/store/response.js';
 
 export default {
+    // inject: ['api_pw'],
     data() {
         return {
-
+            id : '',
+            password : '',
+            confirm_pw : '',
+            pin : '',
+            recommend_id : '',
+            idError : false,
+            pwError : false,
+            cpwError : false,
+            pinError : false,
+            idShow : false,
+            pwShow : false,
+            cpwShow : false,
+            pinShow : false,
         }
     },
     mounted() {
         let store = useResponseStore();
         console.log(333);
         console.log(store.datas);
-        console.log(444);
-        console.log(FormData);
+        // console.log(this.api_pw);
+
+        const formData = new FormData();
+        formData.append('type', 'join');
+        console.log(
+            // for(let keys )
+        );
     },
     methods : {
         join() {
-            // params..로 넘겨줘야 함. 결국은 FormData에 더해주어야 함. + 유효성 검사 + 페이지이동
-            // FormData 필요정보 : 아이디, 비밀번호, 핀번호, 추천인아이디
+            console.log(777);
+
+            // 아이디, 비밀번호, 핀번호 길이 if문 걸기 & FormData 잘 나오는지 확인
+            // 페이지이동
             // 뒤로가기 버튼 누르면 로그인페이지로 이동하고 저장된 데이터는 모두 클리어.
+
+            const empty = /\s/g;     // 공백체크
+            const engnum = /^[a-zA-Z0-9]*$/;     // 영어,숫자체크
+
+            if(this.id == '' || empty.test(this.id) || !engnum.test(this.id) || this.id.length > 6) {
+                this.idError = true;
+                this.idShow = true;
+            }
+            if(this.password == '' || empty.test(this.password) || !engnum.test(this.password) || this.password.length > 8) {
+                this.pwError = true;
+                this.pwShow = true;
+            }
+            if(this.confirm_pw == '' || this.confirm_pw != this.password) {
+                this.cpwError = true;
+                this.cpwShow = true;
+            }
+            if(this.pin == '') {
+                this.pinError = true;
+                this.pinShow = true;
+            }
+
+            // 처음에 let으로 할당하라고 했는데 const로 해도 되는지
+            // const formData = new FormData();
+            // formData.append('type', 'join');
+            // formData.append('api_pw', this.api_pw);
+            // formData.append('id', this.id);
+            // formData.append('password', this.password);
+            // formData.append('pin', this.pin);
+            // formData.append('recommend_id', this.recommend_id);
+
+        },
+        reset(value) {
+            if(value == 'id' && this.idError == true) {
+                this.idError = false;
+                this.idShow = false;
+                return false;
+            }
+            if(value == 'pw' && this.pwError == true) {
+                this.pwError = false;
+                this.pwShow = false;
+                return false;
+            }
+            if(value == 'cpw' && this.cpwError == true) {
+                this.cpwError = false;
+                this.cpwShow = false;
+                return false;
+            }
+            if(value == 'pin' && this.pinError == true) {
+                this.pinError = false;
+                this.pinShow = false;
+                return false;
+            }
         }
-    }
+    },
+    // watch : {
+    //     id : function() {
+    //         this.join();
+    //     }
+    // }
 }
 
 
@@ -111,15 +193,25 @@ header > p {
 .join_form label {
     display: block;
     margin-top: 20px;
+    /* border: 1px solid red; */
+}
+.join_form > div:nth-of-type(5) > label {
+    display: inline-block;
+    /* border: 1px solid blue; */
+}
+.join_form > div:nth-of-type(5) > p {
+    display: inline-block;
+    font-size: 0.7rem;
+    margin-left: 5px;
 }
 .join_form input {
     display: block;
     width: 100%; height: 35px;
     margin-top: 5px;
     border-radius: 10px;
-    border-color: #ccc;
+    /* border: 2px solid #ccc; */
 }
-#password::placeholder, #pin::placeholder  {
+#id::placeholder, #password::placeholder, #pin::placeholder  {
     font-size: 14px;
 }
 .join_btn_holder {
@@ -135,5 +227,17 @@ header > p {
     background-color: #1bce0b; color: #fff;
     border: none; border-radius: 10px;
     /* border: 1px solid red; */
+}
+.error {
+    border: 2px solid red;
+}
+.no {
+    border: 1px solid #ccc;
+}
+#error_code {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-top: 3px;
+    color: red;
 }
 </style>

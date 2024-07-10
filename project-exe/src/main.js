@@ -45,3 +45,6 @@ app.component('Dialog', Dialog);
 app.component('InputText', InputText);
 app.use(VueSweetalert2);
 app.mount('#app');
+
+
+// app.provide('api_pw','cmb1018!');

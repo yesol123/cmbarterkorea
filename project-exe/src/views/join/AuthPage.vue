@@ -109,8 +109,9 @@ export default {
 
                             if(data.code == '200') {
                                 const authData = data.msg.response;
-                                console.log(authData);
+                                // console.log(authData);
 
+                                // Pinia 데이터 저장
                                 const jsonArr = store.datas;
                                 jsonArr.push({
                                     'birthday' : authData.birthday,
@@ -127,10 +128,9 @@ export default {
                             }
                             if(data.code == '500') {
                                 alert('이미 가입된 회원입니다.');
-                                // router 걸어서 로그인페이지로 이동.
+                                router.push({ path : '/' });
                                 return false;
                             }
-
                         });
 
                     } else {

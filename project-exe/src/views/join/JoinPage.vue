@@ -146,7 +146,7 @@ export default {
                 });
             }
 
-            console.log(jsonArr);
+            // console.log(jsonArr);
 
             const store = useResponseStore();
             store.setResponseData(jsonArr);
