@@ -1,7 +1,7 @@
 <template>
     <div class="wrap">
         <header>
-            <button type="button" class="goback_btn"><router-link to="/"><img src="@/assets/go_back_btn.png"></router-link></button>
+            <button type="button" class="goback_btn" @click="toHome()"><img src="@/assets/go_back_btn.png"></button>
             <p>회원가입</p>
         </header>
 
@@ -139,6 +139,13 @@ export default {
                 }
             );
         },
+        toHome() {
+            this.$router.push({ path : '/'});
+
+            // 뒤로가기 눌렀을때 Pinia 비워주기
+            const store = useResponseStore();
+            store.datas = '';
+        }
         // callback(response) {
         //     // 콜백함수 정의
         //     const {

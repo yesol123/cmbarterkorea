@@ -31,6 +31,23 @@
 </template>
 
 <script>
+import { useResponseStore } from '@/store/response.js';
+
+export default {
+    data() {
+        return {
+
+        }
+    },
+    mounted() {
+        let store = useResponseStore();
+        console.log(888);
+        console.log(store.datas);
+    },
+    methods : {
+
+    }
+}
 </script>
 
 <style scoped>
