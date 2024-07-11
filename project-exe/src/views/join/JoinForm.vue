@@ -1,7 +1,7 @@
 <template>
     <div class="wrap">
         <header>
-            <button type="button" class="goback_btn"><router-link to="/auth"><img src="@/assets/go_back_btn.png"></router-link></button>
+            <button type="button" class="goback_btn"><router-link to="/"><img src="@/assets/go_back_btn.png"></router-link></button>
             <p>회원가입</p>
         </header>
 
@@ -61,6 +61,7 @@ export default {
             pwShow : false,
             cpwShow : false,
             pinShow : false,
+            maxlength : 6
         }
     },
     mounted() {
@@ -68,29 +69,21 @@ export default {
         console.log(333);
         console.log(store.datas);
         // console.log(this.api_pw);
-
-        const formData = new FormData();
-        formData.append('type', 'join');
-        console.log(
-            // for(let keys )
-        );
     },
     methods : {
         join() {
             console.log(777);
 
-            // 아이디, 비밀번호, 핀번호 길이 if문 걸기 & FormData 잘 나오는지 확인
-            // 페이지이동
             // 뒤로가기 버튼 누르면 로그인페이지로 이동하고 저장된 데이터는 모두 클리어.
 
             const empty = /\s/g;     // 공백체크
             const engnum = /^[a-zA-Z0-9]*$/;     // 영어,숫자체크
 
-            if(this.id == '' || empty.test(this.id) || !engnum.test(this.id) || this.id.length > 6) {
+            if(this.id == '' || empty.test(this.id) || !engnum.test(this.id) || this.id. length < 6 || this.id.length > 15) {
                 this.idError = true;
                 this.idShow = true;
             }
-            if(this.password == '' || empty.test(this.password) || !engnum.test(this.password) || this.password.length > 8) {
+            if(this.password == '' || empty.test(this.password) || !engnum.test(this.password) || this.password.length < 8 || this.password.length > 20) {
                 this.pwError = true;
                 this.pwShow = true;
             }
@@ -98,19 +91,22 @@ export default {
                 this.cpwError = true;
                 this.cpwShow = true;
             }
-            if(this.pin == '') {
+            if(this.pin == '' || !(this.pin.toString().length == this.maxlength)) {
                 this.pinError = true;
                 this.pinShow = true;
             }
 
-            // 처음에 let으로 할당하라고 했는데 const로 해도 되는지
-            // const formData = new FormData();
-            // formData.append('type', 'join');
+            const formData = new FormData();
+            formData.append('type', 'join');
             // formData.append('api_pw', this.api_pw);
-            // formData.append('id', this.id);
-            // formData.append('password', this.password);
-            // formData.append('pin', this.pin);
-            // formData.append('recommend_id', this.recommend_id);
+            formData.append('id', this.id);
+            formData.append('password', this.password);
+            formData.append('pin', this.pin);
+            formData.append('recommend_id', this.recommend_id);
+
+            for(let entry of formData.entries()) {
+                console.log(entry[0], ":", entry[1]);
+            }
 
         },
         reset(value) {

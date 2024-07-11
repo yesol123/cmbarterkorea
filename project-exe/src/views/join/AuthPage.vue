@@ -1,7 +1,7 @@
 <template>
     <div class="wrap">
         <header>
-            <button type="button" class="goback_btn"><router-link to="/join"><img src="@/assets/go_back_btn.png"></router-link></button>
+            <button type="button" class="goback_btn"><router-link to="/"><img src="@/assets/go_back_btn.png"></router-link></button>
             <p>회원가입</p>
         </header>
 
