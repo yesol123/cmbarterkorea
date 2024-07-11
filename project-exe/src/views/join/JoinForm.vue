@@ -45,7 +45,7 @@
 import { useResponseStore } from '@/store/response.js';
 
 export default {
-    // inject: ['api_pw'],
+    inject: ['api_pw'],
     data() {
         return {
             id : '',
@@ -68,14 +68,10 @@ export default {
         let store = useResponseStore();
         console.log(333);
         console.log(store.datas);
-        // console.log(this.api_pw);
     },
     methods : {
         join() {
-            console.log(777);
-
-            // 뒤로가기 버튼 누르면 로그인페이지로 이동하고 저장된 데이터는 모두 클리어.
-
+            //유효성검사
             const empty = /\s/g;     // 공백체크
             const engnum = /^[a-zA-Z0-9]*$/;     // 영어,숫자체크
 
@@ -96,9 +92,21 @@ export default {
                 this.pinShow = true;
             }
 
+            //FormData에 가입정보 붙이기
+            let store = useResponseStore();
+
             const formData = new FormData();
+
             formData.append('type', 'join');
-            // formData.append('api_pw', this.api_pw);
+            formData.append('api_pw', this.api_pw);
+        
+            //약관 + 본인인증
+            store.datas.forEach(data => {
+                for (let key in data) {
+                    formData.append(key, data[key]);
+                }
+            })
+            //아이디, 비밀번호 등
             formData.append('id', this.id);
             formData.append('password', this.password);
             formData.append('pin', this.pin);

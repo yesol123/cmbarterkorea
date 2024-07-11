@@ -47,4 +47,4 @@ app.use(VueSweetalert2);
 app.mount('#app');
 
 
-// app.provide('api_pw','cmb1018!');
+app.provide('api_pw','cmb1018!');

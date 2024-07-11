@@ -85,6 +85,7 @@ export default {
        this.checkBefore();
     },
     methods: {
+        //약관 전체 동의
         checkAll() {
             const allChecked = !this.AllCheck;
             this.service = allChecked;
@@ -93,6 +94,7 @@ export default {
             this.advertise = allChecked;
             this.location = allChecked;
         },
+        //필수약관 유효성검사
         confirmCheck() {
             if(this.service === false || this.privacy === false) {
                 alert('필수항목을 체크해주세요.');
@@ -101,6 +103,7 @@ export default {
                 this.$router.push({ path : '/auth' });
             }
         },
+        //필수, 선택 약관체크
         handleChange() {
             if (this.service && this.privacy && this.marketing && this.advertise && this.location) {
                 this.AllCheck = true;
@@ -129,12 +132,13 @@ export default {
 
             // 약관 전체 동의 체크안되었을 경우
             if(this.AllCheck == false) {
-                jsonArr.push({ service_agreed: this.service ? 'Y' : 'N' });
-                jsonArr.push({ privacy_agreed: this.privacy ? 'Y' : 'N' });
-                jsonArr.push({ marketing_agreed: this.marketing ? 'Y' : 'N' });
-                jsonArr.push({ advertise_agreed: this.advertise ? 'Y' : 'N' });
-                jsonArr.push({ location_agreed: this.location ? 'Y' : 'N' });
-
+                jsonArr.push({ 
+                    service_agreed: this.service ? 'Y' : 'N',
+                    privacy_agreed: this.privacy ? 'Y' : 'N',
+                    marketing_agreed: this.marketing ? 'Y' : 'N',
+                    advertise_agreed: this.advertise ? 'Y' : 'N',
+                    location_agreed: this.location ? 'Y' : 'N' 
+                });
             } else {
                 // 약관 전체 동의 체크되었을 경우
                 jsonArr.push({
