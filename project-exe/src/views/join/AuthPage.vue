@@ -17,16 +17,23 @@
             </div>
         </main>
     </div>
+
+    <div>
+        <ModalPage/>
+    </div>
 </template>
 
 <script>
 import { useResponseStore } from '@/store/response.js';
 import router from '@/router/index.js';
+import ModalPage from '@/components/ModalPage.vue';
 
 export default {
+    components : {
+        ModalPage
+    },
     data() {
         return {
-
         }
     },
     mounted() {
@@ -67,7 +74,6 @@ export default {
         //     // 본인인증 창 호출
         //     IMP.certification(data, this.callback);
         // },
-        
         getYmd10() {
         //yyyy-mm-dd 포맷 날짜 생성
         var d = new Date();
@@ -121,8 +127,8 @@ export default {
 
                                 console.log(jsonArr);
 
-                                alert('본인인증 완료되었습니다.');
-                                router.push({ path : '/joinform' });
+                                // alert('본인인증 완료되었습니다.');
+                                // router.push({ path : '/joinform' });
                                 return false;
                             }
                             if(data.code == '500') {
@@ -144,7 +150,7 @@ export default {
             // 뒤로가기 눌렀을때 Pinia 비워주기
             const store = useResponseStore();
             store.datas = '';
-        }
+        },
         // callback(response) {
         //     // 콜백함수 정의
         //     const {

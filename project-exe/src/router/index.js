@@ -22,7 +22,12 @@ const router = createRouter({
             path: "/joinform",      
             name: "JoinForm",      
             component: () => import("@/views/join/JoinForm.vue"),    
-        },        
+        },
+        {      
+            path: "/joinend",      
+            name: "JoinEnd",      
+            component: () => import("@/views/join/JoinEnd.vue"),    
+        },            
         {      
             path: "/findid",      
             name: "FindID",      
@@ -32,6 +37,11 @@ const router = createRouter({
             path: "/yourid",      
             name: "YourID",      
             component: () => import("@/views/find/YourID.vue"),    
+        },    
+        {      
+            path: "/modal",      
+            name: "Modal",      
+            component: () => import("@/components/ModalPage.vue"),    
         },       
         // {      
         //     path: "/",      

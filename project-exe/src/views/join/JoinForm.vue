@@ -116,6 +116,23 @@ export default {
                 console.log(entry[0], ":", entry[1]);
             }
 
+            fetch('https://cmbarter.com/api/join/joinform.php', {
+            method: 'POST',
+            body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+
+                if(data.code == '200') {
+                // 회원가입 완료 컴포넌트로 이동하도록
+                //router.push({ path : '/' });
+                }
+                if(data.code == '500') {
+                    alert(data.msg);
+                    return false;
+                }
+            });
         },
         reset(value) {
             if(value == 'id' && this.idError == true) {
