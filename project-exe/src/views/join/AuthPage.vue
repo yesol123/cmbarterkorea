@@ -19,22 +19,18 @@
     </div>
 
     <div>
-        <ModalPage/>
+        <ModalPage ref="child"/>
     </div>
 </template>
 
 <script>
 import { useResponseStore } from '@/store/response.js';
 import router from '@/router/index.js';
-import ModalPage from '@/components/ModalPage.vue';
+import ModalPage from '@/components/ModalPage2.vue';
 
 export default {
     components : {
         ModalPage
-    },
-    data() {
-        return {
-        }
     },
     mounted() {
         // let store = useResponseStore();
@@ -52,8 +48,8 @@ export default {
         // store = useResponseStore();
         // console.log(333);
         // console.log(store.datas);
-        
 
+        //this.$refs.child.openModal();
     },
     methods : {
         // 다날 휴대폰 본인인증
@@ -82,6 +78,9 @@ export default {
         // 본인인증
         authMe() {
             const { IMP } = window;
+
+            const refs = this.$refs.child;
+
             IMP.init("imp06362454");
             IMP.certification({ // param
                     merchant_uid : "cmbarter " + this.getYmd10(),
@@ -127,8 +126,14 @@ export default {
 
                                 console.log(jsonArr);
 
+                                console.log("테스트");
+
+                                refs.openModal();
+
                                 // alert('본인인증 완료되었습니다.');
                                 // router.push({ path : '/joinform' });
+                                //this.ref.openModal();
+
                                 return false;
                             }
                             if(data.code == '500') {
