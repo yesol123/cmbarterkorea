@@ -75,8 +75,6 @@ export default {
         },
         // 본인인증
         authMe() {
-            // let store = useResponseStore();
-
             const { IMP } = window;
             IMP.init("imp06362454");
             IMP.certification({ // param
@@ -117,7 +115,8 @@ export default {
                                     'birthday' : authData.birthday,
                                     'gender' : authData.gender,
                                     'name' : authData.name,
-                                    'phone' : authData.phone
+                                    'phone' : authData.phone,
+                                    'unique_key' : authData.unique_key
                                 })
 
                                 console.log(jsonArr);
