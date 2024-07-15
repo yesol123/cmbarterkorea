@@ -43,6 +43,7 @@
 
 <script>
 import { useResponseStore } from '@/store/response.js';
+import router from '@/router/index.js';
 
 export default {
     inject: ['api_pw'],
@@ -125,8 +126,8 @@ export default {
                 console.log(data);
 
                 if(data.code == '200') {
-                // 회원가입 완료 컴포넌트로 이동하도록
-                //router.push({ path : '/' });
+                // 회원가입 완료 페이지로 이동
+                router.push({ path : '/joinend' });
                 }
                 if(data.code == '500') {
                     alert(data.msg);

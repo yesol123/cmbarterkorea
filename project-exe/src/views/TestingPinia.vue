@@ -4,6 +4,9 @@
     {{ counter }}
   </div>
 
+  <input type="text" style="display: block;" ref="reftest">
+  <button style="width: 50px; height: 50px;" @click="refTest()"></button>
+
   <!-- <div class="card flex justify-center">
     <Button label="PrimeVue" @click="visible = true" />
     <Dialog v-model:visible="visible" modal header="인증완료" :style="{ width: '25rem' }"> -->
@@ -63,9 +66,13 @@ export default {
     }
   },
   mounted() {
-
+    console.log(this.$refs);
+    console.log('ref test :', this.$refs.reftest);
   },
   methods : {
+    refTest() {
+      console.log(this.$refs.reftest.value);
+    },
     clickMe() {
       this.counter++;
       // if(this.counter == 5) {

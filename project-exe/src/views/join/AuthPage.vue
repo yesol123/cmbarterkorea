@@ -25,7 +25,7 @@
 
 <script>
 import { useResponseStore } from '@/store/response.js';
-import router from '@/router/index.js';
+// import router from '@/router/index.js';
 import ModalPage from '@/components/ModalPage2.vue';
 
 export default {
@@ -137,8 +137,8 @@ export default {
                                 return false;
                             }
                             if(data.code == '500') {
-                                alert('이미 가입된 회원입니다.');
-                                router.push({ path : '/' });
+                                // alert('이미 가입된 회원입니다.');
+                                // router.push({ path : '/' });
                                 return false;
                             }
                         });
