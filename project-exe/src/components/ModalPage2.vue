@@ -35,6 +35,11 @@ export default {
         this.content = '이미 가입된 회원입니다.'
         this.visible = true;
       }
+      if(this.mode == 'notfound') {
+        this.header = '아이디 찾기 실패';
+        this.content = '가입되지 않은 연락처입니다.'
+        this.visible = true;
+      }
     },
     // 모달창 닫기
     handleConfirm(){
@@ -45,6 +50,10 @@ export default {
       if(this.mode == 'fail') {
         this.visible = false;
         this.$router.push({'path' : '/'});
+      }
+      if(this.mode == 'notfound') {
+        this.visible = false;
+        this.$router.push({'path' : '/join'});
       }
     }
   },

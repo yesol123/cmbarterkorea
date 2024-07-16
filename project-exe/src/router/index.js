@@ -39,6 +39,11 @@ const router = createRouter({
             component: () => import("@/views/find/YourID.vue"),    
         },    
         {      
+            path: "/findpw",      
+            name: "FindPW",      
+            component: () => import("@/views/find/FindPW.vue"),    
+        },   
+        {      
             path: "/modal",      
             name: "Modal",      
             component: () => import("@/components/ModalPage.vue"),    

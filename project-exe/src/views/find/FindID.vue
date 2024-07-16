@@ -1,11 +1,18 @@
 <template>
-    <div></div>
+    <div>
+        <ModalPage ref="child" style="display: none;"/>
+    </div>
 </template>
 
 <script>
-// import router from '@/router/index.js'
+import router from '@/router/index.js';
+import ModalPage from '@/components/ModalPage2.vue';
+import { useResponseStore } from '@/store/response.js';
 
 export default {
+    components : {
+        ModalPage
+    },
     data() {
         return {
 
@@ -22,6 +29,8 @@ export default {
         },
         // 본인인증
         authMe() {
+            const refs = this.$refs.child;
+
             const { IMP } = window;
             IMP.init("imp06362454");
             IMP.certification({ // param
@@ -35,6 +44,8 @@ export default {
                     console.log(rsp.success);
 
                     if (rsp.success) {
+
+                        let store = useResponseStore();
 
                         console.log(rsp);
                         const formData = new FormData();
@@ -51,12 +62,18 @@ export default {
                             console.log(data);
 
                             if(data.code == '200') { 
-                                alert('본인인증 완료되었습니다.');
-                                // router.push({ path : '/yourid'});
+
+                                const idData = data.msg;
+
+                                store.datas.push(idData);
+                                router.push({ path : '/yourid'});
+                                
                                 return false;
                             }
                             if(data.code == '500') {
-                                alert('이미 가입된 회원입니다.');
+
+                                refs.mode = 'notfound';
+                                refs.openModal();
                                 return false;
                             }
 
