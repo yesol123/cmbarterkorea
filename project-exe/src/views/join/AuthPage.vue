@@ -126,19 +126,18 @@ export default {
 
                                 console.log(jsonArr);
 
-                                console.log("테스트");
-
+                                // 본인인증 완료 모달창
+                                refs.mode = 'pass';
                                 refs.openModal();
-
-                                // alert('본인인증 완료되었습니다.');
-                                // router.push({ path : '/joinform' });
-                                //this.ref.openModal();
 
                                 return false;
                             }
                             if(data.code == '500') {
-                                // alert('이미 가입된 회원입니다.');
-                                // router.push({ path : '/' });
+
+                                // 본인인증 실패 모달창
+                                refs.mode = 'fail';
+                                refs.openModal();
+
                                 return false;
                             }
                         });

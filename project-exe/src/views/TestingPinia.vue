@@ -66,8 +66,11 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$refs);
-    console.log('ref test :', this.$refs.reftest);
+    // console.log(this.$refs);
+    // console.log('ref test :', this.$refs.reftest);
+    this.$refs.modalDialog.mode = 'pass';
+    this.$refs.modalDialog.openModal();
+    // console.log(this.$refs.modalDialog.mode)
   },
   methods : {
     refTest() {
