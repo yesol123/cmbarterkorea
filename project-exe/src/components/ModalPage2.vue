@@ -40,6 +40,11 @@ export default {
         this.content = '가입되지 않은 연락처입니다.'
         this.visible = true;
       }
+      if(this.mode == 'changepw') {
+        this.header = '변경 완료';
+        this.content = '비밀번호 변경을 성공하였습니다.'
+        this.visible = true;
+      }
     },
     // 모달창 닫기
     handleConfirm(){
@@ -54,6 +59,10 @@ export default {
       if(this.mode == 'notfound') {
         this.visible = false;
         this.$router.push({'path' : '/join'});
+      }
+      if(this.mode == 'changepw') {
+        this.visible = false;
+        this.$router.push({'path' : '/'});
       }
     }
   },

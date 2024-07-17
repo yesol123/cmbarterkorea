@@ -29,7 +29,7 @@ export default {
     mounted() {
         let store = useResponseStore();
         this.yourid = store.datas.toString();
-        console.log(store.datas);
+        // console.log(store.datas);
     }
 }
 

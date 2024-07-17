@@ -64,10 +64,9 @@ export default {
                             if(data.code == '200') { 
 
                                 const idData = data.msg;
-
                                 store.datas.push(idData);
                                 router.push({ path : '/yourid'});
-                                
+
                                 return false;
                             }
                             if(data.code == '500') {
