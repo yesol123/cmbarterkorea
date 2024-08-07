@@ -4,7 +4,7 @@
     </footer> -->
 
     <!-- 하단 네브바 -->
-    <nav class="navbar bg-dark border-bottom border-body fixed-bottom" data-bs-theme="dark" style="justify-content: center; opacity: 0.9;">
+    <!-- <nav class="navbar bg-dark border-bottom border-body fixed-bottom" data-bs-theme="dark" style="justify-content: center; opacity: 0.9;">
       <div class="row" style="width: 100%;">
         <div class="col-3">
           <a class="navbar-brand" href="#" style="display: grid; place-items: center; justify-content: center;">
@@ -31,13 +31,48 @@
           </a>
         </div>
       </div>
-    </nav>
+    </nav> -->
+
+    <div class="footer">
+        <div class="btn_group">
+          <img src="@/assets/home.png">
+          <img src="@/assets/gift.png">
+          <img src="@/assets/search.png">
+          <img src="@/assets/my.png">
+        </div>
+    </div>
 
 </template>
 
 <style scoped>
-footer {
+/* footer {
     width: 100%; height: 50px;
     border: 1px solid #000;
+} */
+
+* {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    font-size: 1rem;
+    text-decoration: none;
+    color: #000;
+}
+.footer {
+    position: fixed;
+    bottom: 0; left: 0;  
+    width: 100%; height: 50px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.btn_group {
+  display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: inherit; height: inherit;
+}
+.btn_group img {
+    width: 25px; height: 25px;
+    /* border: 1px solid orange; */
 }
 </style>

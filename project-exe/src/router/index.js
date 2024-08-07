@@ -44,6 +44,11 @@ const router = createRouter({
             component: () => import("@/views/find/FindPW.vue"),    
         },   
         {      
+            path: "/main",      
+            name: "MainPage",      
+            component: () => import("@/views/MainPage.vue"),    
+        },    
+        {      
             path: "/modal",      
             name: "Modal",      
             component: () => import("@/components/ModalPage.vue"),    
@@ -57,6 +62,11 @@ const router = createRouter({
             path: "/test",      
             name: "TestingPinia",      
             component: () => import("@/views/TestingPinia.vue"),    
+        },      
+        {      
+            path: "/footer",      
+            name: "Footer",      
+            component: () => import("@/components/FooterPage.vue"),    
         },      
     ],
 }); 
