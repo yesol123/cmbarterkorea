@@ -67,7 +67,7 @@ const router = createRouter({
             path: "/footer",      
             name: "Footer",      
             component: () => import("@/components/FooterPage.vue"),    
-        },      
+        },       
     ],
 }); 
 

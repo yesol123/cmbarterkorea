@@ -33,6 +33,8 @@ export default {
         ModalPage
     },
     mounted() {
+        // const a = 'abcde';
+        // console.log(a + '/123.com')
         // let store = useResponseStore();
 
         // console.log(222);

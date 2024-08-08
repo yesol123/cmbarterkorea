@@ -20,6 +20,9 @@ export default {
     },
     mounted() {
         this.authMe();
+        // console.log(process.env.VUE_APP_API_URL);
+        // const url = process.env.VUE_APP_API_URL;
+        // console.log(url + 'api/find/id_find1.php');
     },
     methods : {
         getYmd10() {
@@ -53,7 +56,9 @@ export default {
                         formData.append('type', 'auth');
                         formData.append('imp_uid', rsp.imp_uid);
 
-                        fetch('https://cmbarter.com/api/find/id_find1.php', {
+                        const url = process.env.VUE_APP_API_URL;
+
+                        fetch(url + 'api/find/id_find1.php', {
                         method: 'POST',
                         body: formData
                         })

@@ -116,7 +116,7 @@ img {
     margin-top: 70px;
 }
 .main_content {
-    width: 100%; height: 100vh;
+    width: 100%; height: 900px;
     /* border: 3px solid red; */
 }
 .pay_content {
