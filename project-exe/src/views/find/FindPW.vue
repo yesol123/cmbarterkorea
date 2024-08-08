@@ -67,7 +67,9 @@ export default {
                 formData.append('id', store.datas.toString());
                 formData.append('pw', this.newpw);
 
-                fetch('https://cmbarter.com/api/find/pw_change.php', {
+                const url = process.env.VUE_APP_API_URL;
+
+                fetch(url + 'api/find/pw_change.php', {
                 method: 'POST',
                 body: formData
                 })

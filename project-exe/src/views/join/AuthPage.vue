@@ -104,7 +104,9 @@ export default {
                         formData.append('type', 'auth');
                         formData.append('imp_uid', rsp.imp_uid);
 
-                        fetch('https://cmbarter.com/api/join/AuthPage.php', {
+                        const url = process.env.VUE_APP_API_URL;
+
+                        fetch(url + 'api/join/AuthPage.php', {
                         method: 'POST',
                         body: formData
                         })

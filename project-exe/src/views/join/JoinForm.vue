@@ -117,7 +117,9 @@ export default {
                 console.log(entry[0], ":", entry[1]);
             }
 
-            fetch('https://cmbarter.com/api/join/joinform.php', {
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/join/joinform.php', {
             method: 'POST',
             body: formData
             })
