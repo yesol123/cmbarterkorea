@@ -45,6 +45,10 @@ export default {
         this.content = '비밀번호 변경을 성공하였습니다.'
         this.visible = true;
       }
+      if(this.mode == 'loginfail') {
+        this.header = '존재하지 않는 계정입니다.';
+        this.visible = true;
+      }
     },
     // 모달창 닫기
     handleConfirm(){
@@ -63,6 +67,9 @@ export default {
       if(this.mode == 'changepw') {
         this.visible = false;
         this.$router.push({'path' : '/'});
+      }
+      if(this.mode == 'loginfail') {
+        this.visible = false;
       }
     }
   },

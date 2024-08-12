@@ -1,9 +1,11 @@
 <template>
-    <div class="main_header">
+    <div class="main_header" :style="{backgroundColor : headerColor}">
         <div class="header_center">
             <div class="main_logo">
                 <img src="@/assets/mypage.png">
-                <p>일반</p>
+                <p v-if="this.member === '1'">일반</p>
+                <p v-else-if="this.member === '2'">사업자</p>
+                <p v-else-if="this.member === '3'">가맹점</p>
             </div>
             <div>
                 <h1 style="font-size: 1.3rem; color: #fff;">씨엠바더</h1>
@@ -15,9 +17,9 @@
     </div>
 
     <div class="main_content">
-        <div class="pay_content">
+        <div class="pay_content" :style="{backgroundColor : headerColor}">
             <div class="pay_center">
-                <div class="pay_area">
+                <div class="pay_area" :style="{backgroundColor : headerColor}">
                     <p>20,000CM</p>
                     <p>보유쿠폰 <span style="color: yellow; font-size: 1.5rem;">5</span>장</p>
                     <p>여기를 탭하여 결제하세요.</p>
@@ -65,10 +67,28 @@
 
 <script>
 import Footer from '@/components/FooterPage.vue'
+import { useResponseStore } from '@/store/response.js';
 
 export default {
     components : {
         Footer,
+    },
+    data() {
+        return {
+            member : ''
+        }
+    },
+    mounted() {
+        let store = useResponseStore();
+        this.member = store.member;
+    },
+    computed: {
+        headerColor() {
+            return (this.member === '1') ? 'rgb(9, 9, 116)' 
+            : (this.member === '2') ?'#0A6847'
+            : (this.member === '3') ?'#E4003A'
+            : '#fff'
+        }
     }
 }
 </script>
@@ -85,7 +105,7 @@ export default {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 70px;
-    background-color: rgb(9, 9, 116);
+    /* background-color: rgb(9, 9, 116); */
     /* border: 1px solid red; */
 }
 .header_center {
@@ -122,7 +142,7 @@ img {
 .pay_content {
     width: 100%; height: 200px;
     /* border: 2px solid blue; */
-    background-color: rgb(9, 9, 116);
+    /* background-color: rgb(9, 9, 116); */
 }
 .pay_center {
     padding: 20px;
@@ -130,7 +150,7 @@ img {
 }
 .pay_area {
     height: 100px;
-    background-color: rgb(9, 9, 116);
+    /* background-color: rgb(9, 9, 116); */
     text-align: center;
     border-radius: 10px;
     border: 3px solid #fff;

@@ -26,7 +26,7 @@ export default {
                 }
                 else if (response.status === 403) {
                     // eslint-disable-next-line
-                    token_refresh("http://localhost:8080/api/token").then(result => {
+                    token_refresh("http://182.213.2.211:8081/api/token").then(result => {
                         if (result) {
                             localStorage.setItem("access_token", result.accessToken);
                             localStorage.setItem("refresh_token", result.refreshToken);

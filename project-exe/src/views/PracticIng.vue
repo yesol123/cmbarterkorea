@@ -37,7 +37,7 @@ export default {
         },
         async login() {
             try {
-                const response = await fetch('http://localhost:8080/login', {
+                const response = await fetch('http://182.213.2.211:8081/login', {
                     method: 'POST',
                     headers: {
                     'Content-Type': 'application/json'
@@ -77,7 +77,7 @@ export default {
         setTime() {
             setTimeout(() => {
                 let josn = {}
-                this.$refs.function.callAsync("POST", "http://localhost:8080/api/v1/test", josn, () => { console.log("OK") }, () => { console.log("NO") });
+                this.$refs.function.callAsync("POST", "http://182.213.2.211:8081/api/v1/test", josn, () => { console.log("OK") }, () => { console.log("NO") });
             }, 130000);
         }
     }
