@@ -37,6 +37,8 @@
     </div>
     <AppConfig simple />
     <button type="button" @click="$router.go(-1)">뒤로가기</button>
+
+    <!-- <TokenFunction ref="function" /> -->
 </template>
 
 <script setup>
@@ -52,6 +54,22 @@ const checked = ref(false);
 const logoUrl = computed(() => {
     return `/layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
 });
+</script>
+
+<script>
+// import TokenFunction from '@/components/GetToken.vue'
+
+export default {
+    data() {
+        return {
+
+        }
+    },
+    mounted() {
+        // this.$refs.function.token_refresh();
+    }
+}
+
 </script>
 
 <style scoped>
