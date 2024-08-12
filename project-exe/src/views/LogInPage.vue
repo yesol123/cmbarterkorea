@@ -85,7 +85,10 @@ export default {
                             return false;
                         }
                         else {
-                            store.member = data.msg;
+                            let jsonObject = JSON.parse(data.msg);
+                            store.member = jsonObject.user_role_index;
+                            store.user_id = jsonObject.user_id;
+                            console.log(jsonObject);
                             console.log(store.member);
                             router.push({'path' : '/main'});
                         }

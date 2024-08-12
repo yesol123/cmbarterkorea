@@ -1,5 +1,5 @@
 <template>
-    <div class="main_header" :style="{backgroundColor : headerColor}">
+    <div class="main_header" :style="{backgroundColor : backColor}">
         <div class="header_center">
             <div class="main_logo">
                 <img src="@/assets/mypage.png">
@@ -17,11 +17,17 @@
     </div>
 
     <div class="main_content">
-        <div class="pay_content" :style="{backgroundColor : headerColor}">
+        <div class="pay_content" :style="{backgroundColor : backColor}">
             <div class="pay_center">
-                <div class="pay_area" :style="{backgroundColor : headerColor}">
-                    <p>20,000CM</p>
-                    <p>보유쿠폰 <span style="color: yellow; font-size: 1.5rem;">5</span>장</p>
+                <div class="pay_area" :style="{backgroundColor : backColor}">
+                    <p v-if="this.member === '1'">{{ user_cm }} CM</p>
+                    <p v-if="this.member === '2'">20,000 CM</p>
+                    <p v-if="this.member === '3'" style="color: pink;">{{ user_cmp }} CMP</p>
+
+                    <p v-if="this.member === '1'">보유쿠폰 <span>{{ coupon_count }}</span>장</p>
+                    <p v-if="this.member === '2'">보유쿠폰 <span>5</span>장</p>
+                    <p v-if="this.member === '3'" style="font-size: 1.5rem; color: yellow;">{{ user_cm }} CM</p>
+                    
                     <p>여기를 탭하여 결제하세요.</p>
                 </div>
                 <div class="pay_btn">
@@ -75,19 +81,64 @@ export default {
     },
     data() {
         return {
-            member : ''
+            member : '',
+            user_cmp : '',
+            user_cm : '',
+            coupon_count : ''
         }
     },
     mounted() {
         let store = useResponseStore();
         this.member = store.member;
+
+        // console.log('user_id : ' + store.user_id);
+
+        this.MainList();
+    },
+    methods : {
+        MainList() {
+
+            let store = useResponseStore();
+            const formData = new FormData();
+
+            formData.append('type', 'authentication');
+            formData.append('user_id', store.user_id);
+
+            fetch('https://cmbarter.com/api/common/main.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                let toJson = JSON.parse(data.msg);
+                console.log(toJson);
+
+                // 유저CMP
+                this.user_cmp = toJson.user_cmp;
+                if(this.user_cmp != null) {
+                    this.user_cmp.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                }
+                
+                // 유저CM
+                this.user_cm = toJson.user_cm.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+                // 쿠폰갯수
+                this.coupon_count = toJson.coupon_count;
+                if(this.coupon_count != null) {
+                    this.coupon_count.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                }
+            })
+
+        }
     },
     computed: {
-        headerColor() {
+        // 회원별 색상 바꿔주기
+        backColor() {
             return (this.member === '1') ? 'rgb(9, 9, 116)' 
-            : (this.member === '2') ?'#0A6847'
-            : (this.member === '3') ?'#E4003A'
-            : '#fff'
+            : (this.member === '2') ? '#0A6847'
+            : (this.member === '3') ? '#E4003A'
+            : '#ccc'
         }
     }
 }
@@ -159,6 +210,10 @@ img {
     font-weight: bold;
     font-size: 1.2rem;
     color: #fff
+}
+.pay_area span {
+    font-size: 1.5rem;
+    color: yellow;
 }
 .pay_area > p:nth-of-type(1) {
     font-size: 1.5rem;
