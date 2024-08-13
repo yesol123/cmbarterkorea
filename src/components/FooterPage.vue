@@ -33,14 +33,14 @@
       </div>
     </nav> -->
 
-    <div class="footer">
-        <div class="btn_group">
-          <img src="@/assets/home.png">
-          <img src="@/assets/gift.png">
-          <img src="@/assets/search.png">
-          <img src="@/assets/my.png">
-        </div>
-    </div>
+  <div class="footer">
+      <div class="btn_group">
+        <img src="@/assets/home.png">
+        <img src="@/assets/gift.png">
+        <img src="@/assets/search.png">
+        <img src="@/assets/my.png">
+      </div>
+  </div>
 
 </template>
 

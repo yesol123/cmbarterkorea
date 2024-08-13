@@ -38,18 +38,24 @@
         </div>
 
         <div class="commercial">
-            첫번째 광고란
+            <div class="slide_group">
+                <img :src="currentBanner">
+            </div>
         </div>
         <div class="icons">
             <div class="icon">
                 <img src="@/assets/gift.png">
-                <p>쿠폰게시판</p>
+                <p>쿠폰이벤트</p>
             </div>
             <div class="icon">
                 <img src="@/assets/gift.png">
                 <p>CM라이프</p>
             </div>
-            <div class="icon">
+            <div class="icon" v-if="this.member == '3'">
+                <img src="@/assets/gift.png">
+                <p>CM충전</p>
+            </div>
+            <div class="icon" v-if="this.member == '1'">
                 <img src="@/assets/gift.png">
                 <p>가맹점신청</p>
             </div>
@@ -57,13 +63,27 @@
                 <img src="@/assets/gift.png">
                 <p>홈페이지</p>
             </div>
+            <div class="icon" v-if="this.member == '3'">
+                <img src="@/assets/gift.png">
+                <p>매장관리</p>
+            </div>
+            <div class="icon" v-if="this.member == '3'">
+                <img src="@/assets/gift.png">
+                <p>고객관리</p>
+            </div>
             <div class="icon">
                 <img src="@/assets/gift.png">
                 <p>카카오 상담</p>
             </div>
+            <div class="icon" v-if="this.member == '3'">
+                <img src="@/assets/gift.png">
+                <p>이벤트등록</p>
+            </div>
         </div>
         <div class="commercial">
-            두번째 광고란
+            <div class="slide_group">
+                <img :src="currentBanner">
+            </div>
         </div>
     </div>
 
@@ -73,7 +93,11 @@
 
 <script>
 import Footer from '@/components/FooterPage.vue'
-import { useResponseStore } from '@/store/response.js';
+import { useResponseStore } from '@/store/response.js'
+
+import bannerOne from '@/assets/1.jpg'
+import bannerTwo from '@/assets/2.jpg'
+import bannerThree from '@/assets/3.jpg'
 
 export default {
     components : {
@@ -84,7 +108,14 @@ export default {
             member : '',
             user_cmp : '',
             user_cm : '',
-            coupon_count : ''
+            coupon_count : '',
+            bannerImg : [
+                bannerOne,
+                bannerTwo,
+                bannerThree
+            ],
+            currentIndex : 0,
+            time: null
         }
     },
     mounted() {
@@ -93,6 +124,7 @@ export default {
 
         // 일반, 사업자, 가맹점 별 데이터 바인딩
         this.MainList();
+        this.Sliding();
     },
     methods : {
         MainList() {
@@ -129,7 +161,12 @@ export default {
                 }
             })
 
-        }
+        },
+        Sliding() {
+            this.time = setInterval(() => {
+                this.currentIndex = (this.currentIndex + 1) % this.bannerImg.length;
+            },3000);
+        },
     },
     computed: {
         // 회원별 색상 바꿔주기
@@ -138,6 +175,9 @@ export default {
             : (this.member === '2') ? '#0A6847'
             : (this.member === '3') ? '#E4003A'
             : '#ccc'
+        },
+        currentBanner() {
+            return this.bannerImg[this.currentIndex];
         }
     }
 }
@@ -183,11 +223,8 @@ img {
     font-size: small;
 }
 .main_content {
-    margin-top: 70px;
-}
-.main_content {
-    width: 100%; height: 900px;
-    /* border: 3px solid red; */
+    width: 100%; height: 100vh;
+    margin: 70px 0 100px;
 }
 .pay_content {
     width: 100%; height: 200px;
@@ -237,9 +274,16 @@ button {
     border: none;
 }
 .commercial {
-    width: 90%; height: 170px;
-    margin: 20px auto 0;
+    width: 90%; height: 200px;
+    margin: 20px auto;
     border: 1px solid #ccc;
+}
+.slide_group {
+    width: 100%; height: 100%;
+}
+.slide_group > img {
+    display: block;
+    width: 100%; height: 100%;
 }
 .icons {
     display: flex;
