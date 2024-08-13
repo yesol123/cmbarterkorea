@@ -82,7 +82,7 @@
         </div>
         <div class="commercial">
             <div class="slide_group">
-                <img :src="currentBanner">
+                <img :src="currentAd">
             </div>
         </div>
     </div>
@@ -95,10 +95,6 @@
 import Footer from '@/components/FooterPage.vue'
 import { useResponseStore } from '@/store/response.js'
 
-import bannerOne from '@/assets/1.jpg'
-import bannerTwo from '@/assets/2.jpg'
-import bannerThree from '@/assets/3.jpg'
-
 export default {
     components : {
         Footer,
@@ -109,13 +105,12 @@ export default {
             user_cmp : '',
             user_cm : '',
             coupon_count : '',
-            bannerImg : [
-                bannerOne,
-                bannerTwo,
-                bannerThree
-            ],
-            currentIndex : 0,
-            time: null
+            bannerImg : [],
+            bannerIndex : 0,
+            timeOne: null,
+            adImg : [],
+            adIndex : 0,
+            timeTwo: null
         }
     },
     mounted() {
@@ -124,7 +119,10 @@ export default {
 
         // 일반, 사업자, 가맹점 별 데이터 바인딩
         this.MainList();
+        this.getBanner();
+        this.getAd();
         this.Sliding();
+        this.SlidingTwo();
     },
     methods : {
         MainList() {
@@ -145,28 +143,65 @@ export default {
                 let toJson = JSON.parse(data.msg);
                 console.log(toJson);
 
-                // 유저CMP
-                this.user_cmp = toJson.user_cmp;
-                if(this.user_cmp != null) {
-                    this.user_cmp.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                }
+                // 유저CMP (null 걸러주기)
+                this.user_cmp = (toJson.user_cmp ?? '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
                 
                 // 유저CM
-                this.user_cm = toJson.user_cm.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                this.user_cm = (toJson.user_cm ?? '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
                 // 쿠폰갯수
                 this.coupon_count = toJson.coupon_count;
-                if(this.coupon_count != null) {
-                    this.coupon_count.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                }
             })
 
         },
         Sliding() {
-            this.time = setInterval(() => {
-                this.currentIndex = (this.currentIndex + 1) % this.bannerImg.length;
+            this.timeOne = setInterval(() => {
+                this.bannerIndex = (this.bannerIndex + 1) % this.bannerImg.length;
             },3000);
         },
+        SlidingTwo() {
+            this.timeTwo = setInterval(() => {
+                this.adIndex = (this.adIndex + 1) % this.adImg.length;
+            },3000);
+        },
+        getBanner() {
+
+            const formData = new FormData();
+            formData.append('type', 'banner_get');
+
+            fetch('https://www.cmbarter.com/api/common/main.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                let toJson = JSON.parse(data.msg);
+                console.log(toJson);
+                console.log(toJson.url1);
+                this.bannerImg.push(toJson.url1, toJson.url2);
+            })
+            
+        },
+        getAd() {
+
+            const formData = new FormData();
+            formData.append('type', 'advertisement_get');
+
+            fetch('https://www.cmbarter.com/api/common/main.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                let toJson = JSON.parse(data.msg);
+                console.log(999)
+                console.log(toJson);
+                this.adImg.push(toJson.url1, toJson.url2);
+            })
+            
+        }
     },
     computed: {
         // 회원별 색상 바꿔주기
@@ -176,9 +211,13 @@ export default {
             : (this.member === '3') ? '#E4003A'
             : '#ccc'
         },
+        // 광고배너
         currentBanner() {
-            return this.bannerImg[this.currentIndex];
-        }
+            return this.bannerImg[this.bannerIndex];
+        },
+        currentAd() {
+            return this.adImg[this.adIndex];
+        },
     }
 }
 </script>
