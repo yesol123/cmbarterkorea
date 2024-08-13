@@ -91,8 +91,7 @@ export default {
         let store = useResponseStore();
         this.member = store.member;
 
-        // console.log('user_id : ' + store.user_id);
-
+        // 일반, 사업자, 가맹점 별 데이터 바인딩
         this.MainList();
     },
     methods : {
