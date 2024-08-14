@@ -119,10 +119,8 @@ export default {
 
         // 일반, 사업자, 가맹점 별 데이터 바인딩
         this.MainList();
-        this.getBanner();
-        this.getAd();
-        this.Sliding();
-        this.SlidingTwo();
+        this.bannerSliding();
+        this.adSliding();
     },
     methods : {
         MainList() {
@@ -153,17 +151,21 @@ export default {
                 this.coupon_count = toJson.coupon_count;
             })
 
+            this.getBanner();
+            this.getAd();
+
         },
-        Sliding() {
+        bannerSliding() {
             this.timeOne = setInterval(() => {
                 this.bannerIndex = (this.bannerIndex + 1) % this.bannerImg.length;
             },3000);
         },
-        SlidingTwo() {
+        adSliding() {
             this.timeTwo = setInterval(() => {
                 this.adIndex = (this.adIndex + 1) % this.adImg.length;
             },3000);
         },
+        // 배너 이미지 불러오기
         getBanner() {
 
             const formData = new FormData();
@@ -178,11 +180,16 @@ export default {
                 console.log(data);
                 let toJson = JSON.parse(data.msg);
                 console.log(toJson);
-                console.log(toJson.url1);
-                this.bannerImg.push(toJson.url1, toJson.url2);
+
+                for(var i in toJson) {
+                    console.log(11111111);
+                    console.log(toJson[i]);
+                    this.bannerImg.push(toJson[i]);
+                }
             })
             
         },
+        // 광고 이미지 불러오기
         getAd() {
 
             const formData = new FormData();
@@ -196,9 +203,13 @@ export default {
             .then(data => {
                 console.log(data);
                 let toJson = JSON.parse(data.msg);
-                console.log(999)
                 console.log(toJson);
-                this.adImg.push(toJson.url1, toJson.url2);
+
+                for(var i in toJson) {
+                    console.log(100000000);
+                    console.log(toJson[i]);
+                    this.adImg.push(toJson[i]);
+                }
             })
             
         }
@@ -211,10 +222,11 @@ export default {
             : (this.member === '3') ? '#E4003A'
             : '#ccc'
         },
-        // 광고배너
+        // 메인배너
         currentBanner() {
             return this.bannerImg[this.bannerIndex];
         },
+        // 메인광고
         currentAd() {
             return this.adImg[this.adIndex];
         },
@@ -262,8 +274,8 @@ img {
     font-size: small;
 }
 .main_content {
-    width: 100%; height: 100vh;
-    margin: 70px 0 100px;
+    width: 100%; height: 100%;
+    margin: 70px 0;
 }
 .pay_content {
     width: 100%; height: 200px;

@@ -66,7 +66,7 @@
     border: 1px solid #ccc;
 }
 .btn_group {
-  display: flex;
+    display: flex;
     justify-content: space-around;
     align-items: center;
     width: inherit; height: inherit;

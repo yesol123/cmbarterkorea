@@ -16,7 +16,7 @@
                 </div>
                 <div>
                     <label for="password">비밀번호</label>
-                    <input type="text" id="password" v-model="password">
+                    <input type="password" id="password" v-model="password">
                 </div>
             </div>
 
