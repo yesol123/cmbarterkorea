@@ -67,6 +67,11 @@ const router = createRouter({
             path: "/testing",      
             name: "PractuceExe",      
             component: () => import("@/views/PracticIng.vue"),    
+        },  
+        {      
+            path: "/qrtest",      
+            name: "TestingQR",      
+            component: () => import("@/components/TestingQR.vue"),    
         },      
         {      
             path: "/footer",      

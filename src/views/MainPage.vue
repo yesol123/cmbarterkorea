@@ -19,7 +19,7 @@
     <div class="main_content">
         <div class="pay_content" :style="{backgroundColor : backColor}">
             <div class="pay_center">
-                <div class="pay_area" :style="{backgroundColor : backColor}">
+                <div class="pay_area" :style="{backgroundColor : backColor}" @click="toPayment()">
                     <p v-if="this.member === '1'">{{ user_cm }} CM</p>
                     <p v-if="this.member === '2'">20,000 CM</p>
                     <p v-if="this.member === '3'" style="color: pink;">{{ user_cmp }} CMP</p>
@@ -119,7 +119,9 @@ export default {
 
         // 일반, 사업자, 가맹점 별 데이터 바인딩
         this.MainList();
+        // 배너 슬라이드
         this.bannerSliding();
+        // 광고 슬라이드
         this.adSliding();
     },
     methods : {
@@ -212,6 +214,9 @@ export default {
                 }
             })
             
+        },
+        toPayment() {
+            console.log(4444);
         }
     },
     computed: {
