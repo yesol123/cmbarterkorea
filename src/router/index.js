@@ -47,12 +47,7 @@ const router = createRouter({
             path: "/main",      
             name: "MainPage",      
             component: () => import("@/views/MainPage.vue"),    
-        },    
-        {      
-            path: "/modal",      
-            name: "Modal",      
-            component: () => import("@/components/ModalPage.vue"),    
-        },       
+        },      
         // {      
         //     path: "/",      
         //     name: "HelloWorld",      
@@ -72,6 +67,11 @@ const router = createRouter({
             path: "/qrtest",      
             name: "TestingQR",      
             component: () => import("@/components/TestingQR.vue"),    
+        },      
+        {      
+            path: "/couponpopup",      
+            name: "CouponPopup",      
+            component: () => import("@/components/PopCoupon.vue"),    
         },      
         {      
             path: "/footer",      

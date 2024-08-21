@@ -87,6 +87,7 @@
         </div>
     </div>
 
+    <Payment ref="payment" />
 
     <Footer />
 </template>
@@ -94,9 +95,11 @@
 <script>
 import Footer from '@/components/FooterPage.vue'
 import { useResponseStore } from '@/store/response.js'
+import Payment from '@/components/PopCoupon.vue'
 
 export default {
     components : {
+        Payment,
         Footer,
     },
     data() {
@@ -217,6 +220,8 @@ export default {
         },
         toPayment() {
             console.log(4444);
+
+            this.$refs.payment.openpopup();
         }
     },
     computed: {
