@@ -136,7 +136,9 @@ export default {
             formData.append('type', 'authentication');
             formData.append('user_id', store.user_id);
 
-            fetch('https://cmbarter.com/api/common/main.php', {
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/common/main.php', {
             method : 'POST',
             body : formData
             })
