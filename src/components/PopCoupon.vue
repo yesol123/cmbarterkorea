@@ -3,36 +3,44 @@
     
     <div id="popup" class="popup">
         <div class="popup-content">
-            <span class="close-btn" @click="closePopup()">&times;</span>
+            <span class="close-btn" @click="closepopup()">&times;</span>
             <p class="header">결제하기</p>
-            <div class="price">
-                <input type="number" placeholder="금액을 입력하세요.">
-                <button type="button">결 제</button>
-            </div>
-            <div class="coupon">
-                <label>쿠폰 검색</label>
-                <input type="text" placeholder="쿠폰 이름을 입력하세요." v-model="coupon_name">
-                <div class="btn_box"><button type="button" @click="SearchCoupon()">검 색</button></div>
-                <div class="coupon_list">
-                    <div class="coupon_content" v-for="(c,i) in this.coupons" :key="i" :style="{backgroundImage : `url('https://www.haruby.store/assets/img/money/${c.coupon_price}.jpg')`}">
-                        <input type="checkbox">
-                        <div class="coupon_value">
-                            <p>{{ c.coupon_name }}</p>
-                            <p>{{ c.coupon_provided_status }}</p>
-                            <p>{{ c.coupon_limit_time }}</p>
+            <div v-show="showCoupon">
+                <div class="price">
+                    <input type="number" placeholder="금액을 입력하세요." v-model="price">
+                    <button type="button" @click="toPin()">결 제</button>
+                </div>
+                <div class="coupon">
+                    <label>쿠폰 검색</label>
+                    <input type="text" placeholder="쿠폰 이름을 입력하세요." v-model="coupon_name">
+                    <div class="btn_box"><button type="button" @click="SearchCoupon()">검 색</button></div>
+                    <div class="coupon_list">
+                        <div class="coupon_content" v-for="(c,i) in this.coupons" :key="i" :style="{backgroundImage : `url('https://www.haruby.store/assets/img/money/${c.coupon_price}.jpg')`}">
+                            <input type="checkbox" @change="showIndex(c.coupon_index, c.issuance_user_index, $event)">
+                            <div class="coupon_value">
+                                <p>{{ c.coupon_name }}</p>
+                                <!-- <p>{{ c.coupon_provided_status }}</p> -->
+                                <p>{{ c.coupon_limit_time }}</p>
+                            </div>
+                            <div class="coupon_img" :style="{backgroundImage : `url('https://www.haruby.store/assets/img/money/${c.coupon_price}_t.png')`}"></div>
                         </div>
-                        <div class="coupon_img" :style="{backgroundImage : `url('https://www.haruby.store/assets/img/money/${c.coupon_price}_t.png')`}"></div>
                     </div>
                 </div>
             </div>
+            <div v-show="showPin">
+                <h3>PIN 번호 입력</h3>
+            </div>
         </div>
     </div>
+
 </template>
 
 <script>
 // import { useResponseStore } from '@/store/response.js'
 
 export default {
+    components : {
+    },
     data() {
         return {
             // urls : [
@@ -54,7 +62,12 @@ export default {
             //     },
             // ],
             coupons : '',
-            coupon_name : ''
+            coupon_name : '',
+            showCoupon : true,
+            showPin : false,
+            price : '',
+            coupon_index : [],
+            issuance_user_index : []
         }
     },
     mounted() {
@@ -66,13 +79,59 @@ export default {
         // console.log(store.user_id);
     },
     methods : {
+        // coupon_index 불러오기
+        showIndex(coupon_index,user_index,event) {
+
+            const isChecked = event.target.checked;
+
+            if(isChecked) {
+                if(this.issuance_user_index.length === 0) {
+                    this.issuance_user_index.push(user_index);
+                } else {
+                    const firstValue = this.issuance_user_index[0];
+                    if(user_index !== firstValue) {
+                        alert('동일한 지점의 쿠폰을 선택해주세요.');
+                        event.target.checked = false;
+                        return false;
+                    }
+                }
+                this.coupon_index.push(coupon_index);
+                this.issuance_user_index.push(user_index);
+            } else {
+                this.coupon_index = this.coupon_index.filter(index => index !== coupon_index);
+                this.issuance_user_index = this.issuance_user_index.filter(index => index !== user_index);
+
+            }
+
+            // if(this.issuance_user_index.length === 0) {
+            //     this.issuance_user_index.push(user_index);
+            // } else {
+            //     const firstValue = this.issuance_user_index[0];
+            //     if(user_index !== firstValue) {
+            //         alert('동일한 지점의 쿠폰을 선택해주세요.');
+            //         return false;
+            //     }
+
+            //     this.issuance_user_index.push(user_index);
+            // }
+
+        },
         // 결제창 열기
         openpopup() {
             document.getElementById('popup').style.display = 'flex';
         },
         // 결제창 닫기
-        closePopup() {
+        closepopup() {
             document.getElementById('popup').style.display = 'none';
+            this.price = '';
+            this.coupon_index = [];
+            this.issuance_user_index = [];
+            this.showCoupon = true;
+            this.showPin = false;
+
+            console.log('결제창 닫았을때 결제금액 & 쿠폰인덱스');
+            console.log(this.price);
+            console.log(this.coupon_index);
         },
         // 쿠폰 리스트 불러오기
         CouponList() {
@@ -119,6 +178,21 @@ export default {
             // this.CouponList();
 
            
+        },
+        // 핀번호 이동
+        toPin() {
+
+            if(this.price == '') {
+                alert('결제금액을 입력해주세요.');
+                return false;
+            }
+            
+            this.showCoupon = false;
+            this.showPin = true;
+
+            console.log('결제금액 : ' + this.price);
+            console.log('쿠폰인덱스 : ' + this.coupon_index);
+
         }
     }
 }
@@ -211,7 +285,7 @@ export default {
 .coupon_content {
     position: relative;
     
-    width: 330px; height: 150px;
+    width: 100%; height: 150px;
     /* background-image: url('https://www.haruby.store/assets/img/money/1000.jpg'); */
     background-repeat: no-repeat;
     background-size: contain;
@@ -224,17 +298,19 @@ export default {
 }
 .coupon_value {
     position: absolute;
-    top: 5px; left: 60px;
-    width: 160px;
+    top: 5%; left: 13%;
+    width: 50%;
     text-align: center;
     /* border: 1px solid red; */
 }
 .coupon_value > p {
-    width: 90%; height: 20%;
+    width: 95%; height: 20%;
     border-radius: 7px;
     background-color: #f1eded;
     border: 1px solid #ccc;
     font-size: 0.9rem;
+    margin-top: 12%;
+    /* border: 2px solid red; */
 }
 .coupon_img {
     position: absolute;
