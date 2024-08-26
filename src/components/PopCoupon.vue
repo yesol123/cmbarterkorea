@@ -64,7 +64,7 @@
 </template>
 
 <script>
-// import { useResponseStore } from '@/store/response.js'
+import { useResponseStore } from '@/store/response.js'
 
 export default {
     components : {
@@ -127,9 +127,11 @@ export default {
                 const strpin = this.pinnums.toString();
                 const numpin = strpin.replace(/,/g, "");
 
+                let store = useResponseStore();
+
                 const formData = new FormData();
                 formData.append('type', 'pin_check');
-                formData.append('id', 'asd1543715');
+                formData.append('id', store.user_id);
                 formData.append('pin', numpin);
 
                 const url = process.env.VUE_APP_API_URL;
@@ -201,12 +203,11 @@ export default {
         },
         // 쿠폰 리스트 불러오기
         CouponList() {
-            // let store = useResponseStore();
+            let store = useResponseStore();
 
             const formData = new FormData();
             formData.append('type', 'coupon_select');
-            // formData.append('id', store.user_id);
-            formData.append('id', 'asd1543715');
+            formData.append('id', store.user_id);
 
             const url = process.env.VUE_APP_API_URL;
 
@@ -223,9 +224,11 @@ export default {
         },
         // 쿠폰검색
         SearchCoupon() {
+            let store = useResponseStore();
+
             const formData = new FormData();
             formData.append('type', 'coupon_select');
-            formData.append('id', 'asd1543715');
+            formData.append('id', store.user_id);
             formData.append('coupon_name', this.coupon_name);
 
             const url = process.env.VUE_APP_API_URL;

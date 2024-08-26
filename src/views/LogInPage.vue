@@ -88,8 +88,10 @@ export default {
                             let jsonObject = JSON.parse(data.msg);
                             store.member = jsonObject.user_role_index;
                             store.user_id = jsonObject.user_id;
+                            store.user_index = jsonObject.user_index;
                             console.log(jsonObject);
-                            console.log(store.member);
+                            console.log('user_role_index 값 : ' + store.member);
+                            console.log('user_index 값 : ' + store.user_index);
                             router.push({'path' : '/main'});
                         }
                     }
