@@ -17,7 +17,7 @@
                     <div class="btn_box"><button type="button" @click="SearchCoupon()">검 색</button></div>
                     <div class="coupon_list">
                         <div class="coupon_content" v-for="(c,i) in this.coupons" :key="i" :style="{backgroundImage : `url('https://www.haruby.store/assets/img/money/${c.coupon_price}.jpg')`}">
-                            <input type="checkbox" id="checkbox" @change="showIndex(c.coupon_index, c.issuance_user_index, $event)">
+                            <input type="checkbox" id="checkbox" v-model="c.checked" @change="showIndex(c.coupon_index, c.issuance_user_index, $event)">
                             <div class="coupon_value">
                                 <p>{{ c.coupon_name }}</p>
                                 <!-- <p>{{ c.coupon_provided_status }}</p> -->
@@ -122,7 +122,8 @@ export default {
             zero : 0,
             pinnums : [],
             id : '',
-            qrdigit : ''
+            qrdigit : '',
+            emptyck : '',
 
         }
     },
@@ -215,6 +216,7 @@ export default {
         showIndex(coupon_index,user_index,event) {
 
             const isChecked = event.target.checked;
+            console.log(event.target)
 
             if(isChecked) {
                 if(this.issuance_user_index.length === 0) {
@@ -242,20 +244,16 @@ export default {
         // 결제창 닫기
         closepopup() {
             document.getElementById('popup').style.display = 'none';
-            this.price = '';
-            this.coupon_index = [];
-            this.issuance_user_index = [];
-            if(document.querySelector('#checkbox').checked) {
-                document.querySelector('#checkbox').checked = false;
-            }
             this.showCoupon = true;
             this.showPin = false;
             this.showQR = false;
+            this.price = '';
+            this.coupons.forEach(c => {
+                c.checked = false;
+            })
+            this.coupon_index = [];
+            this.issuance_user_index = [];
             this.pinnums = [];
-
-            // console.log('결제창 닫았을때 결제금액 & 쿠폰인덱스');
-            // console.log(this.price);
-            // console.log(this.coupon_index);
         },
         // 쿠폰 리스트 불러오기
         CouponList() {
@@ -307,8 +305,14 @@ export default {
         // 핀번호 이동
         toPin() {
 
+            let store = useResponseStore();
+
             if(this.price == '') {
                 alert('결제금액을 입력해주세요.');
+                return false;
+            }
+            if(this.price > store.cm_amount) {
+                alert('보유CM보다 큰 금액은 입력할 수 없습니다.');
                 return false;
             }
             
@@ -370,6 +374,7 @@ export default {
     width: 100%; height: 35px;
     border-radius: 7px;
     padding: 5px;
+    background-color: #fff;
     border: 1px solid #ccc;
 }
 .price > button {
@@ -377,6 +382,8 @@ export default {
     border-radius: 7px;
     padding: 5px;
     margin-top: 15px;
+    color: #000;
+    background-color: #dcdbdb;
     border: 1px solid #ccc;
 }
 .coupon {
@@ -392,6 +399,7 @@ export default {
     border-radius: 7px;
     padding: 5px;
     margin-top: 10px;
+    background-color: #fff;
     border: 1px solid #ccc;
 }
 .btn_box {
@@ -402,6 +410,8 @@ export default {
     border-radius: 7px;
     padding: 5px;
     margin-top: 15px;
+    color: #000;
+    background-color: #dcdbdb;
     border: 1px solid #ccc;
 }
 .coupon_list {

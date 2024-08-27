@@ -153,6 +153,7 @@ export default {
                 
                 // 유저CM
                 this.user_cm = (toJson.user_cm ?? '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                store.cm_amount = toJson.user_cm;
 
                 // 쿠폰갯수
                 this.coupon_count = toJson.coupon_count;
@@ -287,6 +288,7 @@ img {
 }
 .main_content {
     width: 100%; height: 100%;
+    background-color: #fff;
     margin: 70px 0;
 }
 .pay_content {

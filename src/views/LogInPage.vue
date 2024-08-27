@@ -116,10 +116,12 @@ export default {
 }
 .wrap {
     width: 100%; height: 100vh;
-    border: 1px solid red;
+    background-color: #fff;
+    /* border: 1px solid red; */
 }
 header {
     width: 100%; height: 40px;
+    background-color: #fff;
     border: 1px solid #ccc;
 }
 header > p {
