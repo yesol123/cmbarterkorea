@@ -58,6 +58,16 @@
                     <div @click="DeletePin()">취소</div>
                 </div>
             </div>
+            <!-- QR코드 화면 -->
+            <div class="qr_wrap" v-show="showQR">
+                <!-- <qrcode-stream @detect="onDetect()"></qrcode-stream> -->
+                 <p>멤버십에 해당 QR코드를 보여주세요.</p>
+                 <p style="font-weight: bold;">{{ id }}</p>
+                <img src="https://quickchart.io/chart?chs=200x200&cht=qr&chl=908509" alt="QR코드">
+                <p style="border: 1px solid #ccc; width: 170px; height: 30px; margin: 0 auto; border-radius: 5px; font-size: 0.9rem; font-weight: bold; line-height: 28px;">{{ qrdigit }}</p>
+                <p style="font-size: 0.9rem;">결제금액</p>
+                <p style="font-weight: bold; font-size: 1.2rem;">{{ commaprice }} CM</p>
+            </div>
         </div>
     </div>
 
@@ -65,9 +75,11 @@
 
 <script>
 import { useResponseStore } from '@/store/response.js'
+// import { QrcodeStream } from 'vue-qrcode-reader'
 
 export default {
     components : {
+        // QrcodeStream,
     },
     data() {
         return {
@@ -93,7 +105,9 @@ export default {
             coupon_name : '',
             showCoupon : true,
             showPin : false,
+            showQR : false,
             price : '',
+            commaprice : '',
             coupon_index : [],
             issuance_user_index : [],
             one : 1,
@@ -106,18 +120,27 @@ export default {
             eight : 8,
             nine : 9,
             zero : 0,
-            pinnums : []
+            pinnums : [],
+            id : '',
+            qrdigit : ''
+
         }
     },
     mounted() {
         this.CouponList();
         // document.getElementById('popup').style.display = 'flex';
-        // let store = useResponseStore();
+        let store = useResponseStore();
+        this.id = store.user_id;
         // console.log(88889);
         // console.log(store.member);
         // console.log(store.user_id);
     },
     methods : {
+        // QR 스캔
+        // onDetect (detectedCodes) {
+        //     // this.qrCodeData = detectedCodes;
+        //     console.log(detectedCodes);
+        // },
         // 핀번호 입력
         InsertPin(i) {
             this.pinnums.push(i);
@@ -129,7 +152,7 @@ export default {
 
                 let store = useResponseStore();
 
-                const formData = new FormData();
+                let formData = new FormData();
                 formData.append('type', 'pin_check');
                 formData.append('id', store.user_id);
                 formData.append('pin', numpin);
@@ -144,9 +167,38 @@ export default {
                 .then(data => {
                     console.log(data);
 
+                    // 핀번호 인증 완료
                     if(data.code == 200) {
                         alert(data.msg);
-                        return false;
+                        this.showPin = false;
+                        this.showQR = true;
+
+                        // QR 이동
+                        let store = useResponseStore();
+
+                        const strcouponindex = this.coupon_index.toString();
+
+                        let formData = new FormData();
+                        formData.append('type', 'qr_number');
+                        formData.append('coupon_issuance_index_list', strcouponindex);
+                        formData.append('user_index', store.user_index);
+                        formData.append('user_role_index', store.member);
+                        formData.append('user_amount', this.price);
+
+                        const url = process.env.VUE_APP_API_URL;
+
+                        fetch(url + 'api/pay/Pay.php', {
+                            method : 'POST',
+                            body : formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            this.qrdigit = data.msg;
+
+                            this.commaprice = this.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        })
+
                     }
                 })
             }
@@ -191,11 +243,15 @@ export default {
         closepopup() {
             document.getElementById('popup').style.display = 'none';
             this.price = '';
-            document.getElementById('checkbox').checked = false;
             this.coupon_index = [];
             this.issuance_user_index = [];
+            if(document.querySelector('#checkbox').checked) {
+                document.querySelector('#checkbox').checked = false;
+            }
             this.showCoupon = true;
             this.showPin = false;
+            this.showQR = false;
+            this.pinnums = [];
 
             // console.log('결제창 닫았을때 결제금액 & 쿠폰인덱스');
             // console.log(this.price);
@@ -258,6 +314,7 @@ export default {
             
             this.showCoupon = false;
             this.showPin = true;
+            this.showQR = false;
 
             console.log('결제금액 : ' + this.price);
             console.log('쿠폰인덱스 : ' + this.coupon_index);
@@ -434,5 +491,10 @@ export default {
     width: 33%; height: 25%;
     text-align: center; line-height: 60px;
     /* border: 1px solid blue; */
+}
+.qr_wrap {
+    width: 100%;
+    text-align: center;
+    /* border: 1px solid red; */
 }
 </style>
