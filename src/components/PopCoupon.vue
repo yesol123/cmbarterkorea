@@ -60,7 +60,6 @@
             </div>
             <!-- QR코드 화면 -->
             <div class="qr_wrap" v-show="showQR">
-                <!-- <qrcode-stream @detect="onDetect()"></qrcode-stream> -->
                  <p>멤버십에 해당 QR코드를 보여주세요.</p>
                  <p style="font-weight: bold;">{{ id }}</p>
                 <img src="https://quickchart.io/chart?chs=200x200&cht=qr&chl=908509" alt="QR코드">
@@ -75,32 +74,12 @@
 
 <script>
 import { useResponseStore } from '@/store/response.js'
-// import { QrcodeStream } from 'vue-qrcode-reader'
 
 export default {
     components : {
-        // QrcodeStream,
     },
     data() {
         return {
-            // urls : [
-            //     {
-            //         back : 'https://www.haruby.store/assets/img/money/1000.jpg',
-            //         badge : 'https://www.haruby.store/assets/img/money/1000_t.png'
-            //     },
-            //     {
-            //         back : 'https://www.haruby.store/assets/img/money/5000.jpg',
-            //         badge : 'https://www.haruby.store/assets/img/money/5000_t.png'
-            //     },
-            //     {
-            //         back : 'https://www.haruby.store/assets/img/money/10000.jpg',
-            //         badge : 'https://www.haruby.store/assets/img/money/10000_t.png'
-            //     },
-            //     {
-            //         back : 'https://www.haruby.store/assets/img/money/50000.jpg',
-            //         badge : 'https://www.haruby.store/assets/img/money/50000_t.png'
-            //     },
-            // ],
             coupons : '',
             coupon_name : '',
             showCoupon : true,
@@ -132,16 +111,8 @@ export default {
         // document.getElementById('popup').style.display = 'flex';
         let store = useResponseStore();
         this.id = store.user_id;
-        // console.log(88889);
-        // console.log(store.member);
-        // console.log(store.user_id);
     },
     methods : {
-        // QR 스캔
-        // onDetect (detectedCodes) {
-        //     // this.qrCodeData = detectedCodes;
-        //     console.log(detectedCodes);
-        // },
         // 핀번호 입력
         InsertPin(i) {
             this.pinnums.push(i);
@@ -174,7 +145,7 @@ export default {
                         this.showPin = false;
                         this.showQR = true;
 
-                        // QR 이동
+                        // QR코드 이동
                         let store = useResponseStore();
 
                         const strcouponindex = this.coupon_index.toString();
@@ -297,10 +268,6 @@ export default {
                 console.log(data);
                 this.coupons = data.msg;
             })
-
-            // this.CouponList();
-
-           
         },
         // 핀번호 이동
         toPin() {
@@ -326,8 +293,6 @@ export default {
         }
     }
 }
-
-
 </script>
 
 <style scoped>

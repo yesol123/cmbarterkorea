@@ -161,6 +161,7 @@ input {
     border-radius: 10px;
     margin-top: 5px;
     padding-left: 10px;
+    background-color: #fff;
 }
 .login_btn {
     display: block;

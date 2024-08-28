@@ -32,6 +32,7 @@
                 </div>
                 <div class="pay_btn">
                     <button type="button">CM내역</button>
+                    <button type="button" v-if="this.member === '3'">QR결제</button>
                     <button type="button">쿠폰함</button>
                 </div>
             </div>
@@ -331,7 +332,7 @@ img {
     /* border: 1px solid orange; */
 }
 button {
-    width: 130px; height: 30px;
+    width: 32%; height: 30px;
     background-color: #fff;
     color: rgb(9, 9, 116);
     font-weight: bold; font-size: 0.9rem;
@@ -341,6 +342,7 @@ button {
 .commercial {
     width: 90%; height: 200px;
     margin: 20px auto;
+    background-color: #fff;
     border: 1px solid #ccc;
 }
 .slide_group {
