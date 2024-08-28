@@ -56,6 +56,7 @@
     font-size: 1rem;
     text-decoration: none;
     color: #000;
+    background-color: #fff;
 }
 .footer {
     position: fixed;
