@@ -3,6 +3,7 @@
     <div>
         <qrcode-stream @detect="onDetect" @error="onError" style="border: 1px solid red;"></qrcode-stream>
     </div>
+    <p></p>
 </template>
 
 <script>
@@ -14,6 +15,7 @@ export default {
     },
     data() {
         return {
+            whatError : ''
         }
     },
     methods : {
@@ -24,7 +26,8 @@ export default {
             alert(detectedCodes);
         },
         onError(error) {
-            alert(error);
+            // alert(error);
+            alert(JSON.stringify(error));
         }
     }
 }
