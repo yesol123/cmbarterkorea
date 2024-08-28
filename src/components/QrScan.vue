@@ -14,7 +14,8 @@ export default {
         // QR 스캔
         onDetect (detectedCodes) {
             // this.qrCodeData = detectedCodes;
-            console.log(detectedCodes);
+            // console.log(detectedCodes);
+            alert(detectedCodes);
         },
     }
 }
