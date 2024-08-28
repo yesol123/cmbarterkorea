@@ -32,7 +32,7 @@
                 </div>
                 <div class="pay_btn">
                     <button type="button">CM내역</button>
-                    <button type="button" v-if="this.member === '3'">QR결제</button>
+                    <button type="button" v-if="this.member === '3'" @click="QrScan()">QR결제</button>
                     <button type="button">쿠폰함</button>
                 </div>
             </div>
@@ -226,6 +226,9 @@ export default {
             console.log(4444);
 
             this.$refs.payment.openpopup();
+        },
+        QrScan() {
+            this.$router.push({ path : '/qrscan'});
         }
     },
     computed: {
