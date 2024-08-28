@@ -341,6 +341,7 @@ export default {
     padding: 5px;
     background-color: #fff;
     border: 1px solid #ccc;
+    color: #000;
 }
 .price > button {
     width: 25%; height: 30px;
@@ -366,6 +367,7 @@ export default {
     margin-top: 10px;
     background-color: #fff;
     border: 1px solid #ccc;
+    color: #000;
 }
 .btn_box {
     text-align: center;
