@@ -1,7 +1,7 @@
 <template>
     <p>결제하기</p>
     <div>
-        <qrcode-stream @detect ="onDetect()" style="border: 1px solid red;"></qrcode-stream>
+        <qrcode-stream @decode="onDecode" @error="onError" style="border: 1px solid red;"></qrcode-stream>
     </div>
 </template>
 
@@ -18,11 +18,14 @@ export default {
     },
     methods : {
         // QR 스캔
-        onDetect (decodedString) {
+        onDecode (decodedString) {
             // this.qrCodeData = detectedCodes;
             // console.log(detectedCodes);
             alert(decodedString);
         },
+        onError(error) {
+            alert(error);
+        }
     }
 }
 </script>
