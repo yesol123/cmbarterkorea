@@ -1,6 +1,9 @@
 <template>
     <p>결제하기</p>
-    <qrcode-stream @detect="onDetect()" style="border: 1px solid red;"></qrcode-stream>
+    <div>
+        <qrcode-stream @decode="onDecode" style="border: 1px solid red;"></qrcode-stream>
+    </div>
+    <p v-if="result">QR Code result : {{ result }}</p>
 </template>
 
 <script>
@@ -10,12 +13,18 @@ export default {
     components : {
         QrcodeStream,
     },
+    data() {
+        return {
+            result : null,
+        }
+    },
     methods : {
         // QR 스캔
-        onDetect (detectedCodes) {
+        onDecode (decodedString) {
             // this.qrCodeData = detectedCodes;
             // console.log(detectedCodes);
-            alert(detectedCodes);
+            alert(decodedString);
+            this.result = decodedString;
         },
     }
 }
