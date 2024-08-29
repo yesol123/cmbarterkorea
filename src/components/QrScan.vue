@@ -79,26 +79,38 @@ export default {
         }
     },
     mounted() {
-        // const btn = document.querySelector('.btn-stream');
-        // btn.style.display = 'none';
-        // btn.click();
+        const btn = document.querySelector('.btn-stream');
+        btn.style.display = 'none';
+        btn.click();
         // this.callAPI();
-        this.clickButton();
+        // this.clickButton();
     },
     methods : {
-        async clickButton() {
-            const btn = document.querySelector('.btn-stream');
-            btn.style.display = 'none';
+        // clickButton() {
+        //     const btn = document.querySelector('.btn-stream');
+        //     btn.style.display = 'none';
+        //     console.log(444);
+        //     console.log(222);
+        //     // this.callAPI();
+        //     btn.click();
 
-            await new Promise(resolve => {
-                btn.addEventListener('click', resolve, { once : true });
-                btn.click();
-            });
+        //     // if(this.detectedCode != '') {
+        //     //     console.log(222)
+        //     // }
 
-            this.callAPI();
-        },
+        //     // await this.callAPI();
+
+
+        //     // await new Promise(resolve => {
+        //     //     btn.addEventListener('click', resolve, { once : true });
+        //     //     btn.click();
+        //     // });
+
+        //     // this.callAPI();
+        // },
         onResult(result) {
             this.detectedCode = result;
+            this.callAPI();
         },
         callAPI() {
             let formData = new FormData();
@@ -114,7 +126,7 @@ export default {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                alert(data.msg);
+                alert('api data : ' + data.msg);
             })
         }
     }
