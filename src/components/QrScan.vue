@@ -79,12 +79,24 @@ export default {
         }
     },
     mounted() {
-        const btn = document.querySelector('.btn-stream');
-        btn.style.display = 'none';
-        btn.click();
-        this.callAPI();
+        // const btn = document.querySelector('.btn-stream');
+        // btn.style.display = 'none';
+        // btn.click();
+        // this.callAPI();
+        this.clickButton();
     },
     methods : {
+        async clickButton() {
+            const btn = document.querySelector('.btn-stream');
+            btn.style.display = 'none';
+
+            await new Promise(resolve => {
+                btn.addEventListener('click', resolve, { once : true });
+                btn.click();
+            });
+
+            this.callAPI();
+        },
         onResult(result) {
             this.detectedCode = result;
         },
