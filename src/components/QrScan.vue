@@ -147,7 +147,7 @@ export default {
     },
     mounted() {
         const btn = document.querySelector('.btn-stream');
-        btn.remove();
+        btn.click();
         this.onResult();
     },
     methods : {
