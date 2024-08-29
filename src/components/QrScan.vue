@@ -113,8 +113,8 @@ export default {
             })
             .then(response => response.json())
             .then(data => {
-                console.log('api data :');
                 console.log(data);
+                alert(data.msg);
             })
         }
     }
