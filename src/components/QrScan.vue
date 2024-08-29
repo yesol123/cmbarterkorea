@@ -144,7 +144,7 @@ export default {
     background-color: #fff;
 }
 .scan_wrap {
-    width: 100%;
+    width: 100%; height: 100vh;
     border: 1px solid red;
     text-align: center;
     background-color: #fff;
@@ -157,6 +157,7 @@ export default {
     width: 90%;
     font-size: 1.1rem;
     font-weight: bold;
+    color: #000;
     /* border: 1px solid red; */
 }
 .scan_wrap > p:nth-of-type(1) {
