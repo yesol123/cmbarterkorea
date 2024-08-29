@@ -37,11 +37,11 @@ export default {
     <div class="scan_wrap">
         <p>QR Scanner</p>
         <p>QR코드를 스캔하거나 인증코드를 입력하세요.</p>
-        <div style="width: 90%; overflow: hidden;">
+        <div style="width: 90%; height: 300px; overflow: hidden;">
             <StreamQrcodeBarcodeReader
                 capture="shoot"
                 @result="onResult"
-            style="border: 1px solid #000; width: 100%; height: 300px; margin: 0 auto;"/>
+            style="border: 1px solid #000; width: 100%; height: 100%; margin: 0 auto;"/>
             <!-- @loaded="onLoaded" -->
             <!-- @onloading="onLoading" -->
         </div>
