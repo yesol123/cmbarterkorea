@@ -47,7 +47,7 @@ export default {
         </div>
         <!-- <p>Detected Code : {{ detectedCode }}</p> -->
         <input type="number" placeholder="QR코드 6자리를 입력해주세요.">
-        <button type="button">확인</button>
+        <button type="button" class="inserqr">확인</button>
     </div>
 </template>
 
@@ -84,7 +84,7 @@ export default {
     mounted() {
         const btn = document.querySelector('.btn-stream');
         btn.style.display = 'none';
-        // btn.click();
+        btn.click();
         // this.callAPI();
         // this.clickButton();
     },
@@ -139,7 +139,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 * {
     background-color: #fff;
 }
@@ -147,6 +147,7 @@ export default {
     width: 100%;
     border: 1px solid red;
     text-align: center;
+    background-color: #fff;
 }
 .scan_wrap > div {
     margin: 0 auto;
@@ -176,7 +177,7 @@ input {
     text-align: center;
     background-color: #fff;
 }
-button {
+.inserqr {
     display: block;
     width: 90%; height: 40px;
     margin: 20px auto 0;
