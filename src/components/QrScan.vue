@@ -104,7 +104,7 @@ export default {
 
 <template>
     <p>QR Scanner</p>
-    <div style="width: 90%; height: 300px; border: 1px solid red;">
+    <div style="width: 90%;">
         <StreamQrcodeBarcodeReader
             capture="shoot"
         />
@@ -147,8 +147,9 @@ export default {
     },
     mounted() {
         const btn = document.querySelector('.btn-stream');
+        btn.style.display = 'none';
         btn.click();
-        this.onResult();
+        // this.onResult();
     },
     methods : {
         onResult(result) {
