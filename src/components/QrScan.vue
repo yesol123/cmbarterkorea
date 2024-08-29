@@ -113,8 +113,6 @@ export default {
 
             if(this.detectedCode != undefined) {
                 this.callAPI();
-            } else {
-                alert('api 실패...');
             }
         },
         callAPI() {
