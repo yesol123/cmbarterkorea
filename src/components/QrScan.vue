@@ -36,7 +36,8 @@ export default {
 <template>
     <div class="scan_wrap">
         <p>QR Scanner</p>
-        <div style="width: 90%;">
+        <p>QR코드를 스캔하거나 인증코드를 입력하세요.</p>
+        <div style="width: 90%; overflow: hidden;">
             <StreamQrcodeBarcodeReader
                 capture="shoot"
                 @result="onResult"
@@ -44,7 +45,9 @@ export default {
             <!-- @loaded="onLoaded" -->
             <!-- @onloading="onLoading" -->
         </div>
-        <p>Detected Code : {{ detectedCode }}</p>
+        <!-- <p>Detected Code : {{ detectedCode }}</p> -->
+        <input type="number" placeholder="QR코드 6자리를 입력해주세요.">
+        <button type="button">확인</button>
     </div>
 </template>
 
@@ -81,7 +84,7 @@ export default {
     mounted() {
         const btn = document.querySelector('.btn-stream');
         btn.style.display = 'none';
-        btn.click();
+        // btn.click();
         // this.callAPI();
         // this.clickButton();
     },
@@ -137,21 +140,49 @@ export default {
 </script>
 
 <style>
+* {
+    background-color: #fff;
+}
 .scan_wrap {
     width: 100%;
     border: 1px solid red;
+    text-align: center;
 }
 .scan_wrap > div {
     margin: 0 auto;
     /* border: 1px solid red; */
 }
 .scan_wrap > p {
-    padding-left: 20px;
+    width: 90%;
     font-size: 1.1rem;
     font-weight: bold;
     /* border: 1px solid red; */
 }
+.scan_wrap > p:nth-of-type(1) {
+    text-align: left;
+    margin-left: 25px;
+}
 .scan_wrap > p:nth-of-type(2) {
     font-weight: normal;
+    font-size: 1.0rem;
+    text-align: left;
+    margin-left: 25px;
+}
+input {
+    width: 200px; height: 35px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+    text-align: center;
+    background-color: #fff;
+}
+button {
+    display: block;
+    width: 90%; height: 40px;
+    margin: 20px auto 0;
+    background-color: #1bce0b;
+    color: #fff;
+    border-radius: 10px;
+    border: none;
 }
 </style>
