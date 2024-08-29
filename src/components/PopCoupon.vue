@@ -62,7 +62,7 @@
             <div class="qr_wrap" v-show="showQR">
                 <p>멤버십에 해당 QR코드를 보여주세요.</p>
                 <p style="font-weight: bold;">{{ id }}</p>
-                <img src="https://quickchart.io/chart?chs=200x200&cht=qr&chl=908509" alt="QR코드">
+                <img :src="`https://quickchart.io/chart?chs=200x200&cht=qr&chl=${qrdigit}`" alt="QR코드">
                 <p style="border: 1px solid #ccc; width: 170px; height: 30px; margin: 0 auto; border-radius: 5px; font-size: 0.9rem; font-weight: bold; line-height: 28px;">{{ qrdigit }}</p>
                 <p style="font-size: 0.9rem;">결제금액</p>
                 <p style="font-weight: bold; font-size: 1.2rem;">{{ commaprice }} CM</p>

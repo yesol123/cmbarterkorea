@@ -107,35 +107,60 @@ export default {
     <div style="width: 90%; height: 300px; border: 1px solid red;">
         <StreamQrcodeBarcodeReader
             capture="shoot"
-            @loaded="onLoaded"
-            @onloading="onLoading"
-            @result="onResult"
         />
+        <!-- @loaded="onLoaded" -->
+            <!-- @onloading="onLoading" -->
+            <!-- @result="onResult" -->
     </div>
     <p>Detected Code: {{ detectedCode }}</p>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { StreamQrcodeBarcodeReader } from 'vue3-barcode-qrcode-reader';
+// import { ref } from 'vue';
+// import { StreamQrcodeBarcodeReader } from 'vue3-barcode-qrcode-reader';
 
-const detectedCode = ref('');
+// const detectedCode = ref('');
 
-const onLoaded = () => {
-    alert('Stream loaded');
-};
+// const onLoaded = () => {
+//     alert('Stream loaded');
+// };
 
-const onLoading = () => {
-    alert('Stream loading');
-};
+// const onLoading = () => {
+//     alert('Stream loading');
+// };
 
-const onResult = (result) => {
-    detectedCode.value = result;
-    alert('Result:', result);
-};
+// const onResult = (result) => {
+//     detectedCode.value = result;
+//     alert('Result:', result);
+// };
 
 </script>
 
 <script>
+import { StreamQrcodeBarcodeReader } from 'vue3-barcode-qrcode-reader';
 
+export default {
+    data() {
+        return {
+            detectedCode : ''
+        }
+    },
+    mounted() {
+        const btn = document.querySelector('.btn-stream');
+        btn.remove();
+        this.onResult();
+    },
+    methods : {
+        onResult(result) {
+            this.detectedCode = result;
+        },
+        // Click() {
+        //     const btn = document.querySelector('.btn-stream');
+        //     btn.addEventListener('click', () => {
+        //         console.log('버튼클릭되었음');
+        //     });
+        //     this.onResult();
+        // }
+    }
+}
 </script>
