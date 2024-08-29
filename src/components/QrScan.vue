@@ -127,7 +127,7 @@ export default {
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
-                    alert('api data : ' + data.msg);
+                    alert('api data : ' + data.code);
                 })
             } else {
                 alert('실패했음..');

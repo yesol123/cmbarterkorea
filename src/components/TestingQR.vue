@@ -17,7 +17,11 @@ export default {
         }
     },
     mounted() {
-
+        // this.exit();
+        window.addEventListener('beforeunload', this.unLoadEvent);
+    },
+    beforeUnmount() {
+        window.removeEventListener('beforeunload', this.unLoadEvent);
     },
     methods : {
         // qrVideo() {
@@ -32,6 +36,19 @@ export default {
         //         }
         //     })
         // }
+        // exit(e) {
+        //     // window.addEventListener('beforeunload', () => {
+        //     //     console.log('Are you sure?');
+        //     // })
+        //     e.preventDefault();
+        //     e.returnValue = '';
+        // },
+        unLoadEvent: function (event) {
+            if (this.canLeaveSite) return;
+        
+            event.preventDefault();
+            event.returnValue = '';
+        },
     }
 }
 </script>

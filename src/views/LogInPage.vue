@@ -53,8 +53,19 @@ export default {
         store.datas = [];
         console.log(888);
         console.log(store.datas);
+
+        window.addEventListener('beforeunload', this.unLoadEvent);
+    },
+    beforeUnmount() {
+        window.removeEventListener('beforeunload', this.unLoadEvent);
     },
     methods : {
+        unLoadEvent: function (event) {
+            if (this.canLeaveSite) return;
+        
+            event.preventDefault();
+            event.returnValue = '';
+        },
         toLogin() {
             if(this.id == '' || this.password == '') {
                 alert('아이디와 비밀번호를 입력해주세요.');
