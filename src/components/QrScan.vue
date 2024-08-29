@@ -149,7 +149,7 @@ export default {
         const btn = document.querySelector('.btn-stream');
         btn.style.display = 'none';
         btn.click();
-        // this.onResult();
+        this.onResult();
     },
     methods : {
         onResult(result) {
