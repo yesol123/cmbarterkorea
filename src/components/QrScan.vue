@@ -110,28 +110,29 @@ export default {
         // },
         onResult(result) {
             this.detectedCode = result;
-            this.callAPI();
+
+            if(this.detectedCode != undefined) {
+                this.callAPI();
+            } else {
+                alert('api 실패...');
+            }
         },
         callAPI() {
-            if(this.detectedCode != '') {
-                let formData = new FormData();
-                formData.append('type', 'send');
-                formData.append('num', this.detectedCode);
+            let formData = new FormData();
+            formData.append('type', 'send');
+            formData.append('num', this.detectedCode);
 
-                const url = process.env.VUE_APP_API_URL;
+            const url = process.env.VUE_APP_API_URL;
 
-                fetch(url + 'api/pay/Pay.php', {
-                method : 'POST',
-                body : formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    alert('api data : ' + data.code + ',' + this.detectedCode);
-                })
-            } else {
-                alert('실패했음..');
-            }
+            fetch(url + 'api/pay/Pay.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert('api data : ' + data.code + ',' + this.detectedCode);
+            })
         }
     }
 }
