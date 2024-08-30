@@ -37,7 +37,7 @@ export default {
     <div class="scan_wrap">
         <p>QR Scanner</p>
         <p>QR코드를 스캔하거나 인증코드를 입력하세요.</p>
-        <div style="width: 90%; height: 300px; overflow: hidden;">
+        <div style="width: 90%; height: 350px; overflow: hidden;">
             <StreamQrcodeBarcodeReader
                 capture="shoot"
                 @result="onResult"
@@ -48,6 +48,9 @@ export default {
         <!-- <p>Detected Code : {{ detectedCode }}</p> -->
         <input type="number" placeholder="QR코드 6자리를 입력해주세요.">
         <button type="button" class="inserqr">확인</button>
+
+
+        <ModalPage ref="child" style="display: none;"/>
     </div>
 </template>
 
@@ -74,8 +77,12 @@ export default {
 
 <script>
 import { StreamQrcodeBarcodeReader } from 'vue3-barcode-qrcode-reader';
+import ModalPage from '@/components/ModalPage2.vue';
 
 export default {
+    components : {
+        ModalPage
+    },
     data() {
         return {
             detectedCode : ''
@@ -84,7 +91,7 @@ export default {
     mounted() {
         const btn = document.querySelector('.btn-stream');
         btn.style.display = 'none';
-        btn.click();
+        // btn.click();
         // this.callAPI();
         // this.clickButton();
     },
@@ -119,6 +126,8 @@ export default {
             }
         },
         callAPI() {
+            const refs = this.$refs.child;
+
             let formData = new FormData();
             formData.append('type', 'send');
             formData.append('num', this.detectedCode);
@@ -132,7 +141,11 @@ export default {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                alert('api data : ' + data.code + ',' + this.detectedCode);
+                // alert('QR 코드 6자리 : ' + this.detectedCode);
+                if(data.code == 404) {
+                    refs.mode = 'qrpay';
+                    refs.openModal();
+                }
             })
         }
     }
@@ -177,6 +190,7 @@ input {
     margin-top: 20px;
     text-align: center;
     background-color: #fff;
+    color: #000;
 }
 .inserqr {
     display: block;
@@ -186,5 +200,8 @@ input {
     color: #fff;
     border-radius: 10px;
     border: none;
+}
+button {
+    display: none;
 }
 </style>

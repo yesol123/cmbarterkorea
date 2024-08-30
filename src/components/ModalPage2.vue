@@ -4,7 +4,9 @@
     <Dialog v-model:visible="visible" modal :header="header" :style="{ width: '23rem' }">
       <span class="text-surface-500 dark:text-surface-400 block mb-8">{{ content }}</span>
       <template #footer>
-        <Button label="확인" outlined severity="secondary" @click="handleConfirm()" autofocus />
+        <Button v-show="this.mode == 'qrpay'" class="decline" label="취소" outlined severity="secondary" @click="Decline()" autofocus />
+        <Button class="confirm" label="확인" outlined severity="secondary" @click="handleConfirm()" autofocus />
+        <Button class="success" v-show="this.mode == 'success'" label="확인" outlined severity="secondary" @click="Success()" autofocus />
       </template>
     </Dialog>
   </div>
@@ -21,6 +23,9 @@ export default {
       content : '',
       mode : '',
     };
+  },
+  mounted() {
+    
   },
   methods: {
     // 모달창 열기
@@ -49,6 +54,11 @@ export default {
         this.header = '존재하지 않는 계정입니다.';
         this.visible = true;
       }
+      if(this.mode == 'qrpay') {
+        this.header = '결제확인';
+        this.content = '결제하시겠습니까?'
+        this.visible = true;
+      }
     },
     // 모달창 닫기
     handleConfirm(){
@@ -71,6 +81,22 @@ export default {
       if(this.mode == 'loginfail') {
         this.visible = false;
       }
+      if(this.mode == 'qrpay') {
+        this.header = '결제완료'
+        this.content = '결제완료되었습니다'
+        document.querySelector('.decline').style.display = 'none'
+        document.querySelector('.confirm').style.display = 'none'
+        document.querySelector('.success').style.display = 'block'
+
+      }
+    },
+    Success() {
+      alert('결제가 완료되었습니다');
+      return false;
+    },
+    Decline() {
+      alert('결제가 취소되었습니다');
+      return false;
     }
   },
 }
