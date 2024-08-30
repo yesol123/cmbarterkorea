@@ -91,7 +91,7 @@ export default {
     mounted() {
         const btn = document.querySelector('.btn-stream');
         btn.style.display = 'none';
-        // btn.click();
+        btn.click();
         // this.callAPI();
         // this.clickButton();
     },
