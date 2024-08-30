@@ -142,7 +142,7 @@ export default {
             .then(data => {
                 console.log(data);
                 // alert('QR 코드 6자리 : ' + this.detectedCode);
-                if(data.code == 404) {
+                if(data.code == '000') {
                     refs.mode = 'qrpay';
                     refs.openModal();
                 }
