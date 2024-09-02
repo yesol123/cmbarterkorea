@@ -94,7 +94,7 @@ export default {
         const btn = document.querySelector('.btn-stream');
         btn.style.display = 'none';
         btn.click();
-        // this.onError();
+        this.onError();
         // this.callAPI();
         // this.clickButton();
         // this.toScan();
