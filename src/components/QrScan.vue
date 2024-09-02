@@ -107,7 +107,19 @@ export default {
         // },
         toScan() {
 
-            // const btn = document.querySelector('.btn-stream');
+            const btn = document.querySelector('.btn-stream');
+
+            btn.addEventListener('click', function() {
+                if(navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({video:true}).then(function(stream) {
+                        btn.srcObject = stream;
+                    })
+                    .catch(function(error) {
+                        alert(error);
+                        router.push({ path : '/' });
+                    })
+                }
+            })
             // btn.click();
 
             // try {
@@ -120,18 +132,16 @@ export default {
             // }
 
             // const video = document.getElementsByTagName('video');
-            const btn = document.querySelector('.btn-stream');
 
-            if(navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({video:true}).then(function() {
-                    // video.srcObject = stream;
-                    btn.click();
-                })
-                .catch(function(error) {
-                    alert(error);
-                    router.push({ path : '/' });
-                })
-            }
+            // if(navigator.mediaDevices.getUserMedia) {
+            //     navigator.mediaDevices.getUserMedia({video:true}).then(function(stream) {
+            //         btn.srcObject = stream;
+            //     })
+            //     .catch(function(error) {
+            //         alert(error);
+            //         // router.push({ path : '/' });
+            //     })
+            // }
 
         },
         onResult(result) {
