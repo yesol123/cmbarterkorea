@@ -120,10 +120,12 @@ export default {
             // }
 
             const video = document.getElementsByTagName('video');
+            const btn = document.querySelector('.btn-stream');
 
             if(navigator.mediaDevices.getUserMedia) {
                 navigator.mediaDevices.getUserMedia({video:true}).then(function(stream) {
                     video.srcObject = stream;
+                    btn.click();
                 })
                 .catch(function(error) {
                     alert(error);
