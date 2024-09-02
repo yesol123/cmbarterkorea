@@ -106,6 +106,8 @@ export default {
         // },
         toScan() {
 
+            alert('aaa');
+
             // const btn = document.querySelector('.btn-stream');
             // btn.click();
 
@@ -118,16 +120,16 @@ export default {
             //     // this.$router.push({ path : '/' });
             // }
 
-            const video = document.getElementsByTagName('video');
+            // const video = document.getElementsByTagName('video');
 
-            if(navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({video:true}).then(function(stream) {
-                    video.srcObject = stream;
-                })
-                .catch(function(error) {
-                    alert(error);
-                })
-            }
+            // if(navigator.mediaDevices.getUserMedia) {
+            //     navigator.mediaDevices.getUserMedia({video:true}).then(function(stream) {
+            //         video.srcObject = stream;
+            //     })
+            //     .catch(function(error) {
+            //         alert(error);
+            //     })
+            // }
 
         },
         onResult(result) {
