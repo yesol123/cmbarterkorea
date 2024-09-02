@@ -80,6 +80,7 @@ export default {
 <script>
 import { StreamQrcodeBarcodeReader } from 'vue3-barcode-qrcode-reader';
 import ModalPage from '@/components/ModalPage2.vue';
+import router from '@/router/index.js';
 
 export default {
     components : {
@@ -126,6 +127,7 @@ export default {
                 })
                 .catch(function(error) {
                     alert(error);
+                    router.push({ path : '/' });
                 })
             }
 
