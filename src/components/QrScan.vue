@@ -121,19 +121,26 @@ export default {
         //     // this.callAPI();
         // },
         toScan() {
-
-            try {
-                throw new Error('에러발생');
-            } catch(err) {
-                console.log(err);
-                alert('에러가 발생함!');
-                // this.$router.push({ path : '/' });
-            }
-
             const btn = document.querySelector('.btn-stream');
             btn.style.display = 'none';
 
-            btn.click();
+            if(navigator.mediaDevices.getUserMedia) {
+                alert('권한허용');
+                btn.click();
+                // navigator.mediaDevices.getUserMedia({ video : true });
+            } else {
+                alert('권한거부');
+            }
+
+            // try {
+            //     throw new Error('에러발생');
+            // } catch(err) {
+            //     console.log(111);
+            //     console.log(err);
+            //     // alert('에러가 발생함!');
+            //     // this.$router.push({ path : '/' });
+            // }
+
         },
         onResult(result) {
             this.detectedCode = result;
