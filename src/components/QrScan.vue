@@ -35,7 +35,7 @@ export default {
 
 <template>
     <div class="scan_wrap">
-        <!-- <p>QR Scanner</p> -->
+        <p>QR Scanner</p>
         <p>QR코드를 스캔하거나 인증코드를 입력하세요.</p>
         <p>카메라 빨간버튼을 QR코드 정중앙에 위치해주세요.</p>
         <div style="width: 90%; height: 350px; overflow: hidden;">
@@ -106,8 +106,6 @@ export default {
         // },
         toScan() {
 
-            alert('aaa');
-
             // const btn = document.querySelector('.btn-stream');
             // btn.click();
 
@@ -120,16 +118,16 @@ export default {
             //     // this.$router.push({ path : '/' });
             // }
 
-            // const video = document.getElementsByTagName('video');
+            const video = document.getElementsByTagName('video');
 
-            // if(navigator.mediaDevices.getUserMedia) {
-            //     navigator.mediaDevices.getUserMedia({video:true}).then(function(stream) {
-            //         video.srcObject = stream;
-            //     })
-            //     .catch(function(error) {
-            //         alert(error);
-            //     })
-            // }
+            if(navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({video:true}).then(function(stream) {
+                    video.srcObject = stream;
+                })
+                .catch(function(error) {
+                    alert(error);
+                })
+            }
 
         },
         onResult(result) {
