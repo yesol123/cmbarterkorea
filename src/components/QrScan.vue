@@ -93,28 +93,10 @@ export default {
     mounted() {
         const btn = document.querySelector('.btn-stream');
         btn.style.display = 'none';
-        btn.click();
-        this.onError();
-        // this.callAPI();
-        // this.clickButton();
-        // this.toScan();
+        this.toScan();
     },
     methods : {
         // clickButton() {
-        //     const btn = document.querySelector('.btn-stream');
-        //     btn.style.display = 'none';
-        //     console.log(444);
-        //     console.log(222);
-        //     // this.callAPI();
-        //     btn.click();
-
-        //     // if(this.detectedCode != '') {
-        //     //     console.log(222)
-        //     // }
-
-        //     // await this.callAPI();
-
-
         //     // await new Promise(resolve => {
         //     //     btn.addEventListener('click', resolve, { once : true });
         //     //     btn.click();
@@ -122,28 +104,36 @@ export default {
 
         //     // this.callAPI();
         // },
-        // toScan() {
-        //     const btn = document.querySelector('.btn-stream');
-        //     btn.style.display = 'none';
+        async toScan() {
 
-        //     if(navigator.mediaDevices.getUserMedia) {
-        //         alert('권한허용');
-        //         btn.click();
-        //         // navigator.mediaDevices.getUserMedia({ video : true });
-        //     } else {
-        //         alert('권한거부');
-        //     }
+            try {
+                const btn = document.querySelector('.btn-stream');
+                if(btn) {
+                    btn.click();
+                }
+                await this.cameraAccess();
 
-        //     // try {
-        //     //     throw new Error('에러발생');
-        //     // } catch(err) {
-        //     //     console.log(111);
-        //     //     console.log(err);
-        //     //     // alert('에러가 발생함!');
-        //     //     // this.$router.push({ path : '/' });
-        //     // }
+            } catch(err) {
+                alert('에러 : ' + err);
+            }
 
-        // },
+            // try {
+            //     throw new Error('에러발생');
+            // } catch(err) {
+            //     console.log(111);
+            //     console.log(err);
+            //     // alert('에러가 발생함!');
+            //     // this.$router.push({ path : '/' });
+            // }
+
+        },
+        cameraAccess() {
+            return new Promise((resolve, reject) => {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                .then(() => resolve())
+                .catch((err) => reject(err));
+            })
+        },
         onResult(result) {
             this.detectedCode = result;
 
