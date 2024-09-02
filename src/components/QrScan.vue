@@ -35,7 +35,7 @@ export default {
 
 <template>
     <div class="scan_wrap">
-        <p>QR Scanner</p>
+        <!-- <p>QR Scanner</p> -->
         <p>QR코드를 스캔하거나 인증코드를 입력하세요.</p>
         <p>카메라 빨간버튼을 QR코드 정중앙에 위치해주세요.</p>
         <div style="width: 90%; height: 350px; overflow: hidden;">
