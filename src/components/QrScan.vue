@@ -121,17 +121,19 @@ export default {
         //     // this.callAPI();
         // },
         toScan() {
+
+            try {
+                throw new Error('에러발생');
+            } catch(err) {
+                console.log(err);
+                console.log('에러가 발생함!');
+                // this.$router.push({ path : '/' });
+            }
+
             const btn = document.querySelector('.btn-stream');
             btn.style.display = 'none';
 
-            try {
-                btn.click();
-                throw new Error('에러발생');
-            } catch (err) {
-                console.log(err);
-                console.log('에러발생하여 메인페이지로 이동');
-                this.$router.push({ path : '/' });
-            }
+            btn.click();
         },
         onResult(result) {
             this.detectedCode = result;
