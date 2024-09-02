@@ -126,8 +126,11 @@ export default {
 
             try {
                 btn.click();
-            } catch {
-                alert('카메라 차단!');
+                throw new Error('에러발생');
+            } catch (err) {
+                console.log(err);
+                console.log('에러발생하여 메인페이지로 이동');
+                this.$router.push({ path : '/' });
             }
         },
         onResult(result) {
