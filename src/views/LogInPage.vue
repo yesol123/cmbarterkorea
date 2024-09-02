@@ -82,7 +82,9 @@ export default {
                 formData.append('user_id', this.id);
                 formData.append('user_pw', this.password);
 
-                fetch('https://cmbarter.com/api/login.php', {
+                const url = process.env.VUE_APP_API_URL;
+
+                fetch(url + 'api/login.php', {
                 method : 'POST',
                 body : formData
                 })

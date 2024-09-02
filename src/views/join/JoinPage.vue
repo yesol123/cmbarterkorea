@@ -188,6 +188,7 @@ export default {
 .wrap {
     position: relative;
     width: 100%; height: 100vh;
+    background-color: #fff;
     border: 1px solid red;
 }
 header {
@@ -196,6 +197,7 @@ header {
     align-items: center;
     width: 100%; height: 40px;
     padding: 0 10px;
+    background-color: #fff;
     border: 1px solid #ccc;
 }
 header > p {

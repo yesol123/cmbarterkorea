@@ -37,6 +37,7 @@ export default {
     <div class="scan_wrap">
         <p>QR Scanner</p>
         <p>QR코드를 스캔하거나 인증코드를 입력하세요.</p>
+        <p>카메라 빨간버튼을 QR코드 정중앙에 위치해주세요.</p>
         <div style="width: 90%; height: 350px; overflow: hidden;">
             <StreamQrcodeBarcodeReader
                 capture="shoot"
@@ -89,11 +90,12 @@ export default {
         }
     },
     mounted() {
-        const btn = document.querySelector('.btn-stream');
-        btn.style.display = 'none';
-        btn.click();
+        // const btn = document.querySelector('.btn-stream');
+        // btn.style.display = 'none';
+        // btn.click();
         // this.callAPI();
         // this.clickButton();
+        this.toScan();
     },
     methods : {
         // clickButton() {
@@ -118,6 +120,16 @@ export default {
 
         //     // this.callAPI();
         // },
+        toScan() {
+            const btn = document.querySelector('.btn-stream');
+            btn.style.display = 'none';
+
+            try {
+                btn.click();
+            } catch {
+                alert('카메라 차단!');
+            }
+        },
         onResult(result) {
             this.detectedCode = result;
 
@@ -177,9 +189,9 @@ export default {
     text-align: left;
     margin-left: 25px;
 }
-.scan_wrap > p:nth-of-type(2) {
+.scan_wrap > p:nth-of-type(2), p:nth-of-type(3) {
     font-weight: normal;
-    font-size: 1.0rem;
+    font-size: 0.9rem;
     text-align: left;
     margin-left: 25px;
 }
