@@ -126,7 +126,7 @@ export default {
                 throw new Error('에러발생');
             } catch(err) {
                 console.log(err);
-                console.log('에러가 발생함!');
+                alert('에러가 발생함!');
                 // this.$router.push({ path : '/' });
             }
 
