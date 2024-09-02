@@ -119,12 +119,12 @@ export default {
             //     // this.$router.push({ path : '/' });
             // }
 
-            const video = document.getElementsByTagName('video');
+            // const video = document.getElementsByTagName('video');
             const btn = document.querySelector('.btn-stream');
 
             if(navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({video:true}).then(function(stream) {
-                    video.srcObject = stream;
+                navigator.mediaDevices.getUserMedia({video:true}).then(function() {
+                    // video.srcObject = stream;
                     btn.click();
                 })
                 .catch(function(error) {
