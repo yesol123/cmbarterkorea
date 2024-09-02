@@ -42,6 +42,7 @@ export default {
             <StreamQrcodeBarcodeReader
                 capture="shoot"
                 @result="onResult"
+                @error="onError"
             style="border: 1px solid #000; width: 100%; height: 100%; margin: 0 auto;"/>
             <!-- @loaded="onLoaded" -->
             <!-- @onloading="onLoading" -->
@@ -90,12 +91,13 @@ export default {
         }
     },
     mounted() {
-        // const btn = document.querySelector('.btn-stream');
-        // btn.style.display = 'none';
-        // btn.click();
+        const btn = document.querySelector('.btn-stream');
+        btn.style.display = 'none';
+        btn.click();
+        // this.onError();
         // this.callAPI();
         // this.clickButton();
-        this.toScan();
+        // this.toScan();
     },
     methods : {
         // clickButton() {
@@ -120,28 +122,28 @@ export default {
 
         //     // this.callAPI();
         // },
-        toScan() {
-            const btn = document.querySelector('.btn-stream');
-            btn.style.display = 'none';
+        // toScan() {
+        //     const btn = document.querySelector('.btn-stream');
+        //     btn.style.display = 'none';
 
-            if(navigator.mediaDevices.getUserMedia) {
-                alert('권한허용');
-                btn.click();
-                // navigator.mediaDevices.getUserMedia({ video : true });
-            } else {
-                alert('권한거부');
-            }
+        //     if(navigator.mediaDevices.getUserMedia) {
+        //         alert('권한허용');
+        //         btn.click();
+        //         // navigator.mediaDevices.getUserMedia({ video : true });
+        //     } else {
+        //         alert('권한거부');
+        //     }
 
-            // try {
-            //     throw new Error('에러발생');
-            // } catch(err) {
-            //     console.log(111);
-            //     console.log(err);
-            //     // alert('에러가 발생함!');
-            //     // this.$router.push({ path : '/' });
-            // }
+        //     // try {
+        //     //     throw new Error('에러발생');
+        //     // } catch(err) {
+        //     //     console.log(111);
+        //     //     console.log(err);
+        //     //     // alert('에러가 발생함!');
+        //     //     // this.$router.push({ path : '/' });
+        //     // }
 
-        },
+        // },
         onResult(result) {
             this.detectedCode = result;
 
@@ -171,6 +173,9 @@ export default {
                     refs.openModal();
                 }
             })
+        },
+        onError(error) {
+            alert('에러임', error);
         }
     }
 }
