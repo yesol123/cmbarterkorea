@@ -41,8 +41,6 @@ export default {
         <div style="width: 90%; height: 350px; overflow: hidden;">
             <StreamQrcodeBarcodeReader
                 capture="shoot"
-                @loaded="onLoaded"
-                @onloading="onLoading"
                 @result="onResult"
                 @error="onError"
             style="border: 1px solid #000; width: 100%; height: 100%; margin: 0 auto;"/>
@@ -94,9 +92,7 @@ export default {
         }
     },
     mounted() {
-        // const btn = document.querySelector('.btn-stream');
-        // btn.style.display = 'none';
-        // this.toScan();
+
     },
     methods : {
         // clickButton() {
@@ -107,9 +103,12 @@ export default {
 
         //     // this.callAPI();
         // },
-        toScan() {
-
-            
+        async activeScan() {
+            const btn = document.querySelector('.btn-stream');
+            // btn.click();
+            const a = btn.click();
+            a;
+            // console.log(222)
 
             // btn.addEventListener('click', function() {
             //     if(navigator.mediaDevices.getUserMedia) {
@@ -143,17 +142,19 @@ export default {
             //         alert(error);
             //         // router.push({ path : '/' });
             //     })
-            // }
+            // }W
 
         },
-        onLoaded(loaded) {
-            alert(loaded);
-        },
-        onLoading(onloading) {
-            // if(onloading == false) {
-                alert(onloading);
-                
-            // }
+        accessToCam() {
+            return new Promise((resolve,reject) => {
+                navigator.mediaDevices.getUserMedia({video:true})
+                .then(stream => {
+                    resolve(stream);
+                })
+                .catch(error => {
+                    reject(error);
+                })
+            })
         },
         onResult(result) {
             this.detectedCode = result;
