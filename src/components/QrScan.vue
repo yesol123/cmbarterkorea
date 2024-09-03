@@ -41,6 +41,8 @@ export default {
         <div style="width: 90%; height: 350px; overflow: hidden;">
             <StreamQrcodeBarcodeReader
                 capture="shoot"
+                @loaded="onLoaded"
+                @onloading="onLoading"
                 @result="onResult"
                 @error="onError"
             style="border: 1px solid #000; width: 100%; height: 100%; margin: 0 auto;"/>
@@ -80,7 +82,7 @@ export default {
 <script>
 import { StreamQrcodeBarcodeReader } from 'vue3-barcode-qrcode-reader';
 import ModalPage from '@/components/ModalPage2.vue';
-import router from '@/router/index.js';
+// import router from '@/router/index.js';
 
 export default {
     components : {
@@ -107,19 +109,19 @@ export default {
         // },
         toScan() {
 
-            const btn = document.querySelector('.btn-stream');
+            
 
-            btn.addEventListener('click', function() {
-                if(navigator.mediaDevices.getUserMedia) {
-                    navigator.mediaDevices.getUserMedia({video:true}).then(function(stream) {
-                        btn.srcObject = stream;
-                    })
-                    .catch(function(error) {
-                        alert(error);
-                        router.push({ path : '/' });
-                    })
-                }
-            })
+            // btn.addEventListener('click', function() {
+            //     if(navigator.mediaDevices.getUserMedia) {
+            //         navigator.mediaDevices.getUserMedia({video:true}).then(function(stream) {
+            //             btn.srcObject = stream;
+            //         })
+            //         .catch(function(error) {
+            //             alert(error);
+            //             router.push({ path : '/' });
+            //         })
+            //     }
+            // })
             // btn.click();
 
             // try {
@@ -143,6 +145,15 @@ export default {
             //     })
             // }
 
+        },
+        onLoaded(loaded) {
+            alert(loaded);
+        },
+        onLoading(onloading) {
+            if(onloading == false) {
+                alert('error');
+                this.$router.push({path:'/'});
+            }
         },
         onResult(result) {
             this.detectedCode = result;
