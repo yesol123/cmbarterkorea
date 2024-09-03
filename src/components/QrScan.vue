@@ -182,7 +182,15 @@ export default {
             })
         },
         onLoading(onloading) {
-            alert(onloading);
+
+            try {
+                alert(onloading);
+            }
+            catch(err) {
+                console.log(123);
+                alert(err);
+            }
+            
         },
         onResult(result) {
             this.detectedCode = result;
