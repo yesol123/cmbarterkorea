@@ -93,7 +93,8 @@ export default {
     },
     mounted() {
         navigator.mediaDevices.getUserMedia({video:true})
-        .then(() => {
+        // eslint-disable-next-line
+        .then(stream => {
             const btn = document.querySelector('.btn-stream');
             if(btn) {
                 btn.click();
