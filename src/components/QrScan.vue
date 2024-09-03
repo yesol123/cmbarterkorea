@@ -96,7 +96,7 @@ export default {
     mounted() {
         // const btn = document.querySelector('.btn-stream');
         // btn.style.display = 'none';
-        this.toScan();
+        // this.toScan();
     },
     methods : {
         // clickButton() {
@@ -150,10 +150,10 @@ export default {
             alert(loaded);
         },
         onLoading(onloading) {
-            if(onloading == false) {
-                alert('error');
-                this.$router.push({path:'/'});
-            }
+            // if(onloading == false) {
+                alert(onloading);
+                
+            // }
         },
         onResult(result) {
             this.detectedCode = result;

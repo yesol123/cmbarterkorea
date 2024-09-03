@@ -66,7 +66,7 @@ const router = createRouter({
         {      
             path: "/qrtest",      
             name: "TestingQR",      
-            component: () => import("@/components/TestingQR.vue"),    
+            component: () => import("@/components/TestTest.vue"),    
         },      
         {      
             path: "/popup",      
