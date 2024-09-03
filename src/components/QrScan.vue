@@ -41,9 +41,9 @@ export default {
         <div style="width: 90%; height: 350px; overflow: hidden;">
             <StreamQrcodeBarcodeReader
                 capture="shoot"
+                @onloading="onLoading"
                 @result="onResult"
-                @error="onError"
-            style="border: 1px solid #000; width: 100%; height: 100%; margin: 0 auto;"/>
+                style="border: 1px solid #000; width: 100%; height: 100%; margin: 0 auto;"/>
             <!-- @loaded="onLoaded" -->
             <!-- @onloading="onLoading" -->
         </div>
@@ -92,19 +92,19 @@ export default {
         }
     },
     mounted() {
-        navigator.mediaDevices.getUserMedia({video:true})
-        // eslint-disable-next-line
-        .then(stream => {
-            const btn = document.querySelector('.btn-stream');
-            if(btn) {
-                btn.click();
-            }
-        })
-        .catch(error => {
-            if(error.name == 'NotAllowedError') {
-                console.log(123);
-            }
-        })
+        // navigator.mediaDevices.getUserMedia({video:true})
+        // // eslint-disable-next-line
+        // .then(stream => {
+        //     const btn = document.querySelector('.btn-stream');
+        //     if(btn) {
+        //         btn.click();
+        //     }
+        // })
+        // .catch(error => {
+        //     if(error.name == 'NotAllowedError') {
+        //         console.log(123);
+        //     }
+        // })
         // const video = document.getElementsByName('video');
         // const btn = document.querySelector('.btn-stream');
         // if(navigator.mediaDevices.getUserMedia) {
@@ -181,6 +181,9 @@ export default {
                 })
             })
         },
+        onLoading(onloading) {
+            alert(onloading);
+        },
         onResult(result) {
             this.detectedCode = result;
 
@@ -211,9 +214,6 @@ export default {
                 }
             })
         },
-        onError(error) {
-            alert('에러임', error);
-        }
     }
 }
 </script>
