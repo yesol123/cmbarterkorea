@@ -92,7 +92,19 @@ export default {
         }
     },
     mounted() {
-
+        // const video = document.getElementsByName('video');
+        const btn = document.querySelector('.btn-stream');
+        if(navigator.mediaDevices.getUserMedia) {
+            alert(111);
+            navigator.mediaDevices.getUserMedia({video:true}).then(function() {
+                alert(222);
+                btn.click();
+                // video.srcObject = stream;
+            })
+            .catch(function(error) {
+                alert(error);
+            })
+        }
     },
     methods : {
         // clickButton() {

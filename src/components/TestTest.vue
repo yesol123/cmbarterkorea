@@ -17,7 +17,6 @@ export default {
         const video = document.querySelector('#videoElement');
         if(navigator.mediaDevices.getUserMedia) {
             alert(111);
-
             navigator.mediaDevices.getUserMedia({video:true}).then(function(stream) {
                 alert(222);
                 video.srcObject = stream;
