@@ -16,14 +16,14 @@ export default {
     mounted() {
         const video = document.querySelector('#videoElement');
         if(navigator.mediaDevices.getUserMedia) {
-            console.log(111);
+            alert(111);
 
             navigator.mediaDevices.getUserMedia({video:true}).then(function(stream) {
-                console.log(222);
+                alert(222);
                 video.srcObject = stream;
             })
             .catch(function(error) {
-                console.log(error);
+                alert(error);
             })
         }
     },
