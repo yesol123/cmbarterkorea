@@ -11,8 +11,8 @@
         <div class="qr_scan_txt">
             <p>QR코드를 스캔하거나 인증코드를 입력하세요</p>
         </div>
-        <div class="contents_qr_scan" style="border: 1px solid red; width: 80%; height: 300px;">
-            <div class="scan_box">
+        <div class="contents_qr_scan" style="border: 1px solid red; width: 85%; height: 400px;">
+            <div class="scan_box" style="width: 100%; height: 100%; background-color: aqua;">
                 <video id="video" class="" width="100%" height="100%" style="object-fit:cover"></video>
             </div>
         </div>
@@ -76,13 +76,17 @@ export default {
                 const videoInputDevices = await ZXingBrowser.BrowserCodeReader.listVideoInputDevices();
                 console.log(videoInputDevices.length);
                 if(videoInputDevices.length) {
-                    const selectedDeviceId = videoInputDevices[videoInputDevices.length - 1].deviceId;
-                    alert(`Started decode from camera with id ${selectedDeviceId}`);
-                    // const qr_area_off = document.querySelector('.qr_area_off');
-                    // qr_area_off.classList.add("d_none");
 
-                    const previewElem = document.querySelector('video');
-                    console.log(selectedDeviceId);
+                    try {
+                        const selectedDeviceId = videoInputDevices[videoInputDevices.length - 1].deviceId;
+                        alert(`Started decode from camera with id ${selectedDeviceId}`);
+
+                        const previewElem = document.querySelector('video');
+                        console.log(selectedDeviceId);
+                    }
+                    catch {
+                        alert('카메라 접근 불가');
+                    }
                     const controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result, error, controls) => {
                         if(result) {
                             alert('QR코드 스캔성공');
