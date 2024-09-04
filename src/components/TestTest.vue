@@ -82,9 +82,8 @@ export default {
                     // qr_area_off.classList.add("d_none");
 
                     const previewElem = document.querySelector('video');
-                    alert('123' + selectedDeviceId);
+                    console.log(selectedDeviceId);
                     const controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result, error, controls) => {
-                        alert('12345');
                         if(result) {
                             alert('QR코드 스캔성공');
                             console.log(result);
