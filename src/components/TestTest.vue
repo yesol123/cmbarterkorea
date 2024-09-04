@@ -77,9 +77,9 @@ export default {
                 console.log(videoInputDevices.length);
                 if(videoInputDevices.length) {
                     const selectedDeviceId = videoInputDevices[videoInputDevices.length - 1].deviceId;
-                    console.log(`Started decode from camera with id ${selectedDeviceId}`);
-                    const qr_area_off = document.querySelector('.qr_area_off');
-                    qr_area_off.classList.add("d_none");
+                    alert(`Started decode from camera with id ${selectedDeviceId}`);
+                    // const qr_area_off = document.querySelector('.qr_area_off');
+                    // qr_area_off.classList.add("d_none");
 
                     const previewElem = document.querySelector('video');
                     console.log(selectedDeviceId);
