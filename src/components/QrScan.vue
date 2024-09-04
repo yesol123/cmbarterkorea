@@ -35,7 +35,8 @@ export default {
     methods : {
         /* eslint-disable */
         activateScanner() {
-            window.addEventListener('load', async () => {
+            // window.addEventListener('load', 
+            (async () => {
                 const codeReader = new ZXingBrowser.BrowserQRCodeReader();
                 const videoInputDevices = await ZXingBrowser.BrowserCodeReader.listVideoInputDevices();
                 console.log(videoInputDevices.length);
@@ -67,7 +68,8 @@ export default {
                         alert('카메라 접근 실패');
                     }
                 }
-            });
+            })();
+        // );
         }
     }
 }
