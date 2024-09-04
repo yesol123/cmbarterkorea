@@ -77,28 +77,25 @@ export default {
                 console.log(videoInputDevices.length);
                 if(videoInputDevices.length) {
 
-                    try {
-                        const selectedDeviceId = videoInputDevices[videoInputDevices.length - 1].deviceId;
-                        alert(`Started decode from camera with id ${selectedDeviceId}`);
+                    const selectedDeviceId = videoInputDevices[videoInputDevices.length - 1].deviceId;
+                    alert(`Started decode from camera with id ${selectedDeviceId}`);
 
-                        const previewElem = document.querySelector('video');
-                        console.log(selectedDeviceId);
-                    }
-                    catch {
-                        alert('카메라 접근 불가');
-                    }
+                    const previewElem = document.querySelector('video');
+                    console.log(selectedDeviceId);
+
                     const controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result, error, controls) => {
-                        if(result) {
-                            alert('QR코드 스캔성공');
-                            console.log(result);
-                            const hash = document.querySelector('#hash');
-                            hash.val(result.text);
-                            scan_ajax();
-                            controls.stop();
+                        try {
+                            if(result) {
+                                alert('QR코드 스캔성공');
+                                console.log(result);
+                                const hash = document.querySelector('#hash');
+                                hash.val(result.text);
+                                scan_ajax();
+                                controls.stop();
+                            }
+                        } catch(err) {
+                            alert(err);
                         }
-                        // if(error) {
-                        //     alert('QR코드 스캔실패');
-                        // }
                     });
                 }
             });
