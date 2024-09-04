@@ -44,6 +44,22 @@
 
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+
+    }
+  },
+  methods : {
+    // test
+    // to() {
+    //   this.$router.push({path : '/qrtest'})
+    // }
+  }
+}
+</script>
+
 <style scoped>
 /* footer {
     width: 100%; height: 50px;

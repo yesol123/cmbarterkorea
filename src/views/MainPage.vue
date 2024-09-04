@@ -11,7 +11,7 @@
                 <h1 style="font-size: 1.3rem; color: #fff;">씨엠바더</h1>
             </div>
             <div>
-                <img src="@/assets/settings.png">
+                <img src="@/assets/logout.png">
             </div>
         </div>
     </div>

@@ -92,6 +92,7 @@ export default {
         }
     },
     mounted() {
+       
         // navigator.mediaDevices.getUserMedia({video:true})
         // // eslint-disable-next-line
         // .then(stream => {
@@ -129,12 +130,11 @@ export default {
         //     // this.callAPI();
         // },
         async activeScan() {
-            const btn = document.querySelector('.btn-stream');
-            // btn.click();
-            const a = btn.click();
-            a;
-            // console.log(222)
 
+
+
+            // const btn = document.querySelector('.btn-stream');
+            // btn.click();
             // btn.addEventListener('click', function() {
             //     if(navigator.mediaDevices.getUserMedia) {
             //         navigator.mediaDevices.getUserMedia({video:true}).then(function(stream) {
