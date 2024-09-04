@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import router from '@/router/index.js';
 
 export default {
     components : {
@@ -66,6 +67,7 @@ export default {
 
                     } catch (e) {
                         alert('카메라 접근 실패');
+                        router.push({ path : '/' });
                     }
                 }
             })();
