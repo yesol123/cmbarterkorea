@@ -75,6 +75,6 @@ export default {
 
 <style scoped>
 * {
-    background-color: #fff;
+    /* background-color: #fff; */
 }
 </style>
