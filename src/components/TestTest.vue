@@ -93,9 +93,9 @@ export default {
                             scan_ajax();
                             controls.stop();
                         }
-                        if(error) {
-                            alert('QR코드 스캔실패');
-                        }
+                        // if(error) {
+                        //     alert('QR코드 스캔실패');
+                        // }
                     });
                 }
             });
