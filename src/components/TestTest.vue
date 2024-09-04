@@ -11,7 +11,7 @@
         <div class="qr_scan_txt">
             <p>QR코드를 스캔하거나 인증코드를 입력하세요</p>
         </div>
-        <div class="contents_qr_scan" style="border: 1px solid #000">
+        <div class="contents_qr_scan" style="border: 1px solid red; width: 80%; height: 300px;">
             <div class="scan_box">
                 <video id="video" class="" width="100%" height="100%" style="object-fit:cover"></video>
             </div>
@@ -82,15 +82,19 @@ export default {
                     // qr_area_off.classList.add("d_none");
 
                     const previewElem = document.querySelector('video');
-                    console.log(selectedDeviceId);
+                    alert('123' + selectedDeviceId);
                     const controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result, error, controls) => {
+                        alert('12345');
                         if(result) {
-                            alert("OK!!!!");
+                            alert('QR코드 스캔성공');
                             console.log(result);
                             const hash = document.querySelector('#hash');
                             hash.val(result.text);
                             scan_ajax();
                             controls.stop();
+                        }
+                        if(error) {
+                            alert('QR코드 스캔실패');
                         }
                     });
                 }
