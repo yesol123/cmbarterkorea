@@ -53,6 +53,7 @@ export default {
                         const controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result, error, controls) => {
                             if(result) {
                                 alert('QR코드 스캔성공');
+                                alert(result);
                                 // console.log(result);
                                 // const hash = document.querySelector('#hash');
                                 // hash.value = result.text;
