@@ -1,11 +1,11 @@
 <template>
-   <div class="qrscanwrap">
-        <!-- <div class="qr_scan_txt">
-            <p>QR코드를 스캔하거나 인증코드를 입력하세요</p>
+   <div class="qrscanwrap" style="text-align: center; margin-top: 35%;">
+        <!-- <div class="qr_scan_txt" style="font-size: 1.0rem; font-weight: bold; margin-bottom: 40px;">
+            <p>QR 스캔</p>
         </div> -->
-        <div class="contents_qr_scan" style="width: 100%; height: 100vh;">
+        <div class="contents_qr_scan" style="width: 90%; height: 400px; margin: 0 auto; border: 2px solid #000;">
             <div class="scan_box" style="width: 100%; height: 100%;">
-                <video id="video" class="" width="100%" height="100%" style="object-fit:cover"></video>
+                <video id="video" class="" width="100%" height="100%" style="object-fit:cover; background-color: #6e6b6b;"></video>
             </div>
         </div>
         <!-- <div class="qr_number">
@@ -42,7 +42,7 @@ export default {
                 if(videoInputDevices.length) {
 
                     const selectedDeviceId = videoInputDevices[videoInputDevices.length - 1].deviceId;
-                    alert(`Started decode from camera with id ${selectedDeviceId}`);
+                    // alert(`Started decode from camera with id ${selectedDeviceId}`);
 
                     const previewElem = document.querySelector('video');
                     console.log(selectedDeviceId);
@@ -75,6 +75,6 @@ export default {
 
 <style scoped>
 * {
-    /* background-color: #fff; */
+    background-color: #fff;
 }
 </style>
