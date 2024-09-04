@@ -3,7 +3,7 @@
         <!-- <div class="qr_scan_txt">
             <p>QR코드를 스캔하거나 인증코드를 입력하세요</p>
         </div> -->
-        <div class="contents_qr_scan" style="border: 1px solid red; width: 100%; height: 100%;">
+        <div class="contents_qr_scan" style="width: 100%; height: 100%;">
             <div class="scan_box" style="width: 100%; height: 100%;">
                 <video id="video" class="" width="100%" height="100%" style="object-fit:cover"></video>
             </div>
@@ -72,3 +72,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+* {
+    background-color: #fff;
+}
+</style>
