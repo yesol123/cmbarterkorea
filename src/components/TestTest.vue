@@ -12,7 +12,7 @@
             <p>QR코드를 스캔하거나 인증코드를 입력하세요</p>
         </div>
         <div class="contents_qr_scan" style="border: 1px solid red; width: 85%; height: 400px;">
-            <div class="scan_box" style="width: 100%; height: 100%; background-color: aqua;">
+            <div class="scan_box" style="width: 100%; height: 100%;">
                 <video id="video" class="" width="100%" height="100%" style="object-fit:cover"></video>
             </div>
         </div>
@@ -83,20 +83,24 @@ export default {
                     const previewElem = document.querySelector('video');
                     console.log(selectedDeviceId);
 
-                    const controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result, error, controls) => {
-                        try {
+                    try {
+                        const controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result, error, controls) => {
                             if(result) {
                                 alert('QR코드 스캔성공');
                                 console.log(result);
                                 const hash = document.querySelector('#hash');
-                                hash.val(result.text);
+                                hash.value = result.text;
                                 scan_ajax();
                                 controls.stop();
                             }
-                        } catch(err) {
-                            alert(err);
+                        });
+
+                        if(!controls) {
+                            alert('카메라 허용 실패');
                         }
-                    });
+                    } catch (e) {
+                        alert('카메라 허용 실패발생');
+                    }
                 }
             });
         }
