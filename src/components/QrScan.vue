@@ -148,6 +148,7 @@ export default {
     /* max-height: 80%; */
     position: relative;
     overflow: scroll;
+    color: #000;
 }
 .header {
     font-weight: bold;
