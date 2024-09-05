@@ -36,7 +36,6 @@ export default {
     methods : {
         /* eslint-disable */
         activateScanner() {
-            // window.addEventListener('load', 
             (async () => {
                 const codeReader = new ZXingBrowser.BrowserQRCodeReader();
                 const videoInputDevices = await ZXingBrowser.BrowserCodeReader.listVideoInputDevices();
@@ -59,6 +58,7 @@ export default {
                                 // hash.value = result.text;
                                 // scan_ajax();
                                 controls.stop();
+                                alert('12345');
                             }
                         });
 
@@ -72,14 +72,11 @@ export default {
                     }
                 }
             })();
-        // );
         }
     }
 }
 </script>
 
 <style scoped>
-* {
-    /* background-color: #fff; */
-}
+
 </style>
