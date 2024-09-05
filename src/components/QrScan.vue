@@ -26,7 +26,7 @@ export default {
     },
     data() {
         return {
-            
+            result : ''
         }
     },
     mounted() {
@@ -60,28 +60,9 @@ export default {
 
                                 alert('123');
 
-                                const formData = new FormData();
-                                formData.append('type', 'send');
-                                formData.append('num', result);
+                                this.result = result;
 
-                                const url = process.env.VUE_APP_API_URL;
-
-                                fetch(url + 'api/pay/Pay.php', {
-                                method : 'POST',
-                                body : formData
-                                })
-                                .then(response => response.json())
-                                .then(data => {
-                                    console.log(data);
-
-                                    if(data.code == 404) {
-                                        alert(data.msg);
-                                        // return false;
-                                    }
-                                })
-                                .catch(error =>
-                                    alert(error)
-                                )
+                                this.callAPI();
 
                                 alert('345')
 
@@ -99,6 +80,28 @@ export default {
                     }
                 }
             })();
+        },
+        callAPI() {
+            alert('77');
+            const formData = new FormData();
+            formData.append('type', 'send');
+            formData.append('num', this.result);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/pay/Pay.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+
+                if(data.code == 404) {
+                    alert(data.msg);
+                    // return false;
+                }
+            })
         }
     }
 }
