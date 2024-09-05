@@ -58,6 +58,8 @@ export default {
                                 // hash.value = result.text;
                                 // scan_ajax();
 
+                                alert('123');
+
                                 const formData = new FormData();
                                 formData.append('type', 'send');
                                 formData.append('num', result);
@@ -77,6 +79,8 @@ export default {
                                         // return false;
                                     }
                                 })
+
+                                alert('345')
 
                                 controls.stop();
                             }
