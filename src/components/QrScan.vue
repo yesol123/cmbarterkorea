@@ -31,63 +31,80 @@ export default {
     },
     mounted() {
         // QR스캔
-        this.activateScanner();
+        this.activateScanner().then(() => {
+            this.callAPI();
+        });
     },
-    methods: {
-    /* eslint-disable */
-    async activateScanner() {
-        const codeReader = new ZXingBrowser.BrowserQRCodeReader();
-        const videoInputDevices = await ZXingBrowser.BrowserCodeReader.listVideoInputDevices();
+    methods : {
+        /* eslint-disable */
+        activateScanner() {
+            (async () => {
+                alert('111');
+                const codeReader = new ZXingBrowser.BrowserQRCodeReader();
+                const videoInputDevices = await ZXingBrowser.BrowserCodeReader.listVideoInputDevices();
+                console.log(videoInputDevices.length);
+                if(videoInputDevices.length) {
 
-        console.log(videoInputDevices.length);
+                    const selectedDeviceId = videoInputDevices[videoInputDevices.length - 1].deviceId;
+                    // alert(`Started decode from camera with id ${selectedDeviceId}`);
 
-        if (videoInputDevices.length) {
-            const selectedDeviceId = videoInputDevices[videoInputDevices.length - 1].deviceId;
-            const previewElem = document.querySelector('video');
-            console.log(selectedDeviceId);
+                    const previewElem = document.querySelector('video');
+                    console.log(selectedDeviceId);
 
-            try {
-                const result = await new Promise((resolve, reject) => {
-                    codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result, error, controls) => {
-                        if (result) {
-                            controls.stop();
-                            resolve(result);
-                        }
-                    });
-                });
+                    try {
+                        const controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result, error, controls) => {
+                            if(result) {
+                                alert('QR코드 스캔성공');
+                                // alert(result);
+                                // console.log(result);
+                                // const hash = document.querySelector('#hash');
+                                // hash.value = result.text;
+                                // scan_ajax();
 
-                alert('QR코드 스캔성공');
+                                alert('123');
 
-                const formData = new FormData();
-                formData.append('type', 'send');
-                formData.append('num', result);
+                                this.result = result;
 
-                const url = process.env.VUE_APP_API_URL;
+                                alert('345')
 
-                alert('88');
+                                controls.stop();
+                            }
+                        });
 
-                const response = await fetch(url + 'api/pay/Pay.php', {
-                    method: 'POST',
-                    body: formData
-                });
+                    } catch (e) {
+                        alert('카메라 접근 실패');
+                        router.push({ path : '/main' });
+                    }
+                }
+            })();
+        },
+        callAPI() {
+            alert('77');
+            const formData = new FormData();
+            formData.append('type', 'send');
+            formData.append('num', this.result);
 
-                const data = await response.json();
+            const url = process.env.VUE_APP_API_URL;
+
+            alert('88');
+
+            fetch(url + 'api/pay/Pay.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
                 console.log(data);
 
-                if (data.code == 404) {
+                if(data.code == 404) {
                     alert(data.msg);
+                    // return false;
                 }
-
-            } catch (e) {
-                alert('카메라 접근 실패');
-                router.push({ path: '/main' });
-            }
+            })
 
             alert('99');
         }
     }
-}
-
 }
 </script>
 
