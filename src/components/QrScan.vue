@@ -1,59 +1,60 @@
 <template>
-   <div class="qrscanwrap" style="text-align: center; margin-top: 35%;">
-        <!-- <div class="qr_scan_txt" style="font-size: 1.0rem; font-weight: bold; margin-bottom: 40px;">
-            <p>QR 스캔</p>
-        </div> -->
-        <div class="contents_qr_scan" style="width: 90%; height: 400px; margin: 0 auto; border: 2px solid #000;">
-            <div class="scan_box" style="width: 100%; height: 100%;">
-                <video id="video" class="" width="100%" height="100%" style="object-fit:cover; background-color: #6e6b6b;"></video>
-            </div>
-        </div>
-        <!-- <div class="qr_number">
-            <form name="qrSendForm" id="qrSendForm">
-                <input type="hidden" name="fran" id="fran" value="5">
-                <input type="hidden" name="hash" id="hash" value="">
-                <input type="text" name="num2" id="num2" placeholder="123456" maxlength="6" onkeyup="this.value=this.value.replace(/[^-0-9]/g,'');" inputmode="decimal"/>
-            </form>
-        </div> -->
-    </div>
-</template>
-
-<script>
-import router from '@/router/index.js';
-
-export default {
-    components : {
-    },
-    data() {
-        return {
-            result : ''
-        }
-    },
-    mounted() {
-        // QR스캔
+    <div class="qrscanwrap" style="text-align: center; margin-top: 35%;">
+         <!-- <div class="qr_scan_txt" style="font-size: 1.0rem; font-weight: bold; margin-bottom: 40px;">
+             <p>QR 스캔</p>
+         </div> -->
+         <div class="contents_qr_scan" style="width: 90%; height: 400px; margin: 0 auto; border: 2px solid #000;">
+             <div class="scan_box" style="width: 100%; height: 100%;">
+                 <video id="video" class="" width="100%" height="100%" style="object-fit:cover; background-color: #6e6b6b;"></video>
+             </div>
+         </div>
+         <!-- <div class="qr_number">
+             <form name="qrSendForm" id="qrSendForm">
+                 <input type="hidden" name="fran" id="fran" value="5">
+                 <input type="hidden" name="hash" id="hash" value="">
+                 <input type="text" name="num2" id="num2" placeholder="123456" maxlength="6" onkeyup="this.value=this.value.replace(/[^-0-9]/g,'');" inputmode="decimal"/>
+             </form>
+         </div> -->
+     </div>
+ </template>
+ 
+ <script>
+ import router from '@/router/index.js';
+ 
+ export default {
+     components : {
+     },
+     data() {
+         return {
+             result : ''
+         }
+     },
+     mounted() {
         this.activateScanner().then(() => {
-            this.callAPI();
-        });
-    },
-    methods : {
-        /* eslint-disable */
+        this.callAPI();
+    }).catch(error => {
+        console.error('An error occurred:', error);
+    });
+     },
+     methods : {
+         /* eslint-disable */
         activateScanner() {
-            (async () => {
-                alert('111');
-                const codeReader = new ZXingBrowser.BrowserQRCodeReader();
-                const videoInputDevices = await ZXingBrowser.BrowserCodeReader.listVideoInputDevices();
-                console.log(videoInputDevices.length);
-                if(videoInputDevices.length) {
-
-                    const selectedDeviceId = videoInputDevices[videoInputDevices.length - 1].deviceId;
-                    // alert(`Started decode from camera with id ${selectedDeviceId}`);
-
-                    const previewElem = document.querySelector('video');
-                    console.log(selectedDeviceId);
-
-                    try {
-                        const controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result, error, controls) => {
-                            if(result) {
+        return new Promise(async (resolve, reject) => {
+            alert('111');
+            const codeReader = new ZXingBrowser.BrowserQRCodeReader();
+            const videoInputDevices = await ZXingBrowser.BrowserCodeReader.listVideoInputDevices();
+            console.log(videoInputDevices.length);
+            if (videoInputDevices.length) {
+                const selectedDeviceId = videoInputDevices[videoInputDevices.length - 1].deviceId;
+                // alert(`Started decode from camera with id ${selectedDeviceId}`);
+                
+                const previewElem = document.querySelector('video');
+                console.log(selectedDeviceId);
+                
+                try {
+                    const controls = await new Promise((resolve, reject) => {
+                        codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result, error, controls) => {
+                            if (result) {
                                 alert('QR코드 스캔성공');
                                 // alert(result);
                                 // console.log(result);
@@ -62,52 +63,55 @@ export default {
                                 // scan_ajax();
 
                                 alert('123');
-
                                 this.result = result;
-
-                                alert('345')
-
+                                alert('345');
                                 controls.stop();
+                                resolve(); // Resolve after scanning is complete
+                            } else if (error) {
+                                reject(new Error('Decoding error: ' + error));
                             }
                         });
+                    });
 
-                    } catch (e) {
-                        alert('카메라 접근 실패');
-                        router.push({ path : '/main' });
-                    }
+                } catch (e) {
+                    alert('카메라 접근 실패');
+                    router.push({ path: '/main' });
+                    reject(e); // Reject if there's an error
                 }
-            })();
-        },
-        callAPI() {
-            alert('77');
-            const formData = new FormData();
-            formData.append('type', 'send');
-            formData.append('num', this.result);
+            } else {
+                reject(new Error('No video input devices found'));
+            }
+        });
+    },
 
-            const url = process.env.VUE_APP_API_URL;
+    callAPI() {
+        alert('77');
+        const formData = new FormData();
+        formData.append('type', 'send');
+        formData.append('num', this.result.text); // Assuming you want to send result.text
 
-            alert('88');
+        const url = process.env.VUE_APP_API_URL;
 
-            fetch(url + 'api/pay/Pay.php', {
-            method : 'POST',
-            body : formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
+        alert('88');
 
-                if(data.code == 404) {
-                    alert(data.msg);
-                    // return false;
-                }
-            })
+        fetch(url + 'api/pay/Pay.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (data.code == 404) {
+                alert(data.msg);
+                // return false;
+            }
+        })
+        .catch(error => {
+            console.error('API call error:', error);
+        });
 
-            alert('99');
-        }
+        alert('99');
     }
-}
-</script>
-
-<style scoped>
-
-</style>
+     }
+ }
+ </script>
