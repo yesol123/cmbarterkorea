@@ -62,8 +62,6 @@ export default {
 
                                 this.result = result;
 
-                                this.callAPI();
-
                                 alert('345')
 
                                 controls.stop();
@@ -78,36 +76,62 @@ export default {
                         alert('카메라 접근 실패');
                         router.push({ path : '/main' });
                     }
+
+                    alert('77');
+                    const formData = new FormData();
+                    formData.append('type', 'send');
+                    formData.append('num', this.result);
+
+                    const url = process.env.VUE_APP_API_URL;
+
+                    alert('88');
+
+                    fetch(url + 'api/pay/Pay.php', {
+                    method : 'POST',
+                    body : formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+
+                        if(data.code == 404) {
+                            alert(data.msg);
+                            // return false;
+                        }
+                    })
+
+                    alert('99');
+                    
+                    // dd
                 }
             })();
         },
-        callAPI() {
-            alert('77');
-            const formData = new FormData();
-            formData.append('type', 'send');
-            formData.append('num', this.result);
+        // callAPI() {
+        //     alert('77');
+        //     const formData = new FormData();
+        //     formData.append('type', 'send');
+        //     formData.append('num', this.result);
 
-            const url = process.env.VUE_APP_API_URL;
+        //     const url = process.env.VUE_APP_API_URL;
 
-            alert('88');
+        //     alert('88');
 
-            fetch(url + 'api/pay/Pay.php', {
-            method : 'POST',
-            body : formData
-            })
-            .then(response => response.json())
-            .catch((error) => alert(error))
-            .then(data => {
-                console.log(data);
+        //     fetch(url + 'api/pay/Pay.php', {
+        //     method : 'POST',
+        //     body : formData
+        //     })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         console.log(data);
 
-                if(data.code == 404) {
-                    alert(data.msg);
-                    // return false;
-                }
-            })
+        //         if(data.code == 404) {
+        //             alert(data.msg);
+        //             // return false;
+        //         }
+        //     })
 
-            alert('99');
-        }
+        //     alert('99');
+        // }
     }
 }
 </script>
