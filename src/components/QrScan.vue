@@ -57,7 +57,6 @@ export default {
                                 // const hash = document.querySelector('#hash');
                                 // hash.value = result.text;
                                 // scan_ajax();
-                                controls.stop();
 
                                 const formData = new FormData();
                                 formData.append('type', 'send');
@@ -75,9 +74,11 @@ export default {
 
                                     if(data.code == 404) {
                                         alert(data.msg);
-                                        return false;
+                                        // return false;
                                     }
                                 })
+
+                                controls.stop();
                             }
                         });
 
