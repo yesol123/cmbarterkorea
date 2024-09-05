@@ -52,13 +52,32 @@ export default {
                         const controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result, error, controls) => {
                             if(result) {
                                 alert('QR코드 스캔성공');
-                                alert(result);
+                                // alert(result);
                                 // console.log(result);
                                 // const hash = document.querySelector('#hash');
                                 // hash.value = result.text;
                                 // scan_ajax();
                                 controls.stop();
-                                alert('12345');
+
+                                const formData = new FormData();
+                                formData.append('type', 'send');
+                                formData.append('num', result);
+
+                                const url = process.env.VUE_APP_API_URL;
+
+                                fetch(url + 'api/pay/Pay.php', {
+                                method : 'POST',
+                                body : formData
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log(data);
+
+                                    if(data.code == 404) {
+                                        alert(data.msg);
+                                        return false;
+                                    }
+                                })
                             }
                         });
 
