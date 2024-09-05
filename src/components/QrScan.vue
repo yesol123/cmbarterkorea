@@ -33,106 +33,61 @@ export default {
         // QR스캔
         this.activateScanner();
     },
-    methods : {
-        /* eslint-disable */
-        activateScanner() {
-            (async () => {
-                const codeReader = new ZXingBrowser.BrowserQRCodeReader();
-                const videoInputDevices = await ZXingBrowser.BrowserCodeReader.listVideoInputDevices();
-                console.log(videoInputDevices.length);
-                if(videoInputDevices.length) {
+    methods: {
+    /* eslint-disable */
+    async activateScanner() {
+        const codeReader = new ZXingBrowser.BrowserQRCodeReader();
+        const videoInputDevices = await ZXingBrowser.BrowserCodeReader.listVideoInputDevices();
 
-                    const selectedDeviceId = videoInputDevices[videoInputDevices.length - 1].deviceId;
-                    // alert(`Started decode from camera with id ${selectedDeviceId}`);
+        console.log(videoInputDevices.length);
 
-                    const previewElem = document.querySelector('video');
-                    console.log(selectedDeviceId);
+        if (videoInputDevices.length) {
+            const selectedDeviceId = videoInputDevices[videoInputDevices.length - 1].deviceId;
+            const previewElem = document.querySelector('video');
+            console.log(selectedDeviceId);
 
-                    try {
-                        const controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result, error, controls) => {
-                            if(result) {
-                                alert('QR코드 스캔성공');
-                                // alert(result);
-                                // console.log(result);
-                                // const hash = document.querySelector('#hash');
-                                // hash.value = result.text;
-                                // scan_ajax();
-
-                                alert('123');
-
-                                this.result = result;
-
-                                alert('345')
-
-                                controls.stop();
-                            }
-                        });
-
-                        // if(!controls) {
-                        //     alert('카메라 허용 실패');
-                        // }
-
-                    } catch (e) {
-                        alert('카메라 접근 실패');
-                        router.push({ path : '/main' });
-                    }
-
-                    alert('77');
-                    const formData = new FormData();
-                    formData.append('type', 'send');
-                    formData.append('num', this.result);
-
-                    const url = process.env.VUE_APP_API_URL;
-
-                    alert('88');
-
-                    fetch(url + 'api/pay/Pay.php', {
-                    method : 'POST',
-                    body : formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-
-                        if(data.code == 404) {
-                            alert(data.msg);
-                            // return false;
+            try {
+                const result = await new Promise((resolve, reject) => {
+                    codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result, error, controls) => {
+                        if (result) {
+                            controls.stop();
+                            resolve(result);
                         }
-                    })
+                    });
+                });
 
-                    alert('99');
-                    
-                    // dd
+                alert('QR코드 스캔성공');
+
+                const formData = new FormData();
+                formData.append('type', 'send');
+                formData.append('num', result);
+
+                const url = process.env.VUE_APP_API_URL;
+
+                alert('88');
+
+                const response = await fetch(url + 'api/pay/Pay.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                console.log(data);
+
+                if (data.code == 404) {
+                    alert(data.msg);
                 }
-            })();
-        },
-        // callAPI() {
-        //     alert('77');
-        //     const formData = new FormData();
-        //     formData.append('type', 'send');
-        //     formData.append('num', this.result);
 
-        //     const url = process.env.VUE_APP_API_URL;
+            } catch (e) {
+                alert('카메라 접근 실패');
+                router.push({ path: '/main' });
+            }
 
-        //     alert('88');
-
-        //     fetch(url + 'api/pay/Pay.php', {
-        //     method : 'POST',
-        //     body : formData
-        //     })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         console.log(data);
-
-        //         if(data.code == 404) {
-        //             alert(data.msg);
-        //             // return false;
-        //         }
-        //     })
-
-        //     alert('99');
-        // }
+            alert('99');
+        }
     }
+}
+
 }
 </script>
 
