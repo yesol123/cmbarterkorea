@@ -19,14 +19,16 @@
 
     <div id="popup" class="popup">
         <div class="popup-content">
-            <p class="header">결제 확인</p>
-            <span style="font-weight: bold; font-size: 1.1rem;">{{ name }}</span><span style="font-weight: bold; font-size: 1.1rem;">({{ id }})</span> <span>님,</span>
-            <p style="font-weight: bold; font-size: 1.3rem;">{{ cm }} CM</p>
-            <p style="font-size: 1.0rem;">결제하시겠습니까?</p>
+            <div class="center">
+            <p class="header">결제 하시겠습니까?</p>
+            <span style="font-weight: bold; font-size: 1.0rem;">{{ name }}</span><span style="font-weight: bold; font-size: 1.0rem;">({{ id }})</span> <span>님,</span>
+            <p style="font-weight: bold; font-size: 1.2rem;">{{ cm }} CM</p>
+            <!-- <p style="font-size: 1.0rem;">결제하시겠습니까?</p> -->
 
             <div class="btn_group">
                 <button type="button">취소</button>
                 <button type="button">확인</button>
+            </div>
             </div>
         </div>
     </div>
@@ -125,7 +127,7 @@ export default {
 
 <style scoped>
 .popup {
-    display: none;
+    /* display: none; */
     position: fixed;
     left: 0;
     top: 0;
@@ -138,36 +140,28 @@ export default {
 }
 /* 팝업내용 */
 .popup-content {
-    width: 90%; height: 70%;
+    position: relative;
+    width: 90%; height: 30%;
     background-color: #fff;
-    padding: 10px;
     border-radius: 8px;
     text-align: center;
-    /* border: 1px solid red; */
-    /* max-width: 90%; */
-    /* max-height: 80%; */
     position: relative;
     overflow: scroll;
     color: #000;
 }
+.center {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+}
 .header {
     font-weight: bold;
-    font-size: 1.25rem;
-    margin-top: 70px;
-    margin-bottom: 15%;
-}
-p {
-    margin-top: 30px;
-}
-p:nth-of-type(3) {
-    margin-top: 40px;
-}
-.btn_group {
-    margin-top: 40px;
-    /* border: 1px solid red; */
+    font-size: 1.2rem;
+    margin-top: 0;
 }
 .btn_group > button {
-    width: 55px; height: 35px;
+    width: 65px; height: 35px;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 7px;
@@ -175,8 +169,8 @@ p:nth-of-type(3) {
 }
 .btn_group > button:nth-of-type(2) {
     margin-left: 40px;
-    background-color: rgba(0, 0, 255, 0.829);
-    border: 1px solid rgba(0, 0, 255, 0.829);
+    background-color: #1bce0b;
+    border: 1px solid #1bce0b;
     color: #fff;
 }
 </style>
