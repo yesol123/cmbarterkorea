@@ -79,6 +79,9 @@ export default {
                                         // return false;
                                     }
                                 })
+                                .catch(error =>
+                                    alert(error)
+                                )
 
                                 alert('345')
 
