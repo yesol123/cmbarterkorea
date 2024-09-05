@@ -89,11 +89,14 @@ export default {
 
             const url = process.env.VUE_APP_API_URL;
 
+            alert('88');
+
             fetch(url + 'api/pay/Pay.php', {
             method : 'POST',
             body : formData
             })
             .then(response => response.json())
+            .catch((error) => alert(error))
             .then(data => {
                 console.log(data);
 
@@ -102,6 +105,8 @@ export default {
                     // return false;
                 }
             })
+
+            alert('99');
         }
     }
 }
