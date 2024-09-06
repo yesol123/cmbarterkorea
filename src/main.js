@@ -4,10 +4,17 @@ import { createApp } from 'vue';
 // Pinia
 import { createPinia } from 'pinia';
 import App from '@/App.vue';
-
+import mitt from 'mitt'; // mitt 임포트
 // router
 import router from "@/router/index.js";
 
+//eventBus
+export const eventBus = mitt()
+
+import DataTable from 'datatables.net-vue3';
+import DataTablesCore from 'datatables.net-dt';
+ 
+DataTable.use(DataTablesCore);
 // 부트스트랩
 // import 'bootstrap';
 // import 'bootstrap/dist/css/bootstrap.min.css';

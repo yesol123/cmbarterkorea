@@ -83,6 +83,48 @@ const router = createRouter({
             name: "TestingPage",      
             component: () => import("@/components/TestingPage.vue"),    
         },     
+        {      
+            path: "/mypage1",      
+            name: "mypage1",      
+            component: () => import("@/views/Mypage1.vue"),    
+        },     
+        {      
+            path: "/changepw",      
+            name: "changePassword",      
+            component: () => import("@/views/ChangePw.vue"),    
+        }, 
+        {      
+            path: "/ChangePin1",      
+            name: "ChangePin1",      
+            component: () => import("@/views/ChangePin1.vue"),    
+        }  ,
+        {      
+            path: "/ChangePin2",      
+            name: "ChangePin2",      
+            component: () => import("@/views/ChangePin2.vue"),    
+        } ,
+        {      
+            path: "/ChangePin3",      
+            name: "ChangePin3",      
+            component: () => import("@/views/ChangePin3.vue"),    
+        }  ,
+        {      
+            path: "/ChangePin4",      
+            name: "ChangePin4",      
+            component: () => import("@/views/ChangePin4.vue"),    
+        }  ,
+        {      
+            path: "/Notice",      
+            name: "NoticePage",      
+            component: () => import("@/views/NoticePage.vue"),    
+        }  ,
+        {      
+            path: "/DetailPgae",      
+            name: "DetailPgae",      
+            component: () => import("@/views/DetailPgae.vue"),    
+        }  
+
+
     ],
 }); 
 
