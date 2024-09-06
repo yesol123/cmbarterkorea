@@ -137,6 +137,7 @@ export default {
                 }
             });
         },
+        // 가입폼 효과
         reset(value) {
             if(value == 'id' && this.idError == true) {
                 this.idError = false;
@@ -159,6 +160,7 @@ export default {
                 return false;
             }
         },
+        // 로그인 페이지로 돌아가기
         toHome() {
             this.$router.push({ path : '/'});
 

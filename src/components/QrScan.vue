@@ -27,7 +27,7 @@
 
             <div class="btn_group">
                 <button type="button" @click="notPaying()">취소</button>
-                <button type="button">확인</button>
+                <button type="button" @click="Paying()">확인</button>
             </div>
             </div>
         </div>
@@ -39,6 +39,7 @@
 <script>
 import router from '@/router/index.js';
 import ModalPage from '@/components/ModalPage2.vue';
+import { useResponseStore } from '@/store/response.js';
 
 export default {
     components : {
@@ -48,7 +49,9 @@ export default {
         return {
             name : '',
             id : '',
-            cm : ''
+            cm : '',
+            mb_index : '',
+            result : ''
         }
     },
     mounted() {
@@ -75,6 +78,8 @@ export default {
                             if(result) {
                                 alert('QR코드 스캔성공');
 
+                                this.result = result;
+
                                 const refs = this.$refs.child;
 
                                 const formData = new FormData();
@@ -97,6 +102,7 @@ export default {
                                         this.name = data.hash_mb.mb_name;
                                         this.id = data.hash_mb.mb_id;
                                         this.cm = data.price;
+                                        this.mb_index = data.hash_mb.mb_index;
 
                                         this.openpopup();
                                     }
@@ -118,9 +124,44 @@ export default {
                 }
             })();
         },
+        // 결체확인창 불러오기
         openpopup() {
             document.getElementById('popup').style.display = 'flex';
         },
+        // 결제확인
+        Paying() {
+            let store = useResponseStore();
+
+            const formData = new FormData();
+            formData.append('type', 'scan');
+            formData.append('user_qr_code', this.result);
+            formData.append('store_user_index', store.user_index);
+            formData.append('customer_user_index', this.mb_index);
+            formData.append('user_role_index', store.member);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/pay/Pay.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+
+                if(data.code == '200') {
+                    alert(data.msg);
+                    router.push({ path : '/main' });
+                    return false;
+                }
+                if(data.code == '500') {
+                    alert(data.msg);
+                    return false;
+                }
+                                  
+            })
+        },
+        // 결제취소
         notPaying() {
             this.$router.push({ path : '/main'});
         }

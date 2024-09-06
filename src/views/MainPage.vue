@@ -226,11 +226,13 @@ export default {
             })
             
         },
+        // 결제 페이지로 이동
         toPayment() {
             console.log(4444);
 
             this.$refs.payment.openpopup();
         },
+        // QR결제 페이지로 이동
         QrScan() {
             this.$router.push({ path : '/qrscan'});
         }
