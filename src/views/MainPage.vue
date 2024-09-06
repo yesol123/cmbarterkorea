@@ -180,7 +180,9 @@ export default {
             const formData = new FormData();
             formData.append('type', 'banner_get');
 
-            fetch('https://www.cmbarter.com/api/common/main.php', {
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/common/main.php', {
             method : 'POST',
             body : formData
             })
@@ -204,7 +206,9 @@ export default {
             const formData = new FormData();
             formData.append('type', 'advertisement_get');
 
-            fetch('https://www.cmbarter.com/api/common/main.php', {
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/common/main.php', {
             method : 'POST',
             body : formData
             })
