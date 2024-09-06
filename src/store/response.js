@@ -6,6 +6,7 @@ export const useResponseStore = defineStore('response', {
     member: '', // 일반, 사업자, 가맹점 여부 확인
     user_id: '', // 각 회원 아이디
     user_index : '', // 로그인시 user_index
+    store_main_user_index : '', // 서브계정
     cm_amount : '' // 회원별 CM 보유량
   }),
   actions: {

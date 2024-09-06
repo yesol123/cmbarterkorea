@@ -54,16 +54,6 @@ const router = createRouter({
         //     component: () => import("../components/HelloWorld.vue"),    
         // },  
         {      
-            path: "/test",      
-            name: "TestingPinia",      
-            component: () => import("@/views/TestingPinia.vue"),    
-        },      
-        {      
-            path: "/testing",      
-            name: "PractuceExe",      
-            component: () => import("@/views/PracticIng.vue"),    
-        }, 
-        {      
             path: "/popup",      
             name: "Popup",      
             component: () => import("@/components/PopCoupon.vue"),    
@@ -77,7 +67,22 @@ const router = createRouter({
             path: "/footer",      
             name: "Footer",      
             component: () => import("@/components/FooterPage.vue"),    
-        },       
+        },   
+        {      
+            path: "/test",      
+            name: "TestingPinia",      
+            component: () => import("@/views/TestingPinia.vue"),    
+        },      
+        {      
+            path: "/testing",      
+            name: "PractuceExe",      
+            component: () => import("@/views/PracticIng.vue"),    
+        },     
+        {      
+            path: "/paging",      
+            name: "TestingPage",      
+            component: () => import("@/components/TestingPage.vue"),    
+        },     
     ],
 }); 
 

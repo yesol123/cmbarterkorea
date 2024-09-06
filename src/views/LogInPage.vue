@@ -102,9 +102,11 @@ export default {
                             store.member = jsonObject.user_role_index;
                             store.user_id = jsonObject.user_id;
                             store.user_index = jsonObject.user_index;
+                            store.store_main_user_index = jsonObject.store_main_user_index;
                             console.log(jsonObject);
                             console.log('user_role_index 값 : ' + store.member);
                             console.log('user_index 값 : ' + store.user_index);
+                            console.log('store_main_user_index 값 : ' + store.store_main_user_index); //오늘 작업한 것
                             router.push({'path' : '/main'});
                         }
                     }
