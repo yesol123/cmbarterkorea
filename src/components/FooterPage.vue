@@ -38,13 +38,14 @@
         <img src="@/assets/home.png">
         <img src="@/assets/gift.png">
         <img src="@/assets/search.png">
-        <img src="@/assets/my.png">
+        <img @click="goMypage()" src="@/assets/my.png">
       </div>
   </div>
 
 </template>
 
 <script>
+import router from '@/router/index.js';
 export default {
   data() {
     return {
@@ -52,6 +53,9 @@ export default {
     }
   },
   methods : {
+     goMypage(){
+      router.push('/MyPage1')
+     }
     // test
     // to() {
     //   this.$router.push({path : '/qrtest'})

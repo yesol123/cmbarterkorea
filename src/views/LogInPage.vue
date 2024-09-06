@@ -83,7 +83,8 @@ export default {
                 formData.append('user_pw', this.password);
 
                 const url = process.env.VUE_APP_API_URL;
-
+                    console.log(url);
+                    
                 fetch(url + 'api/login.php', {
                 method : 'POST',
                 body : formData
