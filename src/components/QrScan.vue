@@ -57,7 +57,8 @@ export default {
             cm : '',
             mb_index : '',
             result : '',
-            confirm : ''
+            confirm : '',
+            qrCode : null
         }
     },
     mounted() {
@@ -84,6 +85,7 @@ export default {
                             if(result) {
                                 // alert('QR코드 스캔성공');
 
+                                this.qrCode = false;
                                 this.result = result;
 
                                 const refs = this.$refs.child;
@@ -140,8 +142,13 @@ export default {
 
             const formData = new FormData();
             formData.append('type', 'scan');
-            formData.append('user_qr_code', this.result);
-            formData.append('user_qr_code', this.confirm);
+
+            if(this.qrCode == false) {
+                formData.append('user_qr_code', this.result);
+            }
+            if(this.qrCode == true) {
+                formData.append('user_qr_code', this.confirm);
+            }
             formData.append('store_user_index', store.user_index);
             formData.append('customer_user_index', this.mb_index);
             formData.append('user_role_index', store.member);
@@ -172,7 +179,10 @@ export default {
         notPaying() {
             this.$router.push({ path : '/main'});
         },
+        // QR코드 직접입력
         payment() {
+            this.qrCode = true;
+
             if(this.confirm == '') {
                 alert('QR 6자리 코드를 작성해주세요.');
                 return false;
@@ -217,7 +227,7 @@ export default {
 
 <style scoped>
 .popup {
-    display: none;
+    /* display: none; */
     position: fixed;
     left: 0;
     top: 0;
@@ -270,9 +280,10 @@ input {
     border-radius: 7px;
     padding: 0 10px;
     color: #000;
+    background-color: #fff;
 }
 .confirm {
-    width: 50px; height: 35px;
+    width: 55px; height: 35px;
     border: 1px solid #1bce0b;
     border-radius: 7px;
     margin-left: 10px;
