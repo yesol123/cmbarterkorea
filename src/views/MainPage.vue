@@ -21,11 +21,11 @@
             <div class="pay_center">
                 <div class="pay_area" :style="{backgroundColor : backColor}" @click="toPayment()">
                     <p v-if="this.member === '1'">{{ user_cm }} CM</p>
-                    <p v-if="this.member === '2'">20,000 CM</p>
+                    <p v-if="this.member === '2'" style="margin: 10px 0;">{{ user_cm }} CM</p>
                     <p v-if="this.member === '3'" style="color: pink;">{{ user_cmp }} CMP</p>
 
                     <p v-if="this.member === '1'">보유쿠폰 <span>{{ coupon_count }}</span>장</p>
-                    <p v-if="this.member === '2'">보유쿠폰 <span>5</span>장</p>
+                    <!-- <p v-if="this.member === '2'">보유쿠폰 <span>{{ coupon_count }}</span>장</p> -->
                     <p v-if="this.member === '3'" style="font-size: 1.5rem; color: yellow;">{{ user_cm }} CM</p>
                     
                     <p>여기를 탭하여 결제하세요.</p>
@@ -138,14 +138,15 @@ export default {
             formData.append('user_id', store.user_id);
 
             const url = process.env.VUE_APP_API_URL;
-
             fetch(url + 'api/common/main.php', {
             method : 'POST',
             body : formData
             })
             .then(response => response.json())
             .then(data => {
+                console.log('jsondata???');
                 console.log(data);
+
                 let toJson = JSON.parse(data.msg);
                 console.log(toJson);
 
@@ -154,6 +155,8 @@ export default {
                 
                 // 유저CM
                 this.user_cm = (toJson.user_cm ?? '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                this.user_cm = (toJson.user_cm ?? null).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                
                 store.cm_amount = toJson.user_cm;
 
                 // 쿠폰갯수

@@ -1,5 +1,5 @@
 <template>
-   <div class="qrscanwrap" style="text-align: center; margin-top: 35%;">
+   <div class="qrscanwrap" style="text-align: center; margin-top: 30%;">
         <!-- <div class="qr_scan_txt" style="font-size: 1.0rem; font-weight: bold; margin-bottom: 40px;">
             <p>QR 스캔</p>
         </div> -->
@@ -7,6 +7,10 @@
             <div class="scan_box" style="width: 100%; height: 100%;">
                 <video id="video" class="" width="100%" height="100%" style="object-fit:cover; background-color: #6e6b6b;"></video>
             </div>
+        </div>
+        <div>
+            <input type="number" placeholder="QR 6자리 코드를 적어주세요." v-model="confirm">
+            <button type="button" class="confirm" @click="payment()">확인</button>
         </div>
         <!-- <div class="qr_number">
             <form name="qrSendForm" id="qrSendForm">
@@ -17,6 +21,7 @@
         </div> -->
     </div>
 
+    <!-- 결제확인창 -->
     <div id="popup" class="popup">
         <div class="popup-content">
             <div class="center">
@@ -51,7 +56,8 @@ export default {
             id : '',
             cm : '',
             mb_index : '',
-            result : ''
+            result : '',
+            confirm : ''
         }
     },
     mounted() {
@@ -76,7 +82,7 @@ export default {
                     try {
                         const controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result, error, controls) => {
                             if(result) {
-                                alert('QR코드 스캔성공');
+                                // alert('QR코드 스캔성공');
 
                                 this.result = result;
 
@@ -97,7 +103,7 @@ export default {
                                     console.log(data);
 
                                     if(data.code == '000') {
-                                        alert('결제 api 호출 성공');
+                                        // alert('결제 api 호출 성공');
 
                                         this.name = data.hash_mb.mb_name;
                                         this.id = data.hash_mb.mb_id;
@@ -119,7 +125,7 @@ export default {
 
                     } catch (e) {
                         alert('카메라 접근 실패');
-                        router.push({ path : '/main' });
+                        router.push({ path : '/qrscan' });
                     }
                 }
             })();
@@ -164,6 +170,45 @@ export default {
         // 결제취소
         notPaying() {
             this.$router.push({ path : '/main'});
+        },
+        payment() {
+            if(this.confirm == '') {
+                alert('QR 6자리 코드를 작성해주세요.');
+                return false;
+            } 
+            else {
+                const formData = new FormData();
+                formData.append('type', 'send');
+                formData.append('num', this.confirm);
+
+                const url = process.env.VUE_APP_API_URL;
+
+                fetch(url + 'api/pay/Pay.php', {
+                method : 'POST',
+                body : formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+
+                    if(data.code == '000') {
+                        alert('QR 코드 직접입력 api 호출 성공');
+
+                        this.name = data.hash_mb.mb_name;
+                        this.id = data.hash_mb.mb_id;
+                        this.cm = data.price;
+                        this.mb_index = data.hash_mb.mb_index;
+
+                        this.openpopup();
+                    }
+                    if(data.code == '500') {
+                        alert(data.msg);
+                    }
+                    if(data.code == '404') {
+                        alert(data.msg);
+                    }
+                })
+            }
         }
     }
 }
@@ -216,5 +261,22 @@ export default {
     background-color: #1bce0b;
     border: 1px solid #1bce0b;
     color: #fff;
+}
+input {
+    width: 220px; height: 35px;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    padding: 0 10px;
+    color: #000;
+}
+.confirm {
+    width: 50px; height: 35px;
+    border: 1px solid #1bce0b;
+    border-radius: 7px;
+    margin-left: 10px;
+    background-color: #1bce0b;
+    color: #fff;
+    vertical-align: middle;
 }
 </style>

@@ -60,7 +60,7 @@
             </div>
             <!-- QR코드 화면 -->
             <div class="qr_wrap" v-show="showQR">
-                <p>멤버십에 해당 QR코드를 보여주세요.</p>
+                <p>가맹점에 해당 QR코드를 보여주세요.</p>
                 <p style="font-weight: bold;">{{ id }}</p>
                 <img :src="`https://quickchart.io/chart?chs=200x200&cht=qr&chl=${qrdigit}`" alt="QR코드">
                 <p style="border: 1px solid #ccc; width: 170px; height: 30px; margin: 0 auto; border-radius: 5px; font-size: 0.9rem; font-weight: bold; line-height: 28px;">{{ qrdigit }}</p>
@@ -171,6 +171,11 @@ export default {
                             this.commaprice = this.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
                         })
 
+                    }
+                    if(data.code == 404) {
+                        alert(data.msg);
+                        this.ResetPin();
+                        return false;
                     }
                 })
             }
