@@ -141,6 +141,7 @@ export default {
             const formData = new FormData();
             formData.append('type', 'scan');
             formData.append('user_qr_code', this.result);
+            formData.append('user_qr_code', this.confirm);
             formData.append('store_user_index', store.user_index);
             formData.append('customer_user_index', this.mb_index);
             formData.append('user_role_index', store.member);
