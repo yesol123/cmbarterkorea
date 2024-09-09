@@ -227,7 +227,7 @@ export default {
 
 <style scoped>
 .popup {
-    /* display: none; */
+    display: none;
     position: fixed;
     left: 0;
     top: 0;
