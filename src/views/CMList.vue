@@ -1,7 +1,7 @@
 <template>
     <div class="wrap">
         <header>
-            <button type="button" class="goback_btn"><img src="@/assets/go_back_btn.png"></button>
+            <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/go_back_btn.png"></button>
             <p>CM내역</p>
         </header>
 
@@ -128,6 +128,19 @@ import Footer from '@/components/FooterPage.vue'
 export default {
     components : {
         Footer,
+    },
+    data() {
+        return {
+
+        }
+    },
+    mounted() {
+
+    },
+    methods : {
+        toMain() {
+            this.$router.push({ path : '/main' });
+        }
     }
 }
 </script>
