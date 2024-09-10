@@ -31,7 +31,7 @@
                     <p>여기를 탭하여 결제하세요.</p>
                 </div>
                 <div class="pay_btn">
-                    <button type="button">CM내역</button>
+                    <button type="button" @click="CMList()">CM내역</button>
                     <button type="button" v-if="this.member === '3'" @click="QrScan()">QR결제</button>
                     <button type="button">쿠폰함</button>
                 </div>
@@ -237,8 +237,13 @@ export default {
         },
         // QR결제 페이지로 이동
         QrScan() {
-            this.$router.push({ path : '/qrscan'});
+            this.$router.push({ path : '/qrscan' });
         },
+        // CM내역으로 이동
+        CMList() {
+            this.$router.push({ path : '/cmlist' });
+        },
+        // 로그아웃
         logout() {
             // localStorage.setItem('response', null);
             localStorage.removeItem('response');
