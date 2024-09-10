@@ -10,7 +10,7 @@
             <div>
                 <h1 style="font-size: 1.3rem; color: #fff;">씨엠바더</h1>
             </div>
-            <div>
+            <div @click="logout()">
                 <img src="@/assets/logout.png">
             </div>
         </div>
@@ -238,6 +238,11 @@ export default {
         // QR결제 페이지로 이동
         QrScan() {
             this.$router.push({ path : '/qrscan'});
+        },
+        logout() {
+            // localStorage.setItem('response', null);
+            localStorage.removeItem('response');
+            this.$router.push({ path : '/' });
         }
     },
     computed: {

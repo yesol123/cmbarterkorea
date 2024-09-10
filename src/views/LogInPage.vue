@@ -49,10 +49,8 @@ export default {
         }
     },
     mounted() {
-        let store = useResponseStore();
-        store.datas = [];
-        console.log(888);
-        console.log(store.datas);
+        // let store = useResponseStore();
+        // store.datas = [];
 
         // window.addEventListener('beforeunload', this.unLoadEvent);
     },
@@ -107,7 +105,8 @@ export default {
                             console.log(jsonObject);
                             console.log('user_role_index 값 : ' + store.member);
                             console.log('user_index 값 : ' + store.user_index);
-                            console.log('store_main_user_index 값 : ' + store.store_main_user_index); //오늘 작업한 것
+                            console.log('store_main_user_index 값 : ' + store.store_main_user_index);
+
                             router.push({'path' : '/main'});
                         }
                     }
