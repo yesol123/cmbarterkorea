@@ -95,5 +95,7 @@ export default {
 .btn_group img {
     width: 25px; height: 25px;
     /* border: 1px solid orange; */
+    cursor: pointer;
 }
+
 </style>

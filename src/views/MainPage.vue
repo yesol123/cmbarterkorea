@@ -31,7 +31,7 @@
                     <p>여기를 탭하여 결제하세요.</p>
                 </div>
                 <div class="pay_btn">
-                    <button type="button">CM내역</button>
+                    <button type="button" @click="goCmHistory()">CM내역</button>
                     <button type="button" v-if="this.member === '3'" @click="QrScan()">QR결제</button>
                     <button type="button">쿠폰함</button>
                 </div>
@@ -60,9 +60,9 @@
                 <img src="@/assets/gift.png">
                 <p>가맹점신청</p>
             </div>
-            <div class="icon">
+            <div class="icon" @click="goHomePage()">
                 <img src="@/assets/gift.png">
-                <p>홈페이지</p>
+                <p >홈페이지</p>
             </div>
             <div class="icon" v-if="this.member == '3'">
                 <img src="@/assets/gift.png">
@@ -233,6 +233,12 @@ export default {
         },
         QrScan() {
             this.$router.push({ path : '/qrscan'});
+        },
+        goHomePage(){
+            window.open('https://www.cmbarter.co.kr/default/main/main.php','_blank') 
+        },
+        goCmHistory(){
+            this.$router.push({ path:'/cmHistroy'})
         }
     },
     computed: {
@@ -251,6 +257,7 @@ export default {
         currentAd() {
             return this.adImg[this.adIndex];
         },
+       
     }
 }
 </script>

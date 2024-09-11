@@ -25,12 +25,12 @@
           <ul class="list1">
             <span class="title"> 고객센터</span>
             <li><RouterLink to="Notice"><span class="flex_"><img  class="img_f" src="@/assets/icon_services.svg" alt=""><p class="sub_title">공지사항</p></span><img src="@/assets/icon_arrow_right.svg" alt=""></RouterLink></li>
-            <li><a href=""><span class="flex_"><img class="img_f" src="@/assets/icon_services.svg" alt=""><p class="sub_title"> Q&A</p></span><img src="@/assets/icon_arrow_right.svg" alt=""></a></li>
-            <li><a href=""><span class="flex_"><img class="img_f"  src="@/assets/icon_services.svg" alt=""><p class="sub_title">카카오톡 상담하기</p></span><img src="@/assets/icon_arrow_right.svg" alt=""></a></li>
+            <li><RouterLink to="/Inquiry"><span class="flex_"><img class="img_f" src="@/assets/icon_services.svg" alt=""><p class="sub_title"> Q&A</p></span><img src="@/assets/icon_arrow_right.svg" alt=""></RouterLink></li>
+            <li><RouterLink to="http://pf.kakao.com/_zFjGG/chat"><span class="flex_"><img class="img_f"  src="@/assets/icon_services.svg" alt=""><p class="sub_title">카카오톡 상담하기</p></span><img src="@/assets/icon_arrow_right.svg" alt=""></RouterLink></li>
           </ul>
           <ul>
             <span class="title">정책</span>
-            <li><a href=""><img src="@/assets/icon_agree.svg" alt=""><p class="sub_title">약관 및 이용 동의</p></a></li>
+            <li><RouterLink to="/Terms"><img src="@/assets/icon_agree.svg" alt=""><p class="sub_title">약관 및 이용 동의</p></RouterLink></li>
             <li><a href=""><img src="@/assets/icon_logout.svg" alt=""><p class="sub_title"> 로그아웃</p></a></li>
           </ul>
 

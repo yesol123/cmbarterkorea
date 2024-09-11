@@ -119,10 +119,62 @@ const router = createRouter({
             component: () => import("@/views/NoticePage.vue"),    
         }  ,
         {      
-            path: "/DetailPgae",      
+            path: "/DetailPgae/:id",      
             name: "DetailPgae",      
             component: () => import("@/views/DetailPgae.vue"),    
-        }  
+        }  ,
+        {      
+            path: "/Inquiry",      
+            name: "InquiryPage",      
+            component: () => import("@/views/InquiryPage.vue"),    
+        }  ,
+        {      
+            path: "/InquiryList",      
+            name: "InquiryList",      
+            component: () => import("@/views/InquiryList.vue"),    
+        }  ,
+        {      
+            path: "/InquiryListDetail/:id",      
+            name: "InquiryListDetail",      
+            component: () => import("@/views/InquiryListDetail.vue"),    
+        }  ,
+
+        {      
+            path: "/Terms",      
+            name: "TermsPage",      
+            component: () => import("@/views/TermsPage.vue"),    
+        }  ,
+        {
+            path: '/Terms/userService',
+            name:'userService',
+            component:()=> import("@/views/UeserService.vue")
+        },
+        {
+            path: '/Terms/Franchiseeprivacy',
+            name:'franchisee_privacy',
+            component:()=> import("@/views/FranchiseePrivacy.vue")
+        },
+        {
+            path: '/Terms/FranchiseeMarketing',
+            name:'franchisee_Marketing',
+            component:()=> import("@/views/FranchiseeMarketing.vue")
+        },
+        {
+            path: '/Terms/FranchiseeAdvertisement',
+            name:'franchisee_Advertisement',
+            component:()=> import("@/views/franchiseeAdvertisement.vue")
+        },
+        {
+            path: '/Terms/FranchiseeLocation',
+            name:'franchisee_location',
+            component:()=> import("@/views/franchiseeLocation.vue")
+        },  {
+            path: '/cmHistroy',
+            name:'cm_history',
+            component:()=> import("@/views/CmHistroy.vue")
+        }
+
+
 
 
     ],
