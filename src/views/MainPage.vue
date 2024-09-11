@@ -158,6 +158,7 @@ export default {
                 this.user_cm = (toJson.user_cm ?? null).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
                 
                 store.cm_amount = toJson.user_cm;
+                store.cmp_amount = toJson.user_cmp;
 
                 // 쿠폰갯수
                 this.coupon_count = toJson.coupon_count;

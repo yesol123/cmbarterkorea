@@ -49,6 +49,12 @@ export default {
         }
     },
     mounted() {
+        // if(localStorage.response.length > 0) {
+        //     localStorage.removeItem('response');
+        // }
+        // else {
+        //     console.log(222)
+        // }
         // let store = useResponseStore();
         // store.datas = [];
 
@@ -145,12 +151,12 @@ header > p {
 }
 .img_holder {
     text-align: center;
-    width: 100%; height: 226px;
-    margin: 50px 0 50px 0;
+    width: 60%;
+    margin: 30px auto;
     /* border: 1px solid #000; */
 }
 .img_holder > img {
-    width: 250px; height: 220px;
+    width: 100%;
 }
 .input_holder {
     width: 100%;
