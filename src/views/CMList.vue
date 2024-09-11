@@ -40,7 +40,7 @@
                 <p style="font-weight: bold;" :style="{color : fontColor(list.user_cm_log_payment_name)}">{{ list.user_cm_log_transaction_type_name }}</p>
             </div>
             <div>
-                <p>작업예정</p> 
+                <p>{{ list.user_cm_log_reason }}</p> 
                 <p style="font-weight: bold;">{{ list.user_cm_log_value }}</p>
             </div>
         </div>
@@ -65,7 +65,6 @@ export default {
             cm : '',
             cmp : '',
             cmlist : '',
-            // whatcolor : []
           
         }
     },
@@ -79,6 +78,7 @@ export default {
             this.cmp = store.cmp_amount.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
 
+        // CM내역
         this.CMList();
     },
     methods : {
@@ -105,10 +105,70 @@ export default {
                 this.cmlist = data.msg;
                 // console.log(this.cmlist[0].party_name);
 
-                // for(let i=0; i<this.cmlist.length; i++) {
-                //     this.whatcolor.push(this.cmlist[i].user_cm_log_payment_name);
-                //     console.log(this.whatcolor);
-                // }
+                for(let i=0; i<this.cmlist.length; i++) {
+                    // console.log(i);
+
+                    const cm = this.cmlist[i];
+
+                    console.log(cm.user_cm_log_reason);
+
+                    cm.user_cm_log_reason = '-';
+
+                    if(cm.user_cm_log_transaction_type_name == '구매(결제 취소)' || cm.user_cm_log_transaction_type_name == '구매') {
+                        // 판매자 가게 이름
+                        cm.user_cm_log_reason = cm.store_name;
+
+                        if(cm.user_cm_log_transaction_type_name == '구매') {
+
+                            // 사용 CM이 0일 경우,
+                            if(cm.user_cm_log_value_t == 0) {
+                                // cm.user_cm_log_value = '쿠폰'; // + 어떤 단위?
+                                cm.user_coupon_value = cm.user_coupon_value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                                cm.user_cm_log_value = `'쿠폰'${cm.user_coupon_value}'CM'`; 
+                            }
+                            else if(cm.user_coupon_value == 0) {
+                                cm.user_cm_log_value;
+                            }
+                            else {
+                                cm.user_coupon_value = cm.user_coupon_value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                                cm.user_cm_log_value = `${cm.user_cm_log_value}'(쿠폰'${cm.user_coupon_value}'CM)'`;
+                            }
+                        }
+                        if(cm.user_cm_log_transaction_type_name == '구매(결제 취소)') {
+                            if(cm.user_cm_log_value_t == 0) {
+                                cm.user_coupon_value = cm.user_coupon_value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                                cm.user_cm_log_value = `'쿠폰'${cm.user_coupon_value}'CM'`; 
+                            }
+                            else if(cm.user_coupon_value == 0) {
+                                cm.user_cm_log_value;
+                            }
+                            else {
+                                cm.user_coupon_value = cm.user_coupon_value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                                cm.user_cm_log_value = `${cm.user_cm_log_value}'(쿠폰'${cm.user_coupon_value}'CM)'`;
+                            }
+                        }
+                    }
+                    else if(cm.user_cm_log_transaction_type_name == '판매(결제 취소)' || cm.user_cm_log_transaction_type_name == '판매') {
+                        cm.trigger_id = cm.trigger_id.slice(0,1) + '*'.repeat(cm.trigger_id.length - 2) + cm.trigger_id.slice(-1);
+                        cm.trigger_name = cm.trigger_name.slice(0,1) + '*'.repeat(cm.trigger_name.length - 2) + cm.trigger_name.slice(-1);
+                        
+                        cm.user_cm_log_reason = cm.trigger_id + '(' + cm.trigger_name + ')';
+                    }
+                    else if(cm.user_cm_log_transaction_type_name == '선물') {
+                        cm.trigger_id = cm.trigger_id.slice(0,1) + '*'.repeat(cm.trigger_id.length - 2) + cm.trigger_id.slice(-1);
+                        cm.trigger_name = cm.trigger_name.slice(0,1) + '*'.repeat(cm.trigger_name.length - 2) + cm.trigger_name.slice(-1);
+                        
+                        cm.user_cm_log_reason = cm.trigger_id + '(' + cm.trigger_name + ')';
+                    }
+                    // else if(cm.user_cm_log_transaction_type_name == '충전(CM)' || cm.user_cm_log_transaction_type_name == '충전(CMP)') {
+
+                    // }
+                    else {
+                        cm.user_cm_log_reason;
+                    }
+
+                } 
+
             })
 
         },
@@ -130,14 +190,6 @@ export default {
             : (this.member === '3') ? '#E4003A'
             : '#ccc'
         },
-        // fontColor() {
-        //     // return(this.whatcolor == '출금') ? 'red'
-        //     // : (this.whatcolor == '입금') ? 'blue'
-        //     // : '#000'
-
-        //     return (document.querySelector('.color').innerHTML == '입금') ? 'red'
-        //     : (document.querySelector('.color').innerHTML == '출금') ? 'blue' : '#000'
-        // }
     }
 }
 </script>
