@@ -110,7 +110,7 @@ export default {
 
                     const cm = this.cmlist[i];
 
-                    console.log(cm.user_cm_log_reason);
+                    // console.log(cm.user_cm_log_reason);
 
                     cm.user_cm_log_reason = '-';
 
