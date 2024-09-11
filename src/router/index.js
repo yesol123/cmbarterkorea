@@ -62,6 +62,11 @@ const router = createRouter({
             path: "/qrscan",      
             name: "QRScan",      
             component: () => import("@/components/QrScan.vue"),    
+        },   
+        {      
+            path: "/cmlist",      
+            name: "CMList",      
+            component: () => import("@/views/CMList.vue"),    
         },      
         {      
             path: "/footer",      

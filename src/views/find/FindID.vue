@@ -85,6 +85,7 @@ export default {
 
                     } else {
                         alert("인증에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+                        router.push({ path : '/'});
                     }
                 }
             );

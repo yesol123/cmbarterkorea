@@ -10,7 +10,7 @@
             <div>
                 <h1 style="font-size: 1.3rem; color: #fff;">씨엠바더</h1>
             </div>
-            <div>
+            <div @click="logout()">
                 <img src="@/assets/logout.png">
             </div>
         </div>
@@ -21,17 +21,21 @@
             <div class="pay_center">
                 <div class="pay_area" :style="{backgroundColor : backColor}" @click="toPayment()">
                     <p v-if="this.member === '1'">{{ user_cm }} CM</p>
-                    <p v-if="this.member === '2'">20,000 CM</p>
+                    <p v-if="this.member === '2'" style="margin: 10px 0;">{{ user_cm }} CM</p>
                     <p v-if="this.member === '3'" style="color: pink;">{{ user_cmp }} CMP</p>
 
                     <p v-if="this.member === '1'">보유쿠폰 <span>{{ coupon_count }}</span>장</p>
-                    <p v-if="this.member === '2'">보유쿠폰 <span>5</span>장</p>
+                    <!-- <p v-if="this.member === '2'">보유쿠폰 <span>{{ coupon_count }}</span>장</p> -->
                     <p v-if="this.member === '3'" style="font-size: 1.5rem; color: yellow;">{{ user_cm }} CM</p>
                     
                     <p>여기를 탭하여 결제하세요.</p>
                 </div>
                 <div class="pay_btn">
+<<<<<<< HEAD
                     <button type="button" @click="goCmHistory()">CM내역</button>
+=======
+                    <button type="button" @click="CMList()">CM내역</button>
+>>>>>>> f9ab0c956354e202ce29764bff7ca12c4e0b7f0d
                     <button type="button" v-if="this.member === '3'" @click="QrScan()">QR결제</button>
                     <button type="button">쿠폰함</button>
                 </div>
@@ -138,14 +142,15 @@ export default {
             formData.append('user_id', store.user_id);
 
             const url = process.env.VUE_APP_API_URL;
-
             fetch(url + 'api/common/main.php', {
             method : 'POST',
             body : formData
             })
             .then(response => response.json())
             .then(data => {
+                console.log('jsondata???');
                 console.log(data);
+
                 let toJson = JSON.parse(data.msg);
                 console.log(toJson);
 
@@ -154,7 +159,10 @@ export default {
                 
                 // 유저CM
                 this.user_cm = (toJson.user_cm ?? '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                this.user_cm = (toJson.user_cm ?? null).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                
                 store.cm_amount = toJson.user_cm;
+                store.cmp_amount = toJson.user_cmp;
 
                 // 쿠폰갯수
                 this.coupon_count = toJson.coupon_count;
@@ -226,11 +234,13 @@ export default {
             })
             
         },
+        // 결제 페이지로 이동
         toPayment() {
             console.log(4444);
 
             this.$refs.payment.openpopup();
         },
+        // QR결제 페이지로 이동
         QrScan() {
             this.$router.push({ path : '/qrscan'});
         },
@@ -239,6 +249,17 @@ export default {
         },
         goCmHistory(){
             this.$router.push({ path:'/cmHistroy'})
+            this.$router.push({ path : '/qrscan' });
+        },
+        // CM내역으로 이동
+        CMList() {
+            this.$router.push({ path : '/cmlist' });
+        },
+        // 로그아웃
+        logout() {
+            // localStorage.setItem('response', null);
+            localStorage.removeItem('response');
+            this.$router.push({ path : '/' });
         }
     },
     computed: {

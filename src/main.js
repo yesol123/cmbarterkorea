@@ -3,6 +3,7 @@
 import { createApp } from 'vue';
 // Pinia
 import { createPinia } from 'pinia';
+import piniaPersist from 'pinia-plugin-persist';
 import App from '@/App.vue';
 import mitt from 'mitt'; // mitt 임포트
 // router
@@ -38,9 +39,13 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
 const app = createApp(App);
+const pinia = createPinia();
+pinia.use(piniaPersist);
+
+app.use(pinia);
 
 app.use(router);
-app.use(createPinia());
+// app.use(createPinia());
 app.use(PrimeVue, {theme : {preset: Aura}});
 app.component('Checkbox', Checkbox);
 app.component('Button', Button);
