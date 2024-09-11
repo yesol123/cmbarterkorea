@@ -153,11 +153,12 @@ export default {
             );
         },
         toHome() {
-            this.$router.push({ path : '/'});
+            localStorage.removeItem('response');
+            this.$router.push({ path : '/join'});
 
             // 뒤로가기 눌렀을때 Pinia 비워주기
-            const store = useResponseStore();
-            store.datas = '';
+            // const store = useResponseStore();
+            // store.datas = '';
         },
         // callback(response) {
         //     // 콜백함수 정의

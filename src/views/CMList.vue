@@ -20,7 +20,7 @@
 
             <!-- 셀렉트 및 결제취소 버튼 -->
             <div class="select">
-                <select>
+                <select v-model="selectlist" @change="Search()">
                     <option>전체</option>
                     <option>구매</option>
                     <option>선물</option>
@@ -28,7 +28,7 @@
                     <option v-if="this.member == '3'">충전</option>
                     <option v-if="this.member == '2'">수당</option>
                 </select>
-
+                <!-- {{ selectlist }} -->
                 <button type="button">결제 취소</button>
             </div>
         </div>
@@ -65,6 +65,7 @@ export default {
             cm : '',
             cmp : '',
             cmlist : '',
+            selectlist : '전체'
           
         }
     },
@@ -91,6 +92,22 @@ export default {
 
             formData.append('type', 'cm_log');
             formData.append('user_index', store.user_index);
+
+            if(this.selectlist == '구매') {
+                formData.append('user_cm_log_transaction_type_name', '구매');
+            }
+            if(this.selectlist == '선물') {
+                formData.append('user_cm_log_transaction_type_name', '선물');
+            }
+            if(this.selectlist == '판매') {
+                formData.append('user_cm_log_transaction_type_name', '판매');
+            }
+            if(this.selectlist == '충전') {
+                formData.append('user_cm_log_transaction_type_name', '충전');
+            }
+            if(this.selectlist == '수당') {
+                formData.append('user_cm_log_transaction_type_name', '수당');
+            }
 
             const url = process.env.VUE_APP_API_URL;
 
@@ -180,6 +197,13 @@ export default {
             } else {
                 return '#000';
             }
+        },
+        // 검색하기
+        Search() {
+            // alert(list);
+            // this.selectlist = list;
+            // console.log(this.selectlist);
+            this.CMList();
         }
 
     },

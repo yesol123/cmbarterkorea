@@ -56,6 +56,7 @@ export default {
         //     console.log(222)
         // }
         // let store = useResponseStore();
+        // console.log(store.state);
         // store.datas = [];
 
         // window.addEventListener('beforeunload', this.unLoadEvent);
