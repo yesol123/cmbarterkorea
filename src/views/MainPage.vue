@@ -31,7 +31,7 @@
                     <p>여기를 탭하여 결제하세요.</p>
                 </div>
                 <div class="pay_btn">
-                    <button type="button" @click="CMList()">CM내역</button>
+                    <button type="button" @click="toCMList()">CM내역</button>
                     <button type="button" v-if="this.member === '3'" @click="QrScan()">QR결제</button>
                     <button type="button">쿠폰함</button>
                 </div>
@@ -44,21 +44,33 @@
             </div>
         </div>
         <div class="icons">
-            <div class="icon">
+            <div class="icon" v-if="this.member != '2'">
                 <img src="@/assets/gift.png">
                 <p>쿠폰이벤트</p>
             </div>
-            <div class="icon">
+            <div class="icon" v-if="this.member != '2'">
                 <img src="@/assets/gift.png">
                 <p>CM라이프</p>
             </div>
-            <div class="icon" v-if="this.member == '3'">
+            <div class="icon" v-if="this.member == '3'" @click="toCMCharge()"> 
                 <img src="@/assets/gift.png">
                 <p>CM충전</p>
             </div>
             <div class="icon" v-if="this.member == '1'">
                 <img src="@/assets/gift.png">
                 <p>가맹점신청</p>
+            </div>
+            <div class="icon" v-if="this.member == '2'">
+                <img src="@/assets/gift.png">
+                <p>중개수수료</p>
+            </div>
+            <div class="icon" v-if="this.member == '2'">
+                <img src="@/assets/gift.png">
+                <p>산하 사업자</p>
+            </div>
+            <div class="icon" v-if="this.member == '2'">
+                <img src="@/assets/gift.png">
+                <p>산하 가맹점</p>
             </div>
             <div class="icon" @click="goHomePage()">
                 <img src="@/assets/gift.png">
@@ -74,11 +86,11 @@
             </div>
             <div class="icon">
                 <img src="@/assets/gift.png">
-                <p>카카오 상담</p>
+                <p>카톡상담</p>
             </div>
-            <div class="icon" v-if="this.member == '3'">
+            <div class="icon">
                 <img src="@/assets/gift.png">
-                <p>이벤트등록</p>
+                <p>쇼핑몰</p>
             </div>
         </div>
         <div class="commercial">
@@ -244,8 +256,11 @@ export default {
             window.open('https://www.cmbarter.co.kr/default/main/main.php','_blank') 
         },
         // CM내역으로 이동
-        CMList() {
+        toCMList() {
             this.$router.push({ path : '/cmlist' });
+        },
+        toCMCharge() {
+            this.$router.push({ path : '/charge' });
         },
         // 로그아웃
         logout() {

@@ -86,6 +86,7 @@ export default {
         toMain() {
             this.$router.push({ path : '/main' });
         },
+        // CM내역
         CMList() {
             let store = useResponseStore();
             const formData = new FormData();
