@@ -1,7 +1,7 @@
 <template>
     <div class="wrap">
         <header>
-            <button type="button" class="goback_btn"><img src="@/assets/go_back_btn.png"></button>
+            <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/go_back_btn.png"></button>
             <p>충전</p>
         </header>
         <!-- 현재CM -->
@@ -69,7 +69,9 @@ export default {
 
     },
     methods : {
-
+        toMain() {
+            this.$router.push({ path : '/main' });
+        }
     }
 }
 
@@ -223,6 +225,6 @@ header > p {
     background-color: #1bce0b;
     border: none;
     color: #fff;
-    border-radius: 7px;
+    border-radius: 10px;
 }
 </style>
