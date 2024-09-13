@@ -1,11 +1,11 @@
 <template>
 
 <header class="Inquiry_header_title">
-    <RouterLink to="/mypage1">
+    <RouterLink :to="`/mypage/${this.member}`">
       <img src="@/assets/icon_arrow_left.svg" alt="Back" />
     </RouterLink>
     <h3>Q&A</h3>
-    <RouterLink to="/mypage1">
+    <RouterLink :to="`/mypage/${this.member}`">
       <img src="@/assets/icon_close.svg" alt="Close" />
     </RouterLink>
   </header>
@@ -28,6 +28,7 @@
 
 
 <div v-if="showModal" class="modal">
+  <p class="caution">알림</p>
       <p>문의 등록하시겠습니까?</p>
       <button @click="showModal2 = true">확인</button>
       <button @click="cancelInsert">취소</button>
@@ -35,6 +36,7 @@
 
 
   <div v-if="showModal2" class="modal">
+    <p class="caution">알림</p>
       <p>문의 등록이 정상적으로 완료 되었습니다.</p>
       <button @click="confirmInsert">확인</button>
   </div>
@@ -51,11 +53,18 @@ export default{
     name: 'InquiryPage',
     data(){
         return{
+            member:'',
             title:'',
             contents:'',
             showModal: false,
             showModal2: false
         }
+    },
+    
+    mounted(){
+          // store에서 member 값을 가져와서 data에 할당
+        let store = useResponseStore();
+        this.member = store.member;
     },
     methods:{
 
@@ -259,7 +268,9 @@ button{
   text-align: center;
   box-sizing: border-box;
 }
-
+.caution{
+    margin-bottom: 20px;
+ }
 
 .modal button {
   margin: 10px;

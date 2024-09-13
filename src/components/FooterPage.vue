@@ -46,15 +46,23 @@
 
 <script>
 import router from '@/router/index.js';
+import { useResponseStore } from '@/store/response.js'
+
 export default {
   data() {
     return {
-
+      member : '',
     }
+  },
+  mounted(){
+    let store = useResponseStore();
+    this.member = store.member;
+  
+
   },
   methods : {
      goMypage(){
-      router.push('/MyPage1')
+      router.push('/MyPage/'+this.member)
      }
     // test
     // to() {

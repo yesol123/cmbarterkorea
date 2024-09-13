@@ -31,9 +31,13 @@
                     <p>여기를 탭하여 결제하세요.</p>
                 </div>
                 <div class="pay_btn">
+<<<<<<< HEAD
+                    <button type="button" @click="CMList()">CM내역</button>
+=======
                     <button type="button" @click="toCMList()">CM내역</button>
+>>>>>>> 2230595c24beac7f5c87b17c96a69ffd554eaa00
                     <button type="button" v-if="this.member === '3'" @click="QrScan()">QR결제</button>
-                    <button type="button">쿠폰함</button>
+                    <button type="button" @click="CouponBox()">쿠폰함</button>
                 </div>
             </div>
         </div>
@@ -258,6 +262,9 @@ export default {
         // CM내역으로 이동
         toCMList() {
             this.$router.push({ path : '/cmlist' });
+        },
+        CouponBox(){
+            this.$router.push({ path : '/couponbox' });
         },
         toCMCharge() {
             this.$router.push({ path : '/charge' });

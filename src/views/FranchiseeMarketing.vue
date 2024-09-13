@@ -31,33 +31,118 @@
   <hr class="line_l">
 
 <div class="agree_terms m_T30 m_B30">
-    <p>약관 동의일 :<span class="eng"></span></p>
-        <button>이용 동의 </button>
-        <button>이용 동의 철회</button>
-    <p>
-        정보제공 및 이용 동의를 철회한 이후부터는 해당 서비스에서 회원님의 정보를 조회할 수 없습니다.</p>
+    <p>약관 동의일 :<span class="eng">{{ this.agreementDate }}</span></p>
+        <div v-if="yesorno == 'N'" class="N">
+            <button @click="showModal3 = true" >이용 동의 </button>
+        </div>
+       <div v-if="yesorno == 'Y'"  class="Y">
+        <button @click="showModal = true" >이용 동의 철회</button>
+       </div>
+      
+    <p>정보제공 및 이용 동의를 철회한 이후부터는 해당 서비스에서 회원님의 정보를 조회할 수 없습니다.</p>
 </div>
+
+<!--  철회 과정 modal1,modal2 -->
+<div v-if="showModal" class="modal">
+      <p>마케팅 정보 수집 및 이용 동의를 철회하시겠습니까?</p>
+      <p>마케팅 정보 수집 및 이용 동의를 철회한 이후부터는 해당 서비스에서 회원님의 정보를 조회할 수 없습니다.</p>
+      <button @click="confirmRevoke">확인</button>
+      <button @click="cancel">취소</button>
+  </div>
+
+
+  <div v-if="showModal2" class="modal">
+      <p>철회가 완료 되었습니다.</p>
+      <button @click="cancelAgree">확인</button>
+  </div>
+
+  <!--  동의 과정 modal3 -->
+  <div v-if="showModal3" class="modal">
+      <p>마케팅 정보 수집 및 이용동의를 동의하시겠습니까?</p>
+      <button @click="agree">확인</button>
+  </div>
+
 </template>
 
 <script>
-//import { useResponseStore } from '@/store/response.js';
+import { useResponseStore } from '@/store/response.js';
 
 
 export default{
     name:'franchisee_Marketing',
     data(){
         return{
-            yesorno:[]
+            yesorno:null, // 동의인지 거부인지 상태를 저장
+            agreementDate:null, // 약관 동의일
+            showModal:false,
+            showModal2: false,
+            showModal3:false
+        }
+    },
+
+    methods:{
+        cancelAgree(){
+            let store = useResponseStore();
+            const formData = new FormData();
+            this.yesorno = 'N'
+            formData.append('type','user_marketing_checked')
+            formData.append('user_index',store.user_index)
+            formData.append('user_marketing_checked',this.yesorno)
+            console.log(this.yesorno);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/setting/conditions.php', {
+                method: 'POST',
+                body: formData
+                })
+                .then(response => response.json())
+                .then(result =>{
+                    console.log('msg',result);
+                })
+           
+            this.showModal2 = false
+        },
+        cancel(){
+        this.showModal = false;
+        },
+
+        confirmRevoke(){
+            this.showModal = false; // 모달 1 닫기
+            this.showModal2 = true; // 모달 2 열기
+
+        },
+        agree(){
+            let store = useResponseStore();
+            const formData = new FormData();
+            this.yesorno = 'Y'
+            formData.append('type','user_marketing_checked')
+            formData.append('user_index',store.user_index)
+            formData.append('user_marketing_checked',this.yesorno)
+            console.log(this.yesorno);
+            
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/setting/conditions.php', {
+                method: 'POST',
+                body: formData
+                })
+                .then(response => response.json())
+                .then(result =>{
+                    console.log('msg',result);
+                })
+                this.showModal3 = false
         }
     },
     mounted(){
 
-        //let store = useResponseStore();
+        let store = useResponseStore();
 
         const formData = new FormData();
 
         formData.append('type','conditions_get')
-        formData.append('user_index',1)
+        formData.append('user_index',store.user_index)
 
         const url = process.env.VUE_APP_API_URL;
 
@@ -65,15 +150,15 @@ export default{
                 method: 'POST',
                 body: formData
                 })
-                .then(response => response)
+                .then(response => response.json())
                 .then(result =>{
-                    console.log(result.msg);
-                    
-                    
+                    console.log('msg',result.msg[0]);
+                    this.yesorno = result.msg[0].user_marketing_checked
+                    this.agreementDate = result.msg[0].user_create_time
                 })
 
 
-}
+    }
 }
 
 </script>
@@ -83,7 +168,7 @@ export default{
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 
 
-*ul,li,a,p{
+*ul,li,a,p,button{
     font-family: "Noto Sans KR", sans-serif;
     list-style: none;
     text-decoration: none;
@@ -179,10 +264,63 @@ ul > li > a{
     font-weight: 400;
 }
 
-.agree_terms > button{
-    padding: 15px;
+.Y,.N{
+    display: flex;
+    justify-content: center;
+}
+
+.agree_terms > div > button{
+    padding: 10px 15px;
     border: 1px solid gray;
     border-radius: 25px;
     background-color: transparent;
+    font-size: 16px;
 }
+
+
+.eng{
+    font-size: 10px;
+}
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  position: fixed; /* 고정 위치 */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -70%); /* 화면의 중앙에 위치 */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  width: 400px;
+  max-width: 90%;
+  padding: 30px 20px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+
+.modal button {
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #1749c2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
 </style>

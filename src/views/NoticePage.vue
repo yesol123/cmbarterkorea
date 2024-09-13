@@ -1,10 +1,10 @@
 <template>
   <header class="Notice_header_title">
-    <RouterLink to="/mypage1">
+    <RouterLink :to="`/mypage/${member}`">
       <img src="@/assets/icon_arrow_left.svg" alt="Back" />
     </RouterLink>
     <h3>공지사항</h3>
-    <RouterLink to="/mypage1">
+    <RouterLink :to="`/mypage/${member}`">
       <img src="@/assets/icon_close.svg" alt="Close" />
     </RouterLink>
   </header>
@@ -35,6 +35,7 @@
 </template>
 
 <script setup>
+import { useResponseStore } from '@/store/response.js';
 import router from "@/router/index.js";
 import { ref, onMounted } from "vue";
 import DataTable from "datatables.net-vue3";
@@ -45,8 +46,10 @@ DataTable.use(DataTablesLib);
 
 // eslint-disable-next-line no-unused-vars
 let dt;
+let store = useResponseStore();
 const data = ref([]);
 const table = ref();
+const member = store.member
 const columns = [
   {
     data: "notice_title",

@@ -1,6 +1,6 @@
 <template>
    <header class="changePin_header_title">
-            <RouterLink to="/mypage1"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
+            <RouterLink :to="`/mypage/${this.member}`"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
             <h3> PIN 번호 변경</h3>
         </header>
 
@@ -30,6 +30,7 @@ export default{
     name: 'ChangePin1',
     data(){
         return{
+                member :'',
                 password: ''
     }
         
@@ -39,6 +40,7 @@ export default{
         goNext(){
 
             let store = useResponseStore();
+
             const formData = new FormData();
 
             formData.append('type', 'pw_check');
@@ -70,9 +72,16 @@ export default{
         }
        
     },
+    mounted() {
+        // store에서 member 값을 가져와서 data에 할당
+        let store = useResponseStore();
+        this.member = store.member;
+    },
     
 
     computed:{
+       
+
         emptypassword(){
             return this.password !==''
         }
