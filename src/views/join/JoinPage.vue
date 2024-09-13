@@ -33,6 +33,11 @@
                         <button type="button"><img src="@/assets/go_for_btn.png"></button>
                     </div>
                     <div>
+                        <Checkbox v-model="location" :binary="true" inputId="location_agreed" name="location_agreed" @change="handleChange()"/>
+                        <label for="location_agreed"> [필수] 위치기반 서비스 이용 약관 동의 </label>
+                        <button type="button"><img src="@/assets/go_for_btn.png"></button>
+                    </div>
+                    <div>
                         <Checkbox v-model="marketing" :binary="true" inputId="marketing_agreed" name="marketing_agreed" @change="handleChange()"/>
                         <label for="marketing_agreed"> [선택] 마케팅 정보 수집/이용 동의 </label>
                         <button type="button"><img src="@/assets/go_for_btn.png"></button>
@@ -40,11 +45,6 @@
                     <div>
                         <Checkbox v-model="advertise" :binary="true" inputId="advertise_agreed" name="advertise_agreed" @change="handleChange()"/>
                         <label for="advertise_agreed"> [선택] 광고성 정보 수신 동의 </label>
-                        <button type="button"><img src="@/assets/go_for_btn.png"></button>
-                    </div>
-                    <div>
-                        <Checkbox v-model="location" :binary="true" inputId="location_agreed" name="location_agreed" @change="handleChange()"/>
-                        <label for="location_agreed"> [선택] 위치기반 서비스 이용 약관 동의 </label>
                         <button type="button"><img src="@/assets/go_for_btn.png"></button>
                     </div>
                 </div>
@@ -96,7 +96,7 @@ export default {
         },
         //필수약관 유효성검사
         confirmCheck() {
-            if(this.service === false || this.privacy === false) {
+            if(this.service === false || this.privacy === false || this.location === false) {
                 alert('필수항목을 체크해주세요.');
                 return false;
             } else {
@@ -159,19 +159,20 @@ export default {
             console.log(store.datas);
         },
         toHome() {
+            localStorage.removeItem('response');
             this.$router.push({ path : '/'});
 
             // 뒤로가기 눌렀을때 Pinia 비워주기
-            const store = useResponseStore();
-            store.datas = '';
+            // const store = useResponseStore();
+            // store.datas = [];
         }
     },
     computed: {
         buttonColor() {
-            return this.AllCheck || (this.service && this.privacy) ? '#1bce0b' : '#ccc';
+            return this.AllCheck || (this.service && this.privacy && this.location) ? '#1bce0b' : '#ccc';
         },
         fontColor() {
-            return this.AllCheck || (this.service && this.privacy) ? '#fff' : '#000';
+            return this.AllCheck || (this.service && this.privacy && this.location) ? '#fff' : '#000';
         }
     },
 }

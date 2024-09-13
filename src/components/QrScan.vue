@@ -165,7 +165,7 @@ export default {
 
                 if(data.code == '200') {
                     alert(data.msg);
-                    router.push({ path : '/main' });
+                    router.push({ path : '/cmlist' });
                     return false;
                 }
                 if(data.code == '500') {

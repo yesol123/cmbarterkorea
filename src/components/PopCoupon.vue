@@ -66,6 +66,7 @@
                 <p style="border: 1px solid #ccc; width: 170px; height: 30px; margin: 0 auto; border-radius: 5px; font-size: 0.9rem; font-weight: bold; line-height: 28px;">{{ qrdigit }}</p>
                 <p style="font-size: 0.9rem;">결제금액</p>
                 <p style="font-weight: bold; font-size: 1.2rem;">{{ commaprice }} CM</p>
+                <button type="button" @click="toCMList()">확인</button>
             </div>
         </div>
     </div>
@@ -295,6 +296,9 @@ export default {
             console.log('결제금액 : ' + this.price);
             console.log('쿠폰인덱스 : ' + this.coupon_index);
 
+        },
+        toCMList() {
+            this.$router.push({ path : '/cmlist' });
         }
     }
 }
@@ -478,5 +482,13 @@ export default {
     width: 100%;
     text-align: center;
     /* border: 1px solid red; */
+}
+.qr_wrap button {
+    width: 100%; height: 35px;
+    border-radius: 7px;
+    border: none;
+    background-color: #1bce0b;
+    color: #fff;
+    margin-top: 20px;
 }
 </style>

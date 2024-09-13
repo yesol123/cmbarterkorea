@@ -69,6 +69,11 @@ const router = createRouter({
             component: () => import("@/views/CMList.vue"),    
         },      
         {      
+            path: "/charge",      
+            name: "CMCharge",      
+            component: () => import("@/views/CMCharge.vue"),    
+        },      
+        {      
             path: "/footer",      
             name: "Footer",      
             component: () => import("@/components/FooterPage.vue"),    
