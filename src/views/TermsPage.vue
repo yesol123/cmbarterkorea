@@ -2,7 +2,7 @@
     <section class="terms">
 
         <header class="Terms_header_title">
-                  <RouterLink to="/main"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
+                  <RouterLink :to="`/mypage/${this.member}`"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
                   <h3>약관 및 이용 동의</h3>
           </header>
       
@@ -20,12 +20,24 @@
 
 
 <script>
+import { useResponseStore } from '@/store/response.js';
 
 
 
 
 export default{
-    name:'TermsPage'
+    name:'TermsPage',
+    data(){
+        return{
+            member: '',
+
+        }
+    },
+    mounted(){
+          // store에서 member 값을 가져와서 data에 할당
+        let store = useResponseStore();
+        this.member = store.member;
+    }
 }
 </script>
 <style scoped>

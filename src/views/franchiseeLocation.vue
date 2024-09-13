@@ -169,15 +169,42 @@
                         <div class="agree_terms m_T30 m_B30">
                             <p>
                                 약관 동의일 :
-                                <span class="eng"></span></p>
+                                <span class="eng">{{ this.agreementDate }}</span></p>
                             <p>
                                 정보제공 및 이용 동의를 철회한 이후부터는 해당 서비스에서 회원님의 정보를 조회할 수 없습니다.</p>
                         </div>
 </template>
 <script>
+import { useResponseStore } from '@/store/response.js';
+
 export default{
     name:'franchisee_location',
+    data(){
+        return{
+            agreementDate:null, // 약관 동의일
+        }
+    },
+    mounted(){
+        
+        let store = useResponseStore();
 
+        const formData = new FormData();
+
+        formData.append('type','conditions_get')
+        formData.append('user_index',store.user_index)
+
+        const url = process.env.VUE_APP_API_URL;
+
+        fetch(url + 'api/setting/conditions.php', {
+                method: 'POST',
+                body: formData
+                })
+                .then(response => response.json())
+                .then(result =>{
+                    console.log('msg',result.msg[0]);
+                    this.agreementDate = result.msg[0].user_create_time
+                })
+    }
 }
 </script>
 <style scoped>

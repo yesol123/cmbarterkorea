@@ -31,13 +31,9 @@
                     <p>여기를 탭하여 결제하세요.</p>
                 </div>
                 <div class="pay_btn">
-<<<<<<< HEAD
-                    <button type="button" @click="goCmHistory()">CM내역</button>
-=======
                     <button type="button" @click="CMList()">CM내역</button>
->>>>>>> f9ab0c956354e202ce29764bff7ca12c4e0b7f0d
                     <button type="button" v-if="this.member === '3'" @click="QrScan()">QR결제</button>
-                    <button type="button">쿠폰함</button>
+                    <button type="button" @click="CouponBox()">쿠폰함</button>
                 </div>
             </div>
         </div>
@@ -247,13 +243,13 @@ export default {
         goHomePage(){
             window.open('https://www.cmbarter.co.kr/default/main/main.php','_blank') 
         },
-        goCmHistory(){
-            this.$router.push({ path:'/cmHistroy'})
-            this.$router.push({ path : '/qrscan' });
-        },
         // CM내역으로 이동
         CMList() {
             this.$router.push({ path : '/cmlist' });
+        },
+        CouponBox(){
+            this.$router.push({ path : '/couponbox' });
+
         },
         // 로그아웃
         logout() {

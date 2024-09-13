@@ -89,9 +89,9 @@ const router = createRouter({
             component: () => import("@/components/TestingPage.vue"),    
         },     
         {      
-            path: "/mypage1",      
-            name: "mypage1",      
-            component: () => import("@/views/Mypage1.vue"),    
+            path: "/mypage/:id",      
+            name: "mypage",      
+            component: () => import("@/views/Mypage.vue"),    
         },     
         {      
             path: "/changepw",      
@@ -173,13 +173,40 @@ const router = createRouter({
             path: '/Terms/FranchiseeLocation',
             name:'franchisee_location',
             component:()=> import("@/views/franchiseeLocation.vue")
-        },  {
-            path: '/cmHistroy',
-            name:'cm_history',
-            component:()=> import("@/views/CmHistroy.vue")
-        }
+        },  
+        {
+            path: '/buisness',
+            name:'BuisnessPgae',
+            component:()=> import("@/views/BuisnessPage.vue")
+        },  
+        {
+            path: '/franchiseeInfo',
+            name:'FranchiseeInfo',
+            component:()=> import("@/views/FranchiseeInfo.vue")
+        },  
+        {
+            path: '/couponbox',
+            name:'CouponBox',
+            component:()=> import("@/views/CouponBox.vue")
+        },  
 
-
+        {
+            path: '/subPw',
+            name:'subPw',
+            component:()=> import("@/views/SubPw.vue")
+        },  
+        
+        {
+            path: '/subId',
+            name:'subId',
+            component:()=> import("@/views/SubId.vue")
+        },  
+        
+        {
+            path: '/ChangeFranchise',
+            name:'ChangeFranchise',
+            component:()=> import("@/views/ChangeFranchise.vue")
+        },  
 
 
     ],

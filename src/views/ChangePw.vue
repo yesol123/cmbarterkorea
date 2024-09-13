@@ -1,6 +1,6 @@
 <template>
      <header class="changePw_header_title">
-            <RouterLink to="/mypage1"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
+            <RouterLink :to="`/mypage/${this.member}`"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
             <h3> 비밀번호 변경</h3>
         </header>
 
@@ -25,10 +25,24 @@
             <p>*영문, 숫자, 특수문자 중 2종류 이상을 조합하여 최소 10자리 이상 또는 3종류 이상을 조합하여 최소 8자리 이상의 길이로 구성하세요.</p>
             <p>*연속적인 숫자나 생일, 전화번호 등 추측하기 쉬운 개인 정보 및 아이디와 비슷한 비밀번호는 사용하지 않는 것이 안전합니다.</p>
         </div>
+
+
         <div>
-            <button :class="{ 'active': isButtonActive }" @click="confirm()">확인</button>
+            <button :class="[{'active': isButtonActive}, 'origin']" @click="showModal = true">확인</button>
         </div>
+
+
+    
+
+        
+        <div v-if="showModal" class="modal">
+  <p class="caution">알림</p>
+      <p>비밀번호를 수정하였습니다.</p>
+      <button @click="confirm()">확인</button>
+  </div>
+
     </section>
+
 
 </template>
 
@@ -40,11 +54,20 @@ export default {
     name: 'changePassword',
     data(){
         return{
-            password:'',
-            newpassword:'',
-            newpassword_confirm:'',
-            isbuttonActive:false
+            member:'',
+            password:'',//현재비밀번호
+            newpassword:'', //새로운 비밀번호
+            newpassword_confirm:'', //새로운 비밀번호 확인
+            isbuttonActive:false,
+            showModal : false
         }
+    },
+
+    
+    mounted() {
+        // store에서 member 값을 가져와서 data에 할당
+        let store = useResponseStore();
+        this.member = store.member;
     },
     computed:{
         isPasswordMatching() {
@@ -72,8 +95,6 @@ export default {
 
             let store = useResponseStore();
 
-            // console.log(this.password);
-
             const formData = new FormData();
 
             formData.append('type', 'user_pw_change');
@@ -96,7 +117,7 @@ export default {
             }
             
             if(data.code == 200 ){
-                alert(data.msg)
+               // alert(data.msg)
                  router.push({path:'/main'})
             }
             
@@ -190,7 +211,7 @@ div > input:focus {
     margin-top: 5px;
 }
 
-button{
+.origin{
     width: 95%;
     align-items: center;
     padding: 10px;
@@ -205,7 +226,7 @@ button{
 }
 
 
-button.active {
+.origin.active {
     background-color: #4A9EFA;
     border-color: #4A9EFA;
     cursor: pointer; /* 활성화 시 마우스 커서 */
@@ -217,4 +238,46 @@ button.active {
     margin-top: 5px;
 }
 
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  position: fixed; /* 고정 위치 */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -70%); /* 화면의 중앙에 위치 */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  width: 400px;
+  max-width: 90%;
+  padding: 30px 20px;
+  text-align: center;
+  box-sizing: border-box;
+}
+.caution{
+    margin-bottom: 20px;
+ }
+
+.modal button {
+  margin: 10px auto 0;
+  padding: 10px 20px;
+  background-color: #1749c2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 30%;
+}
 </style>
