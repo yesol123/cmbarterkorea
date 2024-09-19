@@ -129,7 +129,7 @@ header > p {
 
 }
 .qrinput {
-    border: ;
+    /* border: ; */
 }
 input {
     width: 220px; height: 30px;

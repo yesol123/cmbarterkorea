@@ -229,9 +229,13 @@ export default {
         // 결제취소버튼
         Cancellation() {
             this.cancel = true;
+            if(this.selectlist != '구매') {
+                this.selectlist = '전체';
+                this.CMList();
+            }
             this.CMList();
         },
-        // 
+        // 결제취소 대상 선택
         SelectCancel(price) {
             if(this.cancel == true) {
                 console.log(price);
@@ -241,9 +245,11 @@ export default {
                 document.getElementById('popup').style.display = 'flex';
             }
         },
+        // 결제취소 취소
         Deny() {
             document.getElementById('popup').style.display = 'none';
         },
+        // 결제취소 확인
         Confirm() {
             this.$router.push({ path : 'cmpin'});
         }
