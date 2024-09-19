@@ -125,12 +125,11 @@ header > p {
     font-weight: bold;
     margin-bottom: 10%;
 }
-.qr_wrap > p:nth-of-type(2) {
+/* .qr_wrap > p:nth-of-type(2) {
 
 }
 .qrinput {
-    /* border: ; */
-}
+} */
 input {
     width: 220px; height: 30px;
     border-radius: 7px;

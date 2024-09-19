@@ -84,6 +84,11 @@ const router = createRouter({
             component: () => import("@/views/CMCharge.vue"),    
         },      
         {      
+            path: "/location",      
+            name: "FindLocation",      
+            component: () => import("@/components/FindLocation.vue"),    
+        },      
+        {      
             path: "/footer",      
             name: "Footer",      
             component: () => import("@/components/FooterPage.vue"),    
