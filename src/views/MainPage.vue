@@ -33,7 +33,8 @@
                 <div class="pay_btn">
                     <button type="button" @click="toCMList()">CM내역</button>
                     <button type="button" v-if="this.member === '3'" @click="QrScan()">QR결제</button>
-                    <button type="button" @click="CouponBox()">쿠폰함</button>
+                    <button type="button" v-if="this.member != '3'" @click="CouponBox()">쿠폰함</button>
+                    <button type="button" v-if="this.member === '3'">쿠폰발행함</button>
                 </div>
             </div>
         </div>
