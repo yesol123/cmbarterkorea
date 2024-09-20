@@ -1,13 +1,15 @@
 <template>
     <h1>Kakao Map Test</h1>
-    <div id="map" style="width:500px;height:400px;"></div>
+    <div id="map" style="width:90%;height:350px;"></div>
+    <button type="button" @click="MoveLocation()">위치이동</button>
 </template>
 
 <script>
 export default {
     data() {
         return {
-
+            x : 126.570667,
+            y : 33.450701,
         }
     },
     mounted() {
@@ -20,7 +22,7 @@ export default {
             
             // 지도생성
             const options = {
-                center : new window.kakao.maps.LatLng(33.450701, 126.570667),
+                center : new window.kakao.maps.LatLng(this.y, this.x),
                 level : 3
             };
 
@@ -43,7 +45,7 @@ export default {
 
             // 내위치 주변으로 원생성
             const circle = new window.kakao.maps.Circle({
-                center : new window.kakao.maps.LatLng(33.450701, 126.570667),
+                center : new window.kakao.maps.LatLng(this.y, this.x),
                 radius : 100,
                 strokeWeight : 1,
                 strokeColor : 'blue',
@@ -56,6 +58,12 @@ export default {
             circle.setMap(map);
 
         },
+        MoveLocation() {
+            this.x = 127.108646701009;
+            this.y = 37.3994643092008;
+
+            this.GetLocation();
+        }
     }
 }
 
