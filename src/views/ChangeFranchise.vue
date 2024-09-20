@@ -11,18 +11,31 @@
 <section class="info_area">
     <ul>
         <li><RouterLink to ='/ChangeFranchise' > 기본 정보</RouterLink></li>
-        <li><RouterLink to ='/#'> 정보 변경</RouterLink></li>
+        <li><RouterLink to ='/storeInformation'> 정보 변경</RouterLink></li>
   </ul>
 
 
   <p class="title">매장 이미지</p>
   <ul class="show_img">
+    <li><p style="margin: 5px 0;">최대 9장</p></li>
+    <div class="selected_nine">
     <li><img src="@/assets/1.jpg" alt=""></li>
     <li><img src="@/assets/2.jpg" alt=""></li>
     <li><img src="@/assets/3.jpg" alt=""></li>
     <li><img src="@/assets/1.jpg" alt=""></li>
     <li><img src="@/assets/2.jpg" alt=""></li>
     <li><img src="@/assets/3.jpg" alt=""></li>
+    <li><img src="@/assets/3.jpg" alt=""></li>
+
+    <li><img src="@/assets/3.jpg" alt=""></li>
+
+    <li><img src="@/assets/3.jpg" alt=""></li>
+
+    <li><img src="@/assets/3.jpg" alt=""></li>
+
+
+    </div>
+   
   </ul>
 
 
@@ -148,10 +161,10 @@ ul{
 }
 
 .info_area{
- 
  width: 95%;
  margin: 0 auto;
 }
+
 .info_area > ul:nth-child(1){
 margin-top: 100px;
  display: flex;
@@ -194,15 +207,41 @@ text-decoration: none;
 
 .show_img{
     display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
+
 
 .show_img li {
-    width: 40%;
+    width: 20%;
 }
 .show_img li img{
-    width: 100%;
+    width: 170%;
 }
 
+.selected_nine {
+    display: flex;
+    overflow-x: auto; /* 가로 스크롤 활성화 */
+    white-space: nowrap; /* 줄바꿈 방지 */
+}
+
+.selected_nine li {
+    flex: 0 0 auto; /* 아이템 크기가 줄어들지 않게 고정 */
+    margin-right: 10px; /* 이미지 간 간격 추가 */
+    text-align: center;
+    font-size: 18px;
+    width: 200px; /* 각 이미지의 너비 고정 */
+    height: 150px; /* 각 이미지의 높이 고정 */
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.selected_nine li img {
+    width: 100%; /* 이미지가 li 요소의 크기에 맞게 */
+    height: 100%; /* 높이도 동일하게 맞춤 */
+    object-fit: cover; /* 이미지 비율을 유지하며 잘 맞도록 설정 */
+}
 .show_img,.show_store_info{
     border-top: 1px solid #B1B1B1;
     width: 100%;

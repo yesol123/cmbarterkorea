@@ -17,15 +17,14 @@
                     <li>새 PIN 번호 재입력</li>
                     <li>변경하실 PIN번호를 재입력해주세요.</li>
                 </ul>
-                <p>PINs: {{ carrypinsnum }}</p>
                
-                    <div class="pinnumber">
-                    <input type="number" v-model="pinnums[0]">
-                    <input type="number" v-model="pinnums[1]">
-                    <input type="number" v-model="pinnums[2]">
-                    <input type="number" v-model="pinnums[3]">
-                    <input type="number" v-model="pinnums[4]">
-                    <input type="number" v-model="pinnums[5]">
+                <div class="pinnumber">
+                    <input :class="{ 'active': pinnums[0] }" type="password" v-model="pinnums[0]">
+                    <input :class="{ 'active': pinnums[1] }" type="password" v-model="pinnums[1]">
+                    <input :class="{ 'active': pinnums[2] }" type="password" v-model="pinnums[2]">
+                    <input :class="{ 'active': pinnums[3] }" type="password" v-model="pinnums[3]">
+                    <input :class="{ 'active': pinnums[4] }" type="password" v-model="pinnums[4]">
+                    <input :class="{ 'active': pinnums[5] }" type="password" v-model="pinnums[5]">
                 </div>
                 
             </form>
@@ -241,15 +240,24 @@ export default{
 }
 
 .pinnumber > input {
-    width:38px;
-    height: 38px;
-    border: 1px solid #F2F2F2;
-    border-radius: 5px;
-    background-color: #F2F2F2;
-    color: black;
-    visibility: visible;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #F2F2F2;  /* 테두리 파란색 */
+    background-color: #F2F2F2;  /* 입력할 때 배경 파란색 */
+    color: white;  /* 텍스트 색상을 흰색으로 */
+    font-size: 24px;  /* 글자 크기 */
     text-align: center;
+    border-radius: 5px;
 }
+
+
+
+.pinnumber input.active {
+    background-color: #1749C2; /* 파란색 배경 */
+    color: white; /* 흰색 텍스트 */
+}
+
+
 
 /* Chrome, Safari, Edge, Opera */
 .pinnumber > input::-webkit-outer-spin-button,

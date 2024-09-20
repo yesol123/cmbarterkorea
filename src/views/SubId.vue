@@ -6,36 +6,35 @@
 
    <section class="subid_seciotn">
 
-    <ul class="list1">
-            <span class="title">보안 / 알림</span>
-            <li><RouterLink to="/subPw"><span class="flex_"><img class="img_f" src="@/assets/icon_pw.svg" alt=""><p class="sub_title">비밀번호 번경</p></span><img src="@/assets/icon_arrow_right.svg" alt=""></RouterLink></li>
-    </ul>
+    <div class="list1">
+        <p>{{ this.name  }}</p>
+        <p>{{this.id}}</p>
+    </div>
 
    
-         
-    <div class="footer_div">
-                <p>씨엠바더코리아(주) | 사업자 등록번호 364-86-03002</p>
-                <p>주소:서울 금천구 가산디지털1로 171,601~606호(가산동,SKV1센터)<span class="ceo-name">대표자 박재능</span></p>
-                <p>연락처:1566-1691</p>
-                <p>Copyright © CMBARTER KOREA All Rights Reserved.</p>
-            </div>
+         <SubPw/>
 
        
 
    </section>
-<Footer/>
 
 </template>
 
 <script>
 import { useResponseStore } from '@/store/response.js';
+import SubPw from './SubPw.vue';
 
 
 
 export default {
    name: 'subId',
+   components:{
+    SubPw,
+   },
    data(){
        return{
+            id:'',
+            name:'',
             member:'',
            password:'',
            newpassword:'',
@@ -46,11 +45,28 @@ export default {
    },
 
    
-   mounted() {
-       // store에서 member 값을 가져와서 data에 할당
-       let store = useResponseStore();
-       this.member = store.member;
-   },
+   mounted(){
+        let store = useResponseStore();
+        this.member = store.member;
+
+        const formData = new FormData();
+        formData.append('type','user_info');
+        formData.append('user_index',store.user_index);
+
+        const url = process.env.VUE_APP_API_URL;
+            fetch(url + 'api/common/main.php', {
+                method: 'POST',
+                body: formData
+                })
+                .then(response => response.json())
+                .then(result =>{
+                    console.log(result.msg);
+                    this.id = result.msg[0].user_id
+                    this.name = result.msg[0].user_name
+                    this.phone =result.msg[0].user_phone
+                })
+        
+    },
    computed:{
        isPasswordMatching() {
            return this.newpassword === this.newpassword_confirm;
@@ -114,34 +130,25 @@ export default {
 
 .subid_seciotn{
    margin-top: 100px;
-
 }
 
-ul{
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    border-top: 1px solid gainsboro;
-    padding: 15px 0 11px;
-}
-ul > li{
-    margin-top: 5px;
-    padding: 10px 10px 10px 20px;
-}
+
 
 .list1{
     width: 100%;
-    border-top: 1px solid gainsboro;
-    padding: 15px 0 11px;
-}
-.list1 > li > a {
-    display: flex;
-    justify-content: space-between;
+    border-bottom: 1px solid gainsboro;
+    text-align: center;
+    padding-bottom: 15px;
 }
 
-.list1 > li > a > p {
-    right: 100px;
+.list1 > p{ 
+    font-weight: 900;
+    margin: 0;
+    
+}
+.list1 > p:nth-child(1){ 
+    font-weight: 900;
+    font-size: 14px;    
 }
 
 a{

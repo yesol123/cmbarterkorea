@@ -47,7 +47,7 @@
             <span class="title"> 고객센터</span>
             <li><RouterLink to="/Notice"><span class="flex_"><img  class="img_f" src="@/assets/icon_services.svg" alt=""><p class="sub_title">공지사항</p></span><img src="@/assets/icon_arrow_right.svg" alt=""></RouterLink></li>
             <li><RouterLink to="/Inquiry"><span class="flex_"><img class="img_f" src="@/assets/icon_services.svg" alt=""><p class="sub_title"> Q&A</p></span><img src="@/assets/icon_arrow_right.svg" alt=""></RouterLink></li>
-            <li><RouterLink to="http://pf.kakao.com/_zFjGG/chat"><span class="flex_"><img class="img_f"  src="@/assets/icon_services.svg" alt=""><p class="sub_title">카카오톡 상담하기</p></span><img src="@/assets/icon_arrow_right.svg" alt=""></RouterLink></li>
+            <li><a href="http://pf.kakao.com/_zFjGG/chat"><span class="flex_"><img class="img_f"  src="@/assets/icon_services.svg" alt=""><p class="sub_title">카카오톡 상담하기</p></span><img src="@/assets/icon_arrow_right.svg" alt=""></a></li>
           </ul>
           <ul>
             <span class="title">정책</span>

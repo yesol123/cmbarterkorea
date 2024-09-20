@@ -1,8 +1,5 @@
 <template>
-    <header class="subpw_header_title">
-           <RouterLink :to="`/subId`"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
-           <h3> 비밀번호 변경</h3>
-       </header>
+   
 
    <section class="subpw_seciotn">
 
@@ -136,42 +133,8 @@ export default {
    margin-bottom: 10px;
 }
 
-.subpw_header_title{
-   display: flex;
-   align-items: center;
-   justify-content: center; /* 가운데 정렬 */
-   position: fixed;
-   top: 0;
-   left: 50%;
-   width: 100%;
-   /* max-width: 768px; */
-   transform: translateX(-50%);
-   height: 60px;
-   background-color: #fff;
-   font-size: 18px;
-   font-weight: 800;
-   border-bottom: 1px solid var(--line);
-   z-index: 100;
-}
 
-.subpw_header_title > a {
-   position: absolute; /* 왼쪽 버튼을 절대 위치로 */
-   left: 10px; /* 왼쪽으로부터의 거리 */
-   top: 50%; /* 세로 가운데 정렬 */
-   transform: translateY(-50%); /* 세로 가운데 정렬 보정 */
-}
 
-.subpw_header_title > h3 {
-   margin: 0;
-   text-align: center; /* 텍스트 가운데 정렬 */
-   color: #1749C2;
-   font-weight: 900;
-}
-
-.subpw_seciotn{
-   margin-top: 100px;
-
-}
 
 div{
    width: 95%;

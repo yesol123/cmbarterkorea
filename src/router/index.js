@@ -212,6 +212,21 @@ const router = createRouter({
             name:'ChangeFranchise',
             component:()=> import("@/views/ChangeFranchise.vue")
         },  
+        {
+            path: '/CustomerManagement',
+            name:'CustomerManagement',
+            component:()=> import("@/views/CustomerManagement.vue")
+        },  
+        {
+            path: '/couponDetail',
+            name:'couponDetail',
+            component:()=> import("@/views/CouponDetail.vue")
+        },  
+        {
+            path: '/storeInformation',
+            name:'storeInformation',
+            component:()=> import("@/views/StoreInformation.vue")
+        },  
 
 
     ],

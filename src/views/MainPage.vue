@@ -31,11 +31,7 @@
                     <p>여기를 탭하여 결제하세요.</p>
                 </div>
                 <div class="pay_btn">
-<<<<<<< HEAD
-                    <button type="button" @click="CMList()">CM내역</button>
-=======
                     <button type="button" @click="toCMList()">CM내역</button>
->>>>>>> 2230595c24beac7f5c87b17c96a69ffd554eaa00
                     <button type="button" v-if="this.member === '3'" @click="QrScan()">QR결제</button>
                     <button type="button" @click="CouponBox()">쿠폰함</button>
                 </div>
@@ -84,7 +80,7 @@
                 <img src="@/assets/gift.png">
                 <p>매장관리</p>
             </div>
-            <div class="icon" v-if="this.member == '3'">
+            <div class="icon" v-if="this.member == '3'"  @click="gocustomer()">
                 <img src="@/assets/gift.png">
                 <p>고객관리</p>
             </div>
@@ -268,6 +264,9 @@ export default {
         },
         toCMCharge() {
             this.$router.push({ path : '/charge' });
+        },
+        gocustomer(){
+            this.$router.push({path:'/CustomerManagement'})
         },
         // 로그아웃
         logout() {
