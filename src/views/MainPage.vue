@@ -34,7 +34,7 @@
                     <button type="button" @click="toCMList()">CM내역</button>
                     <button type="button" v-if="this.member === '3'" @click="QrScan()">QR결제</button>
                     <button type="button" v-if="this.member != '3'" @click="CouponBox()">쿠폰함</button>
-                    <button type="button" v-if="this.member === '3'">쿠폰발행함</button>
+                    <button type="button" v-if="this.member === '3'" @click="toCouponMake()">쿠폰발행함</button>
                 </div>
             </div>
         </div>
@@ -262,6 +262,10 @@ export default {
         },
         CouponBox(){
             this.$router.push({ path : '/couponbox' });
+        },
+        // 쿠폰발행함으로 이동
+        toCouponMake() {
+            this.$router.push({ path : '/cmake' });
         },
         toCMCharge() {
             this.$router.push({ path : '/charge' });
