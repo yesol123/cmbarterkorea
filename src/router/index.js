@@ -67,11 +67,26 @@ const router = createRouter({
             path: "/cmlist",      
             name: "CMList",      
             component: () => import("@/views/CMList.vue"),    
+        },   
+        {      
+            path: "/cmpin",      
+            name: "CMPin",      
+            component: () => import("@/views/CMPin.vue"),    
+        },      
+        {      
+            path: "/cmqr",      
+            name: "CMQr",      
+            component: () => import("@/views/CMQr.vue"),    
         },      
         {      
             path: "/charge",      
             name: "CMCharge",      
             component: () => import("@/views/CMCharge.vue"),    
+        },      
+        {      
+            path: "/location",      
+            name: "FindLocation",      
+            component: () => import("@/components/FindLocation.vue"),    
         },      
         {      
             path: "/footer",      

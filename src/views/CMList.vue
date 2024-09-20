@@ -20,7 +20,7 @@
 
             <!-- 셀렉트 및 결제취소 버튼 -->
             <div class="select">
-                <select v-model="selectlist" @change="Search()">
+                <select v-model="selectlist" @change="Search()" v-if="this.cancel == false">
                     <option>전체</option>
                     <option>구매</option>
                     <option>선물</option>
@@ -29,12 +29,13 @@
                     <option v-if="this.member == '2'">수당</option>
                 </select>
                 <!-- {{ selectlist }} -->
-                <button type="button">결제 취소</button>
+                <button type="button" v-if="this.cancel == false" @click="Cancellation()">결제 취소</button>
+                <p v-if="this.cancel == true">취소할 내역을 클릭하세요.</p>
             </div>
         </div>
 
         <!-- CM 내역 리스트 -->
-        <div class="cm_list" v-for="(list, i) in this.cmlist" :key="i">
+        <div class="cm_list" v-for="(list, i) in this.cmlist" :key="i" @click="SelectCancel(list.user_cm_log_value)">
             <div>
                 <p>{{ list.user_cm_log_create_time }}</p> 
                 <p style="font-weight: bold;" :style="{color : fontColor(list.user_cm_log_payment_name)}">{{ list.user_cm_log_transaction_type_name }}</p>
@@ -46,6 +47,22 @@
         </div>
 
 
+    </div>
+    
+    <!-- 결제취소 창 -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <!-- <span class="close-btn">&times;</span> -->
+            <div class="center">
+                <p class="header">결제 취소 확인</p>
+                <p>{{ price }}</p>
+                <p>선택한 내역을 취소하시겠습니까?</p>
+                <div>
+                    <button type="button" @click="Deny()">이전</button>
+                    <button type="button" @click="Confirm()">확인</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <Footer />
@@ -65,7 +82,9 @@ export default {
             cm : '',
             cmp : '',
             cmlist : '',
-            selectlist : '전체'
+            selectlist : '전체',
+            cancel : false,
+            price : ''
           
         }
     },
@@ -93,8 +112,9 @@ export default {
 
             formData.append('type', 'cm_log');
             formData.append('user_index', store.user_index);
-
-            if(this.selectlist == '구매') {
+            
+            // 선택검색
+            if(this.selectlist == '구매' || this.cancel == true) {
                 formData.append('user_cm_log_transaction_type_name', '구매');
             }
             if(this.selectlist == '선물') {
@@ -205,6 +225,33 @@ export default {
             // this.selectlist = list;
             // console.log(this.selectlist);
             this.CMList();
+        },
+        // 결제취소버튼
+        Cancellation() {
+            this.cancel = true;
+            if(this.selectlist != '구매') {
+                this.selectlist = '전체';
+                this.CMList();
+            }
+            this.CMList();
+        },
+        // 결제취소 대상 선택
+        SelectCancel(price) {
+            if(this.cancel == true) {
+                console.log(price);
+                this.price = price;
+                let store = useResponseStore();
+                store.cancel_price = this.price;
+                document.getElementById('popup').style.display = 'flex';
+            }
+        },
+        // 결제취소 취소
+        Deny() {
+            document.getElementById('popup').style.display = 'none';
+        },
+        // 결제취소 확인
+        Confirm() {
+            this.$router.push({ path : 'cmpin'});
         }
 
     },
@@ -308,6 +355,15 @@ header > p {
     color: #fff;
     font-size: 0.8rem;
 }
+.select > p {
+    width: 100%;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: red;
+    margin-top: 8px;
+    text-align: right;
+    /* border: 1px solid red; */
+}
 .cm_list {
     width: 100%;
     margin-top: 20px;
@@ -324,5 +380,78 @@ header > p {
 }
 .cm_list > div:nth-of-type(2) {
     border-bottom: 1px solid #ccc;
+}
+.popup {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+.popup-content {
+    position: relative;
+
+    width: 90%; height: 30%;
+    background-color: #fff;
+    border-radius: 8px;
+    /* max-width: 90%; */
+    /* max-height: 80%; */
+    position: relative;
+    overflow: scroll;
+    text-align: center;
+}
+/* .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #000;
+    cursor: pointer;
+} */
+.center {
+    position: absolute;
+    top: 50%; left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    /* border: 1px solid red; */
+}
+.header {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+.center > p, .center > div {
+    width: 100%;
+    /* font-size: 0.9rem; */
+    margin-bottom: 5%;
+    /* border: 1px solid blue; */
+}
+.center > p:nth-of-type(2) {
+    font-weight: bold;
+}
+.center > div {
+    display: flex;
+    justify-content: space-evenly;
+
+    width: 80%;
+    margin: 7% auto 0;
+    /* border:1px solid red; */
+}
+.center button {
+    width: 50px; height: 30px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+.center button:nth-of-type(2) {
+    background-color: #1bce0b;
+    color: #fff;
+    border: none;
 }
 </style>
