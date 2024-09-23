@@ -38,6 +38,23 @@
         </div>
     </div>
 
+    <!-- 결제취소창 -->
+    <div id="popup2" class="popup2">
+        <div class="popup-content">
+            <div class="center">
+            <p class="header">결제취소 하시겠습니까?</p>
+            <span style="font-weight: bold; font-size: 1.0rem;">{{ name }}</span><span style="font-weight: bold; font-size: 1.0rem;">({{ id }})</span> <span>님,</span>
+            <p style="font-weight: bold; font-size: 1.2rem;">{{ cm }} CM</p>
+            <!-- <p style="font-size: 1.0rem;">결제하시겠습니까?</p> -->
+
+            <div class="btn_group">
+                <button type="button">취소</button>
+                <button type="button">확인</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
     <ModalPage ref="child" style="display: none;"/>
 </template>
 
@@ -112,7 +129,12 @@ export default {
                                         this.cm = data.price;
                                         this.mb_index = data.hash_mb.mb_index;
 
-                                        this.openpopup();
+                                        if(data.qr_state == 'C') {
+                                            this.openpopup2();
+                                        }
+                                        if(data.qr_state == 'O') {
+                                            this.openpopup();
+                                        }
                                     }
                                     if(data.code == '500') {
                                         alert(data.msg);
@@ -135,6 +157,10 @@ export default {
         // 결체확인창 불러오기
         openpopup() {
             document.getElementById('popup').style.display = 'flex';
+        },
+         // 결체취소창 불러오기
+         openpopup2() {
+            document.getElementById('popup2').style.display = 'flex';
         },
         // 결제확인
         Paying() {
@@ -203,14 +229,19 @@ export default {
                     console.log(data);
 
                     if(data.code == '000') {
-                        alert('QR 코드 직접입력 api 호출 성공');
+                        // alert('QR 코드 직접입력 api 호출 성공');
 
                         this.name = data.hash_mb.mb_name;
                         this.id = data.hash_mb.mb_id;
                         this.cm = data.price;
                         this.mb_index = data.hash_mb.mb_index;
 
-                        this.openpopup();
+                        if(data.qr_state == 'C') {
+                            this.openpopup2();
+                        }
+                        if(data.qr_state == 'O') {
+                            this.openpopup();
+                        }
                     }
                     if(data.code == '500') {
                         alert(data.msg);
@@ -227,6 +258,18 @@ export default {
 
 <style scoped>
 .popup {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+.popup2 {
     display: none;
     position: fixed;
     left: 0;

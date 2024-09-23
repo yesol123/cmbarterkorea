@@ -9,8 +9,9 @@
             <p>가맹점에 해당 QR코드를 보여주세요.</p>
             <p>{{ id }}</p>
             <img :src="`https://quickchart.io/chart?chs=200x200&cht=qr&chl=${qrdigit}`" alt="QR코드">
-            <div class="qrinput">
-                <input type="number" placeholder="QR 6자리를 입력해주세요.">
+            <div class="qrinput" style="margin: 20px 0;">
+                <!-- <input type="number" placeholder="QR 6자리를 입력해주세요."> -->
+                 <p style="font-weight: bold;">{{ qrdigit }}</p>
             </div>
             <p>결제 취소 금액</p>
             <p>{{ price }}</p>
@@ -130,7 +131,7 @@ header > p {
 }
 .qrinput {
 } */
-input {
+/*input {
     width: 220px; height: 30px;
     border-radius: 7px;
     border: 1px solid #000;
@@ -138,7 +139,7 @@ input {
     font-size: 0.9rem;
     color: #000;
     margin-bottom: 10%;
-}
+}*/
 .qr_wrap > p:nth-of-type(3) {
     font-size: 0.9rem;
     margin-bottom: 3%;
