@@ -79,6 +79,16 @@ const router = createRouter({
             component: () => import("@/views/CMQr.vue"),    
         },      
         {      
+            path: "/cmake",      
+            name: "CouponMake",      
+            component: () => import("@/views/CouponMake.vue"),    
+        },    
+        {      
+            path: "/cevent",      
+            name: "CouponEvent",      
+            component: () => import("@/views/CouponEvent.vue"),    
+        },      
+        {      
             path: "/charge",      
             name: "CMCharge",      
             component: () => import("@/views/CMCharge.vue"),    
