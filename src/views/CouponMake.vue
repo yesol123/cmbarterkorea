@@ -12,12 +12,12 @@
             </label>
 
             <div class="buttons">
-                <button :class="{'active':selectedButton === 'possible'}"  @click="possible()" >사용가능</button>
-                <button :class="{'active':selectedButton === 'complete'}"  @click="complete()">사용완료</button>
-                <button :class="{'active':selectedButton === 'pass'}"  @click="pass()">기한경과</button>
+                <button :class="{'active':selectedButton === 'possible'}"  @click="possible()" >보유중</button>
+                <button :class="{'active':selectedButton === 'complete'}"  @click="complete()">보내기완료</button>
+                <button :class="{'active':selectedButton === 'pass'}"  @click="pass()">사용완료</button>
                 <button :class="{'active':selectedButton === 'all'}"  @click="all()">전체</button>
             </div>
-            <p class="coupon_current">'사용가능'에 해당하는 쿠폰의 개수는 '0'개 입니다.</p>
+            <p class="coupon_current">'보유중'에 해당하는 쿠폰의 개수는 '0'개 입니다.</p>
 
             <div class="coupon_btns">
                 <button type="button">쿠폰발행</button>
@@ -31,9 +31,9 @@
                         <ul class="coupon_conditions">
                             <div><input type="checkbox"></div>
                             <div>              
-                            <li>테스트쿠폰</li>
+                            <li>한용숙</li>
                             <li>보유중</li>
-                            <li>2024-09-18</li>
+                            <li>90일</li>
                             </div>
                             <div class="t">
                                 <img src="@/assets/1000_t.png" alt="">
@@ -63,15 +63,15 @@ export default {
             this.$router.push({ path : '/main' });
         },
         possible(){
-            console.log('사용가능');
+            console.log('보유중');
              this.selectedButton = 'possible'
         },
         complete(){
-            console.log('사용완료');
+            console.log('보내기완료');
             this.selectedButton = 'complete'
         },
         pass(){
-            console.log('기한경과');
+            console.log('사용완료');
             this.selectedButton = 'pass'
             
         },

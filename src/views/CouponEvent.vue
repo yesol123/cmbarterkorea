@@ -36,9 +36,9 @@
                         <ul class="coupon_conditions">
                             <div><input type="checkbox"></div>
                             <div>              
-                            <li>테스트쿠폰</li>
-                            <li>보유중</li>
-                            <li>2024-09-18</li>
+                            <li>쿠폰이름</li>
+                            <li>쿠폰상태</li>
+                            <li>쿠폰기한</li>
                             </div>
                             <div class="t">
                                 <img src="@/assets/1000_t.png" alt="">
@@ -55,9 +55,9 @@
                         <ul class="coupon_conditions">
                             <div><input type="checkbox"></div>
                             <div>              
-                            <li>테스트쿠폰</li>
-                            <li>보유중</li>
-                            <li>2024-09-18</li>
+                            <li>쿠폰이름</li>
+                            <li>쿠폰상태</li>
+                            <li>쿠폰기한</li>
                             </div>
                             <div class="t">
                                 <img src="@/assets/1000_t.png" alt="">
@@ -74,9 +74,9 @@
                         <ul class="coupon_conditions">
                             <div><input type="checkbox"></div>
                             <div>              
-                            <li>테스트쿠폰</li>
-                            <li>보유중</li>
-                            <li>2024-09-18</li>
+                            <li>쿠폰이름</li>
+                            <li>쿠폰상태</li>
+                            <li>쿠폰기한</li>
                             </div>
                             <div class="t">
                                 <img src="@/assets/1000_t.png" alt="">
