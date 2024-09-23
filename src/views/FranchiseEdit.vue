@@ -1,8 +1,8 @@
 <template>
-    <header class="change_info_header_title">
-           <RouterLink :to="`/franchiseeInfo`"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
+        <header class="change_info_header_title">
+           <RouterLink :to="`/ChangeFranchise`"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
            <h3>매장 관리</h3>
-           <RouterLink to="franchiseEdit">
+           <RouterLink to="/">
       <img src="@/assets/icon_modify.svg" alt="Close" />
     </RouterLink>
     </header>
@@ -12,13 +12,14 @@
     <ul>
         <li><RouterLink to ='/ChangeFranchise' > 기본 정보</RouterLink></li>
         <li><RouterLink to ='/storeInformation'> 정보 변경</RouterLink></li>
-  </ul>
+    </ul>
 
 
   <p class="title">매장 이미지</p>
   <ul class="show_img">
     <li><p style="margin: 5px 0;">최대 9장</p></li>
     <div class="selected_nine">
+    <li class="change"><RouterLink to="/changeImg" ><img class="changeImg" src="@/assets/contetns_img.svg" alt=""></RouterLink></li>
     <li><img src="@/assets/1.jpg" alt=""></li>
     <li><img src="@/assets/2.jpg" alt=""></li>
     <li><img src="@/assets/3.jpg" alt=""></li>
@@ -26,20 +27,15 @@
     <li><img src="@/assets/2.jpg" alt=""></li>
     <li><img src="@/assets/3.jpg" alt=""></li>
     <li><img src="@/assets/3.jpg" alt=""></li>
-
     <li><img src="@/assets/3.jpg" alt=""></li>
-
     <li><img src="@/assets/3.jpg" alt=""></li>
-
     <li><img src="@/assets/3.jpg" alt=""></li>
-
-
     </div>
    
   </ul>
 
 
-  <p class="title">매장정보</p>
+  <p class="title">매장정보</p> 
   <ul class="show_store_info">
     <li><p class="title">매장명</p>
         <span>명현만 간장게장 합정점</span>
@@ -54,11 +50,12 @@
         <span>010-1234-5678</span>
     </li>
     <li><p class="title">대표사이트</p>
-        <span>www.사이트.입니다.</span>
+        <input type="text" placeholder="사이트 주소를 입력해주세요." >
     </li>
     <li><p class="title">소개</p>
-        <p>저희 매장에서 어쩌구 저쩌고! </p>
+        <textarea name="" id="" placeholder="사장님의 매장을 소개해주세요!"></textarea>
     </li>
+    <button> 저장</button>
   </ul>
 
 <!-- <form @submit.prevent="insertWrite" class="form_area" action="">
@@ -86,29 +83,20 @@
   </div> -->
 
 </section>
-
 </template>
 <script>
-import { useResponseStore } from '@/store/response.js';
+//import { RouterLink } from 'vue-router';
 
 export default{
-    name:'ChangeFranchise',
+    name:'franchiseEdit',
     data(){
-        return{
-            member:'',
-
-        }
+        return{}
     },
-    mounted(){
-    let store = useResponseStore();
-    this.member = store.member;
-
-    }
 
 }
 </script>
 <style scoped>
-    
+
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 
@@ -160,6 +148,7 @@ ul,a{
   color: #1749c2;
   font-weight: 900;
 }
+
 
 .info_area{
  width: 95%;
@@ -213,6 +202,7 @@ color: gray;
     width: 20%;
 }
 
+
 .selected_nine {
     display: flex;
     overflow-x: auto; /* 가로 스크롤 활성화 */
@@ -237,6 +227,17 @@ color: gray;
     object-fit: cover; /* 이미지 비율을 유지하며 잘 맞도록 설정 */
 }
 
+.change{
+    border: 2px dashed #B1B1B1;
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    height: 150px; /* 부모 요소에 높이 설정 */
+}
+.change > a > .changeImg{
+    width: 100%; /* 이미지를 더 작게 만듦 */
+}
+
 .show_img,.show_store_info{
     border-top: 1px solid #B1B1B1;
     width: 100%;
@@ -244,5 +245,25 @@ color: gray;
 .title{
     font-weight: bold;
 }
+
+input,textarea,button{
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #B1B1B1;
+    border-radius: 5px;
+}
+textarea{
+    height: 265px;
+}
+
+button{
+    margin-top: 10px;
+    border: 0;
+    background-color: #1749C2;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+}
+
 
 </style>

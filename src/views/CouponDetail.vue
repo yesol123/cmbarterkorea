@@ -4,6 +4,7 @@
         <h3>쿠폰 상세보기</h3>
     </header>
 
+<!-- 여기는 쿠폰이 쌓이면 여기만 스크롤이 생기게 해주세용! / 반영 전 -->
     <section class="couponbox_Detail_section">
         <ul >
             <li class="m_T30">
@@ -14,6 +15,11 @@
             <li  class="m_T30">
                 <label > 쿠폰 가격 
                     <input  type="text" class="input_form" placeholder="쿠폰 가격" readonly="" disabled="" value="1,000">
+                </label>
+            </li>
+            <li  class="m_T30">
+                <label > 사용 조건
+                    <input  type="text" class="input_form" placeholder="사용 조건" readonly="" disabled="" value="장수촌 (1만원 이상 결제)">
                 </label>
             </li>
             <li  class="m_T30">
