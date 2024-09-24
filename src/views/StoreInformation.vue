@@ -13,6 +13,38 @@
         <li><RouterLink to ='/storeInformation'> 정보 변경</RouterLink></li>
       </ul>
 
+      <div>
+        <p>영업정보</p>
+      </div>
+
+      <article>
+        <div>
+        <h5>영업 시간</h5>
+        
+          <input name="" id="" type="time"/>
+        </div>
+
+        <div>
+          <h5>휴게시간 <span><input type="checkbox"></span></h5>
+          <p>*휴게시간은 운영시간 안으로만 설정 가능 합니다.</p>
+          <ul>
+            <li>
+              <label for="m">월
+              <input type="radio" id="m">
+              </label>
+            </li>
+          </ul>
+        </div>
+        
+        <div>
+          <button> + 영업시간 추가</button>
+        </div>
+      
+      
+      </article>
+
+
+
     </section>
 </template>
 <script>
@@ -110,5 +142,12 @@ margin-top: 100px;
  font-size: 20px;
  border-bottom: 3px solid #1749c2; 
 }
+
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-inner-spin-button {
+    display: none;
+    appearance: none;
+}
+
 
 </style>

@@ -7,7 +7,13 @@
 
     <section class="couponbox_section">
         <label for="search">
-            <input type="text" id="search" placeholder="쿠폰 이름을 입력하세요.">
+            <input 
+            type="text" 
+            id="search" 
+            placeholder="쿠폰 이름을 입력하세요." 
+            v-model="keyword" 
+            @keyup="search(keyword)"
+            >
             <button><img src="@/assets/icon_search.svg" alt=""></button>
         </label>
 
@@ -18,23 +24,25 @@
             <button :class="{'active':selectedButton === 'pass'}"  @click="pass()">기한경과</button>
             <button :class="{'active':selectedButton === 'all'}"  @click="all()">전체</button>
         </div>
-        <p class="coupon_current">사용가능에 해당하는 쿠폰의 개수는 0개 입니다.</p>
+        <p class="coupon_current">{{ selectedButtonText }}에 해당하는 쿠폰의 개수는 {{ filteredCoupons.length }}개 입니다.</p>
+
+
 
         <ul class="flex_direction">
-            <li class="coupon_com">
-                <div class="back_ground_coupon">
+            <li class="coupon_com" v-for="(coupon,index) in filteredCoupons" :key="index">
+                <div class="back_ground_coupon"  :style="getBackgroundImage(coupon.coupon_price)">
                     <ul class="coupon_conditions">
                         <div>                 
-                        <li>하루쿠폰</li>
+                        <li>{{coupon.coupon_name}}</li>
                         <li><p class="long">장수촌 (1만원 이상 결제)</p></li>
-                        <li>2024-09-18</li>
+                        <li>{{coupon.coupon_limit_time_f}}</li>
                         </div>
                         <div class="t">
-                            <img src="@/assets/1000_t.png" alt="">
+                            <img :src="getCouponImage(coupon.coupon_price)"  alt="">
                         </div>
                     </ul>
                 </div>
-                <button @click="gotoDetail()">쿠폰 상세보기</button>
+                <button @click="gotoDetail(coupon.coupon_index)">쿠폰 상세보기</button>
             </li>
         </ul>
     </section>
@@ -43,37 +51,168 @@
 
 <script>
 import router from '@/router/index.js';
+import { useResponseStore } from '@/store/response.js'
 
 export default{
     name:'CouponBox',
     data(){
         return{
             selectedButton: 'possible', // 기본값 설정
+            coupons:[], // 전체 쿠폰 리스트
+            keyword:'',// 검색 통!
+            id:''
         }
     },
+    mounted(){
+       
+        const formData = new FormData();
+        let store = useResponseStore()
+        
+        formData.append('type','select');
+        formData.append('user_index',store.user_index);
+        formData.append('status','');
+
+        const url = process.env.VUE_APP_API_URL;
+        fetch( url + 'api/coupon/coupon_issuance.php',{
+            method:'POST',
+            body:formData
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log(result.msg);
+            console.log(result.msg.coupon_index);
+            this.coupons = result.msg
+            this.id = result.msg.coupon_index
+            this.filterCoupons(); // 초기 필터링 수행
+        })
+    },
+    computed:{
+
+        filteredCoupons(){
+            let filtered = this.coupons;
+
+            if(this.selectedButton === 'possible'){
+                filtered = filtered.filter(coupon=> coupon.coupon_provided_status === '사용 가능')
+            }
+            else if (this.selectedButton === 'complete'){
+                filtered = filtered.filter(coupon=> coupon.coupon_provided_status === '사용 완료')
+            }
+            else if(this.selectedButton === 'pass'){
+                filtered = filtered.filter(coupon=> coupon.coupon_provided_status === '기한 경과')
+            }
+            //검색어 있을 경우 이름으로 필터링
+            if (this.keyword) {
+                filtered = filtered.filter(coupon =>
+                coupon.coupon_name.includes(this.keyword)
+            );
+            }
+            return filtered;
+        },
+        selectedButtonText() {
+            if (this.selectedButton === 'possible') {
+            return '사용 가능';
+            } else if (this.selectedButton === 'complete') {
+            return '사용 완료';
+            } else if (this.selectedButton === 'pass') {
+            return '기한 경과';
+            } else {
+            return '전체';
+    }
+  }
+
+        },
     methods:{
-        gotoDetail(){
-            console.log('ddd');
-            router.push({path:'/couponDetail'})
+        search(){ 
+            //let filtered = this.coupons;
+            if(this.keyword){
+                console.log('검색한번 해봐!'+this.keyword);
+                //filtered = filtered.filter(coupon => coupon.coupon_name.includes(this.keyword))
+            }
+        },
+        gotoDetail(coupon_index){
+            
+            console.log('ddd',coupon_index);
+            this.id = coupon_index
+            router.push({path:`/couponDetail/${this.id}`})
         },
         possible(){
             console.log('사용가능을 한다');
              this.selectedButton = 'possible'
+             this.filterCoupons();
         },
         complete(){
             console.log('사용 완료');
             this.selectedButton = 'complete'
+            this.filterCoupons();
         },
         pass(){
             console.log('기한 경과');
              this.selectedButton = 'pass'
+             this.filterCoupons();
             
         },
         all(){
             console.log('전체');
              this.selectedButton = 'all'
+             this.filterCoupons();
             
+        },
+      
+
+        filterCoupons() {
+            if (this.selectedButton === 'all') {
+            // '전체' 버튼이 선택되면 모든 쿠폰을 표시
+            this.filteredCoupons = this.coupons;
+            } else if (this.selectedButton === 'possible') {
+            // '사용 가능' 버튼이 선택되면 해당 상태의 쿠폰만 표시
+            this.filteredCoupons = this.coupons.filter(coupon => coupon.coupon_provided_status === '사용 가능');
+            } else if (this.selectedButton === 'complete') {
+            // '사용 완료' 버튼이 선택되면 해당 상태의 쿠폰만 표시
+            this.filteredCoupons = this.coupons.filter(coupon => coupon.coupon_provided_status === '사용 완료');
+            } else if (this.selectedButton === 'pass') {
+            // '기한 경과' 버튼이 선택되면 해당 상태의 쿠폰만 표시
+            this.filteredCoupons = this.coupons.filter(coupon => coupon.coupon_provided_status === '기한 경과');
+            }
+        },
+
+        getBackgroundImage(price) {
+        if (price === "1000") {
+            return {
+                backgroundImage: `url(${require('@/assets/1000.jpg')})`
+            };
         }
+        if (price === "5000") {
+            return {
+                backgroundImage: `url(${require('@/assets/5000.jpg')})`
+            };
+        }
+        if (price === "10000") {
+            return {
+                backgroundImage: `url(${require('@/assets/10000.jpg')})`
+            };
+        }
+        if (price === "50000") {
+            return {
+                backgroundImage: `url(${require('@/assets/50000.jpg')})`
+            };
+        }
+    },
+        getCouponImage(price) {
+            
+        if (price === "1000") {
+            return require('@/assets/1000_t.png');
+        }
+        if (price === "5000") {
+            return require('@/assets/5000_t.png');
+        }
+        if(price === "10000"){
+            return require('@/assets/10000_t.png')
+        }
+        if(price === "50000"){
+            return require('@/assets/50000_t.png')
+
+        }
+    },
     }
 }
 </script>
@@ -126,7 +265,10 @@ ul,li{
 .couponbox_section{
     margin: 100px auto 0;
     width: 95%;
-
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 100px); /* 헤더를 제외한 나머지 영역에 맞게 설정 */
+    overflow: hidden;
 }
 
 label{
@@ -192,14 +334,21 @@ label button{
 
 
 .flex_direction{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
 }
+
+.flex_direction>  li{
+    margin-bottom: 10px;
+}
+
+
+
 
 .flex_direction .coupon_com{
     display: flex;
     flex-direction: column;
+    
     border: 1px solid #0d6efd;
     border-radius: 5px;
 }

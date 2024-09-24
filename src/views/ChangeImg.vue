@@ -15,7 +15,7 @@
                     <div class="container">
                         <div class="rep_img_box">
                             <img class="create_img_add" :src="imageSrc" alt="">
-                            <label  class="label" id="addimg1"><input type="file" id="addimg1" class="create_main_img"  @change="previewImage"></label>
+                            <label  class="label" id="addimg1"><input  ref="repImgInput" type="file" id="addimg1" class="create_main_img"  @change="previewImage"></label>
                             <!-- 사진 업로드 INPUT -->
                         </div>
                         <div class="rep_txt">
@@ -46,22 +46,64 @@
 </template>
 
 <script>
+import { useResponseStore } from '@/store/response.js';
+import axios from 'axios';
+
+
+
 export default{
     name:'changeImg',
     data(){
         return{
             imageSrc:require('@/assets/1.jpg'),//경로를 동적으로 사용할 때는 require 함수나 import를 사용해야 합니다.
             detailImages: [], // 상세 이미지 배열
+            files:[], // 이미지 파일들
+            repImgFile: null // 대표 이미지 파일
         }
     },
     methods:{
-        saveImg(){
+        async saveImg(){
             console.log('사진 저장! ');
-            
+
+            let store = useResponseStore();
+            const formData = new FormData();
+            formData.append('type', 'store_update2');
+            formData.append('user_index',store.user_index);
+
+            //대표 이미지 파일 formData에 추가
+            const repImgFile = this.$refs.repImgInput.files[0]; // 대표 이미지 파일
+            if(repImgFile){
+            formData.append('rep_img',repImgFile);   
+            }
+
+            //상세 이미지 파일들을 각각 추가
+            this.files.forEach((file,index)=>{
+            formData.append(`sub_img_${index}`,file); //파일 이름 각각 다르게 설정
+            })
+
+            formData.append('length',this.files.length); // 이미지 최대 9개 까지
+
+            const url = process.env.VUE_APP_API_URL;
+
+            try {
+            // axios로 파일 업로드 요청
+            const response = await axios.post(`${url}api/store/store_update.php`, formData, {
+            headers: {
+            'Content-Type': 'multipart/form-data'
+                    }
+            });
+                console.log('응답 결과:', response.data);
+                console.log('응답 결과:2', response.data.msg);
+
+                } catch (error) {
+                 console.error('이미지 업로드 중 에러 발생:', error);
+                    }
         },
      
         previewImage(event) {
             const file = event.target.files[0]; // 선택된 파일 가져오기
+            console.log('대표이미지',file);
+            
             if (file) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
@@ -72,6 +114,11 @@ export default{
         },
         imgArray(e){
             const file = e.target.files[0];
+            this.files.push(file)
+            console.log(file);
+            console.log(this.files);
+            
+            
             if(file){
                 const reader = new FileReader();
                 reader.onload = (e) =>{

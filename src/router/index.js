@@ -243,7 +243,7 @@ const router = createRouter({
             component:()=> import("@/views/CustomerManagement.vue")
         },  
         {
-            path: '/couponDetail',
+            path: '/couponDetail/:id',
             name:'couponDetail',
             component:()=> import("@/views/CouponDetail.vue")
         },  

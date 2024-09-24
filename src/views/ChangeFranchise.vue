@@ -11,7 +11,7 @@
 <section class="info_area">
     <ul>
         <li><RouterLink to ='/ChangeFranchise' > 기본 정보</RouterLink></li>
-        <li><RouterLink to ='/storeInformation'> 정보 변경</RouterLink></li>
+        <li><RouterLink to ='/storeInformation'> 운영 정보</RouterLink></li>
   </ul>
 
 
@@ -25,15 +25,9 @@
     <li><img src="@/assets/1.jpg" alt=""></li>
     <li><img src="@/assets/2.jpg" alt=""></li>
     <li><img src="@/assets/3.jpg" alt=""></li>
+    <li><img src="@/assets/1.jpg" alt=""></li>
+    <li><img src="@/assets/2.jpg" alt=""></li>
     <li><img src="@/assets/3.jpg" alt=""></li>
-
-    <li><img src="@/assets/3.jpg" alt=""></li>
-
-    <li><img src="@/assets/3.jpg" alt=""></li>
-
-    <li><img src="@/assets/3.jpg" alt=""></li>
-
-
     </div>
    
   </ul>
@@ -42,22 +36,22 @@
   <p class="title">매장정보</p>
   <ul class="show_store_info">
     <li><p class="title">매장명</p>
-        <span>명현만 간장게장 합정점</span>
+        <span>{{ this.store.store_name }}</span>
     </li>
     <li><p class="title">매장 카테고리</p>
-        <span>음식점/카페</span>
+        <span>{{ this.store.store_category }}</span>
     </li>
     <li><p class="title">주소</p>
-        <span>서울 마포구 양화로 45 메세나폴리스 123호~129호</span>
+        <span>{{ this.store.store_address }}</span>
     </li>
     <li><p class="title">연락처</p>
-        <span>010-1234-5678</span>
+        <span>{{this.store.store_call_number }}</span>
     </li>
     <li><p class="title">대표사이트</p>
-        <span>www.사이트.입니다.</span>
+        <span>{{ this.store.store_website }}</span>
     </li>
     <li><p class="title">소개</p>
-        <p>저희 매장에서 어쩌구 저쩌고! </p>
+        <p>{{ this.store.store_introduce }}</p>
     </li>
   </ul>
 
@@ -95,15 +89,40 @@ export default{
     name:'ChangeFranchise',
     data(){
         return{
-            member:'',
+            store:{
+                store_name:'',
+                store_category:'',
+                store_address:'',
+                store_call_number:'',
+                store_website:'',
+                store_introduce:''  
+            }
 
         }
     },
     mounted(){
-    let store = useResponseStore();
-    this.member = store.member;
+        let store = useResponseStore();
+        const formData = new FormData();
+        formData.append('type', 'store_select1');
+        formData.append('user_index',store.user_index);
+        const url = process.env.VUE_APP_API_URL;
+            fetch(url + 'api/store/store_update.php', {
+                method: 'POST',
+                body: formData
+                })
+                .then(response => response.json())
+                .then(result =>{
+                    console.log(result.msg[0]);
+                    this.store.store_name = result.msg[0].store_name;
+                    this.store.store_category = result.msg[0].store_category_name;
+                    this.store.store_address = result.msg[0].store_address;
+                    this.store.store_call_number = result.msg[0].store_phone;
+                    this.store.store_website = result.msg[0].store_site;
+                    this.store.store_introduce = result.msg[0].store_memo;
+                })
 
     }
+
 
 }
 </script>
