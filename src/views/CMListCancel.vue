@@ -120,8 +120,8 @@ export default {
             store.user_cm_log_index = index;
             document.getElementById('popup').style.display = 'flex';
         },
-         // 결제취소 취소
-         Deny() {
+        // 결제취소 취소
+        Deny() {
             document.getElementById('popup').style.display = 'none';
         },
         // 결제취소 확인

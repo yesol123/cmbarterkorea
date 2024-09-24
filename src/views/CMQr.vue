@@ -51,6 +51,10 @@ export default {
             formData.append('amount', cancelprice);
             formData.append('index', store.user_cm_log_index);
 
+            for (const pair of formData.entries()) {
+            console.log(pair[0], pair[1]);
+            }
+
             const url = process.env.VUE_APP_API_URL;
 
             fetch(url + 'api/common/cm.php', {
