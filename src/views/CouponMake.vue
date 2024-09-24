@@ -12,10 +12,10 @@
             </label>
 
             <div class="buttons">
-                <button :class="{'active':selectedButton === 'possible'}"  @click="possible()" >보유중</button>
-                <button :class="{'active':selectedButton === 'complete'}"  @click="complete()">보내기완료</button>
-                <button :class="{'active':selectedButton === 'pass'}"  @click="pass()">사용완료</button>
-                <button :class="{'active':selectedButton === 'all'}"  @click="all()">전체</button>
+                <button :class="{'active':selectedButton === '보유중'}"  @click="possible()" >보유중</button>
+                <button :class="{'active':selectedButton === '보내기완료'}"  @click="complete()">보내기완료</button>
+                <button :class="{'active':selectedButton === '사용완료'}"  @click="pass()">사용완료</button>
+                <button :class="{'active':selectedButton === '전체'}"  @click="all()">전체</button>
             </div>
             <p class="coupon_current">'보유중'에 해당하는 쿠폰의 개수는 '0'개 입니다.</p>
 
@@ -26,37 +26,40 @@
             </div>
 
             <ul class="flex_direction">
-                <li class="coupon_com">
-                    <div class="back_ground_coupon">
+                <li class="coupon_com" v-for="(list,i) in this.cmakelist" :key="i">
+                    <div class="back_ground_coupon" :style="{backgroundImage : `url('https://www.haruby.store/assets/img/money/${list.coupon_price}.jpg')`}">
                         <ul class="coupon_conditions">
                             <div><input type="checkbox"></div>
                             <div>              
-                            <li>한용숙</li>
-                            <li>보유중</li>
-                            <li>90일</li>
+                            <li>{{ list.coupon_name }}</li>
+                            <li>{{ list.coupon_issuance_status }}</li>
+                            <li>{{ list.coupon_limit }}일</li>
                             </div>
                             <div class="t">
-                                <img src="@/assets/1000_t.png" alt="">
+                                <div :style="{backgroundImage : `url('https://www.haruby.store/assets/img/money/${list.coupon_price}_t.png')`}"></div>
+                                <!-- <img :src="require('https://www.haruby.store/assets/img/money/5000_t.png')" alt=""> -->
                             </div>
                         </ul>
                     </div>
                     <button @click="gotoDetail()">쿠폰 상세보기</button>
                 </li>
             </ul>
-
         </section>
     </div>
 </template>
 
 <script>
+import { useResponseStore } from '@/store/response.js'
+
 export default {
     data() {
         return {
-            selectedButton : 'possible',
+            selectedButton : '전체',
+            cmakelist : '',
         }
     },
     mounted() {
-
+        this.CouponMakeList();
     },
     methods : {
         toMain() {
@@ -64,23 +67,50 @@ export default {
         },
         possible(){
             console.log('보유중');
-             this.selectedButton = 'possible'
+            this.selectedButton = '보유중';
+            this.CouponMakeList();
         },
         complete(){
             console.log('보내기완료');
-            this.selectedButton = 'complete'
+            this.selectedButton = '보내기완료';
+            this.CouponMakeList();
         },
         pass(){
             console.log('사용완료');
-            this.selectedButton = 'pass'
+            this.selectedButton = '사용완료';
+            this.CouponMakeList();
             
         },
         all(){
             console.log('전체');
-            this.selectedButton = 'all'
+            this.selectedButton = '전체';
+            this.CouponMakeList();
         },
         toCouponEvent() {
             this.$router.push({ path : '/cevent' });
+        },
+        CouponMakeList() {
+
+            let store = useResponseStore();
+
+            let formData = new FormData();
+            formData.append('type', 'select');
+            formData.append('user_index', store.user_index);
+            formData.append('status', this.selectedButton);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/coupon/coupon_issuance.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('쿠폰발행함');
+                //console.log(data);
+                this.cmakelist = data.msg;
+                console.log(this.cmakelist);
+            })
         }
     }
 }
@@ -186,7 +216,7 @@ label button {
     border-radius: 5px;
 }
 .flex_direction .coupon_com .back_ground_coupon {
-    background-image: url("@/assets/1000.jpg");
+    /* background-image: url("@/assets/1000.jpg"); */
     background-size: cover;
 }
 .flex_direction .coupon_com button {
@@ -225,10 +255,14 @@ label button {
     margin-top: 3%;
 }
 .t {
-    width: 30%;
+    width: 35%; height: 120px;
+    /* border: 1px solid red; */
 }
-.t img {
-    width: 100%;
+.t > div {
+    width: 100%; height: 100%;
+    /* border: 1px solid blue; */
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 .coupon_btns {
     margin-top: 10px;
@@ -253,4 +287,5 @@ label button {
 .coupon_btns > button:nth-of-type(3) {
     background-color: orange;
 }
+
 </style>

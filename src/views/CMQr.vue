@@ -15,7 +15,7 @@
             </div>
             <p>결제 취소 금액</p>
             <p>{{ price }}</p>
-            <button type="button">확인</button>
+            <button type="button" @click="toCMList()">확인</button>
         </div>
     </div>
 </template>
@@ -71,7 +71,10 @@ export default {
         },
         toQRPin() {
             this.$router.push({ path : '/cmpin' });
-        }
+        },
+        toCMList() {
+            this.$router.push({ path : '/cmlist' });
+        },
     }
 }
 
