@@ -29,13 +29,13 @@
                     <option v-if="this.member == '2'">수당</option>
                 </select>
                 <!-- {{ selectlist }} -->
-                <button type="button" v-if="this.cancel == false" @click="Cancellation()">결제 취소</button>
-                <p v-if="this.cancel == true">취소할 내역을 클릭하세요.</p>
+                <button type="button" v-if="this.cancel == false" @click="toCMCancel()">결제 취소</button>
+                <!-- <p v-if="this.cancel == true">취소할 내역을 클릭하세요.</p> -->
             </div>
         </div>
 
         <!-- CM 내역 리스트 -->
-        <div class="cm_list" v-for="(list, i) in this.cmlist" :key="i" @click="SelectCancel(list.user_cm_log_value)">
+        <div class="cm_list" v-for="(list, i) in this.cmlist" :key="i">
             <div>
                 <p>{{ list.user_cm_log_create_time }}</p> 
                 <p style="font-weight: bold;" :style="{color : fontColor(list.user_cm_log_payment_name)}">{{ list.user_cm_log_transaction_type_name }}</p>
@@ -50,10 +50,10 @@
     </div>
     
     <!-- 결제취소 창 -->
-    <div id="popup" class="popup">
-        <div class="popup-content">
+    <!-- <div id="popup" class="popup">
+        <div class="popup-content"> -->
             <!-- <span class="close-btn">&times;</span> -->
-            <div class="center">
+            <!-- <div class="center">
                 <p class="header">결제 취소 확인</p>
                 <p>{{ price }}</p>
                 <p>선택한 내역을 취소하시겠습니까?</p>
@@ -63,7 +63,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <Footer />
 </template>
@@ -114,7 +114,7 @@ export default {
             formData.append('user_index', store.user_index);
             
             // 선택검색
-            if(this.selectlist == '구매' || this.cancel == true) {
+            if(this.selectlist == '구매') {
                 formData.append('user_cm_log_transaction_type_name', '구매');
             }
             if(this.selectlist == '선물') {
@@ -227,32 +227,35 @@ export default {
             this.CMList();
         },
         // 결제취소버튼
-        Cancellation() {
-            this.cancel = true;
-            if(this.selectlist != '구매') {
-                this.selectlist = '전체';
-                this.CMList();
-            }
-            this.CMList();
+        // Cancellation() {
+        //     this.cancel = true;
+        //     if(this.selectlist != '구매') {
+        //         this.selectlist = '전체';
+        //         this.CMList();
+        //     }
+        //     this.CMList();
+        // },
+        toCMCancel() {
+            this.$router.push({ path : '/cmcancel' });
         },
         // 결제취소 대상 선택
-        SelectCancel(price) {
-            if(this.cancel == true) {
-                console.log(price);
-                this.price = price;
-                let store = useResponseStore();
-                store.cancel_price = this.price;
-                document.getElementById('popup').style.display = 'flex';
-            }
-        },
+        // SelectCancel(price) {
+        //     if(this.cancel == true) {
+        //         console.log(price);
+        //         this.price = price;
+        //         let store = useResponseStore();
+        //         store.cancel_price = this.price;
+        //         document.getElementById('popup').style.display = 'flex';
+        //     }
+        // },
         // 결제취소 취소
-        Deny() {
-            document.getElementById('popup').style.display = 'none';
-        },
-        // 결제취소 확인
-        Confirm() {
-            this.$router.push({ path : 'cmpin'});
-        }
+        // Deny() {
+        //     document.getElementById('popup').style.display = 'none';
+        // },
+        // // 결제취소 확인
+        // Confirm() {
+        //     this.$router.push({ path : 'cmpin'});
+        // }
 
     },
     computed : {

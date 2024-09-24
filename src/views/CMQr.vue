@@ -15,7 +15,7 @@
             </div>
             <p>결제 취소 금액</p>
             <p>{{ price }}</p>
-            <button type="button">확인</button>
+            <button type="button" @click="toCMList()">확인</button>
         </div>
     </div>
 </template>
@@ -36,16 +36,24 @@ export default {
 
         let store = useResponseStore();
         this.id = store.user_id;
-        this.price = store.cancel_price;
+        this.price = store.cancel_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     },
     methods : {
         ShowQR() {
 
             let store = useResponseStore();
 
+            const cancelprice = store.cancel_price.replace(',', '');
+
             let formData = new FormData();
             formData.append('type', 'qr_code');
             formData.append('user_index', store.user_index);
+            formData.append('amount', cancelprice);
+            formData.append('index', store.user_cm_log_index);
+
+            for (const pair of formData.entries()) {
+                console.log(pair[0], pair[1]);
+            }
 
             const url = process.env.VUE_APP_API_URL;
 
@@ -57,13 +65,16 @@ export default {
             .then(data => {
                 console.log(data);
                 this.qrdigit = data.msg;
-
+                // console.log(this.qrdigit);
                 // this.commaprice = this.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             })
         },
         toQRPin() {
             this.$router.push({ path : '/cmpin' });
-        }
+        },
+        toCMList() {
+            this.$router.push({ path : '/cmlist' });
+        },
     }
 }
 

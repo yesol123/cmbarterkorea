@@ -9,7 +9,8 @@ export const useResponseStore = defineStore('response', {
     store_main_user_index : '', // 서브계정
     cm_amount : '', // 회원별 CM 보유량
     cmp_amount : '', // 회원별 CMP 보유량
-    cancel_price : '' // 결제취소 시 해당 금액
+    cancel_price : '', // 결제취소 시 해당 금액
+    user_cm_log_index : '' // 결제취소 시 log_index
   }),
   // state: () => {
   //   const savedData = localStorage.getItem('response');
