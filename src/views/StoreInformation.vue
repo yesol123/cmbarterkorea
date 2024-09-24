@@ -7,7 +7,13 @@
     </RouterLink>
     </header>
 
+    <section class="store_info_area">
+      <ul>
+        <li><RouterLink to ='/ChangeFranchise' > 기본 정보</RouterLink></li>
+        <li><RouterLink to ='/storeInformation'> 정보 변경</RouterLink></li>
+      </ul>
 
+    </section>
 </template>
 <script>
     export default{
@@ -27,9 +33,10 @@
     font-family: "Noto Sans KR", sans-serif;
 }
 
-ul{
+ul,a{
     list-style: none;
     padding: 0;
+    text-decoration: none;
 }
 
 .store_infomation_title {
@@ -70,4 +77,38 @@ ul{
   color: #1749c2;
   font-weight: 900;
 }
+
+.store_info_area{
+ width: 95%;
+ margin: 0 auto;
+}
+
+
+
+.store_info_area > ul:nth-child(1){
+margin-top: 100px;
+ display: flex;
+ justify-content: center;
+ padding: 0;
+ text-decoration: none;
+ list-style: none;
+}
+
+.store_info_area > ul:nth-child(1) > li:nth-child(1) {
+ padding: 10px 20px;
+ width: 50%;
+ text-align: center;
+ font-size: 20px;
+ border-bottom: 3px solid gray; 
+ 
+}
+
+.store_info_area > ul:nth-child(1) > li:nth-child(2) {
+ padding: 10px 20px;
+ width: 50%;
+ text-align: center;
+ font-size: 20px;
+ border-bottom: 3px solid #1749c2; 
+}
+
 </style>

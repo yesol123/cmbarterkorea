@@ -257,6 +257,16 @@ const router = createRouter({
             name:'storeInformation',
             component:()=> import("@/views/StoreInformation.vue")
         },  
+        {
+            path: '/franchiseEdit',
+            name:'franchiseEdit',
+            component:()=> import("@/views/FranchiseEdit.vue")
+        },  
+        {
+            path: '/changeImg',
+            name:'changeImg',
+            component:()=> import("@/views/ChangeImg.vue")
+        },  
 
 
     ],
