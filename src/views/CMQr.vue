@@ -43,13 +43,13 @@ export default {
 
             let store = useResponseStore();
 
+            const cancelprice = store.cancel_price.replace(',', '');
+
             let formData = new FormData();
             formData.append('type', 'qr_code');
             formData.append('user_index', store.user_index);
-            // formData.append('amount', store.cancel_price.substring(-3,4));
-
-            console.log('formdata');
-            console.log(store.cancel_price.substring(-3,4));
+            formData.append('amount', cancelprice);
+            formData.append('index', store.user_cm_log_index);
 
             const url = process.env.VUE_APP_API_URL;
 
@@ -61,7 +61,7 @@ export default {
             .then(data => {
                 console.log(data);
                 this.qrdigit = data.msg;
-
+                // console.log(this.qrdigit);
                 // this.commaprice = this.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             })
         },

@@ -25,7 +25,7 @@
         </div>
 
         <!-- CM 내역 리스트 -->
-        <div class="cm_list" v-for="(list, i) in this.cancellist" :key="i" @click="SelectCancel(list.user_cm_log_value_o)">
+        <div class="cm_list" v-for="(list, i) in this.cancellist" :key="i" @click="SelectCancel(list.user_cm_log_value_o, list.user_cm_log_index)">
             <div>
                 <p>{{ list.user_cm_log_create_time }}</p> 
                 <p style="color: red; font-weight: bold">{{ list.user_cm_log_transaction_type_name }}</p>
@@ -70,7 +70,8 @@ export default {
             cm : '',
             cmp : '',
             cancellist : '',
-            price : ''
+            price : '',
+            index : ''
           
         }
     },
@@ -111,11 +112,12 @@ export default {
             })
         },
         // 결제취소 대상 선택
-        SelectCancel(price) {
+        SelectCancel(price, index) {
             console.log(price);
             this.price = price;
             let store = useResponseStore();
             store.cancel_price = this.price;
+            store.user_cm_log_index = index;
             document.getElementById('popup').style.display = 'flex';
         },
          // 결제취소 취소
