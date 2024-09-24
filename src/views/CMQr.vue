@@ -36,7 +36,7 @@ export default {
 
         let store = useResponseStore();
         this.id = store.user_id;
-        this.price = store.cancel_price;
+        this.price = store.cancel_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     },
     methods : {
         ShowQR() {
@@ -52,7 +52,7 @@ export default {
             formData.append('index', store.user_cm_log_index);
 
             for (const pair of formData.entries()) {
-            console.log(pair[0], pair[1]);
+                console.log(pair[0], pair[1]);
             }
 
             const url = process.env.VUE_APP_API_URL;
