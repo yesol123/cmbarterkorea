@@ -46,6 +46,10 @@ export default {
             let formData = new FormData();
             formData.append('type', 'qr_code');
             formData.append('user_index', store.user_index);
+            // formData.append('amount', store.cancel_price.substring(-3,4));
+
+            console.log('formdata');
+            console.log(store.cancel_price.substring(-3,4));
 
             const url = process.env.VUE_APP_API_URL;
 

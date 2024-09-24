@@ -48,8 +48,8 @@
             <!-- <p style="font-size: 1.0rem;">결제하시겠습니까?</p> -->
 
             <div class="btn_group">
-                <button type="button">취소</button>
-                <button type="button">확인</button>
+                <button type="button" @click="notPaying()">취소</button>
+                <button type="button" @click="Paying()">확인</button>
             </div>
             </div>
         </div>
@@ -129,9 +129,11 @@ export default {
                                         this.cm = data.price;
                                         this.mb_index = data.hash_mb.mb_index;
 
+                                        // 결제취소
                                         if(data.qr_state == 'C') {
                                             this.openpopup2();
                                         }
+                                        // 결제확인
                                         if(data.qr_state == 'O') {
                                             this.openpopup();
                                         }
