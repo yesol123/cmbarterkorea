@@ -1,6 +1,6 @@
 <template>
     <header class="couponbox_Detail_title">
-        <RouterLink to="/couponbox"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
+        <RouterLink to="/cmake"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
         <h3>쿠폰 상세보기</h3>
     </header>
 
@@ -27,11 +27,6 @@
                     <input type="text" class="input_form" placeholder="쿠폰 기한" readonly="" disabled="" :value="coupon.coupon_deadline">
                 </label>
             </li>
-            <!-- <li  class="m_T30">
-                <label > 멤버십 명 
-                    <input type="text" class="input_form" placeholder="멤버십 명" readonly="" disabled="" :value="coupon.membership">
-                </label>
-            </li> -->
             <li  class="m_T30">
                 <label > 지급 쿠폰 상태
                     <input type="text" class="input_form" placeholder="지급 쿠폰 상태" readonly="" disabled="" :value="coupon.status">
@@ -45,6 +40,11 @@
             <li  class="m_T30">
                 <label > 쿠폰 지급 만기일
                     <input type="text" class="input_form" placeholder="쿠폰 지급 만기일" readonly="" disabled="" :value="coupon.limit">
+                </label>
+            </li>
+            <li class="m_T30">
+                <label >회원 이름 
+                    <input  type="text" class="input_form" placeholder="회원 이름" readonly="" disabled="" :value="coupon.user">
                 </label>
             </li>
         </ul>
@@ -70,7 +70,8 @@ export default{
                 membership:'',
                 status:'',
                 payment:'',
-                limit:''
+                limit:'',
+                user : ''
 
             }
         }
@@ -87,7 +88,7 @@ export default{
         formData.append('coupon_issuance_index',this.id);
 
         const url = process.env.VUE_APP_API_URL;
-        fetch( url + 'api/coupon/coupon_provided.php',{
+        fetch( url + 'api/coupon/coupon_issuance.php',{
             method:'POST',
             body:formData
         })
@@ -104,11 +105,10 @@ export default{
             this.coupon.status = result.msg[0].coupon_provided_status; //상태
             this.coupon.payment = result.msg[0].coupon_issuance_time; //지급일
             this.coupon.limit = result.msg[0].coupon_limit_time_f; //만기일
-
+            this.coupon.user = result.msg[0].user_name; //회원이름
 
         })
     },
-
 }
 
 </script>
