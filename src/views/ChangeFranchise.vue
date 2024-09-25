@@ -19,15 +19,7 @@
   <ul class="show_img">
     <li><p style="margin: 5px 0;">최대 9장</p></li>
     <div class="selected_nine">
-    <li><img src="@/assets/1.jpg" alt=""></li>
-    <li><img src="@/assets/2.jpg" alt=""></li>
-    <li><img src="@/assets/3.jpg" alt=""></li>
-    <li><img src="@/assets/1.jpg" alt=""></li>
-    <li><img src="@/assets/2.jpg" alt=""></li>
-    <li><img src="@/assets/3.jpg" alt=""></li>
-    <li><img src="@/assets/1.jpg" alt=""></li>
-    <li><img src="@/assets/2.jpg" alt=""></li>
-    <li><img src="@/assets/3.jpg" alt=""></li>
+    <li v-for="(image,index) in img" :key="index"><img :src="image.store_image" alt=""></li>
     </div>
    
   </ul>
@@ -55,29 +47,6 @@
     </li>
   </ul>
 
-<!-- <form @submit.prevent="insertWrite" class="form_area" action="">
-    <label for="title">문의 제목</label>
-    <input  v-model="title" id="title" type="text" name='title' placeholder="문의하실 제목을 입력하세요.">
-    <label class="text" for="text">문의 내역</label>
-    <textarea  v-model="contents" name="contents" id="text" placeholder="문의하실 내용을 입력하세요."></textarea>
-
-    <button @click="showModal = true" type="submit">문의하기</button>
-</form> -->
-
-<!-- 
-<div v-if="showModal" class="modal">
-  <p class="caution">알림</p>
-      <p>문의 등록하시겠습니까?</p>
-      <button @click="showModal2 = true">확인</button>
-      <button @click="cancelInsert">취소</button>
-  </div>
-
-
-  <div v-if="showModal2" class="modal">
-    <p class="caution">알림</p>
-      <p>문의 등록이 정상적으로 완료 되었습니다.</p>
-      <button @click="confirmInsert">확인</button>
-  </div> -->
 
 </section>
 
@@ -96,19 +65,19 @@ export default{
                 store_call_number:'',
                 store_website:'',
                 store_introduce:''  
-            }
-
+            },
+            img:[]
         }
     },
     mounted(){
         let store = useResponseStore();
-        const formData = new FormData();
-        formData.append('type', 'store_select1');
-        formData.append('user_index',store.user_index);
+        const formData1 = new FormData();
+        formData1.append('type', 'store_select1');
+        formData1.append('user_index',store.user_index);
         const url = process.env.VUE_APP_API_URL;
             fetch(url + 'api/store/store_update.php', {
                 method: 'POST',
-                body: formData
+                body: formData1
                 })
                 .then(response => response.json())
                 .then(result =>{
@@ -120,6 +89,26 @@ export default{
                     this.store.store_website = result.msg[0].store_site;
                     this.store.store_introduce = result.msg[0].store_memo;
                 })
+
+
+        const formData2 = new FormData();
+        formData2.append('type','store_image_select');
+        formData2.append('user_index',store.user_index);
+
+        for (const pair of formData2.entries()) {
+        console.log('ㅇㅇㅇㅇ',pair[0], pair[1]);
+        }
+        fetch(url + 'api/store/store_update.php', {
+                method: 'POST',
+                body: formData2
+                })
+                .then(response => response.json())
+                .then(result =>{
+                    console.log('222 ',result);
+                    console.log('222 ',result.msg);
+                    this.img = result.msg
+                })
+
 
     }
 

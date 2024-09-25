@@ -41,12 +41,24 @@
                     </div>
            
         </form>
-        <button type="button" @click="saveImg()">저장</button>
+        <button class="saveBtn" type="button" @click="showModal = true">저장</button>
     </section>
+
+    <div v-if="showModal" class="modal">
+  <p class="caution">알림</p>
+      <p>사진이 등록 되었습니다.</p>
+      <button @click="saveImg()">확인</button>
+      <button @click="cancelInsert">취소</button>
+  </div>
+
+
+
+
 </template>
 
 <script>
 import { useResponseStore } from '@/store/response.js';
+import router from '@/router/index.js';
 import axios from 'axios';
 
 
@@ -58,10 +70,15 @@ export default{
             imageSrc:require('@/assets/1.jpg'),//경로를 동적으로 사용할 때는 require 함수나 import를 사용해야 합니다.
             detailImages: [], // 상세 이미지 배열
             files:[], // 이미지 파일들
-            repImgFile: null // 대표 이미지 파일
+            repImgFile: null, // 대표 이미지 파일
+            showModal:false
         }
     },
     methods:{
+
+        cancelInsert(){
+            this.showModal = false
+        },
         async saveImg(){
             console.log('사진 저장! ');
 
@@ -78,11 +95,15 @@ export default{
 
             //상세 이미지 파일들을 각각 추가
             this.files.forEach((file,index)=>{
-            formData.append(`sub_img_${index}`,file); //파일 이름 각각 다르게 설정
+            formData.append(`sub_img${index}`,file); //파일 이름 각각 다르게 설정
             })
 
             formData.append('length',this.files.length); // 이미지 최대 9개 까지
-
+            
+            for (const pair of formData.entries()) {
+            console.log(pair[0], pair[1]);
+            }
+            
             const url = process.env.VUE_APP_API_URL;
 
             try {
@@ -96,6 +117,7 @@ export default{
                 } catch (error) {
                  console.error('이미지 업로드 중 에러 발생:', error);
                     }
+                    router.push({ path: '/ChangeFranchise' });
         },
      
         previewImage(event) {
@@ -291,7 +313,7 @@ input[type="file"]{
     object-fit: cover; /* 이미지가 박스 안에 맞게 조정 */
 }
 
-button{
+.saveBtn{
     width: 100%;
     height: 50px;
     background-color: #1749C2;
@@ -319,5 +341,48 @@ button{
     cursor: pointer;
     
    }
+
+   
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  position: fixed; /* 고정 위치 */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -70%); /* 화면의 중앙에 위치 */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  width: 400px;
+  max-width: 90%;
+  padding: 30px 20px;
+  text-align: center;
+  box-sizing: border-box;
+}
+.caution{
+    margin-bottom: 20px;
+ }
+
+.modal button {
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #1749c2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
 
 </style>
