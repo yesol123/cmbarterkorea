@@ -2,8 +2,8 @@
         <header class="change_info_header_title">
            <RouterLink :to="`/ChangeFranchise`"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
            <h3>매장 관리</h3>
-           <RouterLink to="/">
-      <img src="@/assets/icon_modify.svg" alt="Close" />
+           <RouterLink to="/ChangeFranchise">
+      <img src="@/assets/icon_close.svg" alt="Close" />
     </RouterLink>
     </header>
 
@@ -292,6 +292,7 @@ color: gray;
 }
 .title{
     font-weight: bold;
+    margin: 5px 0;
 }
 
 input,textarea,.save{
