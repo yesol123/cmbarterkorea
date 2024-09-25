@@ -1,6 +1,6 @@
 <template>
     <header class="couponbox_Detail_title">
-        <RouterLink to="/couponbox"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
+        <RouterLink to="/cmake"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
         <h3>쿠폰 상세보기</h3>
     </header>
 
@@ -27,11 +27,6 @@
                     <input type="text" class="input_form" placeholder="쿠폰 기한" readonly="" disabled="" :value="coupon.coupon_deadline">
                 </label>
             </li>
-            <!-- <li  class="m_T30">
-                <label > 멤버십 명 
-                    <input type="text" class="input_form" placeholder="멤버십 명" readonly="" disabled="" :value="coupon.membership">
-                </label>
-            </li> -->
             <li  class="m_T30">
                 <label > 지급 쿠폰 상태
                     <input type="text" class="input_form" placeholder="지급 쿠폰 상태" readonly="" disabled="" :value="coupon.status">
@@ -87,7 +82,7 @@ export default{
         formData.append('coupon_issuance_index',this.id);
 
         const url = process.env.VUE_APP_API_URL;
-        fetch( url + 'api/coupon/coupon_provided.php',{
+        fetch( url + 'api/coupon/coupon_issuance.php',{
             method:'POST',
             body:formData
         })
@@ -108,7 +103,6 @@ export default{
 
         })
     },
-
 }
 
 </script>

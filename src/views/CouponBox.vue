@@ -132,8 +132,8 @@ export default{
         gotoDetail(coupon_index){
             
             console.log('ddd',coupon_index);
-            this.id = coupon_index
-            router.push({path:`/couponDetail/${this.id}`})
+            this.id = coupon_index;
+            router.push({path:`/couponDetail/${this.id}`});
         },
         possible(){
             console.log('사용가능을 한다');

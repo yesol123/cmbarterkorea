@@ -41,7 +41,7 @@
                             </div>
                         </ul>
                     </div>
-                    <button @click="gotoDetail()">쿠폰 상세보기</button>
+                    <button @click="gotoDetail(list.coupon_index)">쿠폰 상세보기</button>
                 </li>
             </ul>
         </section>
@@ -56,6 +56,7 @@ export default {
         return {
             selectedButton : '전체',
             cmakelist : '',
+            id : ''
         }
     },
     mounted() {
@@ -112,8 +113,11 @@ export default {
                 console.log(this.cmakelist);
             })
         },
-        gotoDetail() {
-            this.$router.push({ path : '/couponDetail/:id'})
+        gotoDetail(id) {
+            // console.log('123');
+            // console.log(id);
+            this.id = id;
+            this.$router.push({path:`/couponDetail2/${this.id}`});
         }
     }
 }

@@ -11,7 +11,7 @@ export const useResponseStore = defineStore('response', {
     cmp_amount : '', // 회원별 CMP 보유량
     cancel_price : '', // 결제취소 시 해당 금액
     user_cm_log_index : '', // 결제취소 시 log_index
-    coupon_index : '' // 쿠폰 인덱스 값 (쿠폰상세보기)
+  
   }),
   // state: () => {
   //   const savedData = localStorage.getItem('response');
