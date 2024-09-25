@@ -1,8 +1,8 @@
 <template>
        <header class="change_info_header_title">
-           <RouterLink :to="`/franchiseEdit`"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
+           <RouterLink :to="`/ChangeFranchise`"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
            <h3>이미지 등록</h3>
-           <RouterLink to="/franchiseEdit">
+           <RouterLink to="/ChangeFranchise">
       <img src="@/assets/icon_close.svg" alt="Close" />
     </RouterLink>
     </header>
@@ -95,7 +95,7 @@ export default{
 
             //상세 이미지 파일들을 각각 추가
             this.files.forEach((file,index)=>{
-            formData.append(`sub_img${index}`,file); //파일 이름 각각 다르게 설정
+            formData.append(`sub_img_${index}`,file); //파일 이름 각각 다르게 설정
             })
 
             formData.append('length',this.files.length); // 이미지 최대 9개 까지

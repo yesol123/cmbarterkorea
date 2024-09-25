@@ -2,9 +2,7 @@
     <header class="change_info_header_title">
            <RouterLink :to="`/franchiseeInfo`"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
            <h3>매장 관리</h3>
-           <RouterLink to="franchiseEdit">
-      <img src="@/assets/icon_modify.svg" alt="Close" />
-    </RouterLink>
+          
     </header>
 
     
@@ -14,18 +12,30 @@
         <li><RouterLink to ='/storeInformation'> 운영 정보</RouterLink></li>
   </ul>
 
-
-  <p class="title">매장 이미지</p>
+  <div class="flex">
+    <p class="title">매장 이미지</p>
+    <div class="btn">
+        <button @click="delImg()"><img src="@/assets/minus.png" alt=""></button>
+    </div>
+  </div>
   <ul class="show_img">
     <li><p style="margin: 5px 0;">최대 9장</p></li>
     <div class="selected_nine">
-    <li v-for="(image,index) in img" :key="index"><img :src="image.store_image" alt=""></li>
+        <li class="addImg"><RouterLink to="/changeImg" ><img class="changeImg" src="@/assets/contetns_img.svg" alt=""></RouterLink></li>
+    <li v-for="(image,index) in img" :key="index"><img class="img_p" :src="image.store_image" alt="">
+        <p v-show="isDelImg" class="closeBtn" @click="cancellation(index)"></p></li>
     </div>
    
   </ul>
 
+  <div class="flex">
+    <p class="title">매장정보</p>
+  <RouterLink to="franchiseEdit">
+      <img src="@/assets/icon_modify.svg" alt="Close" />
+    </RouterLink>
 
-  <p class="title">매장정보</p>
+  </div>
+
   <ul class="show_store_info">
     <li><p class="title">매장명</p>
         <span>{{ this.store.store_name }}</span>
@@ -66,8 +76,24 @@ export default{
                 store_website:'',
                 store_introduce:''  
             },
-            img:[]
+            img:[],
+            isAddImg:false,
+            isDelImg:false,
+            detailImages:[]
         }
+    },
+
+    methods:{
+        delImg(){
+            console.log('이거는 삭제 api 해줄거임');
+            this.isDelImg = !this.isDelImg
+            
+        },
+        
+        cancellation(index){
+            console.log('사진 안올린다');
+            this.detailImages.splice(index,1)
+        },
     },
     mounted(){
         let store = useResponseStore();
@@ -124,10 +150,36 @@ export default{
     font-family: "Noto Sans KR", sans-serif;
 }
 
+*p{
+    margin: 5px 0;
+}
 ul,a{
     list-style: none;
     padding: 0;
     text-decoration: none;
+}
+.flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn{
+    display: flex;
+    gap: 10px;
+
+}
+
+.btn > button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #1749c2;
+    border-radius: 50px;
+    background-color: #1749c2;
+    width: 30px;
+    height: 30px;
+    color: #fff;
 }
 
 .change_info_header_title {
@@ -208,6 +260,38 @@ color: #1749c2;
 .info_area > ul:nth-child(1) > li:nth-child(2) > a:nth-child(2){
 color: gray;
 }
+
+
+.addImg{
+    border: 2px dashed #B1B1B1;
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    height: 150px; /* 부모 요소에 높이 설정 */
+}
+.addImg > a > .changeImg{
+    width: 100%; /* 이미지를 더 작게 만듦 */
+}
+
+
+
+.img_p{
+    position: relative;
+    width: 100%;
+
+}
+.closeBtn{
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    width: 20px;
+    height: 20px;
+    background-image: url('@/assets/icon_img_close.svg');
+    background-size: contain; /* 아이콘 크기를 컨테이너에 맞춤 */
+    background-repeat: no-repeat;
+    cursor: pointer;
+    
+   }
 
 
 .show_img{
