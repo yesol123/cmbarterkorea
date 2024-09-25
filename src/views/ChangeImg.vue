@@ -88,13 +88,11 @@ export default{
             try {
             // axios로 파일 업로드 요청
             const response = await axios.post(`${url}api/store/store_update.php`, formData, {
-            headers: {
-            'Content-Type': 'multipart/form-data'
-                    }
+                headers: {'Content-Type': 'multipart/form-data'}
             });
                 console.log('응답 결과:', response.data);
                 console.log('응답 결과:2', response.data.msg);
-
+                console.log('FormData:', ...formData); // FormData 확인
                 } catch (error) {
                  console.error('이미지 업로드 중 에러 발생:', error);
                     }

@@ -73,7 +73,7 @@ export default{
         formData.append('status','');
 
         const url = process.env.VUE_APP_API_URL;
-        fetch( url + 'api/coupon/coupon_issuance.php',{
+        fetch( url + 'api/coupon/coupon_provided.php',{
             method:'POST',
             body:formData
         })
