@@ -42,6 +42,11 @@
                     <input type="text" class="input_form" placeholder="쿠폰 지급 만기일" readonly="" disabled="" :value="coupon.limit">
                 </label>
             </li>
+            <li class="m_T30">
+                <label >회원 이름 
+                    <input  type="text" class="input_form" placeholder="회원 이름" readonly="" disabled="" :value="coupon.user">
+                </label>
+            </li>
         </ul>
 
 
@@ -65,7 +70,8 @@ export default{
                 membership:'',
                 status:'',
                 payment:'',
-                limit:''
+                limit:'',
+                user : ''
 
             }
         }
@@ -99,7 +105,7 @@ export default{
             this.coupon.status = result.msg[0].coupon_provided_status; //상태
             this.coupon.payment = result.msg[0].coupon_issuance_time; //지급일
             this.coupon.limit = result.msg[0].coupon_limit_time_f; //만기일
-
+            this.coupon.user = result.msg[0].user_name; //회원이름
 
         })
     },
