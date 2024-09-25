@@ -46,6 +46,61 @@
             </ul>
         </section>
     </div>
+
+    <!-- 쿠폰발행창 -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <div class="center">
+                <p class="header">쿠폰 발행</p>
+                
+                <div>
+                    <label>보유CM</label>
+                    <input type="number" v-model="cm">
+                </div>
+
+                <div>
+                    <label>사용CM</label>
+                    <input type="number" v-model="price">
+                </div>
+
+                <div>
+                    <label>가격</label>
+                    <select v-model="coupon_price">
+                        <option>쿠폰의 가격 선택</option>
+                        <option>1,000</option>
+                        <option>5,000</option>
+                        <option>10,000</option>
+                        <option>50,000</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>개수</label>
+                    <input type="number" placeholder="발행수량을 입력해주세요" v-model="coupon_count">
+                </div>
+                
+                <div>
+                    <label>기한</label>
+                    <input type="number" placeholder="사용기한을 입력해주세요(1일~90일)" v-model="coupon_limit">
+                </div>
+
+                <div>
+                    <label>이름</label>
+                    <input type="text" placeholder="쿠폰이름을 입력해주세요(30자이내)" v-model="coupon_name">
+                </div>
+
+                <div>
+                    <label>조건</label>
+                    <input type="text" placeholder="사용조건을 입력해주세요(30자이내)" v-model="coupon_condition">
+                </div>
+
+                <div class="btn_group">
+                    <button type="button" @click="IssueCoupon()">확인</button>
+                    <button type="button">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -56,11 +111,22 @@ export default {
         return {
             selectedButton : '전체',
             cmakelist : '',
-            id : ''
+            id : '',
+            cm : '',
+            price : '',
+            coupon_price : '쿠폰의 가격 선택',
+            coupon_count : '',
+            coupon_limit : '',
+            coupon_name : '',
+            coupon_condition : ''
+
         }
     },
     mounted() {
         this.CouponMakeList();
+
+        let store = useResponseStore();
+        this.cm = store.cm_amount;
     },
     methods : {
         toMain() {
@@ -118,6 +184,25 @@ export default {
             // console.log(id);
             this.id = id;
             this.$router.push({path:`/couponDetail2/${this.id}`});
+        },
+        IssueCoupon() {
+            console.log('쿠폰발행');
+            // console.log(this.coupon_price);
+            // console.log(this.coupon_count);
+            // console.log(this.coupon_limit);
+            // console.log(this.coupon_name);
+            // console.log(this.coupon_condition);
+
+            let store = useResponseStore();
+
+            let formData = new FormData();
+            formData.append('type', 'coupon_buy');
+            formData.append('user_index', store.user_index);
+            formData.append('coupon_price', this.coupon_price);
+            formData.append('coupon_price', this.coupon_price);
+            formData.append('coupon_price', this.coupon_price);
+            formData.append('coupon_price', this.coupon_price);
+            formData.append('coupon_price', this.coupon_price);
         }
     }
 }
@@ -167,14 +252,14 @@ header > p {
     margin: 70px auto 0;
     width: 95%;
 }
-label {
+.couponbox_section label {
     display: flex;
     justify-content: space-between;
     border: 1px solid #B1B1B1;
     border-radius: 10px;
     padding: 10px;
 }
-label input {
+.couponbox_section label input {
     border: 0;
     outline: none;
     padding: 0 10px;
@@ -294,5 +379,79 @@ label button {
 .coupon_btns > button:nth-of-type(3) {
     background-color: orange;
 }
-
+.popup {
+    /* display: none; */
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+/* 팝업내용 */
+.popup-content {
+    position: relative;
+    width: 80%; height: 60%;
+    background-color: #fff;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    overflow: scroll;
+    color: #000;
+}
+.center {
+    position: absolute;
+    top: 7%;
+    /* transform: translateY(-50%); */
+    width: 100%; height: 100%;
+    /* border: 1px solid red; */
+}
+.header {
+    font-weight: bold;
+    font-size: 1.2rem;
+    /* border: 1px solid red; */
+}
+.center > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 85%;
+    margin: 4% auto 0;
+    /* border: 1px solid orange; */
+}
+.center > div input {
+    width: 85%; height: 30px;
+    /* margin-left: 5px; */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding-left: 5px;
+    font-size: 0.8rem;
+}
+.center > div select, option {
+    width: 85%; height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding-left: 5px;
+    font-size: 0.8rem;
+}
+.btn_group {
+    width: 100%;
+    padding: 0 40px;
+    /* border: 1px solid red; */
+}
+.btn_group > button {
+    width: 65px; height: 35px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    color: #000;
+}
+.btn_group > button:nth-of-type(1) {
+    background-color: #1bce0b;
+    border: 1px solid #1bce0b;
+    color: #fff;
+}
 </style>
