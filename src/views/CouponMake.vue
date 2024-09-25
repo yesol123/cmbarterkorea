@@ -111,6 +111,9 @@ export default {
                 this.cmakelist = data.msg;
                 console.log(this.cmakelist);
             })
+        },
+        gotoDetail() {
+            this.$router.push({ path : '/couponDetail/:id'})
         }
     }
 }
