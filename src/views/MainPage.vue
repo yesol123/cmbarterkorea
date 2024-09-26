@@ -245,7 +245,7 @@ export default {
         },
         // 결제 페이지로 이동
         toPayment() {
-            console.log(4444);
+            // console.log(4444);
 
             this.$refs.payment.openpopup();
         },
