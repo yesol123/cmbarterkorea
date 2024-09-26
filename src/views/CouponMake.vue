@@ -60,23 +60,23 @@
 
                 <div>
                     <label>사용CM</label>
-                    <input type="number" v-model="price">
+                    <input type="number" v-model="price" readonly>
                 </div>
 
                 <div>
                     <label>가격</label>
                     <select v-model="coupon_price">
                         <option>쿠폰의 가격 선택</option>
-                        <option>1,000</option>
-                        <option>5,000</option>
-                        <option>10,000</option>
-                        <option>50,000</option>
+                        <option value="1000">1,000 CM</option>
+                        <option value="5000">5,000 CM</option>
+                        <option value="10000">10,000 CM</option>
+                        <option value="50000">50,000 CM</option>
                     </select>
                 </div>
 
                 <div>
                     <label>개수</label>
-                    <input type="number" placeholder="발행수량을 입력해주세요" v-model="coupon_count">
+                    <input type="number" placeholder="발행수량을 입력해주세요" v-model="coupon_count" @change="TotalPrice()">
                 </div>
                 
                 <div>
@@ -129,6 +129,11 @@ export default {
         this.cm = store.cm_amount;
     },
     methods : {
+        TotalPrice() {
+            if(this.coupon_price != '쿠폰의 가격 선택' && this.coupon_count != '') {
+                this.price = this.coupon_price * this.coupon_count;
+            }
+        },
         toMain() {
             this.$router.push({ path : '/main' });
         },
@@ -208,10 +213,6 @@ export default {
             // console.log(typeof this.coupon_name);
             // console.log(this.coupon_condition);
 
-            if(this.price == '') {
-                alert('사용CM을 입력해주세요.');
-                return false;
-            }
             if(this.coupon_price == '쿠폰의 가격 선택') {
                 alert('쿠폰가격을 선택해주세요.');
                 return false;
