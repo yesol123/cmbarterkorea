@@ -204,13 +204,11 @@ export default {
         },
         IssueCoupon() {
             // console.log('쿠폰발행');
+            // console.log(this.price);
             // console.log(this.coupon_price);
             // console.log(this.coupon_count);
-            // console.log(typeof this.coupon_limit);
-            // if(this.coupon_limit > 90) {
-            //     console.log(11)
-            // }
-            // console.log(typeof this.coupon_name);
+            // console.log(this.coupon_limit);
+            // console.log(this.coupon_name);
             // console.log(this.coupon_condition);
 
             if(this.coupon_price == '쿠폰의 가격 선택') {
@@ -252,10 +250,10 @@ export default {
             formData.append('type', 'coupon_buy');
             formData.append('user_index', store.user_index);
             formData.append('coupon_price', this.coupon_price);
-            formData.append('coupon_price', this.coupon_count);
-            formData.append('coupon_price', this.coupon_limit);
-            formData.append('coupon_price', this.coupon_name);
-            formData.append('coupon_price', this.coupon_condition);
+            formData.append('coupon_count', this.coupon_count);
+            formData.append('coupon_limit', this.coupon_limit);
+            formData.append('coupon_name', this.coupon_name);
+            formData.append('coupon_condition', this.coupon_condition);
 
             const url = process.env.VUE_APP_API_URL;
 
