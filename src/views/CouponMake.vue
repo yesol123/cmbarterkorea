@@ -129,6 +129,7 @@ export default {
         this.cm = store.cm_amount;
     },
     methods : {
+        // 쿠폰발행 > 사용CM 계산식
         TotalPrice() {
             if(this.coupon_price != '쿠폰의 가격 선택' && this.coupon_count != '') {
                 this.price = this.coupon_price * this.coupon_count;
@@ -158,9 +159,11 @@ export default {
             this.selectedButton = '전체';
             this.CouponMakeList();
         },
+        // 쿠폰발행하기
         toCouponMake() {
             document.getElementById('popup').style.display = 'flex';
         },
+        //쿠폰발행취소
         NotCouponMake() {
             document.getElementById('popup').style.display = 'none';
             this.price = '';
@@ -170,9 +173,11 @@ export default {
             this.coupon_name = '';
             this.coupon_condition = '';
         },
+        // 쿠폰이벤트 이동
         toCouponEvent() {
             this.$router.push({ path : '/cevent' });
         },
+        // 쿠폰리스트
         CouponMakeList() {
 
             let store = useResponseStore();
@@ -196,12 +201,14 @@ export default {
                 console.log(this.cmakelist);
             })
         },
+        // 쿠폰상세보기
         gotoDetail(id) {
             // console.log('123');
             // console.log(id);
             this.id = id;
             this.$router.push({path:`/couponDetail2/${this.id}`});
         },
+        // 쿠폰발행하기
         IssueCoupon() {
             // console.log('쿠폰발행');
             // console.log(this.price);
@@ -272,6 +279,8 @@ export default {
                 this.coupon_limit = '';
                 this.coupon_name = '';
                 this.coupon_condition = '';
+
+                this.CouponMakeList();
             })
         }
     }
