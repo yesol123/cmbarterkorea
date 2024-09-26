@@ -20,7 +20,7 @@
             <p class="coupon_current">'보유중'에 해당하는 쿠폰의 개수는 '0'개 입니다.</p>
 
             <div class="coupon_btns">
-                <button type="button">쿠폰발행</button>
+                <button type="button" @click="toCouponMake()">쿠폰발행</button>
                 <button type="button">쿠폰선물</button>
                 <button type="button" @click="toCouponEvent()">쿠폰이벤트</button>
             </div>
@@ -96,7 +96,7 @@
 
                 <div class="btn_group">
                     <button type="button" @click="IssueCoupon()">확인</button>
-                    <button type="button">취소</button>
+                    <button type="button" @click="NotCouponMake()">취소</button>
                 </div>
             </div>
         </div>
@@ -153,6 +153,18 @@ export default {
             this.selectedButton = '전체';
             this.CouponMakeList();
         },
+        toCouponMake() {
+            document.getElementById('popup').style.display = 'flex';
+        },
+        NotCouponMake() {
+            document.getElementById('popup').style.display = 'none';
+            this.price = '';
+            this.coupon_price = '쿠폰의 가격 선택';
+            this.coupon_count = '';
+            this.coupon_limit = '';
+            this.coupon_name = '';
+            this.coupon_condition = '';
+        },
         toCouponEvent() {
             this.$router.push({ path : '/cevent' });
         },
@@ -186,12 +198,52 @@ export default {
             this.$router.push({path:`/couponDetail2/${this.id}`});
         },
         IssueCoupon() {
-            console.log('쿠폰발행');
+            // console.log('쿠폰발행');
             // console.log(this.coupon_price);
             // console.log(this.coupon_count);
-            // console.log(this.coupon_limit);
-            // console.log(this.coupon_name);
+            // console.log(typeof this.coupon_limit);
+            // if(this.coupon_limit > 90) {
+            //     console.log(11)
+            // }
+            // console.log(typeof this.coupon_name);
             // console.log(this.coupon_condition);
+
+            if(this.price == '') {
+                alert('사용CM을 입력해주세요.');
+                return false;
+            }
+            if(this.coupon_price == '쿠폰의 가격 선택') {
+                alert('쿠폰가격을 선택해주세요.');
+                return false;
+            }
+            if(this.coupon_count == '') {
+                alert('쿠폰갯수를 입력해주세요.');
+                return false;
+            }
+            if(this.coupon_limit == '') {
+                alert('쿠폰기한을 입력해주세요.');
+                return false;
+            }
+            if(this.coupon_limit < 1 || this.coupon_limit > 90) {
+                alert('쿠폰기한은 1일 ~ 90일사이로 입력할 수 있습니다.');
+                return false;
+            }
+            if(this.coupon_name == '') {
+                alert('쿠폰이름을 입력해주세요.');
+                return false;
+            }
+            if(this.coupon_name.length > 30) {
+                alert('쿠폰이름은 30글자 이내로 작성해주세요');
+                return false;
+            }
+            if(this.coupon_condition == '') {
+                alert('쿠폰조건을 입력해주세요.');
+                return false;
+            }
+            if(this.coupon_condition.length > 30) {
+                alert('쿠폰조건은 30글자 이내로 작성해주세요');
+                return false;
+            }
 
             let store = useResponseStore();
 
@@ -199,10 +251,29 @@ export default {
             formData.append('type', 'coupon_buy');
             formData.append('user_index', store.user_index);
             formData.append('coupon_price', this.coupon_price);
-            formData.append('coupon_price', this.coupon_price);
-            formData.append('coupon_price', this.coupon_price);
-            formData.append('coupon_price', this.coupon_price);
-            formData.append('coupon_price', this.coupon_price);
+            formData.append('coupon_price', this.coupon_count);
+            formData.append('coupon_price', this.coupon_limit);
+            formData.append('coupon_price', this.coupon_name);
+            formData.append('coupon_price', this.coupon_condition);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/coupon/coupon_issuance.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('쿠폰발행');
+                console.log(data);
+                document.getElementById('popup').style.display = 'none';
+                this.price = '';
+                this.coupon_price = '쿠폰의 가격 선택';
+                this.coupon_count = '';
+                this.coupon_limit = '';
+                this.coupon_name = '';
+                this.coupon_condition = '';
+            })
         }
     }
 }
@@ -380,7 +451,7 @@ label button {
     background-color: orange;
 }
 .popup {
-    /* display: none; */
+    display: none;
     position: fixed;
     left: 0;
     top: 0;

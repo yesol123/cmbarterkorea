@@ -2,9 +2,7 @@
     <header class="change_info_header_title">
            <RouterLink :to="`/franchiseeInfo`"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
            <h3>매장 관리</h3>
-           <RouterLink to="franchiseEdit">
-      <img src="@/assets/icon_modify.svg" alt="Close" />
-    </RouterLink>
+          
     </header>
 
     
@@ -14,26 +12,30 @@
         <li><RouterLink to ='/storeInformation'> 운영 정보</RouterLink></li>
   </ul>
 
-
-  <p class="title">매장 이미지</p>
+  <div class="flex">
+    <p class="title">매장 이미지</p>
+    <div class="btn">
+        <button @click="delImg()"><img src="@/assets/minus.png" alt=""></button>
+    </div>
+  </div>
   <ul class="show_img">
     <li><p style="margin: 5px 0;">최대 9장</p></li>
     <div class="selected_nine">
-    <li><img src="@/assets/1.jpg" alt=""></li>
-    <li><img src="@/assets/2.jpg" alt=""></li>
-    <li><img src="@/assets/3.jpg" alt=""></li>
-    <li><img src="@/assets/1.jpg" alt=""></li>
-    <li><img src="@/assets/2.jpg" alt=""></li>
-    <li><img src="@/assets/3.jpg" alt=""></li>
-    <li><img src="@/assets/1.jpg" alt=""></li>
-    <li><img src="@/assets/2.jpg" alt=""></li>
-    <li><img src="@/assets/3.jpg" alt=""></li>
+        <li class="addImg"><RouterLink to="/changeImg" ><img class="changeImg" src="@/assets/contetns_img.svg" alt=""></RouterLink></li>
+    <li v-for="(image,index) in img" :key="index"><img class="img_p" :src="image.store_image" alt="">
+        <p v-show="isDelImg" class="closeBtn" @click="cancellation(index)"></p></li>
     </div>
    
   </ul>
 
+  <div class="flex">
+    <p class="title">매장정보</p>
+  <RouterLink to="franchiseEdit">
+      <img src="@/assets/icon_modify.svg" alt="Close" />
+    </RouterLink>
 
-  <p class="title">매장정보</p>
+  </div>
+
   <ul class="show_store_info">
     <li><p class="title">매장명</p>
         <span>{{ this.store.store_name }}</span>
@@ -55,29 +57,6 @@
     </li>
   </ul>
 
-<!-- <form @submit.prevent="insertWrite" class="form_area" action="">
-    <label for="title">문의 제목</label>
-    <input  v-model="title" id="title" type="text" name='title' placeholder="문의하실 제목을 입력하세요.">
-    <label class="text" for="text">문의 내역</label>
-    <textarea  v-model="contents" name="contents" id="text" placeholder="문의하실 내용을 입력하세요."></textarea>
-
-    <button @click="showModal = true" type="submit">문의하기</button>
-</form> -->
-
-<!-- 
-<div v-if="showModal" class="modal">
-  <p class="caution">알림</p>
-      <p>문의 등록하시겠습니까?</p>
-      <button @click="showModal2 = true">확인</button>
-      <button @click="cancelInsert">취소</button>
-  </div>
-
-
-  <div v-if="showModal2" class="modal">
-    <p class="caution">알림</p>
-      <p>문의 등록이 정상적으로 완료 되었습니다.</p>
-      <button @click="confirmInsert">확인</button>
-  </div> -->
 
 </section>
 
@@ -96,19 +75,35 @@ export default{
                 store_call_number:'',
                 store_website:'',
                 store_introduce:''  
-            }
-
+            },
+            img:[],
+            isAddImg:false,
+            isDelImg:false,
+            detailImages:[]
         }
+    },
+
+    methods:{
+        delImg(){
+            console.log('이거는 삭제 api 해줄거임');
+            this.isDelImg = !this.isDelImg
+            
+        },
+        
+        cancellation(index){
+            console.log('사진 안올린다');
+            this.detailImages.splice(index,1)
+        },
     },
     mounted(){
         let store = useResponseStore();
-        const formData = new FormData();
-        formData.append('type', 'store_select1');
-        formData.append('user_index',store.user_index);
+        const formData1 = new FormData();
+        formData1.append('type', 'store_select1');
+        formData1.append('user_index',store.user_index);
         const url = process.env.VUE_APP_API_URL;
             fetch(url + 'api/store/store_update.php', {
                 method: 'POST',
-                body: formData
+                body: formData1
                 })
                 .then(response => response.json())
                 .then(result =>{
@@ -120,6 +115,26 @@ export default{
                     this.store.store_website = result.msg[0].store_site;
                     this.store.store_introduce = result.msg[0].store_memo;
                 })
+
+
+        const formData2 = new FormData();
+        formData2.append('type','store_image_select');
+        formData2.append('user_index',store.user_index);
+
+        for (const pair of formData2.entries()) {
+        console.log('ㅇㅇㅇㅇ',pair[0], pair[1]);
+        }
+        fetch(url + 'api/store/store_update.php', {
+                method: 'POST',
+                body: formData2
+                })
+                .then(response => response.json())
+                .then(result =>{
+                    console.log('222 ',result);
+                    console.log('222 ',result.msg);
+                    this.img = result.msg
+                })
+
 
     }
 
@@ -135,10 +150,36 @@ export default{
     font-family: "Noto Sans KR", sans-serif;
 }
 
+*p{
+    margin: 5px 0;
+}
 ul,a{
     list-style: none;
     padding: 0;
     text-decoration: none;
+}
+.flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn{
+    display: flex;
+    gap: 10px;
+
+}
+
+.btn > button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #1749c2;
+    border-radius: 50px;
+    background-color: #1749c2;
+    width: 30px;
+    height: 30px;
+    color: #fff;
 }
 
 .change_info_header_title {
@@ -219,6 +260,38 @@ color: #1749c2;
 .info_area > ul:nth-child(1) > li:nth-child(2) > a:nth-child(2){
 color: gray;
 }
+
+
+.addImg{
+    border: 2px dashed #B1B1B1;
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    height: 150px; /* 부모 요소에 높이 설정 */
+}
+.addImg > a > .changeImg{
+    width: 100%; /* 이미지를 더 작게 만듦 */
+}
+
+
+
+.img_p{
+    position: relative;
+    width: 100%;
+
+}
+.closeBtn{
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    width: 20px;
+    height: 20px;
+    background-image: url('@/assets/icon_img_close.svg');
+    background-size: contain; /* 아이콘 크기를 컨테이너에 맞춤 */
+    background-repeat: no-repeat;
+    cursor: pointer;
+    
+   }
 
 
 .show_img{
