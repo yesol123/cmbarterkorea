@@ -104,7 +104,8 @@ export default {
             id : '',
             qrdigit : '',
             emptyck : '',
-            coupon_price : ''
+            coupon_price : '',
+            arr : []
 
         }
     },
@@ -157,7 +158,7 @@ export default {
                         formData.append('coupon_issuance_index_list', strcouponindex);
                         formData.append('user_index', store.user_index);
                         formData.append('user_role_index', store.member);
-                        const finalprice = this.price - this.coupon_price;
+                        const finalprice = this.price + this.coupon_price;
                         // console.log('빼기')
                         // console.log(finalprice);
                         formData.append('user_amount', finalprice);
@@ -173,7 +174,7 @@ export default {
                             console.log(data);
                             this.qrdigit = data.msg;
 
-                            const finalprice = this.price - this.coupon_price;
+                            const finalprice = this.price + this.coupon_price;
                             this.commaprice = finalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
                         })
 
@@ -197,17 +198,23 @@ export default {
         // coupon_index 불러오기
         showIndex(coupon_index,user_index,coupon_price,event) {
 
-            if(this.price < coupon_price) {
-                alert('결제금액보다 더 큰 금액의 쿠폰은 선택할 수 없습니다.');
-                event.target.checked = false;
-                return false;
-            }
-
+            // if(this.price < coupon_price) {
+            //     alert('결제금액보다 더 큰 금액의 쿠폰은 선택할 수 없습니다.');
+            //     event.target.checked = false;
+            //     return false;
+            // }
             const isChecked = event.target.checked;
             console.log(event.target);
 
             if(isChecked) {
-                this.coupon_price = coupon_price;
+                this.arr.push(coupon_price);
+                let sum = 0;
+                this.arr.forEach((num) => {
+                    sum += num;
+                });
+                console.log(sum);
+                this.coupon_price = sum;
+
                 if(this.issuance_user_index.length === 0) {
                     this.issuance_user_index.push(user_index);
                 } else {
@@ -244,6 +251,7 @@ export default {
             this.issuance_user_index = [];
             this.pinnums = [];
             this.coupon_price = '';
+            this.arr = [];
         },
         // 쿠폰 리스트 불러오기
         CouponList() {
