@@ -21,9 +21,9 @@
   <ul class="show_img">
     <li><p style="margin: 5px 0;">최대 9장</p></li>
     <div class="selected_nine">
-        <li class="addImg"><RouterLink to="/changeImg" ><img class="changeImg" src="@/assets/contetns_img.svg" alt=""></RouterLink></li>
+        <li v-if="img.length < 9" class="addImg"><RouterLink to="/changeImg" ><img class="changeImg" src="@/assets/contetns_img.svg" alt=""></RouterLink></li>
     <li v-for="(image,index) in img" :key="index"><img class="img_p" :src="image.store_image" alt="">
-        <p v-show="isDelImg" class="closeBtn" @click="cancellation(index)"></p></li>
+        <p v-show="isDelImg" class="closeBtn" @click="cancellation(image.store_image_index)"></p></li>
     </div>
    
   </ul>
@@ -90,9 +90,31 @@ export default{
             
         },
         
-        cancellation(index){
+        cancellation(store_image_index){
             console.log('사진 안올린다');
-            this.detailImages.splice(index,1)
+
+            let store = useResponseStore();
+            const formData = new FormData();
+            formData.append('type','store_image_delete');
+            formData.append('user_index',store.user_index);
+            formData.append('store_image_index',store_image_index);
+
+            console.log("=====",this.img);
+            
+            const url = process.env.VUE_APP_API_URL;
+            fetch(url+ 'api/store/store_update.php',{
+                method:'POST',
+                body:formData
+            })
+            .then(response => response.json())
+            .then(result => {
+            console.log('이미지 삭제 성공: ', result);
+            // 삭제 후 img 배열에서 해당 이미지를 제거
+            this.img = this.img.filter(image => image.store_image_index !== store_image_index);
+            })
+        
+            
+
         },
     },
     mounted(){
@@ -121,9 +143,9 @@ export default{
         formData2.append('type','store_image_select');
         formData2.append('user_index',store.user_index);
 
-        for (const pair of formData2.entries()) {
-        console.log('ㅇㅇㅇㅇ',pair[0], pair[1]);
-        }
+        // for (const pair of formData2.entries()) {
+        // console.log('ㅇㅇㅇㅇ',pair[0], pair[1]);
+        // }
         fetch(url + 'api/store/store_update.php', {
                 method: 'POST',
                 body: formData2

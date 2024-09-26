@@ -11,7 +11,7 @@
 <section class="info_area">
     <ul>
         <li><RouterLink to ='/ChangeFranchise' > 기본 정보</RouterLink></li>
-        <li><RouterLink to ='/storeInformation'> 정보 변경</RouterLink></li>
+        <li><RouterLink to ='/storeInformation'> 운영 정보</RouterLink></li>
     </ul>
 
 <!-- 
