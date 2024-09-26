@@ -17,7 +17,7 @@
                     <div class="btn_box"><button type="button" @click="SearchCoupon()">검 색</button></div>
                     <div class="coupon_list">
                         <div class="coupon_content" v-for="(c,i) in this.coupons" :key="i" :style="{backgroundImage : `url('https://www.haruby.store/assets/img/money/${c.coupon_price}.jpg')`}">
-                            <input type="checkbox" id="checkbox" v-model="c.checked" @change="showIndex(c.coupon_index, c.issuance_user_index, $event)">
+                            <input type="checkbox" id="checkbox" v-model="c.checked" @change="showIndex(c.coupon_index, c.issuance_user_index, c.coupon_price, $event)">
                             <div class="coupon_value">
                                 <p>{{ c.coupon_name }}</p>
                                 <!-- <p>{{ c.coupon_provided_status }}</p> -->
@@ -104,6 +104,7 @@ export default {
             id : '',
             qrdigit : '',
             emptyck : '',
+            coupon_price : ''
 
         }
     },
@@ -156,7 +157,10 @@ export default {
                         formData.append('coupon_issuance_index_list', strcouponindex);
                         formData.append('user_index', store.user_index);
                         formData.append('user_role_index', store.member);
-                        formData.append('user_amount', this.price);
+                        const finalprice = this.price - this.coupon_price;
+                        // console.log('빼기')
+                        // console.log(finalprice);
+                        formData.append('user_amount', finalprice);
 
                         const url = process.env.VUE_APP_API_URL;
 
@@ -169,7 +173,8 @@ export default {
                             console.log(data);
                             this.qrdigit = data.msg;
 
-                            this.commaprice = this.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                            const finalprice = this.price - this.coupon_price;
+                            this.commaprice = finalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
                         })
 
                     }
@@ -190,12 +195,19 @@ export default {
             this.pinnums = [];
         },
         // coupon_index 불러오기
-        showIndex(coupon_index,user_index,event) {
+        showIndex(coupon_index,user_index,coupon_price,event) {
+
+            if(this.price < coupon_price) {
+                alert('결제금액보다 더 큰 금액의 쿠폰은 선택할 수 없습니다.');
+                event.target.checked = false;
+                return false;
+            }
 
             const isChecked = event.target.checked;
-            console.log(event.target)
+            console.log(event.target);
 
             if(isChecked) {
+                this.coupon_price = coupon_price;
                 if(this.issuance_user_index.length === 0) {
                     this.issuance_user_index.push(user_index);
                 } else {
@@ -231,6 +243,7 @@ export default {
             this.coupon_index = [];
             this.issuance_user_index = [];
             this.pinnums = [];
+            this.coupon_price = '';
         },
         // 쿠폰 리스트 불러오기
         CouponList() {
@@ -295,6 +308,7 @@ export default {
 
             console.log('결제금액 : ' + this.price);
             console.log('쿠폰인덱스 : ' + this.coupon_index);
+            console.log('쿠폰가격 : ' + this.coupon_price);
 
         },
         toCMList() {
@@ -416,13 +430,14 @@ export default {
     /* border: 1px solid red; */
 }
 .coupon_value > p {
-    width: 95%; height: 20%;
-    border-radius: 7px;
+    width: 80%; height: 30px;
+    border-radius: 10px;
     background-color: #f1eded;
     border: 1px solid #ccc;
     font-size: 0.9rem;
-    margin-top: 12%;
+    margin: 12% auto 0;
     /* border: 2px solid red; */
+    line-height: 30px;
 }
 .coupon_img {
     position: absolute;
