@@ -21,7 +21,7 @@
 
             <div class="coupon_btns">
                 <button type="button" @click="toCouponMake()">쿠폰발행</button>
-                <button type="button">쿠폰선물</button>
+                <button type="button" @click="toCouponGift()">쿠폰선물</button>
                 <button type="button" @click="toCouponEvent()">쿠폰이벤트</button>
             </div>
 
@@ -29,7 +29,7 @@
                 <li class="coupon_com" v-for="(list,i) in this.cmakelist" :key="i">
                     <div class="back_ground_coupon" :style="{backgroundImage : `url('https://www.haruby.store/assets/img/money/${list.coupon_price}.jpg')`}">
                         <ul class="coupon_conditions">
-                            <div><input type="checkbox"></div>
+                            <div><input type="checkbox" @click="CouponIndex(list.coupon_index, $event)"></div>
                             <div>              
                             <li>{{ list.coupon_name }}</li>
                             <li>{{ list.coupon_issuance_status }}</li>
@@ -101,6 +101,32 @@
             </div>
         </div>
     </div>
+
+    <!-- 쿠폰선물 창 -->
+    <div id="popup2" class="popup2">
+        <div class="popup-content2">
+            <div class="center2">
+                <p class="header2">쿠폰 선물</p>
+                <div class="num_search">
+                    <input type="number" placeholder="핸드폰 번호 뒤 4자리를 입력해주세요." v-model="phone_num">
+                    <button type="button" @click="SearchNumber()">검색</button>
+                </div>
+                <div class="num_list">
+                    <div v-for="(list,i) in this.giftlist" :key="i">
+                        <input type="checkbox" @click="UserIndex(list.user_index, $event)">
+                        <p>{{ list.user_name }}</p>
+                        <p>{{ list.user_id }}</p>
+                        <p>{{ list.user_phone }}</p>
+                        <p>{{ list.store_customer_status }}</p>
+                    </div>
+                </div>
+                <div class="btn_group2">
+                    <button type="button">선물</button>
+                    <button type="button" @click="NoGift()">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -118,7 +144,11 @@ export default {
             coupon_count : '',
             coupon_limit : '',
             coupon_name : '',
-            coupon_condition : ''
+            coupon_condition : '',
+            coupon_index : [],
+            phone_num : '',
+            giftlist : '',
+            isUser : false
 
         }
     },
@@ -282,6 +312,98 @@ export default {
 
                 this.CouponMakeList();
             })
+        },
+        // 쿠폰클릭시 해당 coupon_index 저장
+        CouponIndex(couponindex,event) {
+
+            let store = useResponseStore();
+
+            if(event.target.checked == true) {
+
+                this.coupon_index.push(couponindex);
+                // console.log('IN : ' + this.coupon_index);
+
+            } else {
+
+               const index = this.coupon_index.indexOf(couponindex);
+               if(index !== -1) {
+                this.coupon_index.splice(index, 1);
+               }
+                // console.log('OUT : ' + this.coupon_index);
+            }
+
+            store.coupon_index = this.coupon_index;
+            // console.log(store.coupon_index);
+        },
+        // 쿠폰선물창
+        toCouponGift() {
+            if(this.coupon_index == '') {
+                alert('쿠폰을 선택해주세요.');
+                return false;
+            }
+
+            document.getElementById('popup2').style.display = 'flex';
+
+        },
+        // 선물취소
+        NoGift() {
+            document.getElementById('popup2').style.display = 'none';
+           
+            let store = useResponseStore();
+            store.coupon_index = '';
+            this.coupon_index = [];
+            // console.log(store.coupon_index);
+        },
+        // 쿠폰선물검색
+        SearchNumber() {
+            
+            let store = useResponseStore();
+            let formData = new FormData();
+            formData.append('type', 'gift_find_id');
+            formData.append('user_index', store.user_index);
+            formData.append('find_phone', this.phone_num);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/coupon/coupon_issuance.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // console.log(data.msg[0].store_customer_status);
+                for(let i=0; i<data.msg.length; i++) {
+                    data.msg[i].user_id = data.msg[i].user_id.slice(0,7);
+                    // console.log(data.msg[i].user_id);
+
+                }
+                this.giftlist = data.msg;
+            })
+        },
+        // 쿠폰선물 user_index 넘기기
+        UserIndex(userindex, event) {
+            let store = useResponseStore();
+            
+            const isChecked = event.target.checked;
+
+            if(isChecked) {
+                if(this.isUser == false) {
+                    store.coupon_user_index = userindex;
+                    this.isUser = true;
+                    console.log(store.coupon_user_index);
+                } else {
+                    alert('쿠폰선물은 한명에게만 할 수 있습니다.');
+                    event.target.checked = false;
+                    console.log(store.coupon_user_index);
+                    return false;
+                }
+            } else {
+                store.coupon_user_index = '';
+                this.isUser = false;
+                console.log(store.coupon_user_index);
+            }
+
         }
     }
 }
@@ -532,5 +654,106 @@ label button {
     background-color: #1bce0b;
     border: 1px solid #1bce0b;
     color: #fff;
+}
+.popup2 {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+/* 팝업내용 */
+.popup-content2 {
+    position: relative;
+    width: 100%; height: 60%;
+    background-color: #fff;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    overflow: scroll;
+    color: #000;
+}
+.center2 {
+    position: absolute;
+    top: 50%; left: 0;
+    transform: translateY(-50%);
+    width: 100%; height: 100%;
+    padding: 0 10px;
+    /* border: 1px solid red; */
+}
+.header2 {
+    font-weight: bold;
+    font-size: 1.4rem;
+    padding-top: 5%;
+}
+.num_search {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 5%;
+    /* border: 1px solid red; */
+}
+.num_search > input {
+    width: 90%; height: 35px;
+    font-size: 0.8rem;
+    padding-left: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.num_search > button {
+    width: 70px; height: 35px;
+    margin-left: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: purple;
+    color: #fff;
+}
+.num_list {
+    width: 100%; height: 55%;
+    margin-top: 3%;
+    overflow: scroll;
+    padding: 10px;
+    border: 1px solid #000;
+}
+.num_list > div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 15px 10px;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+}
+.num_list > div p {
+    width: 20%;
+    font-size: 0.9rem;
+    /* text-align: left; */
+    /* border: 1px solid red; */
+}
+.num_list > div p:nth-of-type(2) {
+    text-align: left;
+}
+.btn_group2 {
+    width: 100%;
+    margin-top: 4%;
+    /* border: 1px solid red; */
+}
+.btn_group2 > button {
+    width: 50px; height: 30px;
+    color: #fff;
+    background-color: #1bce0b; 
+    border: none;
+    border-radius: 5px;
+    font-size: 0.8rem;
+}
+.btn_group2 > button:nth-of-type(2) {
+    margin-left: 50px;
+    background-color: #fff;
+    color: #ccc;
+    border: 1px solid #ccc;
 }
 </style>

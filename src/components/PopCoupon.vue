@@ -105,7 +105,7 @@ export default {
             qrdigit : '',
             emptyck : '',
             coupon_price : '',
-            arr : []
+            arr : [],
 
         }
     },
