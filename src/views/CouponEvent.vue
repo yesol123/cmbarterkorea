@@ -8,82 +8,47 @@
         <div class="main">
             <div>
                 <label>쿠폰 종류</label>
-                <input type="text" placeholder="전체">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <input type="number" v-model="number" style="width: 80%;" placeholder="검색할 쿠폰금액을 입력해주세요."><button type="button" style="width: 60px; height: 35px; background-color: blue; margin-bottom: 5px;" @click="search()">검색</button>
+                </div>
             </div>
             <div>
                 <label>이벤트 이름</label>
-                <input type="text" placeholder="15글자 이내">
+                <input type="text" placeholder="15글자 이내 / 공백없이" v-model="e_name">
             </div>
             <div>
                 <label>적용할 조건</label>
-                <input type="text">
+                <input type="text" placeholder="15글자 이내 / 공백없이" v-model="e_condition">
             </div>
             <div>
                 <label>다운로드 횟수</label>
-                <input type="number">
+                <input type="number" placeholder="20회 이하" v-model="e_download">
             </div>
 
             <div>
-                <button type="button">전체선택</button>
-                <button type="button">등록</button>
+                <button type="button" @click="SelectAll()">전체선택</button>
+                <button type="button" @click="Register()">등록</button>
             </div>
         </div>
 
         <div class="coupon_list">
             <ul class="flex_direction">
-                <li class="coupon_com">
-                    <div class="back_ground_coupon">
+                <li class="coupon_com" v-for="(list,i) in couponlist" :key="i">
+                    <div class="back_ground_coupon" :style="{backgroundImage : `url('https://www.haruby.store/assets/img/money/${list.coupon_price}.jpg')`}">
                         <ul class="coupon_conditions">
-                            <div><input type="checkbox"></div>
+                            <div><input type="checkbox" name="coupon_event" @click="GetIndex(list.coupon_index, $event)"></div>
                             <div>              
-                            <li>쿠폰이름</li>
-                            <li>쿠폰상태</li>
-                            <li>쿠폰기한</li>
+                            <li>{{ list.coupon_name }}</li>
+                            <li>{{ list.coupon_issuance_status }}</li>
+                            <li>{{ list.coupon_limit }}일</li>
                             </div>
                             <div class="t">
-                                <img src="@/assets/1000_t.png" alt="">
+                                <!-- <img src="@/assets/1000_t.png" alt=""> -->
+                                <div :style="{backgroundImage : `url('https://www.haruby.store/assets/img/money/${list.coupon_price}_t.png')`}"></div>
                             </div>
                         </ul>
                     </div>
-                    <button @click="gotoDetail()">쿠폰 상세보기</button>
-                </li>
-            </ul>
-
-            <ul class="flex_direction">
-                <li class="coupon_com">
-                    <div class="back_ground_coupon">
-                        <ul class="coupon_conditions">
-                            <div><input type="checkbox"></div>
-                            <div>              
-                            <li>쿠폰이름</li>
-                            <li>쿠폰상태</li>
-                            <li>쿠폰기한</li>
-                            </div>
-                            <div class="t">
-                                <img src="@/assets/1000_t.png" alt="">
-                            </div>
-                        </ul>
-                    </div>
-                    <button @click="gotoDetail()">쿠폰 상세보기</button>
-                </li>
-            </ul>
-
-            <ul class="flex_direction">
-                <li class="coupon_com">
-                    <div class="back_ground_coupon">
-                        <ul class="coupon_conditions">
-                            <div><input type="checkbox"></div>
-                            <div>              
-                            <li>쿠폰이름</li>
-                            <li>쿠폰상태</li>
-                            <li>쿠폰기한</li>
-                            </div>
-                            <div class="t">
-                                <img src="@/assets/1000_t.png" alt="">
-                            </div>
-                        </ul>
-                    </div>
-                    <button @click="gotoDetail()">쿠폰 상세보기</button>
+                    <button @click="gotoDetail(list.coupon_index)">쿠폰 상세보기</button>
                 </li>
             </ul>
         </div>
@@ -93,20 +58,190 @@
 </template>
 
 <script>
+import { useResponseStore } from '@/store/response.js'
+
 export default {
     data() {
         return {
-
+            couponlist : '',
+            id : '',
+            index_list : [],
+            coupon_issuance_index_list : '',
+            other_coupon_issuance_index_list : [],
+            number : '',
+            e_name : '',
+            e_condition : '',
+            e_download : '',
         }
     },
     mounted() {
-
+        this.CouponMakeList();
     },
     methods : {
         // 쿠폰발행함으로 이동
         toCouponMake() {
             this.$router.push({ path : '/cmake' });
         },
+        // 쿠폰리스트
+        CouponMakeList() {
+            let store = useResponseStore();
+
+            let formData = new FormData();
+            formData.append('type', 'select');
+            formData.append('user_index', store.user_index);
+            formData.append('status', '보유중');
+            formData.append('coupon_name', '');
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/coupon/coupon_issuance.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                this.couponlist = data.msg;
+
+                for(let i=0; i<data.msg.length; i++) {
+                    this.index_list.push(data.msg[i].coupon_index);
+                    // console.log(this.index_list);
+                } 
+                console.log(333)
+                console.log(this.index_list)
+            })
+        },
+        // 쿠폰상세보기
+        gotoDetail(id) {
+            this.id = id;
+            this.$router.push({ path : `/couponDetail2/${this.id}` });
+        },
+        // 전체선택 클릭
+        SelectAll() {
+            const checkboxes = document.querySelectorAll('input[name="coupon_event"]');
+            checkboxes.forEach(checkbox => {
+                if(checkbox.checked == false) {
+                    checkbox.checked = true;
+                    this.coupon_issuance_index_list = this.index_list;
+                    console.log(this.coupon_issuance_index_list);
+                }else{
+                    checkbox.checked = false;
+                    this.coupon_issuance_index_list = '';
+                    console.log(this.coupon_issuance_index_list);
+                }
+            });
+            // console.log(this.index_list);
+        },
+        // 등록버튼 클릭
+        Register() {
+            if(this.e_name == '') {
+                alert('이벤트 이름을 입력해주세요.');
+                return false;
+            }
+            if(this.e_name.length > 15) {
+                alert('이벤트 이름은 15글자 이내로 입력해주세요.');
+                return false;
+            }
+            if(this.e_name.match(/\s/g)) {
+                alert('이벤트 이름에 공백은 빼주세요.');
+                return false;
+            }
+            if(this.e_condition == '') {
+                alert('이벤트 조건을 입력해주세요.');
+                return false;
+            }
+            if(this.e_condition.length > 15) {
+                alert('이벤트 조건은 15글자 이내로 입력해주세요.');
+                return false;
+            }
+            if(this.e_condition.match(/\s/g)) {
+                alert('이벤트 조건에 공백은 빼주세요.');
+                return false;
+            }
+            if(this.e_download > 20) {
+                alert('이벤트 다운로드 횟수는 최대 20회까지입니다.');
+                return false;
+            }
+            let store = useResponseStore();
+            let formData = new FormData();
+            formData.append('type', 'event_insert');
+            formData.append('user_index', store.user_index);
+            formData.append('event_name', this.e_name);
+            formData.append('event_condition', this.e_condition);
+            formData.append('event_down_limit', this.e_download);
+            // formData.append('coupon_issuance_index_list', JSON.stringify(this.coupon_issuance_index_list));
+            formData.append('coupon_issuance_index_list', JSON.stringify(this.other_coupon_issuance_index_list));
+            for (const pair of formData.entries()) {
+                console.log(pair[0], pair[1]);
+            }
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/coupon/coupon_event.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+
+                if(data.code == 500) {
+                    alert(data.msg);
+                    return false;
+                }
+
+                this.coupon_issuance_index_list = '';
+                this.other_coupon_issuance_index_list = [];
+
+                this.e_name = '';
+                this.e_condition = '';
+                this.e_download = '';
+                
+                const checkboxes = document.querySelectorAll('input[name="coupon_event"]');
+                checkboxes.forEach(checkbox => {
+                    if(checkbox.checked == true) {
+                        checkbox.checked = false;
+                    }
+                });
+
+                this.CouponMakeList();
+            })
+        },
+        // 검색버튼
+        search() {
+            // console.log(123);
+            let store = useResponseStore();
+            let formData = new FormData();
+            formData.append('type', 'event_select');
+            formData.append('user_index', store.user_index);
+            formData.append('coin', this.number);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/coupon/coupon_event.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                this.couponlist = data.msg;
+            })
+        },
+        GetIndex(index, event) {
+            // console.log(index);
+            // console.log(event);
+            if(event.target.checked == true) {
+                this.other_coupon_issuance_index_list.push(index);
+                console.log(this.other_coupon_issuance_index_list);
+            } else {
+                const i = this.other_coupon_issuance_index_list.indexOf(index);
+                if(i !== -1) {
+                    this.other_coupon_issuance_index_list.splice(i, 1);
+                    console.log(this.other_coupon_issuance_index_list);
+                }
+            }
+        }
     }
 }
 </script>
@@ -207,7 +342,7 @@ header > p {
     border-radius: 5px;
 }
 .flex_direction .coupon_com .back_ground_coupon {
-    background-image: url("@/assets/1000.jpg");
+    /* background-image: url("@/assets/1000.jpg"); */
     background-size: cover;
 }
 .flex_direction .coupon_com button {
@@ -246,9 +381,13 @@ header > p {
     margin-top: 3%;
 }
 .t {
-    width: 30%;
+    width: 35%; height: 120px;
+    /* border: 1px solid red; */
 }
-.t img {
-    width: 100%;
+.t > div {
+    width: 100%; height: 100%;
+    /* border: 1px solid blue; */
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 </style>

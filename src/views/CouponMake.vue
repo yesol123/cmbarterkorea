@@ -26,7 +26,7 @@
             </div>
 
             <ul class="flex_direction">
-                <li class="coupon_com" v-for="(list,i) in this.cmakelist" :key="i">
+                <li class="coupon_com" v-for="(list,i) in cmakelist" :key="i">
                     <div class="back_ground_coupon" :style="{backgroundImage : `url('https://www.haruby.store/assets/img/money/${list.coupon_price}.jpg')`}">
                         <ul class="coupon_conditions">
                             <div><input type="checkbox" @click="CouponIndex(list.coupon_index, $event)"></div>
