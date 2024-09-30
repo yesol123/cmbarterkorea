@@ -121,12 +121,47 @@
                     </div>
                 </div>
                 <div class="btn_group2">
-                    <button type="button">선물</button>
+                    <button type="button" @click="GiveGift()">선물</button>
                     <button type="button" @click="NoGift()">취소</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="popup3" class="popup3">
+        <div class="popup-content3">
+            <div class="center3">
+                <div class="pin_word">
+                    <p>PIN 번호 입력</p>
+                    <p>쿠폰선물을 위해 PIN 번호를 입력해주세요.</p>
+
+                    <div class="boxes">
+                        <div>{{ pinnums[0] }}</div>
+                        <div>{{ pinnums[1] }}</div>
+                        <div>{{ pinnums[2] }}</div>
+                        <div>{{ pinnums[3] }}</div>
+                        <div>{{ pinnums[4] }}</div>
+                        <div>{{ pinnums[5] }}</div>
+                    </div>
+                </div>
+                <div class="numbers">
+                    <div @click="InsertPin(one)">1</div>
+                    <div @click="InsertPin(two)">2</div>
+                    <div @click="InsertPin(three)">3</div>
+                    <div @click="InsertPin(four)">4</div>
+                    <div @click="InsertPin(five)">5</div>
+                    <div @click="InsertPin(six)">6</div>
+                    <div @click="InsertPin(seven)">7</div>
+                    <div @click="InsertPin(eight)">8</div>
+                    <div @click="InsertPin(nine)">9</div>
+                    <div @click="ResetPin()">reset</div>
+                    <div @click="InsertPin(zero)">0</div>
+                    <div @click="DeletePin()">취소</div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
 </template>
 
 <script>
@@ -148,7 +183,18 @@ export default {
             coupon_index : [],
             phone_num : '',
             giftlist : '',
-            isUser : false
+            isUser : false,
+            one : 1,
+            two : 2,
+            three : 3,
+            four : 4,
+            five : 5,
+            six : 6,
+            seven : 7,
+            eight : 8,
+            nine : 9,
+            zero : 0,
+            pinnums : [],
 
         }
     },
@@ -315,7 +361,6 @@ export default {
         },
         // 쿠폰클릭시 해당 coupon_index 저장
         CouponIndex(couponindex,event) {
-
             let store = useResponseStore();
 
             if(event.target.checked == true) {
@@ -344,6 +389,18 @@ export default {
 
             document.getElementById('popup2').style.display = 'flex';
 
+        },
+        // 선물하기
+        GiveGift() {
+            if(this.isUser == true) {
+                console.log(333);
+                document.getElementById('popup2').style.display = 'none';
+                document.getElementById('popup3').style.display = 'flex';
+            }
+            if(this.isUser == false) {
+                alert('선물할 대상을 선택해주세요.');
+                return false;
+            }
         },
         // 선물취소
         NoGift() {
@@ -404,7 +461,61 @@ export default {
                 console.log(store.coupon_user_index);
             }
 
-        }
+        },
+        // 핀번호 입력
+        InsertPin(i) {
+            this.pinnums.push(i);
+
+            if(this.pinnums.length == 6) {
+                const strpin = this.pinnums.toString();
+                const numpin = strpin.replace(/,/g, "");
+
+                let store = useResponseStore();
+                let formData = new FormData();
+                formData.append('type', 'coupon_gift');
+                formData.append('give_user_index', store.user_index);
+                formData.append('gift_user_index', store.coupon_user_index);
+                formData.append('pin', numpin);
+                formData.append('coupon_issuance_index_list', store.coupon_index);
+
+                const url = process.env.VUE_APP_API_URL;
+                fetch(url + 'api/coupon/coupon_issuance.php', {
+                method : 'POST',
+                body : formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if(data.code == 200) {
+                        alert(data.msg);
+                        document.getElementById('popup3').style.display = 'none';
+                        this.pinnums = [];
+                        return false;
+                    }
+                    if(data.code == 500) {
+                        alert(data.msg);
+                        document.getElementById('popup3').style.display = 'none';
+                        this.pinnums = [];
+                        return false;
+                    }
+                })
+
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        checkbox.checked = false;
+                    }
+                });
+            }
+        },
+          // 핀번호 입력 취소
+        DeletePin() {
+            this.pinnums.pop();
+        },
+        // 핀번호 입력 초기화
+        ResetPin() {
+            this.pinnums = [];
+        },
     }
 }
 </script>
@@ -755,5 +866,77 @@ label button {
     background-color: #fff;
     color: #ccc;
     border: 1px solid #ccc;
+}
+.popup3 {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+/* 팝업내용 */
+.popup-content3 {
+    position: relative;
+    width: 100%; height: 80%;
+    background-color: #fff;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    overflow: scroll;
+    color: #000;
+}
+.center3 {
+    position: absolute;
+    top: 50%; left: 0;
+    transform: translateY(-50%);
+    width: 100%; height: 100%;
+    padding: 0 10px;
+    /* border: 1px solid red; */
+}
+.pin_word {
+    width: 100%; height: 150px;
+    text-align: center;
+    margin-top: 30px;
+    /* border: 1px solid orange; */
+}
+.pin_word > p {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+.pin_word > p:nth-of-type(2) {
+    font-size: 1.0rem;
+    margin-bottom: 30px;
+}
+.boxes {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+    width: 100%; height: 30px;
+    /* border: 3px solid red; */
+}
+.boxes > div {
+    width: 30px; height: 30px;
+    line-height: 30px;
+    border: none;
+    background-color: #e4e2e2;
+    border-radius: 7px;
+    margin-right: 5px;
+}
+.numbers {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%; height: 70%;
+    padding: 20px 20px;
+    /* border: 1px solid pink; */
+}
+.numbers > div {
+    width: 33%; height: 25%;
+    text-align: center; line-height: 60px;
+    /* border: 1px solid blue; */
 }
 </style>
