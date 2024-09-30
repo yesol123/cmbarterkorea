@@ -94,19 +94,20 @@ export default{
         })
         .then(response => response.json())
         .then(result => {
-            console.log('ddddgggg',result.msg[0].coupon_index);
-            console.log(result.msg[0].coupon_index);
+            if(result.code == 200) {
+                console.log('ddddgggg',result.msg[0].coupon_index);
+                console.log(result.msg[0].coupon_index);
 
-            this.coupon.coupon_name = result.msg[0].coupon_name;
-            this.coupon.coupon_price = result.msg[0].coupon_price;
-            this.coupon.coupon_condition = result.msg[0].coupon_price; //조건
-            this.coupon.coupon_deadline = result.msg[0].coupon_limit; //기한
-            this.coupon.membership = result.msg[0].coupon_price; //멤버십
-            this.coupon.status = result.msg[0].coupon_provided_status; //상태
-            this.coupon.payment = result.msg[0].coupon_issuance_time; //지급일
-            this.coupon.limit = result.msg[0].coupon_limit_time_f; //만기일
-            this.coupon.user = result.msg[0].user_name; //회원이름
-
+                this.coupon.coupon_name = result.msg[0].coupon_name;
+                this.coupon.coupon_price = result.msg[0].coupon_price;
+                this.coupon.coupon_condition = result.msg[0].coupon_price; //조건
+                this.coupon.coupon_deadline = result.msg[0].coupon_limit; //기한
+                this.coupon.membership = result.msg[0].coupon_price; //멤버십
+                this.coupon.status = result.msg[0].coupon_provided_status; //상태
+                this.coupon.payment = result.msg[0].coupon_issuance_time; //지급일
+                this.coupon.limit = result.msg[0].coupon_limit_time_f; //만기일
+                this.coupon.user = result.msg[0].user_name; //회원이름
+            }
         })
     },
 }

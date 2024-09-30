@@ -7,8 +7,8 @@
 
         <section class="couponbox_section">
             <label for="search">
-                <input type="text" id="search" placeholder="쿠폰 이름을 입력하세요.">
-                <button><img src="@/assets/icon_search.svg" alt=""></button>
+                <input type="text" id="search" placeholder="쿠폰 이름을 입력하세요." v-model="name">
+                <button type="button" @click="SearchCoupon()"><img src="@/assets/icon_search.svg" alt=""></button>
             </label>
 
             <div class="buttons">
@@ -195,6 +195,7 @@ export default {
             nine : 9,
             zero : 0,
             pinnums : [],
+            name : ''
 
         }
     },
@@ -275,6 +276,28 @@ export default {
                 //console.log(data);
                 this.cmakelist = data.msg;
                 console.log(this.cmakelist);
+            })
+        },
+        // 쿠폰검색
+        SearchCoupon() {
+            let store = useResponseStore();
+
+            let formData = new FormData();
+            formData.append('type', 'select');
+            formData.append('user_index', store.user_index);
+            formData.append('status', this.selectedButton);
+            formData.append('coupon_name', this.name);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/coupon/coupon_issuance.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                this.cmakelist = data.msg;
             })
         },
         // 쿠폰상세보기
