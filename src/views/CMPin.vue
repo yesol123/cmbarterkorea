@@ -150,9 +150,11 @@ header > p {
     width: 100%; height: 100%;
 }
 .wrap > div {
-    width: 100%; 
-    margin-top: 120px;
+    width: 100%; height: 500px;
+    /* margin-top: 120px; */
+    padding-top: 120px;
     /* border: 1px solid red; */
+    background-color: #fff;
 }
 .pin_word {
     width: 100%;
@@ -187,6 +189,7 @@ header > p {
     width: 100%; height: 50%;
     padding: 20px 20px;
     /* border: 1px solid pink; */
+    background-color: #fff;
 }
 .numbers > div {
     width: 33%; height: 20%;
