@@ -60,7 +60,7 @@ export default{
             selectedButton: 'possible', // 기본값 설정
             coupons:[], // 전체 쿠폰 리스트
             keyword:'',// 검색 통!
-            id:''
+            id:'',
         }
     },
     mounted(){

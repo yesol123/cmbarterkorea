@@ -11,6 +11,17 @@ export const useResponseStore = defineStore('response', {
     cmp_amount : '', // 회원별 CMP 보유량
     cancel_price : '', // 결제취소 시 해당 금액
     user_cm_log_index : '', // 결제취소 시 log_index
+    //쿠폰선물
+    
+    cate: '',
+    limit: '',
+    name: '',
+    condition: '',
+    selectedCustomers: [],
+    length: '',
+    need_user_cm: '',
+    rest_user_cm: '',
+
   
   }),
   // state: () => {
@@ -30,6 +41,16 @@ export const useResponseStore = defineStore('response', {
 
       // localStorage.setItem('response', JSON.stringify(this.datas));
     },
+    setCouponData(coupondata) {
+      this.cate = coupondata.cate || this.cate; // 기본값 사용
+      this.limit = coupondata.limit || this.limit; 
+      this.name = coupondata.name || this.name; 
+      this.condition = coupondata.condition || this.condition; 
+      this.selectedCustomers = coupondata.selectedCustomers || this.selectedCustomers; 
+      this.length = coupondata.length || this.length; 
+      this.need_user_cm = coupondata.need_user_cm || this.need_user_cm; 
+      this.rest_user_cm = coupondata.rest_user_cm || this.rest_user_cm; 
+    }
   },
   persist : {
     enabled : true,

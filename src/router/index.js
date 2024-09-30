@@ -271,6 +271,16 @@ const router = createRouter({
             path: '/changeImg',
             name:'changeImg',
             component:()=> import("@/views/ChangeImg.vue")
+        }, 
+        {
+            path: '/couponGift',
+            name:'couponGift',
+            component:()=> import("@/views/CouponGift.vue")
+        },  
+        {
+            path: '/confrimpin',
+            name:'confrimPin',
+            component:()=> import("@/views/ConfirmPin.vue")
         },  
 
 
