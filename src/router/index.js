@@ -99,6 +99,11 @@ const router = createRouter({
             component: () => import("@/views/CMCharge.vue"),    
         },      
         {      
+            path: "/event",      
+            name: "Event",      
+            component: () => import("@/views/MainEvent.vue"),    
+        },      
+        {      
             path: "/location",      
             name: "FindLocation",      
             component: () => import("@/components/FindLocation.vue"),    
