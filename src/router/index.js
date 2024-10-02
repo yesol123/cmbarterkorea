@@ -100,8 +100,13 @@ const router = createRouter({
         },      
         {      
             path: "/event",      
-            name: "Event",      
+            name: "MainEvent",      
             component: () => import("@/views/MainEvent.vue"),    
+        },      
+        {      
+            path: "/edownload",      
+            name: "MainEventDownload",      
+            component: () => import("@/views/MainEventDownload.vue"),    
         },      
         {      
             path: "/location",      

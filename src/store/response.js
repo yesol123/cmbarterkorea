@@ -23,7 +23,8 @@ export const useResponseStore = defineStore('response', {
     rest_user_cm: '',
 
     coupon_index : '', // 쿠폰선물시 coupon_index
-    coupon_user_index : '' // 쿠폰선물시 user_index
+    coupon_user_index : '', // 쿠폰선물시 user_index
+    event_master_index : ''
   
   }),
   // state: () => {

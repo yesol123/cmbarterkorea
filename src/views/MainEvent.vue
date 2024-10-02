@@ -10,7 +10,7 @@
                 <div :class="{ btn1 : isFirst }" @click="FirstBtn()">진행중</div>
                 <div :class="{ btn2 : isSecond }" @click="SecondBtn()">종료</div>
             </div>
-            <div class="coupons" v-for="(list,i) in eventlist" :key="i">
+            <div class="coupons" v-for="(list,i) in eventlist" :key="i" @click="toDownloadCoupon(list.event_master_index)">
                 <div>
                     <p>{{ list.event_master_name }}</p>
                     <p>{{ list.event_master_condition }}</p>
@@ -46,6 +46,7 @@ export default {
         toMain() {
             this.$router.push({ path : '/main' });
         },
+        // 진행중
         FirstBtn() {
 
             this.eventlist = '';
@@ -68,8 +69,7 @@ export default {
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
-                // this.eventlist = data.msg;
+                // console.log(data);
 
                 for(let i=0; i<data.msg.length; i++) {
                     const comprice = data.msg[i].total_coupon_price;
@@ -82,17 +82,14 @@ export default {
                     const address = data.msg[i].store_address;
                     this.storename.push(str1 + address.slice(0,2) + slash + address.slice(3,6) + str2);
                     
-
                 }
 
                 this.eventlist = data.msg;
-
             })
-
-
         },
+        // 종료
         SecondBtn() {
-            
+
             this.eventlist = '';
             this.commaprice = [];
             this.storename = [];
@@ -113,7 +110,7 @@ export default {
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
 
                 for(let i=0; i<data.msg.length; i++) {
                     const comprice = data.msg[i].total_coupon_price;
@@ -126,11 +123,20 @@ export default {
                     const address = data.msg[i].store_address;
                     this.storename.push(str1 + address.slice(0,2) + slash + address.slice(3,6) + str2);
                     
-
                 }
 
                 this.eventlist = data.msg;
             })
+        },
+        // 쿠폰다운로드페이지로 이동
+        toDownloadCoupon(i) {
+            if(this.isFirst == true) {
+                console.log(i);
+
+                let store = useResponseStore();
+                store.event_master_index = i;
+                this.$router.push({ path : '/edownload' });
+            }
         }
     }
 }
