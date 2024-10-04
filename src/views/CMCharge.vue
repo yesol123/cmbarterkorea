@@ -1,59 +1,54 @@
 <template>
-    <div class="wrap">
-        <header>
-            <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/go_back_btn.png"></button>
-            <p>충전</p>
+         <header class="charge_gift_title">
+            <RouterLink :to="`/main`"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
+           <h3> 충전</h3>
         </header>
-        <!-- 현재CM -->
-        <div class="cm_amount">
-            <p>현재 CM</p>
-            <div>
-                <div>
-                    <p>보유 자산</p>
-                </div>
-                <div>
-                    <p>100,000,000 CMP</p>
-                    <p>0 CM</p>
-                </div>
+        
+         <section class="charge_area">
+              
+            <!-- 현재CM -->
+            <p class="title">현재 CM</p>
+            <div class="present_CM show">
+                  <p class="gray">보유 자산</p>
+                  <p>{{this.user_cmp}}<span>CMP</span></p>
+                  <p>{{this.user_cm}}<span>CM</span></p>
             </div>
-        </div>
+
         <!-- 충전할CM -->
+        <p class="title">충전 할 CM</p>
         <div class="cm_charging">
-            <p>충전 할 CM</p>
-            <div>
-                <input type="number" placeholder="금액을 입력하세요.">
-                <p>* 최소 충전 금액은 10,000 CM 입니다.</p>
-            </div>
+            <input id="user_search" name="user_search" v-model="add_cm" @input="calculate" value="" type="number" class="send input_design" placeholder="금액을 입력하세요.">
+            <p class="red">* 최소 충전 금액은 10,000 CM 입니다.</p>
         </div>
+
         <!-- 충전후CM -->
-        <div class="cm_charged">
-            <p>충전 후 CM</p>
-            <div>
-                <div>
-                    <p>보유 자산</p>
-                </div>
-                <div>
-                    <p>100,000,000 CMP</p>
-                    <p>0 CM</p>
-                </div>
-            </div>
+        <p class="title">충전 후 CM</p>
+        <div class="cm_charged show">
+            <p class="gray">보유 자산</p>
+            <p>{{this.user_cmp}}<span>CMP</span></p>
+            <p>{{this.all_cm}}<span>CM</span></p>
         </div>
         <!-- 충전수수료 -->
+        <p class="title">충전 수수료</p>
         <div class="cm_fee">
-            <p>충전 수수료</p>
             <div>
                 <p>0원</p>
-                <p>* 충전 수수료는 충전 CM의 10% 입니다.</p>
+                <p class="red">* 충전 수수료는 충전 CM의 10% 입니다.</p>
             </div>
         </div>
-
-        <button type="button" class="charge_btn">충전하기</button>
-    </div>
-
+        
+        <button type="button" class="charge_btn" @click="charge()">충전하기</button>
+            
+         </section>
+      
     <Footer />
 </template>
 
+
+
 <script>
+
+import { useResponseStore } from '@/store/response.js'
 import Footer from '@/components/FooterPage.vue'
 
 export default {
@@ -62,160 +57,185 @@ export default {
     },
     data() {
         return {
-
+            user_cmp:'',//보유 CMP
+            user_cm:'', // 보유 CM
+            add_cm:'',//충전할 CM
+            all_cm:'',//충전 후 CM
+            TPO: window.TPO
         }
     },
     mounted() {
+        
+        let store = useResponseStore();
+         const formData = new FormData();
+
+         formData.append('type', 'authentication');
+         formData.append('user_id', store.user_id);
+
+         const url = process.env.VUE_APP_API_URL;
+            fetch(url + 'api/common/main.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+               console.log('jsondata???');
+               console.log(data.msg);
+               let toJson = JSON.parse(data.msg)
+               console.log(toJson);
+               this.user_cm = toJson.user_cm.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+               this.user_cmp = toJson.user_cmp.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+            })
+
+
+
 
     },
+
+
     methods : {
         toMain() {
             this.$router.push({ path : '/main' });
+        },
+        
+        calculate(){
+
+        const userCM = parseInt(this.user_cm.replace(/,/g, '')); // 문자열에서 콤마 제거 후 숫자로 변환
+        // const sendCM = parseInt(this.send_cm) || 0; // 보내는 CM도 숫자로 변환
+
+        this.all_cm = (userCM+this.add_cm).toLocaleString();
+        },
+
+        charge() {
+            if (this.TPO) {
+                this.TPO.pay({
+                    amount: parseInt(this.add_cm), // 충전할 금액
+                    publicKey: 'pk_1703-f7d8df-4f6-dff5a',
+                    products: [{ name: 'CM 충전', desc: 'CM 충전 상품 설명' }],
+                    trackId: 'tx123',  // 유저 ID 또는 트랜잭션 ID
+                    responseFunction: this.eventFnc,  // 응답 받을 함수
+                    redirectUrl: 'https://your-redirect-url.com',
+                    webhookUrl: 'https://your-webhook-url.com',
+                    tmnId: "cm0000", // 터미널 키
+                    payerName: '사용자 이름',
+                    payerEmail: '사용자 이메일',
+                    payerTel: '사용자 전화번호',
+                    mode: 'layer',   // 레이어 모드로 결제 창 표시
+                    debugMode: 'live' // 실시간 모드
+                });
+            } else {
+                console.error('TPO 객체가 없습니다. ThePayOne API가 로드되지 않았습니다.');
+            }
         }
     }
+
 }
 
 </script>
 
 <style scoped>
+
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+
 * {
     margin: 0; padding: 0;
     box-sizing: border-box;
     text-decoration: none;
-    font-size: 1rem;
     color: #000;
+    font-family: "Noto Sans KR", sans-serif;
 }
-.wrap {
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    /* border: 1px solid red; */
-    margin-bottom: 70px;
-    padding: 0 20px;
-}
-header {
-    position: fixed;
-    top: 0; left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; height: 40px;
-    padding: 0 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-header > p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
-}
-.goback_btn {
-    width: 30px; height: 30px;
-    background-color: #fff;
-    border: 1px solid #fff;
-}
-.goback_btn img {
-    width: 100%; height: 100%;
-}
-.cm_amount {
-    width: 100%;
-    margin-top: 70px;
-    /* border: 1px solid blue; */
-}
-.cm_amount > p {
-    font-weight: bold;
-}
-.cm_amount > div {
-    display: flex;
-    justify-content: space-between;
 
-    width: 100%;
-    padding: 30px 20px;
-    border-radius: 10px;
-    margin-top: 10px;
-    border: 1px solid #1bce0b;
-}
-.cm_amount > div p {
-    font-size: 0.9rem;
-}
-.cm_amount > div > div:nth-of-type(2) p {
-    text-align: right;
-}
-.cm_charging {
-    width: 100%;
-    margin-top: 20px;
-    /* border: 1px solid blue; */
-}
-.cm_charging > p {
-    font-weight: bold;
-}
-.cm_charging > div {
-    width: 100%;
-    margin-top: 10px;
-}
-.cm_charging input {
-    width: 100%; height: 35px;
-    border-radius: 7px;
-    padding-left: 10px;
-    border: 1px solid #ccc;
-}
-.cm_charging input::placeholder {
-    font-size: 0.9rem;
-}
-.cm_charging > div > p {
-    color: red;
-    font-weight: bold;
-    font-size: 0.7rem;
-    text-align: right;
-    margin-top: 5px;
-}
-.cm_charged {
-    width: 100%;
-    margin-top: 20px;
-    /* border: 1px solid orange; */
-}
-.cm_charged > p {
-    font-weight: bold;
-}
-.cm_charged > div {
-    display: flex;
-    justify-content: space-between;
 
-    width: 100%;
-    margin-top: 10px;
-    padding: 30px 20px;
-    border-radius: 10px;
+.charge_gift_title{
+   display: flex;
+   align-items: center;
+   justify-content: center; /* 가운데 정렬 */
+   position: fixed;
+   top: 0;
+   left: 50%;
+   width: 100%;
+   /* max-width: 768px; */
+   transform: translateX(-50%);
+   height: 60px;
+   background-color: #fff;
+   font-size: 18px;
+   font-weight: 800;
+   border-bottom: 1px solid var(--line);
+   z-index: 100;
+}
+
+.charge_gift_title > a {
+   position: absolute; /* 왼쪽 버튼을 절대 위치로 */
+   left: 10px; /* 왼쪽으로부터의 거리 */
+   top: 50%; /* 세로 가운데 정렬 */
+   transform: translateY(-50%); /* 세로 가운데 정렬 보정 */
+}
+
+.charge_gift_title > h3 {
+   margin: 0;
+   text-align: center; /* 텍스트 가운데 정렬 */
+   color: #1749C2;
+   font-weight: 900;
+}
+
+.charge_area{
+    width: 95%;
+    margin: 100px auto 0;
+}
+
+.show{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
     border: 1px solid #1bce0b;
+    border-radius: 5px;
 }
-.cm_charged > div p {
-    font-size: 0.9rem
+
+.show p:nth-of-type(2),
+.show p:nth-of-type(3) {
+  align-self: flex-end; /* 개별 요소를 flex-end로 정렬 */
 }
-.cm_charged > div > div:nth-of-type(2) p {
-    text-align: right;
+
+
+.red{
+   color: red;
+   text-align: end;
+   font-size: small;
 }
-.cm_fee {
+
+
+.title{
+   font-weight: 500;
+   margin: 10px 0px;
+}
+
+.input_design {
     width: 100%;
-    margin-top: 20px;
-    /* border: 1px solid blue; */
+    padding: 10px; /* 이미지 공간을 확보하기 위해 padding 추가 */
+    border: 1px solid #b1b1b1;
+    border-radius: 5px;
 }
-.cm_fee > p {
-    font-weight: bold;
+
+
+.send {
+  text-align: right; /* 기본은 오른쪽 정렬 */
 }
-.cm_fee > div {
+
+.send:focus{
+   text-align: left;
+}
+
+/* //// */
+.cm_fee{
+    display: flex;
+
+}
+
+.cm_fee div{
     width: 100%;
-    margin-top: 10px;
-    /* border: 1px solid #000; */
-    text-align: right;
-}
-.cm_fee > div p {
-    font-size: 0.9rem;
-}
-.cm_fee > div p:nth-of-type(2) {
-    color: red;
-    font-weight: bold;
-    font-size: 0.7rem;
-    margin-top: 5px;
+    text-align: end;
 }
 .charge_btn {
     position: fixed;

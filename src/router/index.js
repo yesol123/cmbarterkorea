@@ -292,7 +292,12 @@ const router = createRouter({
             name:'confrimPin',
             component:()=> import("@/views/ConfirmPin.vue")
         },  
-
+        {
+            path: '/gift/:id',
+            name:'giftPage',
+            component:()=> import("@/views/GiftPage.vue")
+        },  
+    
 
     ],
 }); 
