@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="store_coupon">
-                <div class="back_ground_coupon" v-for="(list,i) in couponlist" :key="i" :style="{backgroundImage : `url('https://www.haruby.store/assets/img/money/${list.coupon_price}.jpg')`}">
+                <div class="back_ground_coupon" v-for="(list,i) in couponlist" :key="i" :style="{backgroundImage : `url('https://www.haruby.store/assets/img/money/${list.coupon_price}.jpg')`}" @click="Download(list.coupon_index)">
                     <ul class="coupon_conditions">
                         <div>
                             <li>{{ list.coupon_name }}</li>
@@ -39,16 +39,45 @@
             </div>
         </main>
     </div>  
+
+
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <div class="center">
+                <p class="header">쿠폰을 받으시겠습니까?</p>
+                <div class="btn_group">
+                    <button type="button" @click="Yes()">예</button>
+                    <button type="button" @click="No()">아니오</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="popup2" class="popup2">
+        <div class="popup-content2">
+            <div class="center2">
+                <p class="header2" style="font-size: 1.0rem;">{{ message }}</p>
+                <div class="btn_group2">
+                    <button type="button" @click="Confirm()">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </template>
 
 <script>
 import { useResponseStore } from '@/store/response.js'
 
 export default {
+    components : {
+    },
     data() {
         return {
             couponlist : '',
-            couponinfo : ''
+            couponinfo : '',
+            couponindex : '',
+            message : ''
         }
     },
     mounted() {
@@ -95,6 +124,44 @@ export default {
                 console.log(data);
                 this.couponinfo = data.msg;
             })
+        },
+        Download(index) {
+            console.log(index);
+            this.couponindex = index;
+            document.getElementById('popup').style.display = 'flex';
+        },
+        Yes() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('popup2').style.display = 'flex';
+
+            let store = useResponseStore();
+            let formData = new FormData();
+            formData.append('type', 'coupon_take');
+            formData.append('user_index', store.user_index);
+            formData.append('event_master_index', store.event_master_index);
+            formData.append('coupon_index', this.couponindex);
+
+             const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/coupon/coupon_event.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                this.message = data.msg;
+            })
+        },
+        No() {
+            this.couponindex = '';
+            document.getElementById('popup').style.display = 'none';
+        },
+        Confirm() {
+            document.getElementById('popup2').style.display = 'none';
+            this.couponindex = '';
+            this.message = '';
+            this.$router.push({ path : '/event' });
         }
     }
 }
@@ -159,6 +226,7 @@ main {
     background-repeat: no-repeat;
     background-size: contain;
     border-radius: 5px;
+    border: 1px solid #ccc;
 }
 .store_detail {
     width: 60%;
@@ -244,5 +312,107 @@ main {
     width: 100%; height: 100%;
     background-repeat: no-repeat;
     background-size: contain;
+}
+.popup {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+/* 팝업내용 */
+.popup-content {
+    position: relative;
+    width: 90%; height: 25%;
+    background-color: #fff;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    overflow: scroll;
+    color: #000;
+}
+.center {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    /* border: 1px solid red; */
+}
+.header {
+    font-weight: bold;
+    font-size: 1.2rem;
+    /* border: 1px solid red; */
+}
+.btn_group {
+    width: 100%;
+    margin-top: 10%;
+    /* padding: 0 40px; */
+}
+.btn_group > button {
+    width: 65px; height: 35px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    color: #000;
+    font-size: 0.9rem;
+}
+.btn_group > button:nth-of-type(1) {
+    background-color: #1bce0b;
+    border: 1px solid #1bce0b;
+    color: #fff;
+    margin-right: 20px;
+}
+.popup2 {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+/* 팝업내용 */
+.popup-content2 {
+    position: relative;
+    width: 90%; height: 25%;
+    background-color: #fff;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    overflow: scroll;
+    color: #000;
+}
+.center2 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    /* border: 1px solid red; */
+}
+.header2 {
+    font-weight: bold;
+    font-size: 1.2rem;
+    /* border: 1px solid red; */
+}
+.btn_group2 {
+    width: 100%;
+    margin-top: 10%;
+    /* padding: 0 40px; */
+}
+.btn_group2 > button {
+    width: 65px; height: 35px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    color: #000;
+    font-size: 0.9rem;
 }
 </style>
