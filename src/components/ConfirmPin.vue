@@ -1,5 +1,5 @@
 <template>
-    <header class="confrim_pin_header_title">
+    <header class="confirm_pin_header_title">
      <RouterLink to="/couponGift">
           <img src="@/assets/icon_arrow_left.svg" alt="Back">
       </RouterLink>
@@ -9,7 +9,7 @@
       </RouterLink>
      </header>
  
-     <section class="confrim_pin_section">
+     <section class="confirm_pin_section">
          <div>
              <form class="form_area" action="#">
                  <ul>
@@ -18,12 +18,7 @@
                  </ul>
  
                  <div class="pinnumber">
-                     <input :class="{ 'active': pinnums[0] }" type="password" v-model="pinnums[0]">
-                     <input :class="{ 'active': pinnums[1] }" type="password" v-model="pinnums[1]">
-                     <input :class="{ 'active': pinnums[2] }" type="password" v-model="pinnums[2]">
-                     <input :class="{ 'active': pinnums[3] }" type="password" v-model="pinnums[3]">
-                     <input :class="{ 'active': pinnums[4] }" type="password" v-model="pinnums[4]">
-                     <input :class="{ 'active': pinnums[5] }" type="password" v-model="pinnums[5]">
+                    <input v-for="(pin, index) in pinnums" :key="index" type="password" v-model="pinnums[index]" :class="{ active: pinnums[index] }">
                  </div>
              </form>
          </div>
@@ -31,15 +26,7 @@
          <div class="number_button_area">
  
              <ul class="pins">
-                     <li @click="InsertPin(one)">1</li>
-                     <li @click="InsertPin(two)">2</li>
-                     <li @click="InsertPin(three)">3</li>
-                     <li @click="InsertPin(four)">4</li>
-                     <li @click="InsertPin(five)">5</li>
-                     <li @click="InsertPin(six)">6</li>
-                     <li @click="InsertPin(seven)">7</li>
-                     <li @click="InsertPin(eight)">8</li>
-                     <li @click="InsertPin(nine)">9</li>
+                <li v-for="number in numbers" :key="number" @click="InsertPin(number)">{{ number }}</li>
                      <li @click="ResetPin()"><img src="@/assets/icon_menu_change_on.svg" alt=""></li>
                      <li @click="InsertPin(zero)">0</li>
                      <li @click="DeletePin()"><img src="@/assets/icon_clear.svg" alt=""></li>
@@ -51,8 +38,9 @@
 
      <div v-if="showModal" class="modal">
   <p class="caution"><img src="@/assets/accept.png" alt=""></p>
-      <p>쿠폰을 선물 하였습니다.</p>
-      <button @click="confrimGift()">확인</button>
+       <!-- 문구를 sendType 값에 따라 동적으로 표시 -->
+    <p >{{ sendType === 'Coupon' ? '쿠폰을 선물하였습니다.' : 'CM을 선물하였습니다.' }}</p>
+      <button @click="confirmGift">확인</button>
   </div>
 
 
@@ -70,38 +58,59 @@ import { useResponseStore } from '@/store/response.js'
 
  
  export default{
-     name: 'confrimPin',
+     name: 'confirmPin',
+     props: {
+    apiUrl: {
+      type: String,
+      required: true
+    },
+    apiData: {
+      type: Object,
+      required: true
+    },
+    sendType: {   // 이 부분을 추가
+      type: String,
+      required: true
+    }
+    },
      data(){
          return{
-             pinnums : [],
-             one : 1,
-             two : 2,
-             three : 3,
-             four : 4,
-             five : 5,
-             six : 6,
-             seven : 7,
-             eight : 8,
-             nine : 9,
-             zero : 0,
+            pinnums: ['', '', '', '', '', ''],
+             numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9],
              isActive: [false, false, false, false, false, false],
              showModal:false
          }
      },
      methods:{
-         InsertPin(i) {
-         // 숫자 입력을 pinnums 배열에 추가
-         this.pinnums.push(i);
-         this.isActive = true
-         console.log('PIN 입력 중:', this.pinnums);
-         
-         // PIN 번호가 6자리가 되면 이벤트 발생 및 페이지 이동
-         if (this.pinnums.length === 6) {
-           localStorage.setItem('pinnumber',JSON.stringify(this.pinnums))
-           console.log('PIN번호가 완성되었습니다',this.pinnums);
-          
-          
+        InsertPin(number) {
+      // 첫 번째로 빈 자리('')를 찾아 그 위치에 숫자를 삽입합니다.
+      const index = this.pinnums.findIndex(pin => pin === '');
+      if (index !== -1) {
+        this.pinnums[index] = number;
+      }
 
+      // 모든 PIN 번호가 입력되면 submitPin을 호출합니다.
+      if (!this.pinnums.includes('')) {
+        this.submitPin();
+      }
+    },
+
+        ResetPin(){
+            this.this.pinnums = ['', '', '', '', '', ''];
+        },
+        DeletePin() {
+      // 마지막으로 입력된 숫자를 빈 문자열로 되돌립니다.
+      const index = this.pinnums.lastIndexOf('');
+      if (index === -1) {
+        // 모든 칸이 채워진 경우, 마지막 칸을 비웁니다.
+        this.$set(this.pinnums, this.pinnums.length - 1, '');
+      } else if (index > 0) {
+        // 입력된 숫자가 있는 경우, 그 이전 칸을 비웁니다.
+        this.$set(this.pinnums, index - 1, '');
+      }
+    },
+
+         submitPin(){
             let store = useResponseStore();
 
             const formData = new FormData();
@@ -113,71 +122,33 @@ import { useResponseStore } from '@/store/response.js'
             fetch(url+'api/common/cm.php',{
                 method : 'POST',
                 body : formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
 
                 if(data.code == 200){
+                    this.$emit('pinSuccess', this.sendType);
                     this.showModal = true
-                 
-                
-                }else{
+                    }else{
                     alert(data.msg)
-                }
+                    this.ResetPin();
+                    }
+                })
+         },
+         confirmGift(){
+            this.showModal = false;
+            router.push({ path: '/main' });
             
-            })
-
-
          }
-     },
- 
-         ResetPin(){
-             this.pinnums = [];
-         },
-         DeletePin() {
-             this.pinnums.pop();
-         },
          
-         confrimGift(){
-            
-        let store = useResponseStore();
-            
+     },
 
-        console.log('쿠폰선물!');
-        console.log('ddd',store);
+    
+         
         
-        const formData = new FormData();
-
-        formData.append('type', 'coupon_gift');
-        formData.append('user_index', store.user_index);
-        formData.append('coupon_price',store.cate);
-        formData.append('coupon_limit',store.limit);
-        formData.append('coupon_name',store.name);
-        formData.append('arr',store.selectedCustomers)
-        formData.append('coupon_condition',store.condition)
-
-
-        for (const pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
-        }
-        const url = process.env.VUE_APP_API_URL;
-            fetch(url + 'api/customer/customer_setting.php', {
-            method : 'POST',
-            body : formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                this.showModal = false
-                router.push({path:'/CustomerManagement'})
-
-            
-            })
-            
-         }
      }
- }
+ 
  
  </script>
  
@@ -191,7 +162,7 @@ import { useResponseStore } from '@/store/response.js'
      font-family: "Noto Sans KR", sans-serif;
      list-style: none;
  }
- .confrim_pin_header_title {
+ .confirm_pin_header_title {
      display: flex;
      align-items: center;
      justify-content: space-between; /* 가운데 정렬 */
@@ -209,28 +180,28 @@ import { useResponseStore } from '@/store/response.js'
      box-sizing: border-box; /* 여백과 테두리를 포함한 전체 크기 계산 */
  }
  
- .confrim_pin_header_title > a:nth-child(1) {
+ .confirm_pin_header_title > a:nth-child(1) {
      position: absolute; /* 왼쪽 버튼을 절대 위치로 */
      left: 10px; /* 왼쪽으로부터의 거리 */
      top: 50%; /* 세로 가운데 정렬 */
      transform: translateY(-50%); /* 세로 가운데 정렬 보정 */
  }
  
- .confrim_pin_header_title > a:nth-child(2) {
+ .confirm_pin_header_title > a:nth-child(2) {
      position: absolute; /* 오른쪽 버튼을 절대 위치로 */
      right: 10px; /* 오른쪽으로부터의 거리 (여백 추가) */
      top: 50%; /* 세로 가운데 정렬 */
      transform: translateY(-50%); /* 세로 가운데 정렬 보정 */
  }
  
- .confrim_pin_header_title > h3 {
+ .confirm_pin_header_title > h3 {
      margin: 0 auto;
      text-align: center;
      color: #1749C2;
      font-weight: 900;
  }
  
- .confrim_pin_section{
+ .confirm_pin_section{
      position: relative;
      margin-top: 100px;
  }

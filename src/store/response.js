@@ -12,7 +12,6 @@ export const useResponseStore = defineStore('response', {
     cancel_price : '', // 결제취소 시 해당 금액
     user_cm_log_index : '', // 결제취소 시 log_index
     //쿠폰선물
-    
     cate: '',
     limit: '',
     name: '',
@@ -21,11 +20,16 @@ export const useResponseStore = defineStore('response', {
     length: '',
     need_user_cm: '',
     rest_user_cm: '',
-
     coupon_index : '', // 쿠폰선물시 coupon_index
     coupon_user_index : '', // 쿠폰선물시 user_index
-    event_master_index : ''
-  
+    event_master_index : '',
+    //CM선물
+    send_cm: '', //선물할 CM
+    user_name:'',//사용자 이름
+    user_phone: '', // 사용자 전화번호
+    give_user_index: '', // 선물하는 유저의 인덱스
+    take_user_index: '', // 선물 받는 유저의 인덱스
+
   }),
   // state: () => {
   //   const savedData = localStorage.getItem('response');
@@ -53,8 +57,18 @@ export const useResponseStore = defineStore('response', {
       this.length = coupondata.length || this.length; 
       this.need_user_cm = coupondata.need_user_cm || this.need_user_cm; 
       this.rest_user_cm = coupondata.rest_user_cm || this.rest_user_cm; 
-    }
+    },
+
+    setGiftData(giftData) {
+      this.send_cm = giftData.send_cm || this.send_cm;
+      this.user_name = giftData.user_name || this.user_name;
+      this.user_phone = giftData.user_phone || this.user_phone;
+      this.give_user_index = giftData.give_user_index || this.give_user_index;
+      this.take_user_index = giftData.take_user_index || this.take_user_index;
+    },
   },
+
+  
   persist : {
     enabled : true,
     strategies : [
