@@ -48,7 +48,7 @@
                 </div>
                 
                 <div class="giftBtn">
-                  <button @click="sendCm">선물하기</button>
+                  <button @click="sendGift()">선물하기</button>
                 </div>
             </article>
        </section>
@@ -57,11 +57,23 @@
        
  
 
+  <!-- confirmPin 컴포넌트 모달 -->
+  <ConfirmPin
+    v-if="showPinInput"
+    :apiUrl="apiUrl"
+    :apiData="{ 
+      type:'gift',
+      give_user_index: give_user_index, 
+      take_user_index: take_user_index, 
+      cm: send_cm 
+      }"
+    @pinSuccess="handlePinSuccess"
+  />
       
      <div v-if="showModal" class="modal">
          <p class="caution">알림</p>
          <p>{{ this.error_massage }}</p>
-         <button @click="confrim()">확인</button>
+         <button @click="confirm()">확인</button>
       </div>
 
             
@@ -70,12 +82,13 @@
          <p>보유한 CM이 부족합니다. <br>
             확인 후 다시 입력해주세요.
          </p>
-         <button @click="confrim()">확인</button>
+         <button @click="confirm()">확인</button>
       </div>
 
 </template>
 
 <script>
+import ConfirmPin from '@/components/ConfirmPin.vue';
 import Footer from '@/components/FooterPage.vue'
 import { useResponseStore } from '@/store/response.js'
 //import router from '@/router/index.js';
@@ -83,11 +96,14 @@ import { useResponseStore } from '@/store/response.js'
 export default{
     name:"giftPage",
     components:{
-      Footer
+      Footer,
+      ConfirmPin
 
     },
     data(){
         return{
+            apiUrl: process.env.VUE_APP_API_URL + 'api/gift/gift.php',
+            sendType: 'CM',
             user_cm:'', // 보유 CM
             userName:'', //
             user_id:'', // user_id
@@ -100,6 +116,7 @@ export default{
             take_user_index:'', //받는 사람 index
             showModal:false,
             showModal2:false,
+            showConfirmPin: false, // confirmPin 모달 상태
 
         }
     },
@@ -126,87 +143,76 @@ export default{
             })
      
 },
-    methods:{
-      seacrhUser(){
-         let store = useResponseStore();
-        const formData = new FormData();
 
-        formData.append('type', 'search_user');
-        formData.append('user_index', store.user_index);
-        formData.append('find_user_id',this.userName);
+methods: {
+    seacrhUser() {
+      let store = useResponseStore();
+      const formData = new FormData();
+      formData.append('type', 'search_user');
+      formData.append('user_index', store.user_index);
+      formData.append('find_user_id', this.userName);
 
+      const url = process.env.VUE_APP_API_URL;
+      fetch(url + 'api/gift/gift.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        this.user_id = data.take_user_id;
+        this.user_name = data.take_user_name;
+        this.user_phone = data.take_user_phone;
+        this.error_massage = data.msg;
+        this.take_user_index = data.take_user_index;
 
-        for (const [key, value] of formData.entries()) {
-   console.log(key, value);
-}
-        const url = process.env.VUE_APP_API_URL;
-            fetch(url + 'api/gift/gift.php', {
-            method : 'POST',
-            body : formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-      
-               this.user_id = data.take_user_id
-               this.user_name = data.take_user_name
-               this.user_phone = data.take_user_phone
-               this.error_massage = data.msg
-               this.take_user_index = data.take_user_index
+        // Pinia에 데이터 저장
+        store.setGiftData({
+          user_name: this.user_name,
+          user_phone: this.user_phone,
+          take_user_index: this.take_user_index,
+        });
 
-                if(data.code == 200){
-                  console.log('good');
-                  
-                }
-                if(data.code == 500) {
-                  this.showModal = true
-                }
-                
-            })
-      },
-      confrim(){
-         this.showModal = false
-         this.showModal2 = false
-      },
-      calculate(){
+        if (data.code == 500) {
+          this.showModal = true;
+        }
+      });
+    },
+    calculate() {
+      const userCM = parseInt(this.user_cm.replace(/,/g, ''));
+      this.rest_cm = (userCM - this.send_cm).toLocaleString();
+    },
+    openConfirmPinModal() {
+      this.showConfirmPin = true; // PIN 입력 모달 열기
+    },
+    closeConfirmPinModal() {
+      this.showConfirmPin = false; // PIN 입력 모달 닫기
+    },
+    sendGift() {
+      const remainingCm = parseInt(this.rest_cm.replace(/,/g, ''));
 
-         const userCM = parseInt(this.user_cm.replace(/,/g, '')); // 문자열에서 콤마 제거 후 숫자로 변환
-         // const sendCM = parseInt(this.send_cm) || 0; // 보내는 CM도 숫자로 변환
-
-         this.rest_cm = (userCM-this.send_cm).toLocaleString();
-      },
-      sendCm(){
-
-      const remainingCm = parseInt(this.rest_cm.replace(/,/g, '')); // 콤마 제거 후 숫자로 변환
-    
-         if(remainingCm < 0){
-            this.showModal2 = true
-         }else{
-            console.log('여기에 선물하기 로직을!');
-            
-            let store = useResponseStore();
-            const formData = new FormData();
-
-            formData.append('type', 'gift');
-            formData.append('pin', Number(111111));
-            formData.append('give_user_index',store.user_index);
-            formData.append('take_user_index',this.take_user_index);
-            formData.append('cm',this.send_cm);
-
-            
-        const url = process.env.VUE_APP_API_URL;
-            fetch(url + 'api/gift/gift.php', {
-            method : 'POST',
-            body : formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-                
-            })
-         }
+      if (remainingCm < 0) {
+        this.showModal2 = true;
+      } else {
+         this.sendType = 'CM'
+         const store = useResponseStore();
+         store.send_cm = this.send_cm;
+         store.give_user_index = this.give_user_index;
+         store.take_user_index = this.take_user_index;
+         console.log('pinia',store);
+         this.$router.push({ path: '/confirmpin' });
+         
       }
+    },
+    handlePinSuccess(type) {
+      this.sendType = type
+      this.showPinInput = false;
+    },
+    confirm(){
+      this.showModal = false;
+      this.showModal2 = false;
     }
+  }
+
 
     
 

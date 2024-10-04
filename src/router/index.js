@@ -290,12 +290,12 @@ const router = createRouter({
         {
             path: '/couponGift',
             name:'couponGift',
-            component:()=> import("@/views/CouponGift.vue")
+            component:()=> import("@/views/CouponGift.vue"),
         },  
         {
-            path: '/confrimpin',
-            name:'confrimPin',
-            component:()=> import("@/views/ConfirmPin.vue")
+            path: '/confirmpin',
+            name:'confirmPin',
+            component:()=> import("@/components/ConfirmPin.vue")
         },  
         {
             path: '/gift/:id',

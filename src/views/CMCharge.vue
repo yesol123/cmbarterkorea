@@ -65,6 +65,8 @@ export default {
         }
     },
     mounted() {
+        var tag = document.createElement('script');
+        tag.src = "https://api.thepayone.com/js/clientside.js";
         
         let store = useResponseStore();
          const formData = new FormData();
