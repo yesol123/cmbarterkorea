@@ -36,8 +36,8 @@
   <div class="footer">
       <div class="btn_group">
         <img src="@/assets/home.png">
-        <img src="@/assets/gift.png">
-        <img src="@/assets/search.png">
+        <img @click="goGift()" src="@/assets/gift.png">
+        <img  src="@/assets/search.png">
         <img @click="goMypage()" src="@/assets/my.png">
       </div>
   </div>
@@ -63,6 +63,9 @@ export default {
   methods : {
      goMypage(){
       router.push('/MyPage/'+this.member)
+     },
+     goGift(){
+      router.push('/gift/'+this.member)
      }
     // test
     // to() {
