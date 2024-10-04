@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="icons">
-            <div class="icon" v-if="this.member != '2'">
+            <div class="icon" v-if="this.member != '2'" @click="toEvent()">
                 <img src="@/assets/gift.png">
                 <p>쿠폰이벤트</p>
             </div>
@@ -272,6 +272,10 @@ export default {
         },
         gocustomer(){
             this.$router.push({path:'/CustomerManagement'})
+        },
+        // 메인 쿠폰이벤트 이동
+        toEvent() {
+            this.$router.push({ path : '/event' });
         },
         // 로그아웃
         logout() {

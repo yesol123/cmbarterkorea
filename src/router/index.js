@@ -99,6 +99,16 @@ const router = createRouter({
             component: () => import("@/views/CMCharge.vue"),    
         },      
         {      
+            path: "/event",      
+            name: "MainEvent",      
+            component: () => import("@/views/MainEvent.vue"),    
+        },      
+        {      
+            path: "/edownload",      
+            name: "MainEventDownload",      
+            component: () => import("@/views/MainEventDownload.vue"),    
+        },      
+        {      
             path: "/location",      
             name: "FindLocation",      
             component: () => import("@/components/FindLocation.vue"),    
