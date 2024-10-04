@@ -109,6 +109,11 @@ const router = createRouter({
             component: () => import("@/views/MainEventDownload.vue"),    
         },      
         {      
+            path: "/shopin",      
+            name: "ShopIn",      
+            component: () => import("@/views/ShopIn.vue"),    
+        },      
+        {      
             path: "/location",      
             name: "FindLocation",      
             component: () => import("@/components/FindLocation.vue"),    
