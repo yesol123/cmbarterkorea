@@ -239,10 +239,13 @@ export default{
         formData.append('user_index', store.user_index);
         formData.append('coupon_price', this.cate);
         formData.append('coupon_limit', this.limit);
-        formData.append('coupon_name ', this.name);
+        formData.append('coupon_name', this.name);
         formData.append('arr', this.selectedCustomers.join(','));
         formData.append('coupon_condition', this.condition);
         
+        formData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+        });
 
         const url = process.env.VUE_APP_API_URL;
         fetch(url + 'api/customer/customer_setting.php', {

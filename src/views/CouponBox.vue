@@ -34,7 +34,7 @@
                     <ul class="coupon_conditions">
                         <div>                 
                         <li>{{coupon.coupon_name}}</li>
-                        <li><p class="long">장수촌 (1만원 이상 결제)</p></li>
+                        <li><p class="long">{{coupon.coupon_condition}}</p></li>
                         <li>{{coupon.coupon_limit_time_f}}</li>
                         </div>
                         <div class="t">
@@ -61,6 +61,7 @@ export default{
             coupons:[], // 전체 쿠폰 리스트
             keyword:'',// 검색 통!
             id:'',
+            name:''
         }
     },
     mounted(){
@@ -79,10 +80,11 @@ export default{
         })
         .then(response => response.json())
         .then(result => {
-            console.log(result.msg);
-            console.log(result.msg.coupon_index);
+            console.log('ddd?',result.msg);
+            console.log('ddd?ddd',result.msg.coupon_name);
             this.coupons = result.msg
             this.id = result.msg.coupon_index
+            this.name = result.msg.coupon_name
             this.filterCoupons(); // 초기 필터링 수행
         })
     },
