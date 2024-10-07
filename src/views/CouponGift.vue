@@ -89,7 +89,7 @@ export default{
     components: { ConfirmPin },
     data(){
         return{
-            apiUrl: process.env.VUE_APP_API_URL + 'api/store/store_update.php',
+           // apiUrl: process.env.VUE_APP_API_URL + 'api/store/store_update.php',
             sendType:'Coupon',
             user_cm:'', // 보유 CM
             cate:'', // 종류
@@ -231,21 +231,46 @@ export default{
 
 
         gift() {
-            this.sendType = 'Coupon';  
-            const store = useResponseStore();
-            store.cate = this.cate;
-            store.limit = this.limit;
-            store.name = this.name;
-            store.condition = this.condition;
-            store.selectedCustomers = this.selectedCustomers;
-            store.length = this.length;
-            store.need_user_cm = this.need_user_cm;
-            store.rest_user_cm = this.rest_user_cm;
-            console.log('pinia',store);
-            
+        let store = useResponseStore();
+
+        const formData = new FormData();
+
+        formData.append('type', 'coupon_gift');
+        formData.append('user_index', store.user_index);
+        formData.append('coupon_price', this.cate);
+        formData.append('coupon_limit', this.limit);
+        formData.append('coupon_name ', this.name);
+        formData.append('arr', this.selectedCustomers.join(','));
+        formData.append('coupon_condition', this.condition);
+        
+
+        const url = process.env.VUE_APP_API_URL;
+        fetch(url + 'api/customer/customer_setting.php', {
+        method : 'POST',
+        body : formData
+        })
+        .then(response => response.json())
+        .then(data => {
+        console.log(data);
+        
+        })
+
+
+            // this.sendType = 'Coupon';  
+            // const store = useResponseStore();
+            // store.cate = this.cate;
+            // store.limit = this.limit;
+            // store.name = this.name;
+            // store.condition = this.condition;
+            // store.selectedCustomers = this.selectedCustomers;
+            // store.length = this.length;
+            // store.need_user_cm = this.need_user_cm;
+            // store.rest_user_cm = this.rest_user_cm;
+            // console.log('pinia',store);
+            //this.$router.push({ path: '/main' });
 
              //쿠폰 선물 페이지로 이동
-           this.$router.push({ path: '/confirmpin' });
+        //    this.$router.push({ path: '/confirmpin' });
         },
 
         handlePinSuccess(type){
@@ -261,12 +286,6 @@ export default{
 </script>
 <style scoped>
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-
-
-*{
-   font-family: "Noto Sans KR", sans-serif;
-}
 
 *ul,li{
     list-style: none;
