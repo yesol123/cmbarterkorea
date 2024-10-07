@@ -112,6 +112,46 @@ const router = createRouter({
             path: "/shopin",      
             name: "ShopIn",      
             component: () => import("@/views/ShopIn.vue"),    
+        },     
+        {      
+            path: "/shopin2",      
+            name: "ShopIn2",      
+            component: () => import("@/views/ShopIn2.vue"),    
+        },    
+        {      
+            path: "/shopin3",      
+            name: "ShopIn3",      
+            component: () => import("@/views/ShopIn3.vue"),    
+        },
+        {      
+            path: "/shopin4",      
+            name: "ShopIn4",      
+            component: () => import("@/views/ShopIn4.vue"),    
+        },          
+        {      
+            path: "/service",      
+            name: "ServiceAgreement",      
+            component: () => import("@/views/form/ServiceAgreement.vue"),    
+        },      
+        {      
+            path: "/privacy",      
+            name: "PrivacyAgreement",      
+            component: () => import("@/views/form/PrivacyAgreement.vue"),    
+        },      
+        {      
+            path: "/marketing",      
+            name: "MarketingAgreement",      
+            component: () => import("@/views/form/MarketingAgreement.vue"),    
+        },      
+        {      
+            path: "/advertise",      
+            name: "AdvertiseAgreement",      
+            component: () => import("@/views/form/AdvertiseAgreement.vue"),    
+        },      
+        {      
+            path: "/locate",      
+            name: "LocationAgreement",      
+            component: () => import("@/views/form/LocationAgreement.vue"),    
         },      
         {      
             path: "/location",      
