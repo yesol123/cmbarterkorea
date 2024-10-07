@@ -55,8 +55,6 @@
        <Footer class="footer" />
 
        
- 
-
   <!-- confirmPin 컴포넌트 모달 -->
   <ConfirmPin
     v-if="showPinInput"
@@ -102,7 +100,7 @@ export default{
     },
     data(){
         return{
-            apiUrl: process.env.VUE_APP_API_URL + 'api/gift/gift.php',
+            //apiUrl: process.env.VUE_APP_API_URL + 'api/gift/gift.php',
             sendType: 'CM',
             user_cm:'', // 보유 CM
             userName:'', //
@@ -188,18 +186,41 @@ methods: {
       this.showConfirmPin = false; // PIN 입력 모달 닫기
     },
     sendGift() {
+      
       const remainingCm = parseInt(this.rest_cm.replace(/,/g, ''));
 
       if (remainingCm < 0) {
         this.showModal2 = true;
       } else {
-         this.sendType = 'CM'
-         const store = useResponseStore();
-         store.send_cm = this.send_cm;
-         store.give_user_index = this.give_user_index;
-         store.take_user_index = this.take_user_index;
-         console.log('pinia',store);
-         this.$router.push({ path: '/confirmpin' });
+
+      let store = useResponseStore();
+      const formData = new FormData();
+      formData.append('type', 'gift');
+      formData.append('give_user_index', store.user_index);
+      formData.append('take_user_index', this.take_user_index);
+      formData.append('cm', this.send_cm);
+
+      const url = process.env.VUE_APP_API_URL;
+            fetch(url + 'api/gift/gift.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              
+            })
+     
+
+
+         
+         // this.sendType = 'CM'
+         // const store = useResponseStore();
+         // store.send_cm = this.send_cm;
+         // store.give_user_index = this.give_user_index;
+         // store.take_user_index = this.take_user_index;
+         // console.log('pinia',store);
+         //this.$router.push({ path: '/confirmpin' });
          
       }
     },
