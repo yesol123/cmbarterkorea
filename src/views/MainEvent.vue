@@ -69,7 +69,7 @@ export default {
             })
             .then(response => response.json())
             .then(data => {
-                // console.log(data);
+                console.log(data);
 
                 for(let i=0; i<data.msg.length; i++) {
                     const comprice = data.msg[i].total_coupon_price;

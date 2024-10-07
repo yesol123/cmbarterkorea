@@ -28,24 +28,36 @@
             </div>
         </main>
 
-        <ModalPage ref="child" style="display: none;"/>
+        <!-- <ModalPage ref="child" style="display: none;"/> -->
+    </div>
+
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <div class="center">
+                <p class="header" style="font-size: 1.0rem;">{{ message }}</p>
+                <div class="btn_group">
+                    <button type="button" @click="Confirm()">확인</button>
+                </div>
+            </div>
+        </div>
     </div>
     
 </template>
 
 <script>
 import { useResponseStore } from '@/store/response.js';
-import ModalPage from '@/components/ModalPage2.vue';
+// import ModalPage from '@/components/ModalPage2.vue';
 import router from '@/router';
 
 export default {
     components : {
-        ModalPage
+        // ModalPage
     },
     data() {
         return {
             id : '',
-            password : ''
+            password : '',
+            message : ''
         }
     },
     mounted() {
@@ -79,7 +91,7 @@ export default {
             if(this.id && this.password) {
                 
                 let store = useResponseStore();
-                const refs = this.$refs.child;
+                // const refs = this.$refs.child;
 
                 const formData = new FormData();
 
@@ -118,11 +130,18 @@ export default {
                         }
                     }
                     if(data.code == 404) {
-                        refs.mode = 'loginfail';
-                        refs.openModal();
+                        console.log(data.msg);
+                        this.message = data.msg;
+                        document.getElementById('popup').style.display = 'flex';
                     }
                 })
             }
+        },
+        Confirm() {
+            this.message = '';
+            this.id = '',
+            this.password = '',
+            document.getElementById('popup').style.display = 'none';
         }
     }
 }
@@ -198,5 +217,53 @@ input {
     text-align: center;
     margin-top: 20px;
     /* border: 1px solid red; */
+}
+.popup {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+/* 팝업내용 */
+.popup-content {
+    position: relative;
+    width: 90%; height: 25%;
+    background-color: #fff;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    overflow: scroll;
+    color: #000;
+}
+.center {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    /* border: 1px solid red; */
+}
+.header {
+    font-weight: bold;
+    font-size: 1.2rem;
+    /* border: 1px solid red; */
+}
+.btn_group {
+    width: 100%;
+    margin-top: 10%;
+    /* padding: 0 40px; */
+}
+.btn_group > button {
+    width: 65px; height: 35px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    color: #000;
+    font-size: 0.9rem;
 }
 </style>

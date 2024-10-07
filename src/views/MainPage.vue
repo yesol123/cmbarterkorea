@@ -57,7 +57,7 @@
                 <img src="@/assets/gift.png">
                 <p>CM충전</p>
             </div>
-            <div class="icon" v-if="this.member == '1'">
+            <div class="icon" v-if="this.member == '1'" @click="toShopIn()">
                 <img src="@/assets/gift.png">
                 <p>가맹점신청</p>
             </div>
@@ -277,10 +277,31 @@ export default {
         toEvent() {
             this.$router.push({ path : '/event' });
         },
+        toShopIn() {
+            this.$router.push({ path : '/shopin' });
+        },
         // 로그아웃
         logout() {
             // localStorage.setItem('response', null);
             localStorage.removeItem('response');
+
+            let store = useResponseStore();
+            const formData = new FormData();
+            formData.append('type', 'logout');
+            formData.append('user_index', store.user_index);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/login.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('로그아웃되었음');
+                console.log(data);
+            })
+            
             this.$router.push({ path : '/' });
         }
     },

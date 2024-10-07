@@ -107,8 +107,8 @@ export default {
                     this.index_list.push(data.msg[i].coupon_index);
                     // console.log(this.index_list);
                 } 
-                console.log(333)
-                console.log(this.index_list)
+                console.log(333);
+                console.log(this.index_list);
             })
         },
         // 쿠폰상세보기
