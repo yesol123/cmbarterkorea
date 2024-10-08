@@ -302,6 +302,11 @@ const router = createRouter({
             name:'giftPage',
             component:()=> import("@/views/GiftPage.vue")
         },  
+        {
+            path: '/roulette',
+            name:'roulettePgae',
+            component:()=> import("@/views/RoulettePage.vue")
+        },  
     
 
     ],

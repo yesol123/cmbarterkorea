@@ -8,6 +8,8 @@ import App from '@/App.vue';
 import mitt from 'mitt'; // mitt 임포트
 // router
 import router from "@/router/index.js";
+// LoadScript
+import LoadScript from 'vue-plugin-load-script';
 
 //eventBus
 export const eventBus = mitt()
@@ -38,11 +40,15 @@ import InputText from 'primevue/inputtext';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
+
+
 const app = createApp(App);
 const pinia = createPinia();
 pinia.use(piniaPersist);
 
 app.use(pinia);
+
+app.use(LoadScript);
 
 app.use(router);
 // app.use(createPinia());

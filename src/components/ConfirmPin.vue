@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <header class="confirm_pin_header_title">
      <RouterLink to="/couponGift">
           <img src="@/assets/icon_arrow_left.svg" alt="Back">
@@ -38,18 +38,132 @@
 
      <div v-if="showModal" class="modal">
   <p class="caution"><img src="@/assets/accept.png" alt=""></p>
-       <!-- 문구를 sendType 값에 따라 동적으로 표시 -->
-    <p >{{ sendType === 'Coupon' ? '쿠폰을 선물하였습니다.' : 'CM을 선물하였습니다.' }}</p>
+        문구를 sendType 값에 따라 동적으로 표시 -->
+    <!-- <p >{{ sendType === 'Coupon' ? '쿠폰을 선물하였습니다.' : 'CM을 선물하였습니다.' }}</p>
       <button @click="confirmGift">확인</button>
   </div>
 
+ </template>!--> 
 
 
+ <template>
+    <header class="confirm_pin_header_title">
+      <RouterLink to="/couponGift">
+        <img src="@/assets/icon_arrow_left.svg" alt="Back" />
+      </RouterLink>
+      <h3>PIN 번호 확인</h3>
+      <RouterLink to="/couponGift">
+        <img src="@/assets/icon_close.svg" alt="Close" />
+      </RouterLink>
+    </header>
+  
+    <section class="confirm_pin_section">
+      <div>
+        <form class="form_area" action="#">
+          <ul>
+            <li>PIN 번호 입력</li>
+            <li>PIN 번호를 입력해주세요.</li>
+          </ul>
+  
+          <div class="pinnumber">
+            <input
+              v-for="(pin, index) in pinnums"
+              :key="index"
+              type="password"
+              v-model="pinnums[index]"
+              :class="{ active: pinnums[index] }"
+            />
+          </div>
+        </form>
+      </div>
+  
+      <div class="number_button_area">
+        <ul class="pins">
+          <li v-for="number in numbers" :key="number" @click="InsertPin(number)">
+            {{ number }}
+          </li>
+          <li @click="ResetPin()">
+            <img src="@/assets/icon_menu_change_on.svg" alt="Reset" />
+          </li>
+          <li @click="InsertPin(0)">0</li>
+          <li @click="DeletePin()">
+            <img src="@/assets/icon_clear.svg" alt="Delete" />
+          </li>
+        </ul>
+      </div>
+    </section>
+  
+    <!-- PIN이 성공적으로 확인되었을 때 모달 표시 -->
+    <div v-if="responseStore.showModal" class="modal">
+      <p class="caution">
+        <img src="@/assets/accept.png" alt="" />
+      </p>
+      <p>{{ responseStore.sendType === 'Coupon' ? '쿠폰을 선물하였습니다.' : 'CM을 선물하였습니다.' }}</p>
+      <button @click="closeModal">확인</button>
+    </div>
+  </template>
+  
+
+
+
  
+ <script setup>
+ import { ref } from 'vue';
+ import { useResponseStore } from '@/store/response';
  
- </template>
+ const responseStore = useResponseStore();
+ const pinnums = ref(['', '', '', '', '', '']); // 6자리 PIN 번호 배열
+ const numbers = ref([1, 2, 3, 4, 5, 6, 7, 8, 9]); // 숫자 키패드 배열
+ const errorMessage = ref('');
  
+ // PIN 번호 입력 로직
+ const InsertPin = (number) => {
+   const index = pinnums.value.findIndex((pin) => pin === ''); // 빈 칸 찾기
+   if (index !== -1) {
+     pinnums.value[index] = number;
+   }
+   if (!pinnums.value.includes('')) {
+     submitPin(); // PIN 번호가 모두 입력되면 검증
+   }
+ };
  
+ // PIN 번호 초기화
+ const ResetPin = () => {
+   pinnums.value = ['', '', '', '', '', ''];
+ };
+ 
+ // 마지막 입력 삭제
+ const DeletePin = () => {
+   const lastIndex = pinnums.value.lastIndexOf('');
+   if (lastIndex > 0) {
+     pinnums.value[lastIndex - 1] = '';
+   } else {
+     pinnums.value[pinnums.value.length - 1] = '';
+   }
+ };
+ 
+ // PIN 제출 로직
+ const submitPin = async () => {
+   responseStore.inputPin = pinnums.value.join(''); // 입력한 PIN을 저장
+   const isValid = await responseStore.verifyPin(); // PIN 검증
+ 
+   if (!isValid) {
+     errorMessage.value = 'PIN 번호가 일치하지 않습니다.';
+     ResetPin();
+   } else {
+     errorMessage.value = ''; // 오류 메시지 제거
+   }
+ };
+ 
+ // 모달 닫기
+ const closeModal = () => {
+   responseStore.showModal = false;
+ };
+ </script>
+ 
+
+
+<!--  
  <script>
  //import { RouterLink } from 'vue-router'; 
  import router from '@/router/index.js';
@@ -96,7 +210,7 @@ import { useResponseStore } from '@/store/response.js'
     },
 
         ResetPin(){
-            this.this.pinnums = ['', '', '', '', '', ''];
+            this.pinnums = ['', '', '', '', '', ''];
         },
         DeletePin() {
       // 마지막으로 입력된 숫자를 빈 문자열로 되돌립니다.
@@ -151,7 +265,7 @@ import { useResponseStore } from '@/store/response.js'
  
  
  </script>
- 
+  -->
  
  <style scoped>
  

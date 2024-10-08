@@ -44,6 +44,7 @@ import "datatables.net-select";
 
 DataTable.use(DataTablesLib);
 
+
 // eslint-disable-next-line no-unused-vars
 let dt;
 let store = useResponseStore();

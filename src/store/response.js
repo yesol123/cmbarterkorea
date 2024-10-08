@@ -2,6 +2,12 @@ import { defineStore } from 'pinia';
 
 export const useResponseStore = defineStore('response', {
   state: () => ({
+    //PIN 확인 
+    inputPin:'',//입력한 PIN
+    corretPin:'', //실제 PIN
+    isPinVerified: false, // Pin 검증상태
+    showModal: false, // 모달 상태
+
     datas: [], // 초기값을 빈 배열로 설정
     member: '', // 일반, 사업자, 가맹점 여부 확인
     user_id: '', // 각 회원 아이디
@@ -66,6 +72,50 @@ export const useResponseStore = defineStore('response', {
       this.give_user_index = giftData.give_user_index || this.give_user_index;
       this.take_user_index = giftData.take_user_index || this.take_user_index;
     },
+
+    //핀번호 확인 로직
+    verifyPin(){
+      const formData = new FormData();
+      formData.append('type','pin_check');
+      formData.append('user_index',this.user_index); // 현재 사용자 정보
+      formData.append('user_pin',Number(this.inputPin)); // 입력한 PIN번호
+
+
+      formData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+        });
+      
+        console.log('호출!!!');
+        const url = process.env.VUE_APP_API_URL;
+        fetch(url +'api/common/cm.php',{
+          method: 'POST',
+          body:formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('data',data);
+          
+        })
+
+
+        // if(data.code === 200 ){
+
+        //   console.log('일치!');
+          
+        //   this.isPinVerified = true;
+        // }else{
+        //   console.log('불일치!');
+      
+        //   this.isPinVerified = false;
+        //   this.clearPin();
+        // }
+        // return this.isPinVerified
+      
+      },
+    clearPin(){
+      this.inputPin = '';
+      this.isPinVerified = false;
+    }
   },
 
   

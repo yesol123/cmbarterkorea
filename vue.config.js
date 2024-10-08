@@ -1,7 +1,10 @@
-const { defineConfig } = require('@vue/cli-service')
+const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   transpileDependencies: true,
-  devServer : {
+  devServer: {
+    client: {
+      overlay: false,
+    },
     // https : true
     // webSocketServer: false, //사용하지 않게 변경
     // proxy : {
@@ -22,5 +25,5 @@ module.exports = defineConfig({
     //   webSocketURL: 'wss://192.168.50.156:80/ws' // Add this
     // },
     // compress : true
-  }
-})
+  },
+});
