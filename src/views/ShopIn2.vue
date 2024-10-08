@@ -195,7 +195,7 @@ main button, img {
     align-items: center;
     width: 100%;
     margin: 10px 0 50px 0;
-    padding: 0 100px;
+    padding: 0 150px;
     /* border: 1px solid blue; */
 }
 .index > div {

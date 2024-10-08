@@ -94,7 +94,7 @@ export default {
     methods : {
         toShopIn3() {
             this.$router.push({ path : '/shopin3' });
-        }
+        },
     }
 }
 </script>
