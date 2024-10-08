@@ -18,7 +18,7 @@
         <p class="title">충전 할 CM</p>
         <div class="cm_charging">
             <input id="user_search" name="user_search" v-model="add_cm" @input="calculate" value="" type="number" class="send input_design" placeholder="금액을 입력하세요.">
-            <p class="red">* 최소 충전 금액은 10,000 CM 입니다.</p>
+            <p class="red">* 최소 충전 금액은 100,000 CM 입니다.</p>
         </div>
 
         <!-- 충전후CM -->
@@ -29,10 +29,13 @@
             <p>{{this.all_cm}}<span>CM</span></p>
         </div>
         <!-- 충전수수료 -->
-        <p class="title">충전 수수료</p>
+        
+        <p class="title">충전 수수료
+            <!-- <small>부가세 포함 금액</small> -->
+        </p>
         <div class="cm_fee">
             <div>
-                <p>0원</p>
+                <p>{{this.surtax}}원</p>
                 <p class="red">* 충전 수수료는 충전 CM의 10% 입니다.</p>
             </div>
         </div>
@@ -62,7 +65,11 @@ export default {
             user_cm:'', // 보유 CM
             add_cm:'',//충전할 CM
             all_cm:'',//충전 후 CM
-            TPO: window.TPO
+            TPO: window.TPO,
+            surtax:'', //부가세
+            paymoney:'', // 부가세 포함
+            user_index:'',
+            user_phone:''
         }
     },
     mounted() {
@@ -70,15 +77,15 @@ export default {
        // tag.src = "https://api.thepayone.com/js/clientside.js";
         
         let store = useResponseStore();
-         const formData = new FormData();
+         const formData1 = new FormData();
 
-         formData.append('type', 'authentication');
-         formData.append('user_id', store.user_id);
+         formData1.append('type', 'authentication');
+         formData1.append('user_id', store.user_id);
 
          const url = process.env.VUE_APP_API_URL;
             fetch(url + 'api/common/main.php', {
             method : 'POST',
-            body : formData
+            body : formData1
             })
             .then(response => response.json())
             .then(data => {
@@ -90,6 +97,23 @@ export default {
                this.user_cmp = toJson.user_cmp.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
             })
 
+         const formData2 = new FormData();
+
+         formData2.append('type','user_get');
+         formData2.append('user_index',store.user_index);
+
+        fetch(url+'api/common/user.php',{
+            method:'POST',
+            body:formData2
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('fdd',data.msg[0].user_name);
+            this.user_index = data.msg[0].user_name
+            this.user_phone = data.msg[0].user_phone
+        })
+         
+            
 
     // ThePayOne에서 전달받는 메시지를 처리하기 위해 message 이벤트 리스너를 추가
     window.addEventListener('message', (e) => {
@@ -150,18 +174,24 @@ export default {
         const userCM = parseInt(this.user_cm.replace(/,/g, '')); // 문자열에서 콤마 제거 후 숫자로 변환
         // const sendCM = parseInt(this.send_cm) || 0; // 보내는 CM도 숫자로 변환
 
+
         this.all_cm = (userCM+this.add_cm).toLocaleString();
+        this.paymoney = Math.floor(this.add_cm* 0.1 * 1.1) // 충전 수수료 계산 (10%)
+        this.surtax = Math.floor(this.add_cm * 0.1); 
         },
 
         charge() {
             console.log('앵?');
+            //timestampSecond = Math.floor(+ new Date() / 1000);
+            let store = useResponseStore();
+            let tx = store.user_id + Math.floor(+ new Date() / 1000);
 
             if (this.TPO) {
                 this.TPO.pay({
-                    amount: parseInt(this.add_cm), // 충전할 금액
+                    amount: parseInt(this.paymoney), // 충전할 금액
                     publicKey: 'pk_1703-f7d8df-4f6-dff5a',
-                    products: [{ name: 'CM 충전', desc: 'CM 충전 상품 설명' }],
-                    trackId: 'tx123',  // 유저 ID 또는 트랜잭션 ID
+                    products: [{ name: 'cm', desc: 'description' }],
+                    trackId: tx,  // 유저 ID 또는 트랜잭션 ID
                     responseFunction: this.eventFnc,  // 응답 받을 함수
                     redirectUrl: 'https://your-redirect-url.com',
                     webhookUrl: 'https://your-webhook-url.com',
