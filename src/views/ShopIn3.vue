@@ -50,10 +50,11 @@
 
                 <div class="company_img">
                     <p>사업자등록증 사진 업로드</p>
-                    <div @click="FileUpload()">
-                        <p>파일을 업로드 해주세요.</p>
+                    <div @click="UploadCompany()">
+                        <p id="text1">파일을 업로드 해주세요.</p>
+                        <img id="preview1" style="display: none; width: 100%; height: 100%;">
                     </div>
-                    <input type="file" id="file" style="display: none">
+                    <input type="file" id="company" style="display: none" @change="previewCompany($event)">
                     <p>*가맹점 심사 담당자가 내용을 확인할 수 있는 사업자등록증 스캔 이미지 또는 사진을 등록해 주세요.</p>
                 </div>
             </div>
@@ -98,19 +99,23 @@
                     <input type="text" placeholder="사이트 주소">
                 </div>
 
-                <div class="board_img">
+                <div class="board_img" @click="UploadBoard()">
                     <p>가맹점 간판 사진 업로드</p>
                     <div>
-                        <p>파일을 업로드 해주세요.</p>
+                        <p id="text2">파일을 업로드 해주세요.</p>
+                        <img id="preview2" style="display: none; width: 100%; height: 100%;">
                     </div>
+                    <input type="file" id="board" style="display: none" @change="previewBoard($event)">
                     <p>*가맹점 심사 담당자가 내용을 확인할 수 있는 매장 간판 사진을 등록해 주세요.</p>
                 </div>
 
-                <div class="shop_img">
+                <div class="shop_img" @click="UploadShop()">
                     <p>가맹점 매장 정면 사진 업로드</p>
                     <div>
-                        <p>파일을 업로드 해주세요.</p>
+                        <p id="text3">파일을 업로드 해주세요.</p>
+                        <img id="preview3" style="display: none; width: 100%; height: 100%;">
                     </div>
+                    <input type="file" id="shop" style="display: none" @change="previewShop($event)">
                     <p>*가맹점 심사 담당자가 내용을 확인할 수 있는 매장 정면 사진을 등록해 주세요.</p>
                 </div>
 
@@ -162,6 +167,7 @@ export default {
         toShopIn2() {
             this.$router.push({ path : '/shopin2' });
         },
+        // 사업자유형
         ListUp() {
             // const params =  new URLSearchParams({
             //     serviceKey:'u14R%2BGEwvcJIVOZqPn4ejzEslgsrrHzUiTM48ronDxfzKPBIgVJEatd4VFvVQebke2KntzrSJ1L5iiMuvtSw1w%3D%3D'
@@ -188,8 +194,61 @@ export default {
             })
         },
         // 사업자등록증 사진 업로드
-        FileUpload() {
-            document.getElementById('file').click();
+        UploadCompany() {
+            document.getElementById('company').click();
+        },
+        // 가맹점 간판 사진 업로드
+        UploadBoard() {
+            document.getElementById('board').click();
+        },
+        // 가맹점 정면 사진 업로드
+        UploadShop() {
+            document.getElementById('shop').click();
+        },
+        previewCompany(event) {
+            const file = event.target.files[0];
+            const uploadText = document.getElementById('text1');
+            const preview = document.getElementById('preview1');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadText.style.display = 'none'; // 텍스트 숨기기
+                    preview.src = e.target.result; // 이미지 미리보기
+                    preview.style.display = 'block'; // 이미지 보이기
+                };
+                reader.readAsDataURL(file);
+            }
+        },
+        previewBoard(event) {
+            const file = event.target.files[0];
+            const uploadText = document.getElementById('text2');
+            const preview = document.getElementById('preview2');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadText.style.display = 'none'; // 텍스트 숨기기
+                    preview.src = e.target.result; // 이미지 미리보기
+                    preview.style.display = 'block'; // 이미지 보이기
+                };
+                reader.readAsDataURL(file);
+            }
+        },
+        previewShop(event) {
+            const file = event.target.files[0];
+            const uploadText = document.getElementById('text3');
+            const preview = document.getElementById('preview3');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadText.style.display = 'none'; // 텍스트 숨기기
+                    preview.src = e.target.result; // 이미지 미리보기
+                    preview.style.display = 'block'; // 이미지 보이기
+                };
+                reader.readAsDataURL(file);
+            }
         }
     }
 }
