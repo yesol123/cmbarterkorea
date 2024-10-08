@@ -30,15 +30,14 @@
                 <div class="biz_info">
                     <p>사업자등록번호</p>
                     <input type="number" placeholder="숫자만 입력(-제외)" v-model="biz_num">
-                    <!-- <button type="button">중복 확인</button> -->
                     <p>*사업자등록번호 10자리를 입력해주세요.</p>
-                    <button type="button">사업자 번호 조회</button>
+                    <button type="button" @click="ListUp()">사업자 번호 조회</button>
                 </div>
 
                 <div class="company_info">
                     <p>상호 또는 법인명(단체명)</p>
                     <input type="text" placeholder="상호 또는 법인명(단체명)">
-                    <input type="text" placeholder="사업자유형">
+                    <input type="text" placeholder="사업자유형" v-model="tax_type">
                     <!-- <select>
                         <option selected disabled>사업자유형</option>
                         <option>비영리단체</option>
@@ -153,6 +152,7 @@ export default {
     data() {
         return {
             biz_num : '',
+            tax_type : ''
         }
     },
     mounted() {
@@ -162,6 +162,32 @@ export default {
         toShopIn2() {
             this.$router.push({ path : '/shopin2' });
         },
+        ListUp() {
+            // const params =  new URLSearchParams({
+            //     serviceKey:'u14R%2BGEwvcJIVOZqPn4ejzEslgsrrHzUiTM48ronDxfzKPBIgVJEatd4VFvVQebke2KntzrSJ1L5iiMuvtSw1w%3D%3D'
+            // })
+
+            // console.log('https://api.odcloud.kr/api/nts-businessman/v1/status?' + params.toString())            
+
+            const jsonData = {
+                b_no:[this.biz_num.toString()]
+            }
+
+            fetch('https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=u14R%2BGEwvcJIVOZqPn4ejzEslgsrrHzUiTM48ronDxfzKPBIgVJEatd4VFvVQebke2KntzrSJ1L5iiMuvtSw1w%3D%3D', {
+                method : 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body : JSON.stringify(jsonData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // console.log(data.data[0].tax_type);
+                this.tax_type = data.data[0].tax_type;
+            })
+        },
+        // 사업자등록증 사진 업로드
         FileUpload() {
             document.getElementById('file').click();
         }
