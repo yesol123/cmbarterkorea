@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <button type="button">가맹점 신청하기</button>
+            <button type="button" @click="toShopIn2()">가맹점 신청하기</button>
         </main>
     </div>
 
@@ -73,6 +73,9 @@ export default {
         toMain() {
             this.$router.push({ path : '/main' });
         },
+        toShopIn2() {
+            this.$router.push({ path : '/shopin2' });
+        }
     }
 }
 </script>
@@ -144,7 +147,7 @@ main > div > div p {
 }
 main button {
     width: 100%; height: 35px;
-    border-radius: 7px;
+    border-radius: 20px;
     border: none;
     color: #fff;
     background-color: #1bce0b;
