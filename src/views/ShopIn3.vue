@@ -213,10 +213,11 @@ main {
 .biz_info > button:nth-of-type(2) {
     width: 100%; height: 35px;
     border-radius: 15px;
-    border: 1px solid #ccc;
-    background-color: #fff;
+    border: none;
+    background-color: #1bce0b;
     font-size: 0.9rem;
-    margin-top: 10px;
+    margin-top: 20px;
+    color: #fff;
 }
 .company_info {
     margin-top: 20px;
@@ -275,7 +276,7 @@ main {
     margin-top: 5px;
 }
 .nextbtn {
-    width: 100%; height: 30px;
+    width: 100%; height: 35px;
     margin-top: 50px;   
     border-radius: 20px;
     background-color: #fff;

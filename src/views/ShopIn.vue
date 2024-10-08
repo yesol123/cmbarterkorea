@@ -147,7 +147,7 @@ main > div > div p {
 }
 main button {
     width: 100%; height: 35px;
-    border-radius: 7px;
+    border-radius: 20px;
     border: none;
     color: #fff;
     background-color: #1bce0b;
