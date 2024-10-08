@@ -18,9 +18,9 @@
                     <p>신청자 정보</p>
                     <div>
                       <p>이름</p>  
-                      <p>씨엠바더</p>  
+                      <p>{{ name }}</p>  
                       <p>휴대폰 번호</p>  
-                      <p>010-1234-5678</p>  
+                      <p>{{ phone }}</p>  
                     </div>
                     <p style="margin-top: 5px;">*신청자 정보와 제출하신 사업자등록증 상의 대표자명이 다를 경우, 가맹점 승인이 제한될 수 있습니다.</p>
                 </div>
@@ -153,21 +153,47 @@
 </template>
 
 <script>
+import { useResponseStore } from '@/store/response.js'
+
 export default {
     data() {
         return {
+            name : '',
+            phone : '',
             biz_num : '',
             tax_type : '',
             postcode : '',
-            address : ''
+            address : '경기 성남시 분당구 불정로 6'
         }
     },
     mounted() {
-
+        // 이름,번호 조회
+        this.GetInfo();
     },
     methods : {
         toShopIn2() {
             this.$router.push({ path : '/shopin2' });
+        },
+        GetInfo() {
+            let store = useResponseStore();
+
+            const formData = new FormData();
+            formData.append('type', 'user_get');
+            formData.append('user_index', store.user_index);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/common/user.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                this.name = data.msg[0].user_name;
+                this.phone = data.msg[0].user_phone;
+            })
+
         },
         // 사업자유형
         ListUp() {
@@ -263,10 +289,22 @@ export default {
                     console.log(data);
                     this.postcode = data.zonecode;
                     this.address = data.roadAddress;
+
+                    // 우편번호로 좌표찾기
+                    var geocoder = new window.kakao.maps.services.Geocoder();
+
+                    var callback = function(result, status) {
+                        if(status === window.kakao.maps.services.Status.OK) {
+                            console.log(result);
+                        }
+                    }
+
+                    geocoder.addressSearch(this.address, callback);
+
                 }
             })
             .open();
-        }
+        },
     }
 }
 </script>
