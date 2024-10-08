@@ -88,9 +88,9 @@
 
                 <div class="address">
                     <p>주소</p>
-                    <input type="number" placeholder="우편번호">
-                    <button type="button">우편번호 검색</button>
-                    <input type="text" placeholder="주소">
+                    <input type="number" placeholder="우편번호" v-model="postcode">
+                    <button type="button" @click="GetPostCode()">우편번호 검색</button>
+                    <input type="text" placeholder="주소" v-model="address">
                     <input type="text" placeholder="상세주소 입력">
                 </div>
 
@@ -157,7 +157,9 @@ export default {
     data() {
         return {
             biz_num : '',
-            tax_type : ''
+            tax_type : '',
+            postcode : '',
+            address : ''
         }
     },
     mounted() {
@@ -249,6 +251,21 @@ export default {
                 };
                 reader.readAsDataURL(file);
             }
+        },
+        // 우편번호찾기
+        GetPostCode() {
+
+            this.postcode = '';
+            this.address = '';
+
+            new window.daum.Postcode({
+                oncomplete : (data) => {
+                    console.log(data);
+                    this.postcode = data.zonecode;
+                    this.address = data.roadAddress;
+                }
+            })
+            .open();
         }
     }
 }
