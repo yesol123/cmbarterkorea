@@ -69,7 +69,8 @@ export default {
             TPO: window.TPO,
             paymoney:'', // 부가세 포함
             user_index:'',
-            user_phone:''
+            user_phone:'',
+            surtax:'', //부가세제외
         }
     },
     computed:{
@@ -204,16 +205,7 @@ export default {
     }
 },
 
-        handlePaymentResult(paymentData) {
-        // 결제 결과에 대한 처리 로직
-        console.log('결제 결과:', paymentData);
 
-        if (paymentData.success) {
-            alert('결제가 성공적으로 완료되었습니다.');
-        } else {
-            alert('결제가 실패했습니다.');
-        }
-    },
         toMain() {
             this.$router.push({ path : '/main' });
         },
@@ -228,8 +220,33 @@ export default {
         this.paymoney = Math.floor(this.add_cm* 0.1 * 1.1) // 충전 수수료 계산 (10%)
         this.surtax = Math.floor(this.add_cm * 0.1); 
         },
+        
+        // async sendChargeData(paymentData){
+        //     const formData = new FormData();
+        //     let store = useResponseStore();
+
+        //     formData.append('type','charge')
+        //     formData.append('user_index', store.user_index); // 유저 인덱스
+        //     formData.append('cash', this.surtax); // 결제 금액 (부가세 제외)
+        //     formData.append('amount', this.add_cm); // 충전된 CM 양
+        //     formData.append('data', JSON.stringify(paymentData)); 
+
+        //     const url = process.env.VUE_APP_API_URL;
+        //     fetch(url + 'api/store/charge.php', {
+        //     method : 'POST',
+        //     body : formData
+        //     })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //     console.log(data);
+        
+        // })
+
+
+        // },
 
         charge() {
+
 
             if (this.isChargeable) {
                 console.log('앵?');
@@ -239,7 +256,7 @@ export default {
 
             if (this.TPO) {
                 this.TPO.pay({
-                    amount: parseInt(this.paymoney), // 충전할 금액
+                    amount: parseInt(1000), // 충전할 금액
                     publicKey: 'pk_1703-f7d8df-4f6-dff5a',
                     products: [{ name: 'cm', desc: 'description' }],
                     trackId: tx,  // 유저 ID 또는 트랜잭션 ID
@@ -257,6 +274,7 @@ export default {
                 console.error('TPO 객체가 없습니다. ThePayOne API가 로드되지 않았습니다.');
             }
             }
+        
           
             
           // ThePayOne 스크립트를 로드
@@ -303,6 +321,46 @@ export default {
             // } else {
             //     console.error('TPO 객체가 없습니다. ThePayOne API가 로드되지 않았습니다.');
             // }
+        },
+
+        // handlePaymentResult(paymentData) {
+        //     console.log('결제 결과:', paymentData);
+
+        //     if (paymentData.success) {
+        //         // 결제 성공 시 서버로 결제 정보 전송
+        //         this.sendChargeData(paymentData);
+        //     } else {
+        //         alert('결제가 실패했습니다.');
+        //     }
+        // },
+
+        async eventFnc(data){
+            let json_data = JSON.stringify(data);
+            console.log(json_data);
+
+            if(data.result.resultCd == "0000"){
+
+            const formData = new FormData();
+            let store = useResponseStore();
+
+            formData.append('type','charge')
+            formData.append('user_index', store.user_index); // 유저 인덱스
+            formData.append('cash', this.surtax); // 결제 금액 (부가세 제외)
+            formData.append('amount', this.add_cm); // 충전된 CM 양
+            formData.append('data', JSON.stringify(data)); 
+
+            const url = process.env.VUE_APP_API_URL;
+            fetch(url + 'api/store/charge.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+            console.log(data);
+        
+        })
+            }
+
         }
     }
 
