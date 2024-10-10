@@ -36,7 +36,7 @@
 
                 <div class="company_info">
                     <p>상호 또는 법인명(단체명)</p>
-                    <input type="text" placeholder="상호 또는 법인명(단체명)">
+                    <input type="text" placeholder="상호 또는 법인명(단체명)" v-model="biz_name">
                     <input type="text" placeholder="사업자유형" v-model="tax_type">
                     <!-- <select>
                         <option selected disabled>사업자유형</option>
@@ -45,7 +45,7 @@
                         <option>간이과세자</option>
                     </select> -->
                     <p style="margin-top: 20px;">사업자등록증 상 대표자명</p>
-                    <input type="text" placeholder="사업자등록증 상 대표자명">
+                    <input type="text" placeholder="사업자등록증 상 대표자명" v-model="biz_ceo">
                 </div>
 
                 <div class="company_img">
@@ -64,26 +64,26 @@
 
                 <div class="shop_info">
                     <p>가게명(간판)</p>
-                    <input type="text" placeholder="고객에게 보이는 가맹점명">
-                    <select>
-                        <option>가맹점유형</option>
-                        <option>슈퍼/마트</option>
-                        <option>레저</option>
-                        <option>미용/뷰티/위생</option>
-                        <option>병원/약국</option>
-                        <option>스포츠/헬스</option>
-                        <option>식품</option>
-                        <option>학원/교육</option>
-                        <option>서비스업</option>
-                        <option>가구/인테리어</option>
-                        <option>디지털/가전</option>
-                        <option>생활/주방용품</option>
-                        <option>음식점/카페</option>
-                        <option>패션잡화</option>
-                        <option>기타 도소매</option>
+                    <input type="text" placeholder="고객에게 보이는 가맹점명" v-model="shop_name">
+                    <select v-model="shop_option">
+                        <option selected disabled>가맹점유형</option>
+                        <option value="슈퍼/마트">슈퍼/마트</option>
+                        <option value="레저">레저</option>
+                        <option value="미용/뷰티/위생">미용/뷰티/위생</option>
+                        <option value="병원/약국">병원/약국</option>
+                        <option value="스포츠/헬스">스포츠/헬스</option>
+                        <option value="식품">식품</option>
+                        <option value="학원/교육">학원/교육</option>
+                        <option value="서비스업">서비스업</option>
+                        <option value="가구/인테리어">가구/인테리어</option>
+                        <option value="디지털/가전">디지털/가전</option>
+                        <option value="생활/주방용품">생활/주방용품</option>
+                        <option value="음식점/카페">음식점/카페</option>
+                        <option value="패션잡화">패션잡화</option>
+                        <option value="기타 도소매">기타 도소매</option>
                     </select>
                     <p style="margin-top: 20px;">가게대표 전화번호</p>
-                    <input type="number" placeholder="숫자만 입력(-제외)">
+                    <input type="number" placeholder="숫자만 입력(-제외)" v-model="shop_tel">
                 </div>
 
                 <div class="address">
@@ -91,12 +91,12 @@
                     <input type="number" placeholder="우편번호" v-model="postcode">
                     <button type="button" @click="GetPostCode()">우편번호 검색</button>
                     <input type="text" placeholder="주소" v-model="address">
-                    <input type="text" placeholder="상세주소 입력">
+                    <input type="text" placeholder="상세주소 입력" v-model="extra_address">
                 </div>
 
                 <div class="web">
                     <p>대표 사이트</p>
-                    <input type="text" placeholder="사이트 주소">
+                    <input type="text" placeholder="사이트 주소" v-model="website">
                 </div>
 
                 <div class="board_img" @click="UploadBoard()">
@@ -126,28 +126,28 @@
 
                 <div class="limit">
                     <p style="margin-bottom: 10px;">한도 선택</p>
-                    <input type="radio" checked><label> 10,000,000 CM 포인트</label><br>
-                    <input type="radio"><label> 8,000,000 CM 포인트</label><br>
-                    <input type="radio"><label> 5,000,000 CM 포인트</label><br>
-                    <input type="radio"><label> 3,000,000 CM 포인트</label><br>
-                    <input type="radio"><label> 2,000,000 CM 포인트</label>
+                    <input type="radio" v-model="limit" value="10,000,000" id="first_limit"><label for="first_limit"> 10,000,000 CM 포인트</label><br>
+                    <input type="radio" v-model="limit" value="8,000,000" id="second_limit"><label for="second_limit"> 8,000,000 CM 포인트</label><br>
+                    <input type="radio" v-model="limit" value="5,000,000" id="third_limit"><label for="third_limit"> 5,000,000 CM 포인트</label><br>
+                    <input type="radio" v-model="limit" value="3,000,000" id="fourth_limit"><label for="fourth_limit"> 3,000,000 CM 포인트</label><br>
+                    <input type="radio" v-model="limit" value="2,000,000" id="fifth_limit"><label for="fifth_limit"> 2,000,000 CM 포인트</label>
                 </div>
 
                 <div class="fee">
                     <p style="margin-bottom: 10px;">가맹비 납부 방식</p>
-                    <input type="radio" checked><label> CM</label>&emsp;
-                    <input type="radio"><label> 현금</label>
+                    <input type="radio" v-model="fee" value="CM" id="cm"><label for="cm"> CM</label>&emsp;
+                    <input type="radio" v-model="fee" value="현금" id="cash"><label for="cash"> 현금</label>
                 </div>
 
                 <div class="incharge">
                     <p style="margin-bottom: 10px;">담당자 여부</p>
-                    <input type="radio"><label> YES</label>&emsp;
-                    <input type="radio" checked><label> NO</label>
+                    <input type="radio" v-model="in_charge" value="YES" id="yes"><label for="yes"> YES</label>&emsp;
+                    <input type="radio" v-model="in_charge" value="NO" id="no"><label for="no"> NO</label>
                 </div>
 
             </div>
 
-            <button type="button" class="nextbtn">가맹점 신청하기</button>
+            <button type="button" class="nextbtn" @click="ShopIn()">가맹점 신청하기</button>
         </main>
     </div>
 </template>
@@ -161,14 +161,29 @@ export default {
             name : '',
             phone : '',
             biz_num : '',
+            biz_name : '',
+            biz_ceo : '',
             tax_type : '',
             postcode : '',
-            address : '경기 성남시 분당구 불정로 6'
+            address : '',
+            extra_address : '',
+            company_img : '',
+            board_img : '',
+            shop_img : '',
+            shop_name : '',
+            shop_option : '가맹점유형',
+            shop_tel : '',
+            website : '',
+            limit : '10,000,000',
+            fee : 'CM',
+            in_charge : 'NO'
         }
     },
     mounted() {
         // 이름,번호 조회
         this.GetInfo();
+
+        console.log(this.limit)
     },
     methods : {
         toShopIn2() {
@@ -195,13 +210,18 @@ export default {
             })
 
         },
-        // 사업자유형
+        // 사업자 번호 조회
         ListUp() {
             // const params =  new URLSearchParams({
             //     serviceKey:'u14R%2BGEwvcJIVOZqPn4ejzEslgsrrHzUiTM48ronDxfzKPBIgVJEatd4VFvVQebke2KntzrSJ1L5iiMuvtSw1w%3D%3D'
             // })
 
             // console.log('https://api.odcloud.kr/api/nts-businessman/v1/status?' + params.toString())            
+
+            if(this.biz_num == '') {
+                alert('사업자등록번호를 입력해주세요.');
+                return false;
+            }
 
             const jsonData = {
                 b_no:[this.biz_num.toString()]
@@ -235,6 +255,7 @@ export default {
         },
         previewCompany(event) {
             const file = event.target.files[0];
+            this.company_img = file;
             const uploadText = document.getElementById('text1');
             const preview = document.getElementById('preview1');
 
@@ -250,6 +271,7 @@ export default {
         },
         previewBoard(event) {
             const file = event.target.files[0];
+            this.board_img = file;
             const uploadText = document.getElementById('text2');
             const preview = document.getElementById('preview2');
 
@@ -265,6 +287,7 @@ export default {
         },
         previewShop(event) {
             const file = event.target.files[0];
+            this.shop_img = file;
             const uploadText = document.getElementById('text3');
             const preview = document.getElementById('preview3');
 
@@ -305,6 +328,70 @@ export default {
             })
             .open();
         },
+        // 가맹점 신청하기
+        ShopIn() {
+            if(this.name == '') {
+                alert('신청자 이름을 입력해주세요.');
+                return false;
+            }
+            if(this.phone == '') {
+                alert('신청자 휴대폰 번호를 입력해주세요.');
+                return false;
+            }
+            if(this.biz_num == '') {
+                alert('사업자등록번호를 입력해주세요.');
+                return false;
+            }
+            if(this.biz_name == '') {
+                alert('상호 또는 법인명을 입력해주세요.');
+                return false;
+            }
+            if(this.biz_ceo == '') {
+                alert('대표자명을 입력해주세요.');
+                return false;
+            }
+            if(this.company_img == '') {
+                alert('사업자등록증 사진을 업로드해주세요.');
+                return false;
+            }
+            if(this.shop_name == '') {
+                alert('가게명을 입력해주세요.');
+                return false;
+            }
+            if(this.shop_option == '가맹점유형') {
+                alert('가맹점유형을 선택해주세요.');
+                return false;
+            }
+            if(this.shop_tel == '') {
+                alert('가게 전화번호를 입력해주세요.');
+                return false;
+            }
+            if(this.postcode == '') {
+                alert('우편번호를 입력해주세요.');
+                return false;
+            }
+            if(this.address == '') {
+                alert('주소를 입력해주세요.');
+                return false;
+            }
+            if(this.extra_address == '') {
+                alert('상세주소를 입력해주세요.');
+                return false;
+            }
+            if(this.website == '') {
+                alert('대표 사이트를 입력해주세요.');
+                return false;
+            }
+            if(this.board_img == '') {
+                alert('가맹점 간판 사진을 업로드해주세요.');
+                return false;
+            }
+            if(this.shop_img == '') {
+                alert('가맹점 매장 사진을 업로드해주세요.');
+                return false;
+            }
+
+        }
     }
 }
 </script>
