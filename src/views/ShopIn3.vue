@@ -67,20 +67,20 @@
                     <input type="text" placeholder="고객에게 보이는 가맹점명" v-model="shop_name">
                     <select v-model="shop_option">
                         <option selected disabled>가맹점유형</option>
-                        <option value="슈퍼/마트">슈퍼/마트</option>
-                        <option value="레저">레저</option>
-                        <option value="미용/뷰티/위생">미용/뷰티/위생</option>
-                        <option value="병원/약국">병원/약국</option>
-                        <option value="스포츠/헬스">스포츠/헬스</option>
-                        <option value="식품">식품</option>
-                        <option value="학원/교육">학원/교육</option>
-                        <option value="서비스업">서비스업</option>
-                        <option value="가구/인테리어">가구/인테리어</option>
-                        <option value="디지털/가전">디지털/가전</option>
-                        <option value="생활/주방용품">생활/주방용품</option>
-                        <option value="음식점/카페">음식점/카페</option>
-                        <option value="패션잡화">패션잡화</option>
-                        <option value="기타 도소매">기타 도소매</option>
+                        <option value="1">슈퍼/마트</option>
+                        <option value="2">레저</option>
+                        <option value="3">미용/뷰티/위생</option>
+                        <option value="4">병원/약국</option>
+                        <option value="5">스포츠/헬스</option>
+                        <option value="6">식품</option>
+                        <option value="7">학원/교육</option>
+                        <option value="8">서비스업</option>
+                        <option value="9">가구/인테리어</option>
+                        <option value="10">디지털/가전</option>
+                        <option value="11">생활/주방용품</option>
+                        <option value="12">음식점/카페</option>
+                        <option value="13">패션잡화</option>
+                        <option value="14">기타 도소매</option>
                     </select>
                     <p style="margin-top: 20px;">가게대표 전화번호</p>
                     <input type="number" placeholder="숫자만 입력(-제외)" v-model="shop_tel">
@@ -126,11 +126,11 @@
 
                 <div class="limit">
                     <p style="margin-bottom: 10px;">한도 선택</p>
-                    <input type="radio" v-model="limit" value="10,000,000" id="first_limit"><label for="first_limit"> 10,000,000 CM 포인트</label><br>
-                    <input type="radio" v-model="limit" value="8,000,000" id="second_limit"><label for="second_limit"> 8,000,000 CM 포인트</label><br>
-                    <input type="radio" v-model="limit" value="5,000,000" id="third_limit"><label for="third_limit"> 5,000,000 CM 포인트</label><br>
-                    <input type="radio" v-model="limit" value="3,000,000" id="fourth_limit"><label for="fourth_limit"> 3,000,000 CM 포인트</label><br>
-                    <input type="radio" v-model="limit" value="2,000,000" id="fifth_limit"><label for="fifth_limit"> 2,000,000 CM 포인트</label>
+                    <input type="radio" v-model="limit" value="10000000" id="first_limit"><label for="first_limit"> 10,000,000 CM 포인트</label><br>
+                    <input type="radio" v-model="limit" value="8000000" id="second_limit"><label for="second_limit"> 8,000,000 CM 포인트</label><br>
+                    <input type="radio" v-model="limit" value="5000000" id="third_limit"><label for="third_limit"> 5,000,000 CM 포인트</label><br>
+                    <input type="radio" v-model="limit" value="3000000" id="fourth_limit"><label for="fourth_limit"> 3,000,000 CM 포인트</label><br>
+                    <input type="radio" v-model="limit" value="2000000" id="fifth_limit"><label for="fifth_limit"> 2,000,000 CM 포인트</label>
                 </div>
 
                 <div class="fee">
@@ -141,8 +141,8 @@
 
                 <div class="incharge">
                     <p style="margin-bottom: 10px;">담당자 여부</p>
-                    <input type="radio" v-model="in_charge" value="YES" id="yes"><label for="yes"> YES</label>&emsp;
-                    <input type="radio" v-model="in_charge" value="NO" id="no"><label for="no"> NO</label>
+                    <input type="radio" v-model="in_charge" value="Y" id="yes"><label for="yes"> YES</label>&emsp;
+                    <input type="radio" v-model="in_charge" value="N" id="no"><label for="no"> NO</label>
                 </div>
 
             </div>
@@ -158,6 +158,8 @@ import { useResponseStore } from '@/store/response.js'
 export default {
     data() {
         return {
+            x : '',
+            y : '',
             name : '',
             phone : '',
             biz_num : '',
@@ -174,16 +176,16 @@ export default {
             shop_option : '가맹점유형',
             shop_tel : '',
             website : '',
-            limit : '10,000,000',
+            limit : '10000000',
             fee : 'CM',
-            in_charge : 'NO'
+            in_charge : 'N'
         }
     },
     mounted() {
         // 이름,번호 조회
         this.GetInfo();
 
-        console.log(this.limit)
+        // console.log(this.limit)
     },
     methods : {
         toShopIn2() {
@@ -288,6 +290,7 @@ export default {
         previewShop(event) {
             const file = event.target.files[0];
             this.shop_img = file;
+            // console.log(this.shop_img);
             const uploadText = document.getElementById('text3');
             const preview = document.getElementById('preview3');
 
@@ -316,9 +319,14 @@ export default {
                     // 우편번호로 좌표찾기
                     var geocoder = new window.kakao.maps.services.Geocoder();
 
-                    var callback = function(result, status) {
+                    var callback = (result, status) => {
                         if(status === window.kakao.maps.services.Status.OK) {
+
                             console.log(result);
+                            console.log(result[0].x);
+                            console.log(result[0].y);
+                            this.x = result[0].x;
+                            this.y = result[0].y;
                         }
                     }
 
@@ -344,6 +352,10 @@ export default {
             }
             if(this.biz_name == '') {
                 alert('상호 또는 법인명을 입력해주세요.');
+                return false;
+            }
+            if(this.tax_type == '국세청에 등록되지 않은 사업자등록번호입니다.') {
+                alert('사업자등록번호를 다시 한번 확인해주세요.');
                 return false;
             }
             if(this.biz_ceo == '') {
@@ -390,6 +402,132 @@ export default {
                 alert('가맹점 매장 사진을 업로드해주세요.');
                 return false;
             }
+
+            // 기존 가입 여부 체크
+            let store = useResponseStore();
+            const formData = new FormData();
+            formData.append('type', 'fran_join_check');
+            formData.append('user_index', store.user_index);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/join/joinform.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+
+                if(data.msg.length == 1) {
+                    alert('이미 가입된 가맹점입니다.');
+                    return false;
+                }
+                if(data.msg.length == 0) {
+                    // 결제창
+                    let tx = store.user_id + Math.floor(+ new Date() / 1000);
+
+                    window.TPO.pay({
+                        amount : parseInt(1000), // 최소금액
+                        publicKey: 'pk_1703-f7d8df-4f6-dff5a',
+                        products: [{ name: 'cm', desc: 'description' }],
+                        trackId: tx,  // 유저 ID 또는 트랜잭션 ID
+                        responseFunction: async () => {
+                            await this.eventFnc();
+                        },  // 응답 받을 함수
+                        // redirectUrl: 'https://your-redirect-url.com',
+                        // webhookUrl: 'https://your-webhook-url.com',
+                        tmnId: "cm0000", // 터미널 키
+                        payerName: this.name,
+                        payerEmail: '',
+                        payerTel: this.phone,
+                        mode: 'layer',   // 레이어 모드로 결제 창 표시
+                        debugMode: 'live' // 실시간 모드
+                    })
+                }
+            })
+
+
+
+            // 결제창
+            // let tx = store.user_id + Math.floor(+ new Date() / 1000);
+
+            // window.TPO.pay({
+            //     amount : parseInt(1000), // 최소금액
+            //     publicKey: 'pk_1703-f7d8df-4f6-dff5a',
+            //     products: [{ name: 'cm', desc: 'description' }],
+            //     trackId: tx,  // 유저 ID 또는 트랜잭션 ID
+            //     responseFunction: async () => {
+            //         await this.eventFnc();
+            //     },  // 응답 받을 함수
+            //     // redirectUrl: 'https://your-redirect-url.com',
+            //     // webhookUrl: 'https://your-webhook-url.com',
+            //     tmnId: "cm0000", // 터미널 키
+            //     payerName: this.name,
+            //     payerEmail: '',
+            //     payerTel: this.phone,
+            //     mode: 'layer',   // 레이어 모드로 결제 창 표시
+            //     debugMode: 'live' // 실시간 모드
+            // })
+
+        },
+        // 가맹정 가입
+        eventFnc(data) {
+            let json_data = JSON.stringify(data);
+            console.log(json_data);
+
+            let store = useResponseStore();
+            let tx = store.user_id + Math.floor(+ new Date() / 1000);
+
+            // let json_data = JSON.stringify(data);
+
+            // if(json_data.result.resultCd == '0000') {
+
+                const formData = new FormData();
+                formData.append('type', 'fran_join');
+                formData.append('user_index', store.user_index);
+                formData.append('manager_radio', this.in_charge);  // 담당자여부
+                formData.append('business_number', this.biz_num); // 사업자등록번호
+                formData.append('tax_type', this.tax_type); // 과세유형
+                formData.append('business_name', this.biz_name);
+                formData.append('ceo', this.biz_ceo);
+                formData.append('franchise_name', this.shop_name);
+                formData.append('franchise_type', this.shop_option);
+                formData.append('franchise_number', this.shop_tel);
+                formData.append('link', this.website);
+                formData.append('zip_code', this.postcode);
+                formData.append('post', this.address);
+                formData.append('post_detail', this.extra_address);
+                formData.append('pos1', this.y); // 위도
+                formData.append('pos2', this.x); // 경도
+                formData.append('limit_type', this.limit);
+                formData.set('file', this.company_img);
+                formData.set('file2', this.board_img);
+                formData.set('file3', this.shop_img);
+                formData.append('trxId', tx);
+                formData.append('fee_radio', this.fee);
+                formData.append('limit_value', 1000);
+                formData.append('user_id', store.user_id);
+
+                
+                const url = process.env.VUE_APP_API_URL;
+
+                fetch(url + 'api/join/joinform.php', {
+                method : 'POST',
+                body : formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('가맹점가입여부');
+                    console.log(data);
+
+                    for (let key of formData.keys()) {
+                        console.log(key, ":", formData.get(key));
+                    }
+
+                })
+
+            // }
 
         }
     }
