@@ -18,7 +18,7 @@
         <p class="title">충전 할 CM</p>
         <div class="cm_charging">
             <input id="user_search" name="user_search" v-model="add_cm" @input="calculate" value="" type="number" class="send input_design" placeholder="금액을 입력하세요.">
-            <p class="red">* 최소 충전 금액은 10,000 CM 입니다.</p>
+            <p class="red">* 최소 충전 금액은 100,000 CM 입니다.</p>
         </div>
 
         <!-- 충전후CM -->
@@ -29,15 +29,19 @@
             <p>{{this.all_cm}}<span>CM</span></p>
         </div>
         <!-- 충전수수료 -->
-        <p class="title">충전 수수료</p>
+        <div class="charge_money">
+            <p class="title">충전 수수료</p>
         <div class="cm_fee">
             <div>
-                <p>0원</p>
+                <p>{{formattedPayMoney}}원 <small class="red">(부가세 포함)</small></p>
                 <p class="red">* 충전 수수료는 충전 CM의 10% 입니다.</p>
             </div>
         </div>
         
-        <button type="button" class="charge_btn" @click="charge()">충전하기</button>
+        </div>
+    
+        <button type="button"  :class="['charge_btn', buttonClass]" @change="charge"
+        :disabled="!isChargeable" @click="charge()">충전하기</button>
             
          </section>
       
@@ -62,23 +66,42 @@ export default {
             user_cm:'', // 보유 CM
             add_cm:'',//충전할 CM
             all_cm:'',//충전 후 CM
-            TPO: window.TPO
+            TPO: window.TPO,
+            paymoney:'', // 부가세 포함
+            user_index:'',
+            user_phone:''
         }
+    },
+    computed:{
+        formattedPayMoney() {
+        // paymoney를 3자리마다 콤마로 포맷팅
+
+        return this.paymoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        },
+        isChargeable() {
+      // add_cm 값이 100,000 이상일 때 true
+      return this.add_cm >= 100000;
+    },
+    buttonClass() {
+      // 충전 가능한 상태일 때 버튼 클래스 설정
+      return this.isChargeable ? 'charge_btn_enabled' : 'charge_btn_disabled';
+    }
     },
     mounted() {
        // var tag = document.createElement('script');
        // tag.src = "https://api.thepayone.com/js/clientside.js";
         
         let store = useResponseStore();
-         const formData = new FormData();
+         const formData1 = new FormData();
 
-         formData.append('type', 'authentication');
-         formData.append('user_id', store.user_id);
-
+         formData1.append('type', 'authentication');
+         formData1.append('user_id', store.user_id);
+         
          const url = process.env.VUE_APP_API_URL;
+
             fetch(url + 'api/common/main.php', {
             method : 'POST',
-            body : formData
+            body : formData1
             })
             .then(response => response.json())
             .then(data => {
@@ -90,6 +113,29 @@ export default {
                this.user_cmp = toJson.user_cmp.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
             })
 
+            this.fetchUserData()
+
+   
+
+        //  const formData2 = new FormData();
+
+        //  formData2.append('type','user_get');
+        //  formData2.append('user_index',store.user_index);
+
+        // fetch(url+'api/common/user.php',{
+        //     method:'POST',
+        //     body:formData2
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     console.log('fdd',data.msg[0].user_name);
+        //     console.log('dfawefawef',data.msg[0].user_phone);
+            
+        //     this.user_index = data.msg[0].user_name
+        //     this.user_phone = data.msg[0].user_phone
+        // })
+         
+            
 
     // ThePayOne에서 전달받는 메시지를 처리하기 위해 message 이벤트 리스너를 추가
     window.addEventListener('message', (e) => {
@@ -131,6 +177,33 @@ export default {
 
     methods : {
 
+    async fetchUserData() {
+    const formData2 = new FormData();
+    formData2.append('type', 'user_get');
+    let store = useResponseStore();
+    formData2.append('user_index', store.user_index);
+
+    const url = process.env.VUE_APP_API_URL;
+
+    try {
+        let response = await fetch(url + 'api/common/user.php', {
+            method: 'POST',
+            body: formData2
+        });
+
+        let data = await response.json();
+
+        console.log('fdd', data.msg[0].user_name);
+        console.log('dfawefawef', data.msg[0].user_phone);
+
+        this.user_index = data.msg[0].user_name;
+        this.user_phone = data.msg[0].user_phone;
+
+    } catch (error) {
+        console.error('데이터를 가져오는 중 오류 발생:', error);
+    }
+},
+
         handlePaymentResult(paymentData) {
         // 결제 결과에 대한 처리 로직
         console.log('결제 결과:', paymentData);
@@ -150,31 +223,41 @@ export default {
         const userCM = parseInt(this.user_cm.replace(/,/g, '')); // 문자열에서 콤마 제거 후 숫자로 변환
         // const sendCM = parseInt(this.send_cm) || 0; // 보내는 CM도 숫자로 변환
 
+
         this.all_cm = (userCM+this.add_cm).toLocaleString();
+        this.paymoney = Math.floor(this.add_cm* 0.1 * 1.1) // 충전 수수료 계산 (10%)
+        this.surtax = Math.floor(this.add_cm * 0.1); 
         },
 
         charge() {
-            console.log('앵?');
+
+            if (this.isChargeable) {
+                console.log('앵?');
+            //timestampSecond = Math.floor(+ new Date() / 1000);
+            let store = useResponseStore();
+            let tx = store.user_id + Math.floor(+ new Date() / 1000);
 
             if (this.TPO) {
                 this.TPO.pay({
-                    amount: parseInt(this.add_cm), // 충전할 금액
+                    amount: parseInt(this.paymoney), // 충전할 금액
                     publicKey: 'pk_1703-f7d8df-4f6-dff5a',
-                    products: [{ name: 'CM 충전', desc: 'CM 충전 상품 설명' }],
-                    trackId: 'tx123',  // 유저 ID 또는 트랜잭션 ID
+                    products: [{ name: 'cm', desc: 'description' }],
+                    trackId: tx,  // 유저 ID 또는 트랜잭션 ID
                     responseFunction: this.eventFnc,  // 응답 받을 함수
                     redirectUrl: 'https://your-redirect-url.com',
                     webhookUrl: 'https://your-webhook-url.com',
                     tmnId: "cm0000", // 터미널 키
-                    payerName: '',
+                    payerName: this.user_index,
                     payerEmail: '',
-                    payerTel: '',
+                    payerTel: this.user_phone,
                     mode: 'layer',   // 레이어 모드로 결제 창 표시
                     debugMode: 'live' // 실시간 모드
                 });
             } else {
                 console.error('TPO 객체가 없습니다. ThePayOne API가 로드되지 않았습니다.');
             }
+            }
+          
             
           // ThePayOne 스크립트를 로드
           //this.$loadScript('https://api.thepayone.com/js/clientside.js')
@@ -331,14 +414,31 @@ export default {
     width: 100%;
     text-align: end;
 }
+
+.charge_money{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
 .charge_btn {
     position: fixed;
     bottom: 60px; left: 50%;
     transform: translateX(-50%);
     width: 95%; height: 40px;
-    background-color: #1bce0b;
-    border: none;
-    color: #fff;
+    background-color: transparent;
+    color: #b1b1b1;
+    /* background-color: #1bce0b; */
+    border: 1px solid #b1b1b1;
     border-radius: 10px;
+}
+
+
+.charge_btn_enabled {
+  background-color: #1bce0b;
+  color: white;
+  border: 1px solid #1bce0b;
+  cursor: pointer;
 }
 </style>
