@@ -123,6 +123,11 @@ const router = createRouter({
             name: "ShopIn3",      
             component: () => import("@/views/ShopIn3.vue"),    
         },
+        {      
+            path: "/complete",      
+            name: "ShopInComplete",      
+            component: () => import("@/views/ShopInComplete.vue"),    
+        },
         // {      
         //     path: "/shopin4",      
         //     name: "ShopIn4",      

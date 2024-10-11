@@ -154,6 +154,7 @@
 
 <script>
 import { useResponseStore } from '@/store/response.js'
+// import router from '@/router/index.js';
 
 export default {
     data() {
@@ -446,30 +447,6 @@ export default {
                     })
                 }
             })
-
-
-
-            // 결제창
-            // let tx = store.user_id + Math.floor(+ new Date() / 1000);
-
-            // window.TPO.pay({
-            //     amount : parseInt(1000), // 최소금액
-            //     publicKey: 'pk_1703-f7d8df-4f6-dff5a',
-            //     products: [{ name: 'cm', desc: 'description' }],
-            //     trackId: tx,  // 유저 ID 또는 트랜잭션 ID
-            //     responseFunction: async () => {
-            //         await this.eventFnc();
-            //     },  // 응답 받을 함수
-            //     // redirectUrl: 'https://your-redirect-url.com',
-            //     // webhookUrl: 'https://your-webhook-url.com',
-            //     tmnId: "cm0000", // 터미널 키
-            //     payerName: this.name,
-            //     payerEmail: '',
-            //     payerTel: this.phone,
-            //     mode: 'layer',   // 레이어 모드로 결제 창 표시
-            //     debugMode: 'live' // 실시간 모드
-            // })
-
         },
         // 가맹정 가입
         eventFnc(data) {
@@ -489,24 +466,24 @@ export default {
                 formData.append('manager_radio', this.in_charge);  // 담당자여부
                 formData.append('business_number', this.biz_num); // 사업자등록번호
                 formData.append('tax_type', this.tax_type); // 과세유형
-                formData.append('business_name', this.biz_name);
-                formData.append('ceo', this.biz_ceo);
-                formData.append('franchise_name', this.shop_name);
-                formData.append('franchise_type', this.shop_option);
-                formData.append('franchise_number', this.shop_tel);
-                formData.append('link', this.website);
-                formData.append('zip_code', this.postcode);
-                formData.append('post', this.address);
-                formData.append('post_detail', this.extra_address);
+                formData.append('business_name', this.biz_name); // 법인명
+                formData.append('ceo', this.biz_ceo); // 대표자명
+                formData.append('franchise_name', this.shop_name); // 가게명
+                formData.append('franchise_type', this.shop_option); // 가맹점유형
+                formData.append('franchise_number', this.shop_tel); // 가게 전화번호
+                formData.append('link', this.website); // 가게 대표 웹사이트
+                formData.append('zip_code', this.postcode); // 우편번호
+                formData.append('post', this.address); // 주소
+                formData.append('post_detail', this.extra_address); // 상세주소
                 formData.append('pos1', this.y); // 위도
                 formData.append('pos2', this.x); // 경도
-                formData.append('limit_type', this.limit);
-                formData.set('file', this.company_img);
-                formData.set('file2', this.board_img);
-                formData.set('file3', this.shop_img);
-                formData.append('trxId', tx);
-                formData.append('fee_radio', this.fee);
-                formData.append('limit_value', 1000);
+                formData.append('limit_type', this.limit); // CM한도
+                formData.set('file', this.company_img); // 사업자등록증 사진
+                formData.set('file2', this.board_img); // 가게간판 사진
+                formData.set('file3', this.shop_img); // 가게정면 사진
+                formData.append('trxId', tx); // 거래명
+                formData.append('fee_radio', this.fee); // 가맹비 납부 방식
+                formData.append('limit_value', 1000); // 실제결제금액
                 formData.append('user_id', store.user_id);
 
                 
@@ -524,6 +501,10 @@ export default {
                     for (let key of formData.keys()) {
                         console.log(key, ":", formData.get(key));
                     }
+
+                    // if(data.code == 200) {
+                    //     router.push({ path : '/complete' });
+                    // }
 
                 })
 
