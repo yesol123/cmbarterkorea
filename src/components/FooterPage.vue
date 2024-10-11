@@ -37,7 +37,7 @@
       <div class="btn_group">
         <img src="@/assets/home.png">
         <img @click="goGift()" src="@/assets/gift.png">
-        <img  src="@/assets/search.png">
+        <img @click="FindShop()"  src="@/assets/search.png">
         <img @click="goMypage()" src="@/assets/my.png">
       </div>
   </div>
@@ -66,6 +66,9 @@ export default {
      },
      goGift(){
       router.push('/gift/'+this.member)
+     },
+     FindShop() {
+      this.$router.push({ path : '/findshop' });
      }
     // test
     // to() {
