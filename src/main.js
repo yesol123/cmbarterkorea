@@ -13,6 +13,8 @@ import LoadScript from 'vue-plugin-load-script';
 
 //eventBus
 export const eventBus = mitt()
+//timepicker
+import Antd from 'ant-design-vue';
 
 import DataTable from 'datatables.net-vue3';
 import DataTablesCore from 'datatables.net-dt';
@@ -63,6 +65,6 @@ app.component('Dialog', Dialog);
 app.component('InputText', InputText);
 app.use(VueSweetalert2);
 app.mount('#app');
-
+app.use(Antd);
 
 app.provide('api_pw','cmb1018!');

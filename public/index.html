@@ -1,51 +1,62 @@
 <!DOCTYPE html>
-<html lang=""> 
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <!-- <link rel="icon" href="<%= BASE_URL %>favicon.ico"> -->
-    <title><%= htmlWebpackPlugin.options.title %></title>
-    <!-- 더페이원 -->
-    
-    <script defer="defer" type="text/javascript" src="https://api.thepayone.com/js/clientside.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- <script defer="defer" type="text/javascript" src="https://api.thepayone.com/js/clientside.js"></script> -->
-    
+<html lang="">
 
-    <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-*{
-   font-family: "Noto Sans KR", sans-serif;
-}
-      body {
-        margin: 0; padding: 0;
-        box-sizing: border-box;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <!-- <link rel="icon" href="<%= BASE_URL %>favicon.ico"> -->
+  <title>
+    <%= htmlWebpackPlugin.options.title %>
+  </title>
+  <!-- 더페이원 -->
+  <script defer="defer" type="text/javascript" src="https://api.thepayone.com/js/clientside.js"></script>
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- <script defer="defer" type="text/javascript" src="https://api.thepayone.com/js/clientside.js"></script> -->
 
-    <!-- 다날 휴대폰 본인인증 -->
-    <script defer="defer" type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 
-    <!-- QR -->
-    <script defer="defer" type="text/javascript" src="https://unpkg.com/@zxing/browser@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Sixtyfour+Convergence&display=swap');
 
-    <!-- 사업자등록번호 -->
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    * {
+      /* font-family: "Sixtyfour Convergence", sans-serif; */
+      font-family: "Noto Sans KR", sans-serif;
+    }
 
-    <!-- 룰렛 -->
-    <script src="https://cdn.jsdelivr.net/npm/winwheel@2.7.0/Winwheel.min.js"></script>
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
 
-    <!-- 우편번호찾기 -->
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<body>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
 
-     <!-- 카카오지도 -->
-     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8d59f29af383017905f070a4e3c61545&libraries=services"></script>
-  </body>
+  <!-- 다날 휴대폰 본인인증 -->
+  <script defer="defer" type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
+  <!-- QR -->
+  <script defer="defer" type="text/javascript" src="https://unpkg.com/@zxing/browser@latest"></script>
+
+  <!-- 사업자등록번호 -->
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+  <!-- 룰렛 -->
+  <script src="https://cdn.jsdelivr.net/npm/winwheel@2.7.0/Winwheel.min.js"></script>
+
+  <!-- 우편번호찾기 -->
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+  <!-- 카카오지도 -->
+  <script type="text/javascript"
+    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8d59f29af383017905f070a4e3c61545&libraries=services"></script>
+</body>
+
 </html>
