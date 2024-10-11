@@ -54,6 +54,9 @@
 </template>
 
 <script>
+import { useResponseStore } from '@/store/response.js'
+import router from '@/router/index.js';
+
 export default {
     data() {
         return {
@@ -85,7 +88,32 @@ export default {
                 alert('필수항목을 체크해주세요.');
                 return false;
             } else {
-                this.$router.push({ path : '/shopin3' });
+
+                // 기존 가입 여부 체크
+                let store = useResponseStore();
+                const formData = new FormData();
+                formData.append('type', 'fran_join_check');
+                formData.append('user_index', store.user_index);
+
+                const url = process.env.VUE_APP_API_URL;
+
+                fetch(url + 'api/join/joinform.php', {
+                method : 'POST',
+                body : formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    
+                    if(data.msg.length == 1) {
+                        alert('이미 가입된 가맹점입니다.');
+                        return false;
+                    }
+                    if(data.msg.length == 0) {
+                        router.push({ path : '/shopin3' });
+                    }
+
+                })
             }
         },
         ServiceAgreement() {
