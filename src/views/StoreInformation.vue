@@ -18,14 +18,14 @@
     </ul>
 
     <div>
-      <p>영업정보</p>
+      <p class="title">영업정보</p>
     </div>
 
     <article>
       <div class="business_hours">
         <div class="flex_between">
 
-          <p class="holiday_txt m_B20">영업 시간</p>
+          <p class="title holiday_txt m_B20">영업 시간</p>
         </div>
         <div class="flex_between">
           <div class="hours_box">
@@ -47,7 +47,7 @@
         </div>
 
         <div class="flex_between">
-          <p class="holiday_txt m_B20">휴게 시간</p>
+          <p class="title holiday_txt m_B20">휴게 시간</p>
           <!-- <p class="hour_switch m_B20">
               <input type="checkbox" id="rest_time1" class="hour_switch_check">
               <label class="switch_label"> <span class="onf_btn"></span></label>
@@ -136,7 +136,7 @@
       <div class="business_hours">
         <div class="flex_between">
 
-          <p class="holiday_txt m_B20">영업 시간</p>
+          <p class="title holiday_txt m_B20">영업 시간</p>
         </div>
         <div class="flex_between">
           <div class="hours_box">
@@ -158,7 +158,7 @@
         </div>
 
         <div class="flex_between">
-          <p class="holiday_txt m_B20">휴게 시간</p>
+          <p class="title holiday_txt m_B20">휴게 시간</p>
           <!-- <p class="hour_switch m_B20">
               <input type="checkbox" id="rest_time1" class="hour_switch_check">
               <label class="switch_label"> <span class="onf_btn"></span></label>
@@ -185,7 +185,7 @@
           <!-- input radio -->
           <li>
             <label class="join_obj">
-              <input type="radio" name="sunday" onclick="deselect()">
+              <input type="radio" name="sunday"  v-model="selectedDays.friday">
               <span>
                 일
               </span>
@@ -244,24 +244,24 @@
     </article>
 
     <div class="flex_between">
-      <p>공휴일 / 국경일 휴무</p>
+      <p class="title">공휴일 / 국경일 휴무</p>
       <label class="join_obj">
         <input type="checkbox" name="saturday" onclick="deselect()">
       </label>
     </div>
 
     <div>
-      <p>정기휴무</p>
+      <p class="title">정기휴무</p>
       <div class="regular_holiday">
         <label class="for_select" for="selectWeek">
-          <select name="" id="selectWeek">
+          <select name="" id="selectWeek" class="select">
             <option value="주기" selected>주기</option>
             <option value="매주">매주</option>
             <option value="격주">격주</option>
           </select>
         </label>
         <label class="for_select" for="selectDay">
-          <select name="" id="selectDay">
+          <select name="" id="selectDay" class="select">
             <option value="요일" selected>요일</option>
             <option value="일">일요일</option>
             <option value="월">월요일</option>
@@ -276,14 +276,14 @@
     </div>
 
     <div>
-      <p>임시휴무</p>
+      <p class="title">임시휴무</p>
       <div class="temporary_Closure">
         <a-config-provider :locale="locale">
         <a-space direction="vertical" size="12">
           <a-range-picker :presets="rangePresets" @change="onRangeChange" />
         </a-space>
       </a-config-provider>
-        <input type="text" name="" id="" placeholder="코멘트를 입력하세요">
+        <input class="coments" type="text" name="" id="" placeholder="코멘트를 입력하세요">
       </div>
     </div>
 
@@ -317,7 +317,16 @@ export default {
       restEndTime: dayjs('00:00', 'HH:mm'), // 휴게 종료 시간
       format: 'HH:mm',
       locale: koKR,
-      showTimeError: false // 오류 메시지 표시 여부
+      showTimeError: false, // 오류 메시지 표시 여부
+      selectedDays: {
+        sunday: false,
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false,
+        saturday: false,
+      },
     };
   },
   methods: {
@@ -465,12 +474,16 @@ a {
   border-bottom: 3px solid #1749c2;
 }
 
-input[type="time"]::-webkit-calendar-picker-indicator,
-input[type="time"]::-webkit-inner-spin-button {
-  display: none;
-  appearance: none;
+.title{
+  font-weight: bold;
 }
 
+.coments,.select{
+  padding: 8px;
+  border: 1px solid #b1b1b1;
+  border-radius: 5px;
+
+}
 
 .business_hours {
   display: flex;
@@ -546,7 +559,7 @@ select {
 
 .join_state {
   display: flex;
-  gap: 50px;
+  gap: 10px;
   justify-content: center;
   width: 100%;
 }
@@ -557,14 +570,14 @@ select {
   justify-content: center;
   width: 40px;
   height: 40px;
-  border: 1px solid #1749c2;
+  border: 1px solid #b1b1b1;
   /* 테두리 색상 */
   border-radius: 50%;
   /* 동그란 원 */
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-size: 16px;
-
+  color: #b1b1b1;
   text-align: center;
   user-select: none;
   /* 텍스트 선택 불가능 */
