@@ -46,15 +46,15 @@
         </div>
         <div class="icons">
             <div class="icon" v-if="this.member != '2'" @click="toEvent()">
-                <img src="@/assets/gift.png">
+                <img src="@/assets/coupon_icon.png">
                 <p>쿠폰이벤트</p>
             </div>
             <div class="icon" v-if="this.member != '2'">
-                <img src="@/assets/gift.png">
+                <img src="@/assets/roulette_icon.png">
                 <p>CM라이프</p>
             </div>
             <div class="icon" v-if="this.member == '3'" @click="toCMCharge()"> 
-                <img src="@/assets/gift.png">
+                <img src="@/assets/charge_icon.png">
                 <p>CM충전</p>
             </div>
             <div class="icon" v-if="this.member == '1'" @click="toShopIn()">
@@ -74,23 +74,23 @@
                 <p>산하 가맹점</p>
             </div>
             <div class="icon" @click="goHomePage()">
-                <img src="@/assets/gift.png">
+                <img src="@/assets/homepage_icon.png">
                 <p >홈페이지</p>
             </div>
-            <div class="icon" v-if="this.member == '3'">
-                <img src="@/assets/gift.png">
+            <div class="icon" v-if="this.member == '3'" @click="gomangestore()">
+                <img src="@/assets/store_icon.png">
                 <p>매장관리</p>
             </div>
             <div class="icon" v-if="this.member == '3'"  @click="gocustomer()">
-                <img src="@/assets/gift.png">
+                <img src="@/assets/management_icon.png">
                 <p>고객관리</p>
             </div>
             <div class="icon">
-                <img src="@/assets/gift.png">
+                <img src="@/assets/kakao_icon.png">
                 <p>카톡상담</p>
             </div>
             <div class="icon">
-                <img src="@/assets/gift.png">
+                <img src="@/assets/shoppingmall_icon.png">
                 <p>쇼핑몰</p>
             </div>
         </div>
@@ -279,6 +279,13 @@ export default {
         },
         toShopIn() {
             this.$router.push({ path : '/shopin' });
+        },
+        gomangestore(){
+            this.$router.push({path:'/storeInformation'})
+        },
+        gomanagecustomer(){
+            this.$router.push({path:'/couponbox'})
+
         },
         // 로그아웃
         logout() {

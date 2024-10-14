@@ -185,7 +185,7 @@
           <!-- input radio -->
           <li>
             <label class="join_obj">
-              <input type="radio" name="sunday"  v-model="selectedDays.friday">
+              <input type="radio" name="sunday" >
               <span>
                 일
               </span>
@@ -283,7 +283,7 @@
           <a-range-picker :presets="rangePresets" @change="onRangeChange" />
         </a-space>
       </a-config-provider>
-        <input class="coments" type="text" name="" id="" placeholder="코멘트를 입력하세요">
+        <input class="coments" type="text" name="" id="" v-model="coments" placeholder="코멘트를 입력하세요">
       </div>
     </div>
 
