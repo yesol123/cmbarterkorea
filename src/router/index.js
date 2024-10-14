@@ -128,6 +128,11 @@ const router = createRouter({
             name: "ShopInComplete",      
             component: () => import("@/views/ShopInComplete.vue"),    
         },
+        {      
+            path: "/findshop",      
+            name: "FindShop",      
+            component: () => import("@/views/FindShop.vue"),    
+        },
         // {      
         //     path: "/shopin4",      
         //     name: "ShopIn4",      

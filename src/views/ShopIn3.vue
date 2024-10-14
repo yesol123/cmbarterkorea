@@ -154,7 +154,7 @@
 
 <script>
 import { useResponseStore } from '@/store/response.js'
-// import router from '@/router/index.js';
+import router from '@/router/index.js';
 
 export default {
     data() {
@@ -502,9 +502,9 @@ export default {
                         console.log(key, ":", formData.get(key));
                     }
 
-                    // if(data.code == 200) {
-                    //     router.push({ path : '/complete' });
-                    // }
+                    if(data.code == 200) {
+                        router.push({ path : '/complete' });
+                    }
 
                 })
 
