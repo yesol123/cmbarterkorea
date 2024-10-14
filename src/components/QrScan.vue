@@ -1,24 +1,31 @@
 <template>
-   <div class="qrscanwrap" style="text-align: center; margin-top: 30%;">
-        <!-- <div class="qr_scan_txt" style="font-size: 1.0rem; font-weight: bold; margin-bottom: 40px;">
-            <p>QR 스캔</p>
-        </div> -->
-        <div class="contents_qr_scan" style="width: 90%; height: 400px; margin: 0 auto; border: 2px solid #000;">
-            <div class="scan_box" style="width: 100%; height: 100%;">
-                <video id="video" class="" width="100%" height="100%" style="object-fit:cover; background-color: #6e6b6b;"></video>
+    <div class="wrap">
+        <header>
+            <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/go_back_btn.png"></button>
+            <p>결제</p>
+        </header>
+
+        <div class="qrscanwrap" style="text-align: center; margin-top: 30%;">
+            <!-- <div class="qr_scan_txt" style="font-size: 1.0rem; font-weight: bold; margin-bottom: 40px;">
+                <p>QR 스캔</p>
+            </div> -->
+            <div class="contents_qr_scan" style="width: 90%; height: 400px; margin: 0 auto; border: 2px solid #000;">
+                <div class="scan_box" style="width: 100%; height: 100%;">
+                    <video id="video" class="" width="100%" height="100%" style="object-fit:cover; background-color: #6e6b6b;"></video>
+                </div>
             </div>
+            <div>
+                <input type="number" placeholder="QR 6자리 코드를 적어주세요." v-model="confirm">
+                <button type="button" class="confirm" @click="payment()">확인</button>
+            </div>
+            <!-- <div class="qr_number">
+                <form name="qrSendForm" id="qrSendForm">
+                    <input type="hidden" name="fran" id="fran" value="5">
+                    <input type="hidden" name="hash" id="hash" value="">
+                    <input type="text" name="num2" id="num2" placeholder="123456" maxlength="6" onkeyup="this.value=this.value.replace(/[^-0-9]/g,'');" inputmode="decimal"/>
+                </form>
+            </div> -->
         </div>
-        <div>
-            <input type="number" placeholder="QR 6자리 코드를 적어주세요." v-model="confirm">
-            <button type="button" class="confirm" @click="payment()">확인</button>
-        </div>
-        <!-- <div class="qr_number">
-            <form name="qrSendForm" id="qrSendForm">
-                <input type="hidden" name="fran" id="fran" value="5">
-                <input type="hidden" name="hash" id="hash" value="">
-                <input type="text" name="num2" id="num2" placeholder="123456" maxlength="6" onkeyup="this.value=this.value.replace(/[^-0-9]/g,'');" inputmode="decimal"/>
-            </form>
-        </div> -->
     </div>
 
     <!-- 결제확인창 -->
@@ -253,12 +260,54 @@ export default {
                     }
                 })
             }
+        },
+        toMain() {
+            this.$router.push({ path : '/main' });
         }
     }
 }
 </script>
 
 <style scoped>
+* {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-size: 1rem;
+    color: hsl(0, 0%, 0%);
+}
+.wrap {
+    position: relative;
+    width: 100%;
+    background-color: #fff;
+    /* border: 1px solid red; */
+    margin-bottom: 70px;
+}
+header {
+    position: fixed;
+    top: 0; left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; height: 40px;
+    padding: 0 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+header > p {
+    line-height: 40px;
+    color: blue;
+    /* border: 1px solid red; */
+    margin: 0 auto;
+}
+.goback_btn {
+    width: 30px; height: 30px;
+    background-color: #fff;
+    border: 1px solid #fff;
+}
+.goback_btn img {
+    width: 100%; height: 100%;
+}
 .popup {
     display: none;
     position: fixed;
