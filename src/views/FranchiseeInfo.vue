@@ -116,19 +116,14 @@ export default{
 </script>
 <style scoped>
 
-
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-
-
 *ul,li,input{
-    font-family: "Noto Sans KR", sans-serif;
     list-style: none;
     text-decoration: none;
 }
 
 
 ul{
-    margin: 100px auto 0;
+    margin: 60px auto 0;
     display: flex; 
     flex-direction: column;
     padding: 0;
@@ -199,6 +194,12 @@ ul > li > label {
     text-indent: 16px;
     margin-top: 10px;
 }
+.btn_basic{
+    display: flex;
+    margin-top: 10px;
+    justify-content: center
+
+}
 
 .btn_basic button {
     width: 95%;
@@ -209,7 +210,6 @@ ul > li > label {
     background-color: #1749C2;;
     color: white;
     font-size: 16px;
-    position: fixed;
     bottom: 10px;
     cursor: pointer; 
     font-family: "Noto Sans KR", sans-serif;

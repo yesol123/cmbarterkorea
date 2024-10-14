@@ -288,7 +288,7 @@
     </div>
 
 
-    <button class="save_btn">저장</button>
+    <button class="save_btn" @click="saveData()">저장</button>
 
   </section>
 </template>
@@ -297,7 +297,7 @@
 import { message } from 'ant-design-vue'
 import dayjs from 'dayjs';
 import koKR from 'ant-design-vue/es/locale/ko_KR';
-//import 'ant-design-vue/dist/antd.css';
+import { useResponseStore } from '@/store/response.js'
 
 export default {
   name: 'storeInformation',
@@ -368,16 +368,51 @@ export default {
       }
       return disabledHours;
     },
+    saveData(){
+      let store = useResponseStore();
+      
+      const formData = new FormData();
+      
+      formData.append('type', 'store_update3');
+      formData.append('user_id', store.user_id);
+      formData.append('work_start_time1',); //시작시간
+      formData.append('work_end_time1',); //끝나는 시간
+      formData.append('rest_start_time1',); // 휴게시간 시작
+      formData.append('rest_end_time1',); //휴게시간 끝
+      formData.append('day1',); //날짜 선택 
+      formData.append('work_start_time2',); //시작시간
+      formData.append('work_end_time2',); //끝나는 시간
+      formData.append('rest_start_time2',); // 휴게시간 시작
+      formData.append('rest_end_time2',); //휴게시간 끝
+      formData.append('day2',); //날짜 선택
+      formData.append('holi',); //공휴일 유무
+      formData.append('reg_type',); //정기휴무 주기
+      formData.append('reg_day',); //정기휴무 요일
+      formData.append('datetimes',)// 임시휴무 날짜지정
+      formData.append('holiday_txt',)// 임시휴무 코멘트
+
+      const url = process.env.VUE_APP_API_URL;
+
+      fetch(url + 'api/store/store_update.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+               console.log('data',data);
+               
+            })
+
+
+
+
+
+    }
 
   }
 }
 </script>
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-
-* {
-  font-family: "Noto Sans KR", sans-serif;
-}
 
 ul,
 a {
@@ -449,7 +484,7 @@ a {
 
 
 .store_info_area>ul:nth-child(1) {
-  margin-top: 100px;
+  margin-top: 60px;
   display: flex;
   justify-content: center;
   padding: 0;
@@ -628,5 +663,14 @@ select {
   background-color: #1749c2;
   color: white;
 }
+
+
+@media (max-width: 360px) {
+  .join_state {
+  gap: 5px;
+  }
+
+}
+
 
 </style>
