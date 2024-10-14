@@ -12,15 +12,14 @@
             </div>
 
             <div class="option">
-                <select @change="GetCity()">
+                <select @change="GetCity($event.target.value)">
                     <option selected disabled>시/도 전체</option>
-                    <option value="1" v-for="(state, i) in this.states" :key="i">{{ state }}</option>
+                    <option v-for="(state, i) in this.states" :key="i" :value="state">{{ state }}</option>
                     <!-- <option value="2">{{ city[1] }}</option> -->
                 </select>
                 <select>
                     <option selected disabled>구/군 전체</option>
-                    <!-- <option value="1">서울</option>
-                    <option value="2">경기</option> -->
+                    <option v-for="(city, i) in this.cities" :key="i" :value="city">{{ city }}</option>
                 </select>
             </div>
             
@@ -65,17 +64,25 @@
             </div>
         </main>
     </div>
+
+    <Footer />
 </template>
 
 <script>
+import Footer from '@/components/FooterPage.vue'
 // import { useResponseStore } from '@/store/response.js'
 
 export default {
+    components: {
+        Footer,
+    },
     data() {
         return {
             isOne : true,
             isTwo : false,
-            states : []
+            states : [],
+            state_name : '',
+            cities : []
         }
     },
     mounted() {
@@ -117,9 +124,36 @@ export default {
                 }
             })
         },
-        GetCity() {
-            console.log(111);
-        }
+        GetCity(value) {
+            // console.log(111);
+
+            this.cities = [];
+
+            console.log(value);
+
+            const city = value;
+            const formData = new FormData();
+            formData.append('type', 'category_select2');
+            formData.append('address1', city);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/store/store_map.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // console.log(data);
+                
+                for(let i=0; i<data.msg.length; i++) {
+                    // console.log(data.msg[i].address2);
+                    this.cities.push(data.msg[i].address2);
+                    // console.log(this.cities);
+                }
+            })
+
+        },
     }
 }
 </script>
