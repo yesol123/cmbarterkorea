@@ -131,6 +131,8 @@ export default {
         GetMap() {
             this.isOne = false;
             this.isTwo = true;
+
+            this.$router.push({ path : '/findmap' });
         },
         GetStates() {
             // let store = useResponseStore();
@@ -362,7 +364,7 @@ main {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 1700px;
+    width: 1500px;
 }
 .category li {
     height: 35px; line-height: 35px;
@@ -439,7 +441,7 @@ main {
     /* border: 1px solid red; */
 }
 .etc > button {
-    width: 100%; height: 30px;
+    width: 100%; height: 37%;
     background-color: #1bce0b;
     color: #fff;
     border: none;
@@ -452,7 +454,7 @@ main {
     text-align: right;
 }
 .etc > div button {
-    width: 30px; height: 30px;
+    width: 25px; height: 25px;
     border: 1px solid #ccc;
     border-radius: 50%;
     background-color: #fff;
@@ -460,7 +462,7 @@ main {
     background-image: url(../assets/call.png);
     background-repeat: no-repeat;
     background-size: contain;
-    padding: 5px;
+    /* padding: 5px; */
 }
 .etc > div button:nth-of-type(2) {
     margin-left: 15px;
