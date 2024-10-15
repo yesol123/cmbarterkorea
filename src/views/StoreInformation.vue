@@ -187,6 +187,8 @@ import { message } from 'ant-design-vue'
 import dayjs from 'dayjs';
 import koKR from 'ant-design-vue/es/locale/ko_KR';
 import { useResponseStore } from '@/store/response.js'
+import router from '@/router/index.js';
+
 
 export default {
   name: 'storeInformation',
@@ -305,11 +307,13 @@ export default {
       let store = useResponseStore();
 
       const formData = new FormData();
+      let startDate = dayjs(this.businessInfo.temporaryClosure.dateRange[0]).format('YYYY-MM-DD');
+      let endDate = dayjs(this.businessInfo.temporaryClosure.dateRange[1]).format('YYYY-MM-DD');
+      let dateRangeStr = `${startDate} ~ ${endDate}`;
       
-  
-
+      
       formData.append('type', 'store_update3');
-      formData.append('user_id', store.user_id);
+      formData.append('user_index', store.user_index);
       formData.append('work_start_time1', this.workHours1.openTime.format(this.format)); //시작시간
       formData.append('work_end_time1', this.workHours1.closeTime.format(this.format)); //끝나는 시간
       formData.append('rest_start_time1', this.workHours1.restStartTime.format(this.format)); // 휴게시간 시작
@@ -325,7 +329,7 @@ export default {
       formData.append('holi', this.businessInfo.holiday ? 'Y' : 'N'); //공휴일 유무
       formData.append('reg_type', this.businessInfo.regularHoliday.frequency); //정기휴무 주기
       formData.append('reg_day', this.businessInfo.regularHoliday.day); //정기휴무 요일
-      formData.append('datetimes', JSON.stringify(this.businessInfo.temporaryClosure.dateRange.join(',')))// 임시휴무 날짜지정
+      formData.append('datetimes', dateRangeStr)// 임시휴무 날짜지정
       formData.append('holiday_txt', this.businessInfo.temporaryClosure.comment)// 임시휴무 코멘트
 
       for (let [key, value] of formData.entries()) {
@@ -340,6 +344,10 @@ export default {
         .then(response => response.json())
         .then(data => {
           console.log('data', data);
+
+          router.push({ path: '/ChangeFranchise' });
+
+          
         })
 
     }
