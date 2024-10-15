@@ -96,6 +96,7 @@ export default{
           formData.append('question_desc',this.contents);
 
           const url = process.env.VUE_APP_API_URL;
+          
           fetch(url+'api/setting/qna.php',{
             method:'POST',
             body:formData
@@ -103,9 +104,6 @@ export default{
           .then(response => response.json())
           .then(data => {
             console.log('-------',data);
-           
-
-            
           })
     }
 

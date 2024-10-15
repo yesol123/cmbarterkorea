@@ -26,7 +26,7 @@
         </div>
         <p class="coupon_current">{{ selectedButtonText }}에 해당하는 쿠폰의 개수는 {{ filteredCoupons.length }}개 입니다.</p>
 
-
+     
 
         <ul class="flex_direction">
             <li class="coupon_com" v-for="(coupon,index) in filteredCoupons" :key="index">
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+
 import router from '@/router/index.js';
 import { useResponseStore } from '@/store/response.js'
 
@@ -68,6 +69,7 @@ export default{
        
         const formData = new FormData();
         let store = useResponseStore()
+      
         
         formData.append('type','select');
         formData.append('user_index',store.user_index);
@@ -346,11 +348,9 @@ label button{
 
 
 
-
 .flex_direction .coupon_com{
     display: flex;
     flex-direction: column;
-    
     border: 1px solid #0d6efd;
     border-radius: 5px;
 }

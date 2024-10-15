@@ -13,7 +13,7 @@
             <p>{{ this.user_cmp }}<span>CMP</span></p>
             <p>{{ this.user_cm }}<span>CM</span></p>
         </div>
-
+        
         <!-- 충전할CM -->
         <p class="title">충전 할 CM</p>
         <div class="cm_charging">
@@ -26,7 +26,7 @@
         <p class="title">충전 후 CM</p>
         <div class="cm_charged show">
             <p class="gray">보유 자산</p>
-            <p>{{ this.user_cmp }}<span>CMP</span></p>
+            <p>{{ this.current_cmp }}<span>CMP</span></p>
             <p>{{ this.all_cm }}<span>CM</span></p>
         </div>
         <!-- 충전수수료 -->
@@ -72,6 +72,7 @@ export default {
             user_index: '',
             user_phone: '',
             surtax: '', //부가세제외
+            current_cmp: ''//충전후 CMP
         }
     },
     computed: {
@@ -212,14 +213,19 @@ export default {
         },
 
         calculate() {
+            const userCM = parseInt(this.user_cm.replace(/,/g, ''), 10); // 문자열에서 콤마 제거 후 숫자로 변환
+            const userCMP = parseInt(this.user_cmp.replace(/,/g, ''), 10); // CMP도 숫자로 변환
+            const addCM = parseInt(this.add_cm, 10) || 0; // 충전할 CM을 숫자로 변환
 
-            const userCM = parseInt(this.user_cm.replace(/,/g, '')); // 문자열에서 콤마 제거 후 숫자로 변환
-            // const sendCM = parseInt(this.send_cm) || 0; // 보내는 CM도 숫자로 변환
+            // 보유 CM과 충전할 CM 더한 값
+            this.all_cm = (userCM + addCM).toLocaleString();
 
+            // 보유 CMP와 충전한 CM을 더한 값 (충전 후 CMP)
+            this.current_cmp = (userCMP + addCM).toLocaleString(); // CMP도 더해서 계산
 
-            this.all_cm = (userCM + this.add_cm).toLocaleString();
-            this.paymoney = Math.floor(this.add_cm * 0.1 * 1.1) // 충전 수수료 계산 (10%)
-            this.surtax = Math.floor(this.add_cm * 0.1);
+            // 충전 수수료 계산 (충전할 CM의 10%)
+            this.paymoney = Math.floor(addCM * 0.1 * 1.1).toLocaleString(); // 부가세 포함
+            this.surtax = Math.floor(addCM * 0.1); // 부가세 제외
         },
 
         // async sendChargeData(paymentData){

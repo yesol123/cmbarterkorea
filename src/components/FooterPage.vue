@@ -1,10 +1,10 @@
 <template>
-    <!-- <footer>
+  <!-- <footer>
         <p>푸터영역입니다.</p>
     </footer> -->
 
-    <!-- 하단 네브바 -->
-    <!-- <nav class="navbar bg-dark border-bottom border-body fixed-bottom" data-bs-theme="dark" style="justify-content: center; opacity: 0.9;">
+  <!-- 하단 네브바 -->
+  <!-- <nav class="navbar bg-dark border-bottom border-body fixed-bottom" data-bs-theme="dark" style="justify-content: center; opacity: 0.9;">
       <div class="row" style="width: 100%;">
         <div class="col-3">
           <a class="navbar-brand" href="#" style="display: grid; place-items: center; justify-content: center;">
@@ -34,12 +34,12 @@
     </nav> -->
 
   <div class="footer">
-      <div class="btn_group">
-        <img src="@/assets/home.png">
-        <img @click="goGift()" src="@/assets/gift.png">
-        <img @click="FindShop()"  src="@/assets/search.png">
-        <img @click="goMypage()" src="@/assets/my.png">
-      </div>
+    <div class="btn_group">
+      <img @click="goHome()" src="@/assets/home.png">
+      <img @click="goGift()" src="@/assets/gift.png">
+      <img @click="FindShop()" src="@/assets/search.png">
+      <img @click="goMypage()" src="@/assets/my.png">
+    </div>
   </div>
 
 </template>
@@ -51,25 +51,28 @@ import { useResponseStore } from '@/store/response.js'
 export default {
   data() {
     return {
-      member : '',
+      member: '',
     }
   },
-  mounted(){
+  mounted() {
     let store = useResponseStore();
     this.member = store.member;
-  
+
 
   },
-  methods : {
-     goMypage(){
-      router.push('/MyPage/'+this.member)
-     },
-     goGift(){
-      router.push('/gift/'+this.member)
-     },
-     FindShop() {
-      this.$router.push({ path : '/findshop' });
-     }
+  methods: {
+    goHome() {
+      this.$router.push( {path:'/main' })
+    },
+    goMypage() {
+      router.push('/MyPage/' + this.member)
+    },
+    goGift() {
+      router.push('/gift/' + this.member)
+    },
+    FindShop() {
+      this.$router.push({ path: '/findshop' });
+    }
     // test
     // to() {
     //   this.$router.push({path : '/qrtest'})
@@ -85,31 +88,38 @@ export default {
 } */
 
 * {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    font-size: 1rem;
-    text-decoration: none;
-    color: #000;
-    background-color: #fff;
-}
-.footer {
-    position: fixed;
-    bottom: 0; left: 0;  
-    width: 100%; height: 50px;
-    background-color: #fff;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-.btn_group {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: inherit; height: inherit;
-}
-.btn_group img {
-    width: 25px; height: 25px;
-    /* border: 1px solid orange; */
-    cursor: pointer;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 1rem;
+  text-decoration: none;
+  color: #000;
+  background-color: #fff;
 }
 
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.btn_group {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: inherit;
+  height: inherit;
+}
+
+.btn_group img {
+  width: 25px;
+  height: 25px;
+  /* border: 1px solid orange; */
+  cursor: pointer;
+}
 </style>

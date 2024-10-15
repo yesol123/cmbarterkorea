@@ -54,13 +54,20 @@
         </div>
     </div>
 
+    <Footer />
+
     
 </template>
 
 <script>
+import Footer from '@/components/FooterPage.vue'
+
 import { useResponseStore } from '@/store/response.js'
 
 export default {
+    components : {
+        Footer,
+    },
     data() {
         return {
             couponlist : '',

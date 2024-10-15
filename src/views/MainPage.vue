@@ -46,15 +46,15 @@
         </div>
         <div class="icons">
             <div class="icon" v-if="this.member != '2'" @click="toEvent()">
-                <img src="@/assets/coupon_icon.png">
+                <img src="@/assets/coupon_icon.svg">
                 <p>쿠폰이벤트</p>
             </div>
             <div class="icon" v-if="this.member != '2'">
-                <img src="@/assets/roulette_icon.png">
+                <img src="@/assets/roulette_icon.svg">
                 <p>CM라이프</p>
             </div>
             <div class="icon" v-if="this.member == '3'" @click="toCMCharge()"> 
-                <img src="@/assets/charge_icon.png">
+                <img src="@/assets/charge_icon.svg">
                 <p>CM충전</p>
             </div>
             <div class="icon" v-if="this.member == '1'" @click="toShopIn()">
@@ -74,23 +74,23 @@
                 <p>산하 가맹점</p>
             </div>
             <div class="icon" @click="goHomePage()">
-                <img src="@/assets/homepage_icon.png">
+                <img src="@/assets/homepage_icon.svg">
                 <p >홈페이지</p>
             </div>
             <div class="icon" v-if="this.member == '3'" @click="gomangestore()">
-                <img src="@/assets/store_icon.png">
+                <img src="@/assets/store_icon.svg">
                 <p>매장관리</p>
             </div>
             <div class="icon" v-if="this.member == '3'"  @click="gocustomer()">
-                <img src="@/assets/management_icon.png">
+                <img src="@/assets/management_icon.svg">
                 <p>고객관리</p>
             </div>
             <div class="icon">
-                <img src="@/assets/kakao_icon.png">
+                <img src="@/assets/kakao_icon.svg">
                 <p>카톡상담</p>
             </div>
             <div class="icon">
-                <img src="@/assets/shoppingmall_icon.png">
+                <img src="@/assets/shoppingmall_icon.svg">
                 <p>쇼핑몰</p>
             </div>
         </div>
@@ -103,18 +103,18 @@
 
     <Payment ref="payment" />
 
-    <Footer />
+    <!-- <Footer /> -->
 </template>
 
 <script>
-import Footer from '@/components/FooterPage.vue'
+//import Footer from '@/components/FooterPage.vue'
 import { useResponseStore } from '@/store/response.js'
 import Payment from '@/components/PopCoupon.vue'
 
 export default {
     components : {
         Payment,
-        Footer,
+        //Footer,
     },
     data() {
         return {
