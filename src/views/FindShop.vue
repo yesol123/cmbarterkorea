@@ -51,14 +51,14 @@
                 <div class="img" :style="{ backgroundImage : `url(${post.store_image})`}"></div>
                 <div class="info">
                     <p style="font-size: 0.9rem; font-weight: bold;">{{ post.store_name }}</p>
-                    <p style="font-size: 0.8rem;">{{ post.store_address }}</p>
-                    <p style="font-size: 0.8rem;">{{ post.store_category_name }}</p>
+                    <p style="font-size: 0.7rem;">{{ post.store_address }}</p>
+                    <p style="font-size: 0.7rem;">{{ post.store_category_name }}</p>
                 </div>
                 <div class="etc">
                     <button type="button">{{ post.user_cm_use }} CM 가능</button>
                     <div>
-                        <button type="button">tel</button>
-                        <button type="button">map</button>
+                        <button type="button"></button>
+                        <button type="button"></button>
                     </div>
                 </div>
             </div>
@@ -71,60 +71,11 @@
                 <button type="button" v-if="currentPage < totalPages" @click="currentPage++" style="margin-left: 10px;">다음 페이지</button>
             </div>
 
-            <!-- <div>
-                <DataTable
-                class="display"
-                :columns="columns"
-                :data="data"
-                :options="{
-                    select: true,
-                    responsive: true,
-                    language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/ko.json' // 한글 언어 파일 경로
-                    },
-                    rowCallback: (row, data) => {
-                    // row.notice_index = data.notice_index;
-                    // row.addEventListener('click', function () {
-                    //     // 클릭 시 실행할 코드
-                    //     console.log(row.notice_index);
-                    //     router.push(`/DetailPgae/${row.notice_index}`)
-                    // });
-                    },
-                }"
-                ref="table"
-                />
-            </div> -->
         </main>
     </div>
 
     <Footer />
 </template>
-
-<!-- <script setup>
-// import { useResponseStore } from '@/store/response.js';
-import { ref} from "vue";
-import DataTable from "datatables.net-vue3";
-import DataTablesLib from "datatables.net";
-import "datatables.net-select";
-
-DataTable.use(DataTablesLib);
-
-// let dt;
-// let store = useResponseStore();
-const data = ref([]);
-const table = ref();
-// const member = store.member
-const columns = [
-  {
-    data: "notice_title",
-    title: "공지사항 제목",
-  },
-  {
-    data: "notice_create_time",
-    title: "작성 날짜",
-  },
-];
-</script> -->
 
 <script>
 import Footer from '@/components/FooterPage.vue'
@@ -163,6 +114,12 @@ export default {
             this.isAll = true;
             // this.isSelected = false;
             this.selectedCategory = '';
+            this.address1 = '';
+            this.address2 = '';
+            this.fran_type = '';
+            this.value = '';
+
+            this.GetStoreList();
         },
         toMain() {
             this.$router.push({ path : '/main' });
@@ -462,17 +419,27 @@ main {
     border-bottom: 1px solid #ccc;
 }
 .img {
-    width: 100px; height: 100px;
+    width: 35%; height: 100px;
+    border-radius: 5px;
     border: 1px solid #ccc;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-right: 10px;
 }
 .info {
+    width: 35%; height: 100px;
+    margin-right: 10px;
     /* border: 1px solid red; */
 }
 .info > p {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+}
+.etc {
+    width: 30%; height: 100px;
+    /* border: 1px solid red; */
 }
 .etc > button {
-    height: 30px;
+    width: 100%; height: 30px;
     background-color: #1bce0b;
     color: #fff;
     border: none;
@@ -485,11 +452,19 @@ main {
     text-align: right;
 }
 .etc > div button {
-    width: 35px; height: 35px;
+    width: 30px; height: 30px;
     border: 1px solid #ccc;
     border-radius: 50%;
     background-color: #fff;
-    margin-left: 10px;
+    margin-left: 0;
+    background-image: url(../assets/call.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding: 5px;
+}
+.etc > div button:nth-of-type(2) {
+    margin-left: 15px;
+    background-image: url(../assets/location.png);
 }
 .paging {
     width: 100%;
