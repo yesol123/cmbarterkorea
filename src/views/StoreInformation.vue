@@ -307,9 +307,8 @@ export default {
       const formData = new FormData();
       
   
-
       formData.append('type', 'store_update3');
-      formData.append('user_id', store.user_id);
+      formData.append('user_index', store.user_index);
       formData.append('work_start_time1', this.workHours1.openTime.format(this.format)); //시작시간
       formData.append('work_end_time1', this.workHours1.closeTime.format(this.format)); //끝나는 시간
       formData.append('rest_start_time1', this.workHours1.restStartTime.format(this.format)); // 휴게시간 시작
