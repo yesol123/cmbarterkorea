@@ -12,23 +12,22 @@
             </div>
 
             <div class="option">
-                <select @change="GetCity()">
+                <select @change="GetCity($event.target.value)">
                     <option selected disabled>시/도 전체</option>
-                    <option value="1" v-for="(state, i) in this.states" :key="i">{{ state }}</option>
+                    <option v-for="(state, i) in this.states" :key="i" :value="state">{{ state }}</option>
                     <!-- <option value="2">{{ city[1] }}</option> -->
                 </select>
-                <select>
+                <select @change="SearchByCity($event.target.value)">
                     <option selected disabled>구/군 전체</option>
-                    <!-- <option value="1">서울</option>
-                    <option value="2">경기</option> -->
+                    <option v-for="(city, i) in this.cities" :key="i" :value="city">{{ city }}</option>
                 </select>
             </div>
             
             <div class="category">
                 <ul>
-                    <li>전체</li>
-                    <li>슈퍼/마트</li>
-                    <li>레저</li>
+                    <li :value="0" :class="{ all : isAll }" @click="All()" >전체</li>
+                    <li v-for="(c, i) in categories" :key="i" :value="c.store_category_index" @click="Selected(c.store_category_index)"  :class="{ select : selectedCategory === c.store_category_index }">{{ c.store_category_name }}</li>
+                    <!-- <li>레저</li>
                     <li>미용/뷰티/위생</li>
                     <li>병원/약국</li>
                     <li>스포츠/헬스</li>
@@ -40,48 +39,131 @@
                     <li>생활/주방용품</li>
                     <li>음식점/카페</li>
                     <li>패션잡화</li>
-                    <li>기타 도소매</li>
+                    <li>기타 도소매</li> -->
                 </ul>
             </div>
 
             <div class="search">
-                <input type="text" placeholder="검색어를 입력하세요."><button type="button">검색</button>
+                <input type="text" placeholder="검색어를 입력하세요." v-model="value"><button type="button" @click="SearchStore(this.value)">검색</button>
             </div>
 
-            <div class="list">
-                <div class="img"></div>
+            <div class="list" v-for="(post, i) in showPosts" :key="i">
+                <div class="img" :style="{ backgroundImage : `url(${post.store_image})`}"></div>
                 <div class="info">
-                    <p style="font-size: 0.9rem; font-weight: bold;">에이비셀 주식회사</p>
-                    <p style="font-size: 0.8rem;">서울 종로구 지봉로 56</p>
-                    <p style="font-size: 0.8rem;">패션잡화</p>
+                    <p style="font-size: 0.9rem; font-weight: bold;">{{ post.store_name }}</p>
+                    <p style="font-size: 0.8rem;">{{ post.store_address }}</p>
+                    <p style="font-size: 0.8rem;">{{ post.store_category_name }}</p>
                 </div>
                 <div class="etc">
-                    <button type="button">400만 CM 가능</button>
+                    <button type="button">{{ post.user_cm_use }} CM 가능</button>
                     <div>
                         <button type="button">tel</button>
                         <button type="button">map</button>
                     </div>
                 </div>
             </div>
+
+         
+
+            <div class="paging">
+                <button type="button" v-if="currentPage > 1" @click="currentPage--">이전 페이지</button>
+                <span>{{ currentPage }} / {{ totalPages }}</span>
+                <button type="button" v-if="currentPage < totalPages" @click="currentPage++" style="margin-left: 10px;">다음 페이지</button>
+            </div>
+
+            <!-- <div>
+                <DataTable
+                class="display"
+                :columns="columns"
+                :data="data"
+                :options="{
+                    select: true,
+                    responsive: true,
+                    language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/ko.json' // 한글 언어 파일 경로
+                    },
+                    rowCallback: (row, data) => {
+                    // row.notice_index = data.notice_index;
+                    // row.addEventListener('click', function () {
+                    //     // 클릭 시 실행할 코드
+                    //     console.log(row.notice_index);
+                    //     router.push(`/DetailPgae/${row.notice_index}`)
+                    // });
+                    },
+                }"
+                ref="table"
+                />
+            </div> -->
         </main>
     </div>
+
+    <Footer />
 </template>
 
+<!-- <script setup>
+// import { useResponseStore } from '@/store/response.js';
+import { ref} from "vue";
+import DataTable from "datatables.net-vue3";
+import DataTablesLib from "datatables.net";
+import "datatables.net-select";
+
+DataTable.use(DataTablesLib);
+
+// let dt;
+// let store = useResponseStore();
+const data = ref([]);
+const table = ref();
+// const member = store.member
+const columns = [
+  {
+    data: "notice_title",
+    title: "공지사항 제목",
+  },
+  {
+    data: "notice_create_time",
+    title: "작성 날짜",
+  },
+];
+</script> -->
+
 <script>
+import Footer from '@/components/FooterPage.vue'
 // import { useResponseStore } from '@/store/response.js'
 
 export default {
+    components: {
+        Footer,
+    },
     data() {
         return {
             isOne : true,
             isTwo : false,
-            states : []
+            states : [],
+            state_name : '',
+            cities : [],
+            posts : [],
+            currentPage : 1,
+            postsPerPage : 20,
+            categories : [],
+            isAll : true,
+            selectedCategory : '',
+            address1 : '',
+            address2 : '',
+            fran_type : '',
+            value : ''
         }
     },
     mounted() {
         this.GetStates();
+        this.GetCategory();
+        this.GetStoreList();
     },
     methods : {
+        All() {
+            this.isAll = true;
+            // this.isSelected = false;
+            this.selectedCategory = '';
+        },
         toMain() {
             this.$router.push({ path : '/main' });
         },
@@ -117,10 +199,121 @@ export default {
                 }
             })
         },
-        GetCity() {
-            console.log(111);
+        GetCity(value) {
+            // console.log(111);
+            this.address1 = '';
+            this.cities = [];
+            this.address1 = value;
+
+            console.log(value);
+
+            const city = value;
+            const formData = new FormData();
+            formData.append('type', 'category_select2');
+            formData.append('address1', city);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/store/store_map.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // console.log(data);
+                
+                for(let i=0; i<data.msg.length; i++) {
+                    // console.log(data.msg[i].address2);
+                    this.cities.push(data.msg[i].address2);
+                    // console.log(this.cities);
+                }
+            })
+
+        },
+        GetStoreList() {
+            const formData = new FormData();
+            formData.append('type', 'store_select');
+            formData.append('address1', this.address1);
+            formData.append('address2', this.address2);
+            formData.append('fran_type', this.fran_type);
+            formData.append('value', this.value);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/store/store_map.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+
+                this.posts = [];
+
+                for(let i=0; i<data.msg.length; i++) {
+                    // console.log(data.msg[i].address2);
+                    this.posts.push(data.msg[i]);
+                    // console.log(typeof this.posts.length);
+                }
+            })
+        },
+        GetCategory() {
+            const formData = new FormData();
+            formData.append('type', 'category_select3');
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/store/store_map.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                for(let i=0; i<data.msg.length; i++) {
+                    // console.log(data.msg[i].address2);
+                    this.categories.push(data.msg[i]);
+                    // console.log(typeof this.posts.length);
+                }
+            })
+        },
+        SearchByCity(value){
+            this.address2 = '';
+            console.log(value);
+            this.address2 = value;
+
+            this.GetStoreList();
+        },
+        Selected(value) {
+            this.fran_type = '';
+            console.log(value);
+            this.fran_type = value;
+            this.isAll = false;
+            this.selectedCategory = '';
+            // this.isSelected = true;
+            this.selectedCategory = value;
+
+            this.GetStoreList();
+        },
+        SearchStore(value) {
+            this.value = '';
+            console.log(value);
+            this.value = value;
+
+            this.GetStoreList();
         }
-    }
+    },
+    computed : {
+        showPosts() {
+            const startIndex = (this.currentPage - 1) * this.postsPerPage;
+            const endIndex = startIndex + this.postsPerPage;
+            return this.posts.slice(startIndex, endIndex);
+        },
+        totalPages() {
+            return Math.ceil(this.posts.length/this.postsPerPage);
+        }
+    },
+    
 }
 </script>
 
@@ -225,6 +418,16 @@ main {
     border-radius: 20px;
     border: 1px solid #ccc;
 }
+.category .all {
+    border: none;
+    background-color: #1bce0b;
+    color: #fff;
+}
+.category .select {
+    border: none;
+    background-color: #1bce0b;
+    color: #fff;
+}
 .search {
     display: flex;
     width: 95%;
@@ -269,12 +472,13 @@ main {
     margin-bottom: 10px;
 }
 .etc > button {
-    width: 100px; height: 30px;
+    height: 30px;
     background-color: #1bce0b;
     color: #fff;
     border: none;
     border-radius: 5px;
-    font-size: 0.9rem;
+    padding: 0 10px;
+    font-size: 0.8rem;
 }
 .etc > div {
     margin-top: 30px;
@@ -285,6 +489,25 @@ main {
     border: 1px solid #ccc;
     border-radius: 50%;
     background-color: #fff;
+    margin-left: 10px;
+}
+.paging {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    /* border: 1px solid red; */
+}
+.paging > button {
+    padding: 5px;
+    border: none;
+    color: #fff;
+    background-color: #1bce0b;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.paging > button:nth-of-type(2) {
+    margin-right: 0;
     margin-left: 10px;
 }
 </style>
