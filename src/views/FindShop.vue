@@ -101,7 +101,7 @@ export default {
             address1 : '',
             address2 : '',
             fran_type : '',
-            value : ''
+            value : '',
         }
     },
     mounted() {

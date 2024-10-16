@@ -41,8 +41,8 @@ export default {
             categories : [],
             isAll : true,
             selectedCategory : '',
-            x : '',
-            y : '',
+            // x : '',
+            // y : '',
         }
     },
     mounted() {
@@ -130,34 +130,64 @@ export default {
 
                     // 지도 영역 읽어오기
                     const bounds = circle.getBounds();
-                    // this.bounds = bounds;
-                    console.log(bounds);
+                    // console.log(777);
+                    // console.log(bounds);
 
-                    this.BoundLocation(bounds);
+                    const formData = new FormData();
+                    formData.set('type', 'store_select2');
+                    formData.set('bounds', bounds);
+
+                    const url = process.env.VUE_APP_API_URL;
+
+                    fetch(url + 'api/store/store_map.php', {
+                    method : 'POST',
+                    body : formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('주변 가맹점 가져오기');
+                        console.log(data);
+
+                        data.msg.forEach((data_child) => {
+                            const imageSize = new window.kakao.maps.Size(24, 35);
+                            const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+                            const pos = new window.kakao.maps.LatLng(data_child.pos_latitude,data_child.pos_longitude);
+                            const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+                            const marker = new window.kakao.maps.Marker({
+                                map : map,
+                                position : pos,
+                                image : markerImage
+                            })
+
+                            marker.setMap(map);
+
+                        })
+                    })
 
                 })
 
             }
         
         },
-        BoundLocation(bounds) {
-            const formData = new FormData();
-            formData.set('type', 'store_select2');
-            formData.set('bounds', bounds);
+        // BoundLocation(bounds) {
+        //     const formData = new FormData();
+        //     formData.set('type', 'store_select2');
+        //     formData.set('bounds', bounds);
 
-            const url = process.env.VUE_APP_API_URL;
+        //     const url = process.env.VUE_APP_API_URL;
 
-            fetch(url + 'api/store/store_map.php', {
-            method : 'POST',
-            body : formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
+        //     fetch(url + 'api/store/store_map.php', {
+        //     method : 'POST',
+        //     body : formData
+        //     })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         console.log(123);
+        //         console.log(data);
 
                 
-            })
-        }
+        //     })
+        // }
     }
 }
 </script>
