@@ -104,8 +104,13 @@
     <div v-if="showModal" class="modal">
         <p class="caution">CM게임 보상</p>
         <p>닉네임 입력</p>
-        <input type="text" placeholder="닉네임을 입력해주세요.">
+        <input type="text" v-model="nickname" placeholder="닉네임을 입력해주세요.">
         <button @click="confirm">확인</button>
+    </div>
+
+    <div v-if="showModal2" class="modal">
+        <p class="caution">{{ this.error_massage }}</p>
+        <button @click="confirm2">확인</button>
     </div>
 
 
@@ -136,7 +141,10 @@ export default {
             adImg: [],
             adIndex: 0,
             timeTwo: null,
-            showModal: false
+            nickname:'',
+            showModal: false,
+            showModal2:false,
+            error_massage:''
         }
     },
     mounted() {
@@ -301,8 +309,40 @@ export default {
         },
         //cm게임보상 닉네임 입력 모달
         confirm() {
-            this.showModal = false
+            //this.showModal = false
+            let store = useResponseStore();
+
+
+        const formData = new FormData();
+        formData.append('type', 'roulette_take')
+        formData.append('user_index', store.user_index)
+        formData.append('nickname ',this.nickname)
+
+        const url = process.env.VUE_APP_API_URL;
+            
+        fetch(url + 'api/coupon/coupon_event.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data=>{
+            console.log(data);
+            if(data.code == '404'){
+                this.showModal = false
+                this.showModal2 = true
+                 this.error_massage = data.msg;
+            }
+            
+        })
+
         },
+
+        confirm2(){
+            window.location.href = "https://cmbarter.com/mobile/game_init.php";
+        },
+        
+
+
         // 로그아웃
         logout() {
             // localStorage.setItem('response', null);
