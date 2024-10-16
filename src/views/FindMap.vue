@@ -43,11 +43,16 @@ export default {
             selectedCategory : '',
             // x : '',
             // y : '',
+            // map : '',
+            // circle : '',
+            // bounds : null,
+            // radius : 0.5,
+            markers : '',
         }
     },
     mounted() {
         this.GetCategory();
-        this.GetLocation();
+        this.GetLocation(); // 지도보여주기
     },
     methods : {
         toFindShop() {
@@ -94,6 +99,9 @@ export default {
             const container = document.getElementById('map');
 
             if(navigator.geolocation) {
+
+                // let markers = [];
+
                 navigator.geolocation.getCurrentPosition(function(position) {
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
@@ -128,11 +136,12 @@ export default {
 
                     circle.setMap(map);
 
+                    map.panTo(new window.kakao.maps.LatLng(lat, lon));
+
                     // 지도 영역 읽어오기
                     const bounds = circle.getBounds();
-                    // console.log(777);
-                    // console.log(bounds);
 
+                    // 내 주변 가맹점 표시하기
                     const formData = new FormData();
                     formData.set('type', 'store_select2');
                     formData.set('bounds', bounds);
@@ -154,39 +163,28 @@ export default {
                             const pos = new window.kakao.maps.LatLng(data_child.pos_latitude,data_child.pos_longitude);
                             const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
                             const marker = new window.kakao.maps.Marker({
-                                map : map,
-                                position : pos,
-                                image : markerImage
+                                map : map, // 마커를 표시할 지도
+                                position : pos, // 마커를 표시할 위치
+                                image : markerImage // 마커 이미지
                             })
 
-                            marker.setMap(map);
+                           
+
+                            marker.setMap(map); // 현재 위치 주변 가맹점에 마커 찍기
+
 
                         })
                     })
 
+
                 })
-
             }
-        
         },
-        // BoundLocation(bounds) {
-        //     const formData = new FormData();
-        //     formData.set('type', 'store_select2');
-        //     formData.set('bounds', bounds);
-
-        //     const url = process.env.VUE_APP_API_URL;
-
-        //     fetch(url + 'api/store/store_map.php', {
-        //     method : 'POST',
-        //     body : formData
-        //     })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         console.log(123);
-        //         console.log(data);
-
-                
-        //     })
+        // removeAllMarkers() {
+        //     for(let i=0; this.markers.length; i++) {
+        //         this.markers[i].setMap(null);
+        //     }
+        //     this.markers = [];
         // }
     }
 }
