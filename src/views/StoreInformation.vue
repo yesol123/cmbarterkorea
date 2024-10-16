@@ -212,25 +212,23 @@ export default {
       .then(data => {
         console.log('1', data);
         console.log('1번째 박스 요일', data.msg[0].store_business_date); //1번째 박스 요일
-        this.last_save.day1 = data.msg[0].store_business_date
 
         this.selectedDays1 = data.msg[0].store_business_date.split(','); // "월,화,수"를 배열로 변환
         console.log('1번째 박스 시작시간', data.msg[0].store_start_business_hour); // 시작시간
-        this.last_save.work_start_time1 = data.msg[0].store_start_business_hour
-
+       
         if (data.msg[0].store_start_business_hour) {
           this.workHours1.openTime = dayjs(data.msg[0].store_start_business_hour, 'HH:mm');
         }
 
         console.log('1번째 박스 끝나는 시간', data.msg[0].store_end_business_hour); //끝나는 시간
-        this.last_save.work_end_time1 = data.msg[0].store_end_business_hour
+       
 
         if (data.msg[0].store_end_business_hour) {
           this.workHours1.closeTime = dayjs(data.msg[0].store_end_business_hour, 'HH:mm');
         }
 
         console.log('1번째 박스 쉬는 시간 시작', data.msg[0].store_rest_start_hour); //쉬는시간 시작
-        this.last_save.rest_start_time1 = data.msg[0].store_rest_start_hour
+       
 
 
         if (data.msg[0].store_rest_start_hour) {
@@ -239,30 +237,26 @@ export default {
 
 
         console.log('1번째 박스 쉬는 시간 끝', data.msg[0].store_rest_end_hour); //쉬는시간 끝 
-        this.last_save.rest_end_time1 = data.msg[0].store_rest_end_hour
-
-
+       
         if (data.msg[0].store_rest_end_hour) {
           this.workHours1.restEndTime = dayjs(data.msg[0].store_rest_end_hour, 'HH:mm');
         }
 
 
         console.log('2번째 박스 요일', data.msg[1].store_business_date); //2번째 박스 요일
-        this.last_save.day2 = data.msg[1].store_business_date
+        
         this.selectedDays2 = data.msg[1].store_business_date.split(',');
 
 
 
         console.log('2번째 박스 시작시간', data.msg[1].store_start_business_hour); // 시작시간
-        this.last_save.work_start_time2 = data.msg[1].store_start_business_hour
-
-
+       
         // workHours2.openTime에 데이터 바인딩 (시간 형식을 dayjs로 변환)
         if (data.msg[1].store_start_business_hour) {
           this.workHours2.openTime = dayjs(data.msg[1].store_start_business_hour, 'HH:mm');
         }
         console.log('2번째 박스 끝나는 시간', data.msg[1].store_end_business_hour); //끝나는 시간
-        this.last_save.work_end_time2 = data.msg[1].store_end_business_hour
+       
 
         if (data.msg[1].store_end_business_hour) {
           this.workHours2.closeTime = dayjs(data.msg[1].store_end_business_hour, 'HH:mm');
@@ -270,7 +264,7 @@ export default {
 
 
         console.log('2번째 박스 쉬는 시간 시작', data.msg[1].store_rest_start_hour); //쉬는시간 시작
-        this.last_save.rest_start_time2 = data.msg[1].store_rest_start_hour
+       
 
         if (data.msg[1].store_rest_start_hour) {
           this.workHours2.restStartTime = dayjs(data.msg[1].store_rest_start_hour, 'HH:mm');
@@ -278,7 +272,7 @@ export default {
         }
 
         console.log('2번째 박스 쉬는 시간 끝', data.msg[1].store_rest_end_hour); //쉬는시간 끝 
-        this.last_save.rest_end_time2 = data.msg[1].store_rest_end_hour
+       
         if (data.msg[1].store_rest_end_hour) {
           this.workHours2.restEndTime = dayjs(data.msg[1].store_rest_end_hour, 'HH:mm');
         }
@@ -362,25 +356,6 @@ export default {
   },
   data() {
     return {
-      last_save: {
-        work_start_time1: '',
-        work_end_time1: '',
-        rest_start_time1: '',
-        rest_end_time1: '',
-        work_start_time2: '',
-        work_end_time2: '',
-        rest_start_time2: '',
-        rest_end_time2: '',
-        day1: '',
-        day2: '',
-        holiday: 'N',
-        reg_type: '주기',
-        reg_day: '요일',
-        temporary_closure: {
-          dateRange: ['', ''],
-          comment: ''
-        }
-      },
       days: [
         { value: '일', label: '일' },
         { value: '월', label: '월' },
