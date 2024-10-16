@@ -58,7 +58,7 @@
                     <button type="button">{{ post.user_cm_use }} CM 가능</button>
                     <div>
                         <button type="button"></button>
-                        <button type="button"></button>
+                        <button type="button" @click="GetStoreIndex(post.store_index)"></button>
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
 
 <script>
 import Footer from '@/components/FooterPage.vue'
-// import { useResponseStore } from '@/store/response.js'
+import { useResponseStore } from '@/store/response.js'
 
 export default {
     components: {
@@ -190,6 +190,7 @@ export default {
 
         },
         GetStoreList() {
+            // let store = useResponseStore();
             const formData = new FormData();
             formData.append('type', 'store_select');
             formData.append('address1', this.address1);
@@ -205,6 +206,7 @@ export default {
             })
             .then(response => response.json())
             .then(data => {
+                console.log(333);
                 console.log(data);
 
                 this.posts = [];
@@ -213,6 +215,8 @@ export default {
                     // console.log(data.msg[i].address2);
                     this.posts.push(data.msg[i]);
                     // console.log(typeof this.posts.length);
+                    // store.store_index = data.msg[i].store_index;
+                    // console.log(store.store_index);
                 }
             })
         },
@@ -260,6 +264,14 @@ export default {
             this.value = value;
 
             this.GetStoreList();
+        },
+        GetStoreIndex(store_index) {
+            let store = useResponseStore();
+            store.store_index = '';
+            store.store_index = store_index;
+            console.log(store_index);
+
+            this.$router.push({ path : '/mapdetail' });
         }
     },
     computed : {

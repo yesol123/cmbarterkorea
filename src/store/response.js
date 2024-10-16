@@ -35,6 +35,7 @@ export const useResponseStore = defineStore('response', {
     user_phone: '', // 사용자 전화번호
     give_user_index: '', // 선물하는 유저의 인덱스
     take_user_index: '', // 선물 받는 유저의 인덱스
+    store_index : '' // 가맹점찾기
 
   }),
   // state: () => {
