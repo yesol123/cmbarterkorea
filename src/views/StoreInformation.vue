@@ -132,9 +132,9 @@
 
     <div class="flex_between">
       <p class="title">공휴일 / 국경일 휴무</p>
-        <div class="checkbox-wrapper-2">
-        <input  class="sc-gJwTLC ikxBAC" type="checkbox" v-model="businessInfo.holiday" name="saturday">
-        </div>
+      <div class="checkbox-wrapper-2">
+        <input class="sc-gJwTLC ikxBAC" type="checkbox" v-model="businessInfo.holiday" name="saturday">
+      </div>
     </div>
 
     <div>
@@ -167,8 +167,9 @@
       <div class="temporary_Closure">
         <a-config-provider :locale="locale">
           <a-space direction="vertical" size="12">
-            <a-range-picker v-model="businessInfo.temporaryClosure.dateRange" :presets="rangePresets"
-              @change="onRangeChange" />
+            <a-range-picker :format="'YYYY-MM-DD'"
+              :value="[businessInfo.temporaryClosure.startDate, businessInfo.temporaryClosure.endDate]"
+              v-model="businessInfo.temporaryClosure.dateRange" :presets="rangePresets" @change="onRangeChange" />
           </a-space>
         </a-config-provider>
         <input class="coments" type="text" name="" id="" v-model="businessInfo.temporaryClosure.comment"
@@ -192,27 +193,166 @@ import router from '@/router/index.js';
 
 export default {
   name: 'storeInformation',
+
+  mounted() {
+
+    let store = useResponseStore();
+
+    const formData1 = new FormData();
+
+    formData1.append('type', 'store_info1');
+    formData1.append('user_index', store.user_index);
+
+    const url = process.env.VUE_APP_API_URL;
+    fetch(url + 'api/store/store_update.php', {
+      method: 'POST',
+      body: formData1
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('1', data);
+        console.log('1번째 박스 요일', data.msg[0].store_business_date); //1번째 박스 요일
+        this.last_save.day1 = data.msg[0].store_business_date
+
+        this.selectedDays1 = data.msg[0].store_business_date.split(','); // "월,화,수"를 배열로 변환
+        console.log('1번째 박스 시작시간', data.msg[0].store_start_business_hour); // 시작시간
+        this.last_save.work_start_time1 = data.msg[0].store_start_business_hour
+
+        if (data.msg[0].store_start_business_hour) {
+          this.workHours1.openTime = dayjs(data.msg[0].store_start_business_hour, 'HH:mm');
+        }
+
+        console.log('1번째 박스 끝나는 시간', data.msg[0].store_end_business_hour); //끝나는 시간
+        this.last_save.work_end_time1 = data.msg[0].store_end_business_hour
+
+        if (data.msg[0].store_end_business_hour) {
+          this.workHours1.closeTime = dayjs(data.msg[0].store_end_business_hour, 'HH:mm');
+        }
+
+        console.log('1번째 박스 쉬는 시간 시작', data.msg[0].store_rest_start_hour); //쉬는시간 시작
+        this.last_save.rest_start_time1 = data.msg[0].store_rest_start_hour
+
+
+        if (data.msg[0].store_rest_start_hour) {
+          this.workHours1.restStartTime = dayjs(data.msg[0].store_rest_start_hour, 'HH:mm');
+        }
+
+
+        console.log('1번째 박스 쉬는 시간 끝', data.msg[0].store_rest_end_hour); //쉬는시간 끝 
+        this.last_save.rest_end_time1 = data.msg[0].store_rest_end_hour
+
+
+        if (data.msg[0].store_rest_end_hour) {
+          this.workHours1.restEndTime = dayjs(data.msg[0].store_rest_end_hour, 'HH:mm');
+        }
+
+
+        console.log('2번째 박스 요일', data.msg[1].store_business_date); //2번째 박스 요일
+        this.last_save.day2 = data.msg[1].store_business_date
+        this.selectedDays2 = data.msg[1].store_business_date.split(',');
+
+
+
+        console.log('2번째 박스 시작시간', data.msg[1].store_start_business_hour); // 시작시간
+        this.last_save.work_start_time2 = data.msg[1].store_start_business_hour
+
+
+        // workHours2.openTime에 데이터 바인딩 (시간 형식을 dayjs로 변환)
+        if (data.msg[1].store_start_business_hour) {
+          this.workHours2.openTime = dayjs(data.msg[1].store_start_business_hour, 'HH:mm');
+        }
+        console.log('2번째 박스 끝나는 시간', data.msg[1].store_end_business_hour); //끝나는 시간
+        this.last_save.work_end_time2 = data.msg[1].store_end_business_hour
+
+        if (data.msg[1].store_end_business_hour) {
+          this.workHours2.closeTime = dayjs(data.msg[1].store_end_business_hour, 'HH:mm');
+        }
+
+
+        console.log('2번째 박스 쉬는 시간 시작', data.msg[1].store_rest_start_hour); //쉬는시간 시작
+        this.last_save.rest_start_time2 = data.msg[1].store_rest_start_hour
+
+        if (data.msg[1].store_rest_start_hour) {
+          this.workHours2.restStartTime = dayjs(data.msg[1].store_rest_start_hour, 'HH:mm');
+
+        }
+
+        console.log('2번째 박스 쉬는 시간 끝', data.msg[1].store_rest_end_hour); //쉬는시간 끝 
+        this.last_save.rest_end_time2 = data.msg[1].store_rest_end_hour
+        if (data.msg[1].store_rest_end_hour) {
+          this.workHours2.restEndTime = dayjs(data.msg[1].store_rest_end_hour, 'HH:mm');
+        }
+      })
+
+    const formData2 = new FormData();
+
+
+    formData2.append('type', 'store_info2');
+    formData2.append('user_index', store.user_index);
+
+    fetch(url + 'api/store/store_update.php', {
+      method: 'POST',
+      body: formData2
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+
+        console.log('공휴일Y/N', data.msg[0].store_holiday_status);
+        this.businessInfo.holiday = data.msg[0].store_holiday_status === 'Y'; // 'Y'면 true, 'N'면 false
+
+
+        console.log('정기휴일주기', data.msg[0].store_regular_closing_interval);
+        console.log('정기휴일요일', data.msg[0].store_regular_closing_week);
+
+
+        // 정기휴일 데이터를 businessInfo.regularHoliday에 바인딩
+        this.businessInfo.regularHoliday.frequency = data.msg[0].store_regular_closing_interval; // 주기
+        this.businessInfo.regularHoliday.day = data.msg[0].store_regular_closing_week; // 요일
+
+
+
+        console.log('임시휴무 코멘트!', data.msg[0].store_temporary_closing_comment);
+        console.log('임시휴무 날짜!', data.msg[0].store_temporary_closing_date);
+
+        // 임시휴무 날짜 처리
+        const dateRangeStr = data.msg[0].store_temporary_closing_date; // API에서 받은 날짜
+        console.log(dateRangeStr);
+
+        if (dateRangeStr) {
+          const dates = dateRangeStr.split(' ~ '); // "YYYY-MM-DD ~ YYYY-MM-DD" 형식일 경우
+          this.businessInfo.temporaryClosure.startDate = dayjs(dates[0], 'YYYY-MM-DD');
+          this.businessInfo.temporaryClosure.endDate = dayjs(dates[1], 'YYYY-MM-DD');
+        }
+
+        this.businessInfo.temporaryClosure.comment = data.msg[0].store_temporary_closing_comment;
+      })
+
+
+
+
+  },
   watch: {
     selectedDays1(newSelectedDays) {
-    // selectedDays2와 중복되는 요일이 있는지 확인
-    const duplicatedDay = newSelectedDays.find(day => this.selectedDays2.includes(day));
-    
-    if (duplicatedDay) {
-      message.error('첫 번째와 두 번째 세트의 요일이 같을 수 없습니다.');
-      // 중복된 요일을 선택 해제
-      this.selectedDays1 = newSelectedDays.filter(day => day !== duplicatedDay);
-    }
-  },
-  selectedDays2(newSelectedDays) {
-    // selectedDays1과 중복되는 요일이 있는지 확인
-    const duplicatedDay = newSelectedDays.find(day => this.selectedDays1.includes(day));
+      // selectedDays2와 중복되는 요일이 있는지 확인
+      const duplicatedDay = newSelectedDays.find(day => this.selectedDays2.includes(day));
 
-    if (duplicatedDay) {
-      message.error('첫 번째와 두 번째 세트의 요일이 같을 수 없습니다.');
-      // 중복된 요일을 선택 해제
-      this.selectedDays2 = newSelectedDays.filter(day => day !== duplicatedDay);
-    }
-  },
+      if (duplicatedDay) {
+        message.error('첫 번째와 두 번째 세트의 요일이 같을 수 없습니다.');
+        // 중복된 요일을 선택 해제
+        this.selectedDays1 = newSelectedDays.filter(day => day !== duplicatedDay);
+      }
+    },
+    selectedDays2(newSelectedDays) {
+      // selectedDays1과 중복되는 요일이 있는지 확인
+      const duplicatedDay = newSelectedDays.find(day => this.selectedDays1.includes(day));
+
+      if (duplicatedDay) {
+        message.error('첫 번째와 두 번째 세트의 요일이 같을 수 없습니다.');
+        // 중복된 요일을 선택 해제
+        this.selectedDays2 = newSelectedDays.filter(day => day !== duplicatedDay);
+      }
+    },
     restStartTime() {
       this.validateRestTime();
     },
@@ -222,6 +362,25 @@ export default {
   },
   data() {
     return {
+      last_save: {
+        work_start_time1: '',
+        work_end_time1: '',
+        rest_start_time1: '',
+        rest_end_time1: '',
+        work_start_time2: '',
+        work_end_time2: '',
+        rest_start_time2: '',
+        rest_end_time2: '',
+        day1: '',
+        day2: '',
+        holiday: 'N',
+        reg_type: '주기',
+        reg_day: '요일',
+        temporary_closure: {
+          dateRange: ['', ''],
+          comment: ''
+        }
+      },
       days: [
         { value: '일', label: '일' },
         { value: '월', label: '월' },
@@ -265,6 +424,12 @@ export default {
   },
 
   methods: {
+    onRangeChange(dates) {
+      if (dates && dates.length === 2) {
+        this.businessInfo.temporaryClosure.startDate = dates[0];
+        this.businessInfo.temporaryClosure.endDate = dates[1];
+      }
+    },
     validateRestTime() {
       // openTime, closeTime, restStartTime, restEndTime이 제대로 설정되었는지 먼저 확인
       if (!this.openTime || !this.closeTime || !this.restStartTime || !this.restEndTime) {
@@ -307,11 +472,12 @@ export default {
       let store = useResponseStore();
 
       const formData = new FormData();
-      let startDate = dayjs(this.businessInfo.temporaryClosure.dateRange[0]).format('YYYY-MM-DD');
-      let endDate = dayjs(this.businessInfo.temporaryClosure.dateRange[1]).format('YYYY-MM-DD');
+      // 시작일과 종료일을 개별적으로 처리
+      let startDate = dayjs(this.businessInfo.temporaryClosure.startDate).format('YYYY-MM-DD');
+      let endDate = dayjs(this.businessInfo.temporaryClosure.endDate).format('YYYY-MM-DD');
       let dateRangeStr = `${startDate} ~ ${endDate}`;
-      
-      
+
+
       formData.append('type', 'store_update3');
       formData.append('user_index', store.user_index);
       formData.append('work_start_time1', this.workHours1.openTime.format(this.format)); //시작시간
@@ -333,8 +499,8 @@ export default {
       formData.append('holiday_txt', this.businessInfo.temporaryClosure.comment)// 임시휴무 코멘트
 
       for (let [key, value] of formData.entries()) {
-  console.log(`${key}: ${value}`);
-} 
+        console.log(`${key}: ${value}`);
+      }
       const url = process.env.VUE_APP_API_URL;
 
       fetch(url + 'api/store/store_update.php', {
@@ -347,7 +513,7 @@ export default {
 
           router.push({ path: '/ChangeFranchise' });
 
-          
+
         })
 
     }
@@ -363,7 +529,7 @@ ul,
 a {
   list-style: none;
   padding: 0;
-
+  font-size: 18px;
   text-decoration: none;
 }
 
@@ -612,70 +778,70 @@ select {
 
 /* 국경일 checkbox css */
 .checkbox-wrapper-2 .ikxBAC {
-    appearance: none;
-    background-color: #dfe1e4;
-    border-radius: 72px;
-    border-style: none;
-    flex-shrink: 0;
-    height: 20px;
-    margin: 0;
-    position: relative;
-    width: 30px;
-  }
+  appearance: none;
+  background-color: #dfe1e4;
+  border-radius: 72px;
+  border-style: none;
+  flex-shrink: 0;
+  height: 20px;
+  margin: 0;
+  position: relative;
+  width: 30px;
+}
 
-  .checkbox-wrapper-2 .ikxBAC::before {
-    bottom: -6px;
-    content: "";
-    left: -6px;
-    position: absolute;
-    right: -6px;
-    top: -6px;
-  }
+.checkbox-wrapper-2 .ikxBAC::before {
+  bottom: -6px;
+  content: "";
+  left: -6px;
+  position: absolute;
+  right: -6px;
+  top: -6px;
+}
 
-  .checkbox-wrapper-2 .ikxBAC,
-  .checkbox-wrapper-2 .ikxBAC::after {
-    transition: all 100ms ease-out;
-  }
+.checkbox-wrapper-2 .ikxBAC,
+.checkbox-wrapper-2 .ikxBAC::after {
+  transition: all 100ms ease-out;
+}
 
-  .checkbox-wrapper-2 .ikxBAC::after {
-    background-color: #fff;
-    border-radius: 50%;
-    content: "";
-    height: 14px;
-    left: 3px;
-    position: absolute;
-    top: 3px;
-    width: 14px;
-  }
+.checkbox-wrapper-2 .ikxBAC::after {
+  background-color: #fff;
+  border-radius: 50%;
+  content: "";
+  height: 14px;
+  left: 3px;
+  position: absolute;
+  top: 3px;
+  width: 14px;
+}
 
-  .checkbox-wrapper-2 input[type=checkbox] {
-    cursor: default;
-  }
+.checkbox-wrapper-2 input[type=checkbox] {
+  cursor: default;
+}
 
-  .checkbox-wrapper-2 .ikxBAC:hover {
-    background-color: #c9cbcd;
-    transition-duration: 0s;
-  }
+.checkbox-wrapper-2 .ikxBAC:hover {
+  background-color: #c9cbcd;
+  transition-duration: 0s;
+}
 
-  .checkbox-wrapper-2 .ikxBAC:checked {
-    background-color: #007bff;
-    /* background-color: #6e79d6; */
-  }
+.checkbox-wrapper-2 .ikxBAC:checked {
+  background-color: #007bff;
+  /* background-color: #6e79d6; */
+}
 
-  .checkbox-wrapper-2 .ikxBAC:checked::after {
-    background-color: #fff;
-    left: 13px;
-  }
+.checkbox-wrapper-2 .ikxBAC:checked::after {
+  background-color: #fff;
+  left: 13px;
+}
 
-  .checkbox-wrapper-2 :focus:not(.focus-visible) {
-    outline: 0;
-  }
+.checkbox-wrapper-2 :focus:not(.focus-visible) {
+  outline: 0;
+}
 
-  .checkbox-wrapper-2 .ikxBAC:checked:hover {
-    background-color: #007bff;
+.checkbox-wrapper-2 .ikxBAC:checked:hover {
+  background-color: #007bff;
 
-    /* background-color: #535db3; */
-  }
+  /* background-color: #535db3; */
+}
 
 
 
@@ -685,5 +851,4 @@ select {
   }
 
 }
-
 </style>
