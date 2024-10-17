@@ -235,9 +235,8 @@ export default{
     flex-wrap: wrap;
     justify-content: center;
     padding: 0;
-    margin-top: 100px;
     position: fixed;
-    bottom: 0px;
+    bottom: 60px;
     border-top: 1px solid #F2F2F2;
 }
 .pins > li {

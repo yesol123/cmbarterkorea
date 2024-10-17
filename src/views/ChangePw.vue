@@ -133,11 +133,7 @@ export default {
 
 <style scoped>
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-
-
 *p,label{
-    font-family: "Noto Sans KR", sans-serif;
     margin-bottom: 10px;
 }
 
@@ -174,7 +170,7 @@ export default {
 }
 
 .changePw_seciotn{
-    margin-top: 100px;
+    margin-top: 80px;
 
 }
 
@@ -221,7 +217,7 @@ div > input:focus {
     color: white;
     font-size: 16px;
     position: fixed;
-    bottom: 10px;
+    bottom: 60px;
     cursor: pointer; /* 비활성화 시 마우스 커서 */
 }
 

@@ -38,11 +38,7 @@ export default{
 
 <style scoped>
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-
-
 *li,ul{
-    font-family: "Noto Sans KR", sans-serif;
     list-style: none;
 }
 .changePin4_header_title {
@@ -114,7 +110,7 @@ button {
     color: white;
     font-size: 16px;
     position: fixed; /* 부모 요소를 기준으로 절대 위치 설정 */
-    bottom: 10px;
+    bottom: 60px;
     left: 50%; /* 부모 요소의 가운데 위치로 설정 */
     transform: translateX(-50%); /* 왼쪽으로 50% 이동하여 가운데 정렬 */
     cursor: pointer;

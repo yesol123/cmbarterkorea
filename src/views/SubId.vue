@@ -88,11 +88,8 @@ export default {
 
 <style scoped>
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-
 
 *p,label{
-   font-family: "Noto Sans KR", sans-serif;
    margin-bottom: 10px;
 }
 
@@ -129,7 +126,7 @@ export default {
 }
 
 .subid_seciotn{
-   margin-top: 100px;
+   margin-top: 80px;
 }
 
 

@@ -151,11 +151,7 @@ export default{
 
 <style scoped>
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-
-
 *li,ul{
-    font-family: "Noto Sans KR", sans-serif;
     list-style: none;
 }
 .changePin3_header_title {
@@ -277,9 +273,8 @@ export default{
     flex-wrap: wrap;
     justify-content: center;
     padding: 0;
-    margin-top: 100px;
     position: fixed;
-    bottom: 0px;
+    bottom: 60px;
     border-top: 1px solid #F2F2F2;
 }
 .pins > li {

@@ -112,11 +112,7 @@ export default{
     
 </script>
 <style scoped>
-
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
-
 * {
-  font-family: "Noto Sans KR", sans-serif;
   list-style: none;
 }
 .Inquiry_header_title {
@@ -163,7 +159,7 @@ export default{
     margin: 0 auto;
 }
 .qna_area > ul{
-  margin-top: 100px;
+  margin-top: 60px;
     display: flex;
     justify-content: center;
     padding: 0;

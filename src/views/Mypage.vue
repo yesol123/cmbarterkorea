@@ -71,11 +71,9 @@
       <button @click="logout()">확인</button>
   </div>
     </section>
-    <Footer class="footer" />
 </template>
 
 <script>
-import Footer from '@/components/FooterPage.vue'
 import { RouterLink } from 'vue-router';
 import { useResponseStore } from '@/store/response.js'
 
@@ -86,7 +84,6 @@ export default{
     name: 'MyPage',
 
     components:{
-        Footer,
         RouterLink
     },
     data(){
@@ -197,7 +194,7 @@ export default{
 }
 
 .info{
-    margin-top: 100px;
+    margin-top: 80px;
     text-align: center;
 }
 .info > p{ 

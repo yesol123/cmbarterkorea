@@ -110,10 +110,7 @@ export default {
 }
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
-
 * {
-  font-family: "Noto Sans KR", sans-serif;
   list-style: none;
 }
 
@@ -173,7 +170,7 @@ export default {
 }
 
 .qna_list>ul {
-  margin-top: 100px;
+  margin-top: 60px;
   display: flex;
   justify-content: center;
   padding: 0;
