@@ -100,9 +100,7 @@ export default {
 
             if(navigator.geolocation) {
 
-                // let markers = [];
-
-                navigator.geolocation.getCurrentPosition(function(position) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
 
@@ -116,16 +114,11 @@ export default {
 
                     // 마커생성
                     const map = new window.kakao.maps.Map(container, options);
-                    // console.log('첫번째');
-                    // console.log(map);
-                    // this.map = new window.kakao.maps.Map(container, options);
-                    // console.log('두번째');
-                    // console.log(this.map);
                     const marker = new window.kakao.maps.Marker({
                         position : map.getCenter()
                     });
 
-                    marker.setMap(map);
+                    marker.setMap(map);  // 현재 내위치 마커
 
                     // 내위치 주변으로 원생성
                     const circle = new window.kakao.maps.Circle({
@@ -146,49 +139,86 @@ export default {
                     // 지도 영역 읽어오기
                     const bounds = circle.getBounds();
 
+                    await this.NearShop(bounds, map);
+
                     // 내 주변 가맹점 표시하기
-                    const formData = new FormData();
-                    formData.set('type', 'store_select2');
-                    formData.set('bounds', bounds);
+                    // const formData = new FormData();
+                    // formData.set('type', 'store_select2');
+                    // formData.set('bounds', bounds);
 
-                    const url = process.env.VUE_APP_API_URL;
+                    // const url = process.env.VUE_APP_API_URL;
 
-                    fetch(url + 'api/store/store_map.php', {
-                    method : 'POST',
-                    body : formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('주변 가맹점 가져오기');
-                        console.log(data);
+                    // fetch(url + 'api/store/store_map.php', {
+                    // method : 'POST',
+                    // body : formData
+                    // })
+                    // .then(response => response.json())
+                    // .then(data => {
+                    //     console.log('주변 가맹점 가져오기');
+                    //     console.log(data);
 
-                        data.msg.forEach((data_child) => {
-                            const imageSize = new window.kakao.maps.Size(24, 35);
-                            const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-                            const pos = new window.kakao.maps.LatLng(data_child.pos_latitude,data_child.pos_longitude);
-                            const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
-                            const marker = new window.kakao.maps.Marker({
-                                map : map, // 마커를 표시할 지도
-                                position : pos, // 마커를 표시할 위치
-                                image : markerImage // 마커 이미지
-                            })
+                    //     data.msg.forEach((data_child) => {
+                    //         const imageSize = new window.kakao.maps.Size(24, 35);
+                    //         const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+                    //         const pos = new window.kakao.maps.LatLng(data_child.pos_latitude,data_child.pos_longitude);
+                    //         const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+                    //         const marker = new window.kakao.maps.Marker({
+                    //             map : map, // 마커를 표시할 지도
+                    //             position : pos, // 마커를 표시할 위치
+                    //             image : markerImage // 마커 이미지
+                    //         })
 
-                            marker.setMap(map); // 현재 위치 주변 가맹점에 마커 찍기
+                    //         marker.setMap(map); // 현재 위치 주변 가맹점에 마커 찍기
 
 
-                        })
-                    })
+                    //     })
+                    // })
+
+                    window.kakao.maps.event.addListener(map, 'zoom_changed', async() => {
+                        console.log('zoom changed!');
+
+                        await this.NearShop(bounds, map);
+
+                    });
 
 
                 })
             }
         },
-        // removeAllMarkers() {
-        //     for(let i=0; this.markers.length; i++) {
-        //         this.markers[i].setMap(null);
-        //     }
-        //     this.markers = [];
-        // }
+        // 내주변 가맹점 찾고 표시하기
+        async NearShop(bounds, map) {
+            const formData = new FormData();
+            formData.set('type', 'store_select2');
+            formData.set('bounds', bounds);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            await fetch(url + 'api/store/store_map.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('주변 가맹점 가져오기');
+                console.log(data);
+
+                data.msg.forEach((data_child) => {
+                    const imageSize = new window.kakao.maps.Size(24, 35);
+                    const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+                    const pos = new window.kakao.maps.LatLng(data_child.pos_latitude,data_child.pos_longitude);
+                    const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+                    const marker = new window.kakao.maps.Marker({
+                        map : map, // 마커를 표시할 지도
+                        position : pos, // 마커를 표시할 위치
+                        image : markerImage // 마커 이미지
+                    })
+
+                    marker.setMap(map); // 현재 위치 주변 가맹점에 마커 찍기
+
+                })
+
+            })
+        }
     }
 }
 </script>
