@@ -1,11 +1,11 @@
 <template>
-    <div class="wrap">
+    
         <header>
             <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/go_back_btn.png"></button>
-            <p>CM내역</p>
+            <h3>CM내역</h3>
         </header>
-
-        <div class="btn_list">
+        <section>
+            <div class="btn_list">
             <!-- 보유 포인트, 머니 보여주기 -->
             <div class="money" :style="{ backgroundColor: backColor }">
                 <div v-if="this.member == '3'">
@@ -48,7 +48,10 @@
         </div>
 
 
-    </div>
+        </section>
+ 
+
+
 
     <!-- 결제취소 창 -->
     <!-- <div id="popup" class="popup">
@@ -66,17 +69,13 @@
         </div>
     </div> -->
 
-    <Footer />
 </template>
 
 <script>
-import Footer from '@/components/FooterPage.vue'
 import { useResponseStore } from '@/store/response.js';
 
 export default {
-    components: {
-        Footer,
-    },
+
     data() {
         return {
             member: '',
@@ -271,42 +270,9 @@ export default {
 </script>
 
 <style scoped>
-* {
+
+P{
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: hsl(0, 0%, 0%);
-}
-
-.wrap {
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    /* border: 1px solid red; */
-    margin-bottom: 70px;
-}
-
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-    padding: 0 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-
-header>p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
 }
 
 .goback_btn {
