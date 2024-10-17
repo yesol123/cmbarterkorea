@@ -370,6 +370,16 @@ const router = createRouter({
     
 
     ],
+
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            // 뒤로 가기/앞으로 가기 버튼을 눌렀을 때 저장된 스크롤 위치로 이동
+            return savedPosition;
+        } else {
+            // 그 외의 경우 항상 페이지 상단으로 이동
+            return { left: 0, top: 0 };
+        }
+    }
 }); 
 
 export default router;
