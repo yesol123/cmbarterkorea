@@ -380,6 +380,10 @@ const router = createRouter({
             return { left: 0, top: 0 };
         }
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3dea007f626ee6d8ed27e567d6b0bca0920a755b
 }); 
 
 export default router;

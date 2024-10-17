@@ -42,7 +42,7 @@
 </template>
 
 <script>
-// import { useResponseStore } from '@/store/response.js'
+import { useResponseStore } from '@/store/response.js'
 import Footer from '@/components/FooterPage.vue'
 
 export default {
@@ -101,10 +101,10 @@ export default {
             this.selectedCategory = value;
         },
         GetInfo() {
-            // let store = useResponseStore();
+            let store = useResponseStore();
             const formData = new FormData();
             formData.append('type', 'store_get');
-            formData.append('store_index', 255);
+            formData.append('store_index', store.store_index);
 
             const url = process.env.VUE_APP_API_URL;
 
