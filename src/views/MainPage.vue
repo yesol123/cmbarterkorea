@@ -28,7 +28,7 @@
                     <!-- <p v-if="this.member === '2'">보유쿠폰 <span>{{ coupon_count }}</span>장</p> -->
                     <p v-if="this.member === '3'" style="font-size: 1.5rem; color: yellow;">{{ user_cm }} CM</p>
 
-                    <p>여기를 탭하여 결제하세요.</p>
+                    <p >여기를 탭하여 결제하세요.</p>
                 </div>
                 <div class="pay_btn">
                     <button type="button" @click="toCMList()">CM내역</button>
@@ -460,17 +460,17 @@ img {
 }
 
 .pay_area {
-    height: 100px;
     /* background-color: rgb(9, 9, 116); */
     text-align: center;
     border-radius: 10px;
     border: 3px solid #fff;
+    padding: 5px;
 }
 
 .pay_area>p {
     font-weight: bold;
     font-size: 1.2rem;
-    color: #fff
+    color: #fff;
 }
 
 .pay_area span {

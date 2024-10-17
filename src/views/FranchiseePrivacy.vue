@@ -60,7 +60,7 @@ export default{
 }
 
 ul{
-    margin: 100px auto 0;
+    margin: 60px auto 0;
     display: flex;
     flex-direction: column;
     padding: 0;
