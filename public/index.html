@@ -26,8 +26,6 @@
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Sixtyfour+Convergence&display=swap');
-
     * {
       /* font-family: "Sixtyfour Convergence", sans-serif; */
       font-family: "Noto Sans KR", sans-serif;
@@ -37,8 +35,53 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      padding-bottom: 60px; /* 푸터의 높이만큼 여백을 추가 (푸터가 50px일 경우 약간의 여유를 주어 60px) */
-      min-height: 100vh; /* 최소 높이를 화면 높이로 설정 */
+     /* padding-bottom: 60px; /* 푸터의 높이만큼 여백을 추가 (푸터가 50px일 경우 약간의 여유를 주어 60px) */
+    }
+    a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 부모 요소의 색상 상속 */
+  }
+    header{
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 가운데 정렬 */
+    position: fixed;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    /* max-width: 768px; */
+    transform: translateX(-50%);
+    height: 60px;
+    background-color: #fff;
+    font-size: 18px;
+    font-weight: 800;
+    border-bottom: 1px solid var(--line);
+    z-index: 100;
+    }
+
+    header > a{
+    position: absolute; /* 왼쪽 버튼을 절대 위치로 */
+    left: 10px; /* 왼쪽으로부터의 거리 */
+    top: 50%; /* 세로 가운데 정렬 */
+    transform: translateY(-50%); /* 세로 가운데 정렬 보정 */
+    }
+
+    header > button{
+    position: absolute; /* 왼쪽 버튼을 절대 위치로 */
+    left: 10px; /* 왼쪽으로부터의 거리 */
+    top: 50%; /* 세로 가운데 정렬 */
+    transform: translateY(-50%); /* 세로 가운데 정렬 보정 */
+    }
+
+    header > h3{
+    margin: 0;
+    text-align: center; /* 텍스트 가운데 정렬 */
+    color: #1749C2;
+    font-weight: 900;
+    }
+
+    section{
+      margin-top: 80px !important;
     }
   </style>
 </head>

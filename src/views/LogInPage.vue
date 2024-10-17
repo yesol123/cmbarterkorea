@@ -1,10 +1,10 @@
 <template>
-    <div class="wrap">
+   
         <header>
-            <p>로그인</p>
+            <h3>로그인</h3>
         </header>
 
-        <main>
+        <section>
             <div class="img_holder">
                 <img src="../assets/cmblogo.png">
             </div>
@@ -26,10 +26,8 @@
                 <a href="#"><router-link to="/findid">아이디 및 비밀번호 찾기 | </router-link></a>
                 <a href="#"><router-link to="/join">회원가입</router-link></a>
             </div>
-        </main>
+        </section>
 
-        <!-- <ModalPage ref="child" style="display: none;"/> -->
-    </div>
 
     <div id="popup" class="popup">
         <div class="popup-content">
@@ -148,27 +146,7 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: #000;
-}
-.wrap {
-    width: 100%; height: 100vh;
-    background-color: #fff;
-    /* border: 1px solid red; */
-}
-header {
-    width: 100%; height: 40px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-header > p {
-    text-align: center; line-height: 40px;
-    color: blue;
-}
+
 .img_holder {
     text-align: center;
     width: 60%;

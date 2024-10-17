@@ -3,7 +3,7 @@
   <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   <!-- <HeaderPage class="header"></HeaderPage> -->
   <router-view class="content"/>
-  <Footer/>
+  <Footer  v-if="!$route.meta.hideFooter" />
   <!-- <FooterPage class="footer"></FooterPage> -->
 </template>
 

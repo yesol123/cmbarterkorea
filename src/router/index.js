@@ -6,17 +6,20 @@ const router = createRouter({
         {      
             path: "/",      
             name: "LogInPage",      
-            component: () => import("@/views/LogInPage.vue"),    
+            component: () => import("@/views/LogInPage.vue"),
+            meta: { hideFooter: true } // Footer를 숨김    
         },
         {      
             path: "/join",      
             name: "JoinPage",      
-            component: () => import("@/views/join/JoinPage.vue"),    
+            component: () => import("@/views/join/JoinPage.vue"), 
+            meta: { hideFooter: true } // Footer를 숨김   
         },
         {      
             path: "/auth",      
             name: "AuthPage",      
-            component: () => import("@/views/join/AuthPage.vue"),    
+            component: () => import("@/views/join/AuthPage.vue"),
+            meta: { hideFooter: true } // Footer를 숨김
         },
         {      
             path: "/joinform",      

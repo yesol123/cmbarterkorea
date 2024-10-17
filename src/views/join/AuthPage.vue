@@ -1,11 +1,11 @@
 <template>
-    <div class="wrap">
+    
         <header>
             <button type="button" class="goback_btn" @click="toHome()"><img src="@/assets/go_back_btn.png"></button>
-            <p>회원가입</p>
+            <h3>회원가입</h3>
         </header>
 
-        <main>
+        <section>
             <div class="auth_content">
                 <p>휴대폰 인증하기</p>
                 <p>본인인증을 위해 버튼을 클릭해주세요.</p>
@@ -15,10 +15,9 @@
             <div class="auth_btn_holder">
                 <button type="button" class="auth_btn" @click="authMe()">휴대폰 인증하기</button>
             </div>
-        </main>
-    </div>
+        </section>
 
-    <div>
+    <div :style="{ display: 'none' }">
         <ModalPage ref="child"/>
     </div>
 </template>
@@ -181,31 +180,19 @@ export default {
 </script>
 
 <style scoped>
-* {
+/* * {
     margin: 0; padding: 0;
     box-sizing: border-box;
     text-decoration: none;
     font-size: 1rem;
     color: #000;
-}
+} */
 .wrap {
     position: relative;
-    width: 100%; height: 100vh;
-    border: 1px solid red;
-}
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; height: 40px;
-    padding: 0 10px;
-    border: 1px solid #ccc;
-}
-header > p {
-    line-height: 40px;
-    color: blue;
+    width: 100%;
+    /* height: 100vh; 삭제 또는 조정 */
+    min-height: 100vh; /* 최소 높이로 설정하여 컨텐츠가 충분할 때 스크롤이 생기지 않도록 함 */
     /* border: 1px solid red; */
-    margin: 0 auto;
 }
 .goback_btn {
     width: 30px; height: 30px;
@@ -228,10 +215,12 @@ header > p {
     margin-top: 10px;
 }
 .auth_btn_holder {
-    position: absolute;
-    left: 50%; bottom: 10px;
+    position: fixed; /* fixed로 수정하여 항상 화면 하단에 고정 */
+    left: 50%;
+    bottom: 10px;
     transform: translateX(-50%);
-    width: 95%; height: 40px;
+    width: 95%;
+    height: 40px;
     border-radius: 25px;
     /* border: 1px solid blue; */
 }
