@@ -18,11 +18,21 @@
                 </ul>
             </div>
 
-            <div id="map" style="width: 100%; height: 100vh; margin-top: 10px;"></div>
+            <div class="standard">
 
-            <div class="shop_info" v-for="(info, i) in info" :key="i">
-                <p>sdddfsfsdfsf</p>
-                <div class="img"></div>
+                <div id="map" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
+
+                <div class="shop_info">
+                    <div class="img" :style="{ backgroundImage : `url(${info.store_image})`}"></div>
+                    <div class="info">
+                        <p>{{ info.store_name }}</p>
+                        <p>{{ info.store_address }}</p>
+                        <div>
+                            <button type="button"></button>
+                            <button type="button"></button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </main>
@@ -110,7 +120,8 @@ export default {
                 for(let i=0; i<data.msg.length; i++) {
                     // console.log(data.msg[i]);
                     this.info = data.msg[i];
-                    console.log(this.info.store_index);
+                    // console.log(this.info.store_index);
+                    console.log(this.info.store_image);
 
                     this.GetLocation();
                 }
@@ -245,11 +256,63 @@ main {
     background-color: #1bce0b;
     color: #fff;
 }
+.standard {
+    position: relative;
+    width: 100%; height: 80vh;
+    /* border: 5px solid blue; */
+}
 .shop_info {
     position: absolute;
-    bottom: 22%; left: 0;
+    bottom: 50px; left: 0;
+
+    display: flex;
+    justify-content: space-between;
     z-index: 10;
     width: 100%; height: 150px;
-    border: 1px solid red;
+    background-color: #fff;
+    padding: 15px 10px;
+    border: none;
+}
+.img {
+    width: 35%; height: 100px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.info {
+    width: 60%;
+    /* border: 1px solid red; */
+}
+.info > p {
+    width: 100%;
+    font-weight: bold;
+    color: #000;
+}
+.info > p:nth-of-type(2) {
+    font-weight: 300;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    color: #ccc;
+}
+.info > div {
+    width: 100%; height: 30px;
+    text-align: right;
+    margin-top: 10px;
+    /* border: 1px solid red; */
+}
+.info > div button {
+    width: 30px; height: 30px;
+    background-image: url(../assets/call.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+}
+.info > div button:nth-of-type(2) {
+    margin-left: 10px;
+    background-image: url(../assets/location.png);
 }
 </style>
