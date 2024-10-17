@@ -72,7 +72,7 @@ export default{
     name:'franchisee_Marketing',
     data(){
         return{
-            yesorno:null, // 동의인지 거부인지 상태를 저장
+            yesorno:'N', // 동의인지 거부인지 상태를 저장
             agreementDate:null, // 약관 동의일
             showModal:false,
             showModal2: false,
@@ -99,16 +99,19 @@ export default{
                 .then(response => response.json())
                 .then(result =>{
                     console.log('msg',result);
+                  
                 })
            
-            this.showModal2 = false
+            this.showModal2 = false;
         },
         cancel(){
         this.showModal = false;
         },
 
         confirmRevoke(){
+            
             this.showModal = false; // 모달 1 닫기
+            this.agreementDate = '';
             this.showModal2 = true; // 모달 2 열기
 
         },
@@ -131,33 +134,32 @@ export default{
                 .then(response => response.json())
                 .then(result =>{
                     console.log('msg',result);
+                    this.fetchLatestConditions(); // 철회 후 최신 정보 다시 불러오기
                 })
+                
                 this.showModal3 = false
-        }
-    },
-    mounted(){
-
-        let store = useResponseStore();
-
+        },
+        fetchLatestConditions() {
+            let store = useResponseStore();
         const formData = new FormData();
 
-        formData.append('type','conditions_get')
-        formData.append('user_index',store.user_index)
+        formData.append('type', 'conditions_get');
+        formData.append('user_index', store.user_index);
 
         const url = process.env.VUE_APP_API_URL;
 
         fetch(url + 'api/setting/conditions.php', {
-                method: 'POST',
-                body: formData
-                })
-                .then(response => response.json())
-                .then(result =>{
-                    console.log('msg',result.msg[0]);
-                    this.yesorno = result.msg[0].user_marketing_checked
-                    this.agreementDate = result.msg[0].user_create_time
-                })
-
-
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log('msg', result.msg[0]);
+            this.yesorno = result.msg[0].user_marketing_checked;
+            this.agreementDate = result.msg[0].user_create_time; // 동의 날짜 갱신
+        });
+        }
+        
     }
 }
 
@@ -176,7 +178,7 @@ export default{
 }
 
 ul{
-    margin: 100px auto 0;
+    margin: 60px auto 0;
     display: flex;
     flex-direction: column;
     padding: 0;
