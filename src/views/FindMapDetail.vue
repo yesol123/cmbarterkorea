@@ -8,10 +8,9 @@
         <main>
             <div class="btns">
                 <div :class="{ one : isOne }" @click="GetList()">목록검색</div>
-                <div :class="{ two : isTwo }" @click="GetMap()">지도보기</div>
+                <div :class="{ two : isTwo }">지도보기</div>
             </div>
 
-                
             <div class="category">
                 <ul>
                     <li :value="0" :class="{ all : isAll }" @click="All()" >내 주변</li>
@@ -21,6 +20,11 @@
 
             <div id="map" style="width: 100%; height: 100vh; margin-top: 10px;"></div>
 
+            <div class="shop_info" v-for="(info, i) in info" :key="i">
+                <p>sdddfsfsdfsf</p>
+                <div class="img"></div>
+            </div>
+
         </main>
     </div>
 
@@ -28,6 +32,7 @@
 </template>
 
 <script>
+// import { useResponseStore } from '@/store/response.js'
 import Footer from '@/components/FooterPage.vue'
 
 export default {
@@ -41,18 +46,12 @@ export default {
             categories : [],
             isAll : true,
             selectedCategory : '',
-            // x : '',
-            // y : '',
-            // map : null,
-            // circle : null,
-            // bounds : null,
-            // radius : 0.5,
-            // markers : [],
+            info : ''
         }
     },
     mounted() {
         this.GetCategory();
-        this.GetLocation(); // 지도보여주기
+        this.GetInfo();
     },
     methods : {
         toFindShop() {
@@ -62,10 +61,6 @@ export default {
             this.isTwo = false;
             this.isOne = true;
             this.$router.push({ path : '/findshop' });
-        },
-        GetMap() {
-            this.isOne = false;
-            this.isTwo = true;
         },
         GetCategory() {
             const formData = new FormData();
@@ -95,100 +90,57 @@ export default {
             this.selectedCategory = '';
             this.selectedCategory = value;
         },
+        GetInfo() {
+            // let store = useResponseStore();
+            const formData = new FormData();
+            formData.append('type', 'store_get');
+            formData.append('store_index', 255);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/store/store_map.php', {
+            method : 'POST',
+            body : formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('지도상세');
+                console.log(data);
+                
+                for(let i=0; i<data.msg.length; i++) {
+                    // console.log(data.msg[i]);
+                    this.info = data.msg[i];
+                    console.log(this.info.store_index);
+
+                    this.GetLocation();
+                }
+            })
+
+        },
         GetLocation() {
             const container = document.getElementById('map');
 
-            if(navigator.geolocation) {
+            // 지도생성
+            const options = {
+                center : new window.kakao.maps.LatLng(this.info.store_pos2, this.info.store_pos1),
+                level : 3
+            };
 
-                // let markers = [];
+            // 마커생성
+            const map = new window.kakao.maps.Map(container, options);
+            const imageSize = new window.kakao.maps.Size(24, 35);
+            const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+            const pos = new window.kakao.maps.LatLng(this.info.store_pos2,this.info.store_pos1);
+            const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+            const marker = new window.kakao.maps.Marker({
+                map : map, // 마커를 표시할 지도
+                position : pos, // 마커를 표시할 위치
+                image : markerImage // 마커 이미지
+            });
 
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
+            marker.setMap(map);
 
-                    console.log(lat, lon);
-
-                    // 지도생성
-                    const options = {
-                        center : new window.kakao.maps.LatLng(lat, lon),
-                        level : 5
-                    };
-
-                    // 마커생성
-                    const map = new window.kakao.maps.Map(container, options);
-                    // console.log('첫번째');
-                    // console.log(map);
-                    // this.map = new window.kakao.maps.Map(container, options);
-                    // console.log('두번째');
-                    // console.log(this.map);
-                    const marker = new window.kakao.maps.Marker({
-                        position : map.getCenter()
-                    });
-
-                    marker.setMap(map);
-
-                    // 내위치 주변으로 원생성
-                    const circle = new window.kakao.maps.Circle({
-                        center : new window.kakao.maps.LatLng(lat, lon),
-                        radius : 500,
-                        strokeWeight : 2,
-                        strokeColor : '#1749C2',
-                        strokeOpacity : 0.8,
-                        // strokeStyle : 'solid',
-                        fillColor : '#98caff',
-                        fillOpacity : 0.5,
-                    });
-
-                    circle.setMap(map);
-
-                    map.panTo(new window.kakao.maps.LatLng(lat, lon));
-
-                    // 지도 영역 읽어오기
-                    const bounds = circle.getBounds();
-
-                    // 내 주변 가맹점 표시하기
-                    const formData = new FormData();
-                    formData.set('type', 'store_select2');
-                    formData.set('bounds', bounds);
-
-                    const url = process.env.VUE_APP_API_URL;
-
-                    fetch(url + 'api/store/store_map.php', {
-                    method : 'POST',
-                    body : formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('주변 가맹점 가져오기');
-                        console.log(data);
-
-                        data.msg.forEach((data_child) => {
-                            const imageSize = new window.kakao.maps.Size(24, 35);
-                            const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-                            const pos = new window.kakao.maps.LatLng(data_child.pos_latitude,data_child.pos_longitude);
-                            const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
-                            const marker = new window.kakao.maps.Marker({
-                                map : map, // 마커를 표시할 지도
-                                position : pos, // 마커를 표시할 위치
-                                image : markerImage // 마커 이미지
-                            })
-
-                            marker.setMap(map); // 현재 위치 주변 가맹점에 마커 찍기
-
-
-                        })
-                    })
-
-
-                })
-            }
-        },
-        // removeAllMarkers() {
-        //     for(let i=0; this.markers.length; i++) {
-        //         this.markers[i].setMap(null);
-        //     }
-        //     this.markers = [];
-        // }
+        }
     }
 }
 </script>
@@ -234,6 +186,7 @@ header > p {
     width: 100%; height: 100%;
 }
 main {
+    position: relative;
     width: 100%;
     margin-top: 40px;
     /* border: 1px solid red; */
@@ -291,5 +244,12 @@ main {
     border: none;
     background-color: #1bce0b;
     color: #fff;
+}
+.shop_info {
+    position: absolute;
+    bottom: 22%; left: 0;
+    z-index: 10;
+    width: 100%; height: 150px;
+    border: 1px solid red;
 }
 </style>
