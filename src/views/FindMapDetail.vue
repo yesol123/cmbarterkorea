@@ -168,7 +168,6 @@ export default {
 section {
     position: relative;
     width: 100%;
-    margin-top: 40px;
     /* border: 1px solid red; */
 }
 .btns {
@@ -240,11 +239,12 @@ section {
 }
 .standard {
     position: relative;
-    width: 100%; height: 80vh;
+    width: 100%; 
+    height: calc(100vh - 60px); /* 뷰포트 전체 높이에서 header 높이(60px)를 제외 */
     /* border: 5px solid blue; */
 }
 .shop_info {
-    position: absolute;
+    position: fixed;
     bottom: 30px; left: 0;
     display: flex;
     justify-content: space-between;
@@ -253,6 +253,7 @@ section {
     background-color: #fff;
     padding: 30px 10px;
     border: none;
+   
 }
 .img {
     width: 35%; height: 100px;
