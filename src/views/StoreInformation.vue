@@ -508,30 +508,7 @@ a {
   text-decoration: none;
 }
 
-.store_infomation_title{
-  position: relative  !important;/* relative로 변경하여 내부 absolute 요소들이 정상적으로 배치되도록 */
-}
-.store_infomation_title>a:nth-child(1) {
-      position: absolute  !important;
-      /* 왼쪽 버튼을 절대 위치로 */
-      left: 10px  !important;
-      /* 왼쪽으로부터의 거리 */
-      top: 50%  !important;
-      /* 세로 가운데 정렬 */
-      transform: translateY(-50%)  !important;
-      /* 세로 가운데 정렬 보정 */
-    }
 
-    .store_infomation_title>a:nth-child(2) {
-      position: absolute  !important;
-      /* 오른쪽 버튼을 절대 위치로 */
-      right: 10px  !important;
-      /* 오른쪽으로부터의 거리 (여백 추가) */
-      top: 50%  !important;
-      /* 세로 가운데 정렬 */
-      transform: translateY(-50%)  !important;
-      /* 세로 가운데 정렬 보정 */
-    }
 .holiday_txt {
   margin: 8px 0;
 }

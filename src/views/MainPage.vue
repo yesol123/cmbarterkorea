@@ -529,20 +529,20 @@ button {
     display: flex;
     flex-wrap: wrap;
     width: 90%;
-    margin: 0 auto;
+    margin: 20px auto;
+    padding: 10px;
     /* border: 1px solid red; */
 }
 
 .icon {
     width: 33%;
-    height: 100px;
+    padding: 8px;
     text-align: center;
     /* border: 1px solid red; */
 }
 
 .icon>img {
     width: 40px;
-    margin-top: 20px;
 }
 
 

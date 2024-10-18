@@ -331,11 +331,6 @@ const router = createRouter({
             component:()=> import("@/views/CouponDetail.vue")
         },  
         {
-            path: '/couponDetail2/:id',
-            name:'couponDetail2',
-            component:()=> import("@/views/CouponDetail2.vue")
-        },  
-        {
             path: '/storeInformation',
             name:'storeInformation',
             component:()=> import("@/views/StoreInformation.vue")

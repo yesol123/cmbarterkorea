@@ -38,41 +38,6 @@ export default{
 
 <style scoped>
 
-*li,ul{
-    list-style: none;
-}
-.changePin4_header_title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* 가운데 정렬 */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 60px;
-    background-color: #fff;
-    font-size: 18px;
-    font-weight: 800;
-    border-bottom: 1px solid var(--line);
-    z-index: 100;
-    padding: 0 10px; /* 좌우 여백 추가 */
-    box-sizing: border-box; /* 여백과 테두리를 포함한 전체 크기 계산 */
-}
-
-.changePin4_header_title > a {
-    position: absolute; /* 오른쪽 버튼을 절대 위치로 */
-    right: 10px; /* 오른쪽으로부터의 거리 (여백 추가) */
-    top: 50%; /* 세로 가운데 정렬 */
-    transform: translateY(-50%); /* 세로 가운데 정렬 보정 */
-}
-
-.changePin4_header_title > h3 {
-    margin: 0 auto;
-    text-align: center;
-    color: #1749C2;
-    font-weight: 900;
-}
-
 .changePin4_section{
     position: relative;
     margin-top: 100px;

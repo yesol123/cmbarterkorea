@@ -4,7 +4,6 @@
         <h3>쿠폰 상세보기</h3>
     </header>
 
-<!-- 여기는 쿠폰이 쌓이면 여기만 스크롤이 생기게 해주세용! / 반영 전 -->
     <section class="couponbox_Detail_section">
         <ul >
             <li class="m_T30">
@@ -115,54 +114,6 @@ export default{
 
 <style scoped>
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-
-*{
-    font-family: "Noto Sans KR", sans-serif;
-}
-
-
-ul,li{
-    list-style: none;
-    padding: 0;
-}
-
-.couponbox_Detail_title{
-    display: flex;
-    align-items: center;
-    justify-content: center; /* 가운데 정렬 */
-    position: fixed;
-    top: 0;
-    left: 50%;
-    width: 100%;
-    /* max-width: 768px; */
-    transform: translateX(-50%);
-    height: 60px;
-    background-color: #fff;
-    font-size: 18px;
-    font-weight: 800;
-    border-bottom: 1px solid var(--line);
-    z-index: 100;
-}
-
-.couponbox_Detail_title > a {
-    position: absolute; /* 왼쪽 버튼을 절대 위치로 */
-    left: 10px; /* 왼쪽으로부터의 거리 */
-    top: 50%; /* 세로 가운데 정렬 */
-    transform: translateY(-50%); /* 세로 가운데 정렬 보정 */
-}
-
-.couponbox_Detail_title > h3 {
-    margin: 0;
-    text-align: center; /* 텍스트 가운데 정렬 */
-    color: #1749C2;
-    font-weight: 900;
-}
-
-.couponbox_Detail_section{
-    margin: 100px auto 0;
-    width: 95%;
-}
 
 .couponbox_Detail_section ul li{
     margin-bottom: 10px;
