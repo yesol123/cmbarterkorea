@@ -12,7 +12,7 @@
 
             <div class="btn_group">
                 <button type="button"><router-link to="/findpw" style="color: #fff;">비밀번호 재설정</router-link></button>
-                <button type="button">로그인</button>
+                <button type="button" @click="gotoLogin()">로그인</button>
             </div>
             </div>
         </section>
@@ -33,6 +33,12 @@ export default {
         console.log(store.datas); // store.datas가 무엇인지 확인
         this.yourid = store.datas[0].toString();
         // console.log(store.datas);
+    },
+    methods:{
+        gotoLogin() {
+    console.log('로그인 버튼 클릭됨'); // 더 명확한 로그
+    this.$router.push('/'); // 경로 이동
+}
     }
 }
 
@@ -54,15 +60,6 @@ export default {
 }
 .goback_btn img {
     width: 100%; height: 100%;
-}
-main {
-    margin-top: 130px;
-    text-align: center;
-    /* border: 1px solid red; */
-}
-main > p {
-    font-size: 1.1rem;
-    margin-top: 10px;
 }
 .btn_group {
     margin-top: 30px;
