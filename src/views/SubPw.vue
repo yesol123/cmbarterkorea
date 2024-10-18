@@ -1,9 +1,6 @@
 <template>
    
 
-   <section class="subpw_seciotn">
-
-
        <div>
            <label for="newpassword_">새 비밀번호</label>
            <input v-model="newpassword" id="newpassword_" type="password" placeholder="새로운 비밀번호를 입력해주세요">
@@ -20,7 +17,7 @@
        </div>
 
 
-       <div>
+       <div class="btn_class">
            <button :class="[{'active': isButtonActive}, 'origin']" @click="confirm()">확인</button>
        </div>
 
@@ -34,7 +31,6 @@
      <button @click="confirm()">확인</button>
  </div> -->
 
-   </section>
 
 
 </template>
@@ -133,12 +129,9 @@ export default {
 
 
 div{
-   width: 95%;
    display: flex;
    flex-direction: column;
    margin: 20px auto;
-   
-
 }
 div > input{
    width: 100%;
@@ -165,9 +158,9 @@ div > input:focus {
    margin-top: 5px;
 }
 
+
 .origin{
    width: 95%;
-   align-items: center;
    padding: 10px;
    border-radius: 5px;
    border: 1px solid #b1b1b1;
@@ -177,6 +170,7 @@ div > input:focus {
    position: fixed;
    bottom: 60px;
    cursor: pointer; /* 비활성화 시 마우스 커서 */
+   margin: 0 auto;
 }
 
 

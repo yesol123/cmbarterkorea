@@ -1,11 +1,11 @@
 <template>
-    <div class="wrap">
+    
         <header>
             <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/go_back_btn.png"></button>
-            <p>가맹점 찾기</p>
+            <h3>가맹점 찾기</h3>
         </header>
 
-        <main>
+        <section>
             <div class="btns">
                 <div :class="{ one : isOne }" @click="GetList()">목록검색</div>
                 <div :class="{ two : isTwo }" @click="GetMap()">지도보기</div>
@@ -71,20 +71,14 @@
                 <button type="button" v-if="currentPage < totalPages" @click="currentPage++" style="margin-left: 10px;">다음 페이지</button>
             </div>
 
-        </main>
-    </div>
-
-    <Footer />
+        </section>
+ 
 </template>
 
 <script>
-import Footer from '@/components/FooterPage.vue'
 import { useResponseStore } from '@/store/response.js'
 
 export default {
-    components: {
-        Footer,
-    },
     data() {
         return {
             isOne : true,
@@ -289,37 +283,11 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: hsl(0, 0%, 0%);
+
+*p{
+    margin: 5px
 }
-.wrap {
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    /* border: 1px solid red; */
-    margin-bottom: 70px;
-}
-header {
-    position: fixed;
-    top: 0; left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; height: 40px;
-    padding: 0 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-header > p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
-}
+
 .goback_btn {
     width: 30px; height: 30px;
     background-color: #fff;
@@ -367,25 +335,38 @@ main {
     border-radius: 7px;
 }
 .category {
-    width: 100%; height: 70px;
+    width: 100%;
+    padding: 15px;
     /* border: 1px solid red; */
-    overflow: scroll;
+    overflow-x: auto;
     padding: 0 10px;
 }
 .category > ul {
+    margin: 8px 0;
+    padding: 5px;
     display: flex;
-    flex-wrap: wrap;
+    gap: 5px;
+    white-space: nowrap; /* 리스트 항목이 가로로 배치되도록 설정 */
+    flex-shrink: 0;
+    overflow-x: auto;
     justify-content: space-between;
-    width: 1500px;
+    scrollbar-width: none; /* Firefox: 스크롤바 숨기기 */
+    -ms-overflow-style: none; /* IE and Edge: 스크롤바 숨기기 */
 }
+
+
+/* Chrome, Safari, Opera에서 스크롤바 숨기기 */
+.category::-webkit-scrollbar {
+  display: none;
+}
+
 .category li {
-    height: 35px; line-height: 35px;
-    padding: 0 15px; 
+    width: 100%;
+    padding: 8px 15px; 
     list-style: none;
     font-size: 0.8rem;
     /* text-align: center; */
     font-weight: bold;
-    margin-top: 15px;
     border-radius: 20px;
     border: 1px solid #ccc;
 }
@@ -407,6 +388,7 @@ main {
     margin-top: 20px;
     border-radius: 5px;
     border: 1px solid #ccc;
+    margin: 5px 0;
 }
 .search > input {
     width: 80%; height: 35px;
@@ -427,13 +409,15 @@ main {
 .list {
     display: flex;
     justify-content: space-between;
-    width: 100%; height: 150px;
-    padding: 20px 15px;
-    margin-top: 20px;
+    width: 100%; 
+    padding: 25px 15px;
+
     border-bottom: 1px solid #ccc;
 }
+.list > div{
+    width: 35%;
+}
 .img {
-    width: 35%; height: 100px;
     border-radius: 5px;
     border: 1px solid #ccc;
     background-repeat: no-repeat;
@@ -441,10 +425,12 @@ main {
     margin-right: 10px;
 }
 .info {
-    width: 35%; height: 100px;
+    display: flex;
+    flex-direction: column;
     margin-right: 10px;
     /* border: 1px solid red; */
 }
+
 .info > p {
     margin-bottom: 5px;
 }

@@ -1,11 +1,11 @@
 <template>
-    <div class="wrap">
+  
         <header>
             <button type="button" class="goback_btn" @click="toCouponMake()"><img src="@/assets/go_back_btn.png"></button>
-            <p>쿠폰 이벤트 등록</p>
+            <h3>쿠폰 이벤트 등록</h3>
         </header>
-
-        <div class="main">
+        <section>
+            <div class="main">
             <div>
                 <label>쿠폰 종류</label>
                 <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -52,22 +52,20 @@
                 </li>
             </ul>
         </div>
-    </div>
 
-    <Footer />
+        </section>
+
+
+
 
     
 </template>
 
 <script>
-import Footer from '@/components/FooterPage.vue'
 
 import { useResponseStore } from '@/store/response.js'
 
 export default {
-    components : {
-        Footer,
-    },
     data() {
         return {
             couponlist : '',
@@ -254,37 +252,7 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: hsl(0, 0%, 0%);
-}
-.wrap {
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    /* border: 1px solid red; */
-    margin-bottom: 70px;
-}
-header {
-    position: fixed;
-    top: 0; left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; height: 40px;
-    padding: 0 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-header > p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
-}
+
 .goback_btn {
     width: 30px; height: 30px;
     background-color: #fff;

@@ -1,11 +1,11 @@
 <template>
-    <div class="wrap">
+    
         <header>
             <button type="button" class="goback_btn" @click="toFindShop()"><img src="@/assets/go_back_btn.png"></button>
-            <p>가맹점 찾기</p>
+            <h3>가맹점 찾기</h3>
         </header>
 
-        <main>
+        <section>
             <div class="btns">
                 <div :class="{ one : isOne }" @click="GetList()">목록검색</div>
                 <div :class="{ two : isTwo }" @click="GetMap()">지도보기</div>
@@ -21,8 +21,8 @@
 
             <div id="map" style="width: 100%; height: 100vh; margin-top: 10px;"></div>
 
-        </main>
-    </div>
+        </section>
+
 
     <Footer style="z-index: 10;" />
 </template>
@@ -276,37 +276,7 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: hsl(0, 0%, 0%);
-}
-.wrap {
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    /* border: 1px solid red; */
-    margin-bottom: 70px;
-}
-header {
-    position: fixed;
-    top: 0; left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; height: 40px;
-    padding: 0 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-header > p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
-}
+
 .goback_btn {
     width: 30px; height: 30px;
     background-color: #fff;
@@ -342,25 +312,40 @@ main {
     border-bottom: 2px solid #1bce0b;
 }
 .category {
-    width: 100%; height: 70px;
+    width: 100%;
+    padding: 15px;
     /* border: 1px solid red; */
-    overflow: scroll;
+    overflow-x: auto;
     padding: 0 10px;
 }
 .category > ul {
+    margin: 8px 0;
+    padding: 5px;
     display: flex;
-    flex-wrap: wrap;
+    gap: 5px;
+    white-space: nowrap; /* 리스트 항목이 가로로 배치되도록 설정 */
+    flex-shrink: 0;
+    overflow-x: auto;
     justify-content: space-between;
-    width: 1500px;
+    scrollbar-width: none; /* Firefox: 스크롤바 숨기기 */
+    -ms-overflow-style: none; /* IE and Edge: 스크롤바 숨기기 */
 }
+
+
+/* Chrome, Safari, Opera에서 스크롤바 숨기기 */
+.category::-webkit-scrollbar {
+  display: none;
+}
+
+
+
 .category li {
-    height: 35px; line-height: 35px;
-    padding: 0 15px; 
+    width: 100%;
+    padding: 8px 15px; 
     list-style: none;
     font-size: 0.8rem;
     /* text-align: center; */
     font-weight: bold;
-    margin-top: 15px;
     border-radius: 20px;
     border: 1px solid #ccc;
 }

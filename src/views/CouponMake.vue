@@ -1,8 +1,8 @@
 <template>
-    <div class="wrap">
+    
         <header>
             <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/go_back_btn.png"></button>
-            <p>쿠폰발행함</p>
+            <h3>쿠폰발행함</h3>
         </header>
 
         <section class="couponbox_section">
@@ -49,7 +49,7 @@
                 </li>
             </ul>
         </section>
-    </div>
+   
 
     <!-- 쿠폰발행창 -->
     <div id="popup" class="popup">
@@ -564,58 +564,8 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0;
+ul{
     padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: hsl(0, 0%, 0%);
-}
-
-.wrap {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    /* 화면 전체 높이로 설정 */
-    background-color: #fff;
-}
-
-header {
-    display: flex;
-    flex-shrink: 0;
-    /* 헤더는 고정 */
-    position: fixed;
-    /* 상단 고정 */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 40px;
-    padding: 0 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    z-index: 100;
-}
-
-
-.couponbox_section {
-    display: flex;
-    flex-direction: column;
-    margin-top: 70px;
-    /* header 아래로 이동 */
-    padding: 10px;
-    flex-grow: 1;
-    /* 남은 공간을 모두 차지 */
-    overflow: hidden;
-    /* 기본적으로 내용이 넘칠 때 스크롤을 숨김 */
-}
-
-
-header>p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
 }
 
 .goback_btn {

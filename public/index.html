@@ -19,13 +19,16 @@
   <script defer="defer" type="text/javascript" src="https://api.thepayone.com/js/clientside.js"></script>
   <link rel="stylesheet" type="text/css"
     href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <!-- <script defer="defer" type="text/javascript" src="https://api.thepayone.com/js/clientside.js"></script> -->
 
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
     * {
       /* font-family: "Sixtyfour Convergence", sans-serif; */
       font-family: "Noto Sans KR", sans-serif;
@@ -35,53 +38,96 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-     /* padding-bottom: 60px; /* 푸터의 높이만큼 여백을 추가 (푸터가 50px일 경우 약간의 여유를 주어 60px) */
+      /* padding-bottom: 60px; /* 푸터의 높이만큼 여백을 추가 (푸터가 50px일 경우 약간의 여유를 주어 60px) */
     }
+
     a {
-    text-decoration: none; /* 밑줄 제거 */
-    color: inherit; /* 부모 요소의 색상 상속 */
-  }
-    header{
-    display: flex;
-    align-items: center;
-    justify-content: center; /* 가운데 정렬 */
-    position: fixed;
-    top: 0;
-    left: 50%;
-    width: 100%;
-    /* max-width: 768px; */
-    transform: translateX(-50%);
-    height: 60px;
-    background-color: #fff;
-    font-size: 18px;
-    font-weight: 800;
-    border-bottom: 1px solid var(--line);
-    z-index: 100;
+      text-decoration: none;
+      /* 밑줄 제거 */
+      color: inherit;
+      /* 부모 요소의 색상 상속 */
     }
 
-    header > a{
-    position: absolute; /* 왼쪽 버튼을 절대 위치로 */
-    left: 10px; /* 왼쪽으로부터의 거리 */
-    top: 50%; /* 세로 가운데 정렬 */
-    transform: translateY(-50%); /* 세로 가운데 정렬 보정 */
+    ul,li,
+    a {
+      text-decoration: none;
+      list-style: none;
+      padding: 0;
+
     }
 
-    header > button{
-    position: absolute; /* 왼쪽 버튼을 절대 위치로 */
-    left: 10px; /* 왼쪽으로부터의 거리 */
-    top: 50%; /* 세로 가운데 정렬 */
-    transform: translateY(-50%); /* 세로 가운데 정렬 보정 */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* 가운데 정렬 */
+      position: fixed;
+      top: 0;
+      left: 50%;
+      width: 100%;
+      /* max-width: 768px; */
+      transform: translateX(-50%);
+      height: 60px;
+      background-color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      border-bottom: 1px solid var(--line);
+      z-index: 100;
     }
 
-    header > h3{
-    margin: 0;
-    text-align: center; /* 텍스트 가운데 정렬 */
-    color: #1749C2;
-    font-weight: 900;
+    /* header>a {
+      position: absolute;
+      /* 왼쪽 버튼을 절대 위치로 */
+      /* left: 10px; */
+      /* 왼쪽으로부터의 거리
+      top: 50%; */
+      /* 세로 가운데 정렬
+      transform: translateY(-50%); */
+      /* 세로 가운데 정렬 보정 
+    } */
+
+
+/* 왼쪽 버튼 (뒤로 가기 버튼) */
+header > a:nth-child(1) {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* 오른쪽 버튼 (닫기 버튼) */
+header > a:nth-child(3) {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+    header>button {
+      position: absolute;
+      /* 왼쪽 버튼을 절대 위치로 */
+      left: 10px;
+      /* 왼쪽으로부터의 거리 */
+      top: 50%;
+      /* 세로 가운데 정렬 */
+      transform: translateY(-50%);
+      /* 세로 가운데 정렬 보정 */
     }
 
-    section{
-      margin-top: 80px !important;
+    header>h3 {
+      margin: 0;
+      text-align: center;
+      /* 텍스트 가운데 정렬 */
+      color: #1749C2;
+      font-weight: 900;
+    }
+
+
+
+    section {
+      width: 95%;
+      margin: 80px auto;
     }
   </style>
 </head>

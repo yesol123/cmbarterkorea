@@ -5,8 +5,8 @@
                   <h3>사업자 등록정보</h3>
           </header>
     </header>
-
-    <ul>
+    <section>
+        <ul>
                 <li li class="m_T30">
                     <label>
                         사업자 등록번호
@@ -35,6 +35,9 @@
                     </label>
                 </li>
     </ul>
+
+    </section>
+   
 
 </template>
 <script>
@@ -92,16 +95,6 @@ export default{
 <style scoped>
 
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-
-
-*ul,li,input{
-    font-family: "Noto Sans KR", sans-serif;
-    list-style: none;
-    text-decoration: none;
-    
-}
-
 ul{
     margin: 100px auto;
     display: flex;
@@ -130,38 +123,6 @@ ul > li > label {
 .terms{
     width: 100%;
     margin: 0 auto;
-}
-
-.buisness_header_title{
-    display: flex;
-    align-items: center;
-    justify-content: center; /* 가운데 정렬 */
-    position: fixed;
-    top: 0;
-    left: 50%;
-    width: 100%;
-    /* max-width: 768px; */
-    transform: translateX(-50%);
-    height: 60px;
-    background-color: #fff;
-    font-size: 18px;
-    font-weight: 800;
-    border-bottom: 1px solid var(--line);
-    z-index: 100;
-}
-
-.buisness_header_title > a {
-    position: absolute; /* 왼쪽 버튼을 절대 위치로 */
-    left: 10px; /* 왼쪽으로부터의 거리 */
-    top: 50%; /* 세로 가운데 정렬 */
-    transform: translateY(-50%); /* 세로 가운데 정렬 보정 */
-}
-
-.buisness_header_title > h3 {
-    margin: 0;
-    text-align: center; /* 텍스트 가운데 정렬 */
-    color: #1749C2;
-    font-weight: 900;
 }
 
 

@@ -1,11 +1,11 @@
 <template>
-    <div class="wrap">
+  
         <header>
             <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/go_back_btn.png"></button>
-            <p>결제</p>
+            <h3>결제</h3>
         </header>
-
-        <div class="qrscanwrap" style="text-align: center; margin-top: 30%;">
+<section>
+    <div class="qrscanwrap" style="text-align: center; margin-top: 30%;">
             <!-- <div class="qr_scan_txt" style="font-size: 1.0rem; font-weight: bold; margin-bottom: 40px;">
                 <p>QR 스캔</p>
             </div> -->
@@ -26,7 +26,7 @@
                 </form>
             </div> -->
         </div>
-    </div>
+ 
 
     <!-- 결제확인창 -->
     <div id="popup" class="popup">
@@ -62,6 +62,10 @@
         </div>
     </div>
 
+
+
+</section>
+   
     <ModalPage ref="child" style="display: none;"/>
 </template>
 
@@ -269,37 +273,8 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: hsl(0, 0%, 0%);
-}
-.wrap {
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    /* border: 1px solid red; */
-    margin-bottom: 70px;
-}
-header {
-    position: fixed;
-    top: 0; left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; height: 40px;
-    padding: 0 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-header > p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
-}
+
+
 .goback_btn {
     width: 30px; height: 30px;
     background-color: #fff;

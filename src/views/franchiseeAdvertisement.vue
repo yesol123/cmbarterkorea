@@ -157,18 +157,7 @@ export default {
 }
 </script>
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 
-
-*ul,
-li,
-a,
-p {
-    font-family: "Noto Sans KR", sans-serif;
-    list-style: none;
-    text-decoration: none;
-
-}
 
 ul {
     margin: 60px auto 0;

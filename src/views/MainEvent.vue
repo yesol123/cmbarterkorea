@@ -1,11 +1,11 @@
 <template>
-    <div class="wrap">
+
         <header>
             <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/go_back_btn.png"></button>
-            <p>쿠폰 이벤트</p>
+            <h3>쿠폰 이벤트</h3>
         </header>
 
-        <main style="margin-top: 50px;">
+        <section style="margin-top: 50px;">
             <div class="buttons">
                 <div :class="{ btn1 : isFirst }" @click="FirstBtn()">진행중</div>
                 <div :class="{ btn2 : isSecond }" @click="SecondBtn()">종료</div>
@@ -22,8 +22,8 @@
                     <p v-if="this.isSecond == false">다운로드 가능 : {{ list.event_master_limit }}</p>
                 </div>
             </div>
-        </main>
-    </div>
+        </section>
+
 </template>
 
 <script>
@@ -143,37 +143,7 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: hsl(0, 0%, 0%);
-}
-.wrap {
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    /* border: 1px solid red; */
-    margin-bottom: 70px;
-}
-header {
-    position: fixed;
-    top: 0; left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; height: 40px;
-    padding: 0 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-header > p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
-}
+
 .goback_btn {
     width: 30px; height: 30px;
     background-color: #fff;
@@ -210,16 +180,23 @@ main {
     justify-content: space-between;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-top: 10px;
+    margin: 10px auto;
+    width: 95%;
+
 }
 .coupons > div {
-    width: 50%; height: 100px;
-    /* border: 1px solid #000; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%; 
+    padding: 5px;
 }
 .coupons > div:nth-of-type(1) > p, div:nth-of-type(2) > p {
     font-size: 0.9rem;
     margin-top: 7px;
     padding: 0 5px;
+    margin: 5px;
     text-align: center;
 }
 .coupons > div:nth-of-type(1) > p:nth-of-type(1) {
