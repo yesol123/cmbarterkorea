@@ -1,11 +1,11 @@
 <template>
-    <div class="wrap">
+   
         <header>
             <button type="button" class="goback_btn"><router-link to="/"><img src="@/assets/go_back_btn.png"></router-link></button>
-            <p>비밀번호 확인</p>
+            <h3>비밀번호 확인</h3>
         </header>
 
-        <main>
+        <section>
             <div class="join_form">
                 <div>
                     <label for="newpw">새 비밀번호 입력</label>
@@ -20,10 +20,10 @@
             <div class="change_btn_holder">
                 <button type="button" class="change_btn" @click="setChange()">변경</button>
             </div>
-        </main>
+        </section>
 
         <ModalPage ref="child" style="display: none;"/>
-    </div>
+ 
 </template>
 
 <script>
@@ -90,32 +90,7 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: #000;
-}
-.wrap {
-    position: relative;
-    width: 100%; height: 100vh;
-    border: 1px solid red;
-}
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; height: 40px;
-    padding: 0 10px;
-    border: 1px solid #ccc;
-}
-header > p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
-}
+
 .goback_btn {
     width: 30px; height: 30px;
     background-color: #fff;
@@ -124,19 +99,20 @@ header > p {
 .goback_btn img {
     width: 100%; height: 100%;
 }
-.change_btn_holder {
-    position: absolute;
-    left: 50%; bottom: 10px;
-    transform: translateX(-50%);
-    width: 95%; height: 40px;
-    border-radius: 25px;
-    /* border: 1px solid blue; */
-}
+
 .change_btn {
-    width: 100%; height: 100%;
-    background-color: #1bce0b; color: #fff;
-    border: none; border-radius: 10px;
-    /* border: 1px solid red; */
+    width: 95%; /* 적절한 너비로 조정 */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #1749C2;
+    background-color: #1749C2;
+    color: white;
+    font-size: 16px;
+    position: fixed; /* 부모 요소를 기준으로 절대 위치 설정 */
+    bottom: 60px;
+    left: 50%; /* 부모 요소의 가운데 위치로 설정 */
+    transform: translateX(-50%); /* 왼쪽으로 50% 이동하여 가운데 정렬 */
+    cursor: pointer;
 }
 .join_form {
     width: 100%;

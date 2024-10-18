@@ -1,20 +1,22 @@
 <template>
-    <div class="wrap">
+    
         <header>
             <button type="button" class="goback_btn"><router-link to="/"><img src="@/assets/go_back_btn.png"></router-link></button>
-            <p>아이디찾기</p>
+            <h3>아이디찾기</h3>
         </header>
 
-        <main>
-            <p>가입하신 아이디는</p>
+        <section>
+            <div class="show_your_info">
+                <p>가입하신 아이디는</p>
             <p>{{ yourid }} 입니다.</p>
 
             <div class="btn_group">
                 <button type="button"><router-link to="/findpw" style="color: #fff;">비밀번호 재설정</router-link></button>
                 <button type="button">로그인</button>
             </div>
-        </main>
-    </div>
+            </div>
+        </section>
+    
 </template>
 
 <script>
@@ -28,7 +30,8 @@ export default {
     },
     mounted() {
         let store = useResponseStore();
-        this.yourid = store.datas.toString();
+        console.log(store.datas); // store.datas가 무엇인지 확인
+        this.yourid = store.datas[0].toString();
         // console.log(store.datas);
     }
 }
@@ -36,32 +39,14 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: #000;
-}
-.wrap {
-    position: relative;
-    width: 100%; height: 100vh;
-    border: 1px solid red;
-}
-header {
+.show_your_info{
+    margin-top: 250px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    width: 100%; height: 40px;
-    padding: 0 10px;
-    border: 1px solid #ccc;
+    justify-content: center;
 }
-header > p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
-}
+
 .goback_btn {
     width: 30px; height: 30px;
     background-color: #fff;
