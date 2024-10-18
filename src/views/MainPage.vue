@@ -58,7 +58,7 @@
                 <p>CM충전</p>
             </div>
             <div class="icon" v-if="this.member == '1'" @click="toShopIn()">
-                <img src="@/assets/gift.png">
+                <img src="@/assets/application.png">
                 <p>가맹점신청</p>
             </div>
             <div class="icon" v-if="this.member == '2'">
