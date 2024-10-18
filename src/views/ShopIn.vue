@@ -1,11 +1,11 @@
 <template>
-    <div class="wrap">
+    
         <header>
             <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/go_back_btn.png"></button>
-            <p>가맹점 신청</p>
+            <h3>가맹점 신청</h3>
         </header>
 
-        <main>
+        <section>
             <!-- 신청가능해요 -->
             <div class="one">
                 <p>신청 가능해요!</p>
@@ -42,19 +42,13 @@
             </div>
 
             <button type="button" @click="toShopIn2()">가맹점 신청하기</button>
-        </main>
-    </div>
-
-    <Footer />
+        </section>
+    
 </template>
 
 <script>
-import Footer from '@/components/FooterPage.vue'
-
 export default {
-    components : {
-        Footer,
-    },
+
     data() {
         return {
 
@@ -81,37 +75,7 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: hsl(0, 0%, 0%);
-}
-.wrap {
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    /* border: 1px solid red; */
-    margin-bottom: 70px;
-}
-header {
-    position: fixed;
-    top: 0; left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; height: 40px;
-    padding: 0 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-header > p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
-}
+
 .goback_btn {
     width: 30px; height: 30px;
     background-color: #fff;
@@ -126,27 +90,28 @@ main {
     padding: 10px;
     /* border: 1px solid red; */
 }
-main > div {
+section > div {
     /* padding: 10px; */
     margin-bottom: 20px;
     /* border: 1px solid blue; */
 }
-main > div > p {
+section > div > p {
     font-weight: bold;
     margin-bottom: 5px;
 }
-main > div > div {
+section > div > div {
     border: 1px solid #ccc;
     padding: 10px;
     border-radius: 7px;
 }
-main > div > div p {
+section > div > div p {
     font-size: 0.9rem;
     color: #888686;
     margin-top: 3px;
 }
-main button {
-    width: 100%; height: 35px;
+button {
+    width: 100%; 
+    padding: 10px;
     border-radius: 20px;
     border: none;
     color: #fff;

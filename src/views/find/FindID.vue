@@ -69,6 +69,12 @@ export default {
                             if(data.code == '200') { 
 
                                 const idData = data.msg;
+                                console.log('테스트!!!!!!!!!');
+                                //const store = useResponseStore();
+                                store.datas = [];
+                                console.log(store);
+                                console.log(store.datas);
+                                
                                 store.datas.push(idData);
                                 router.push({ path : '/yourid'});
 
