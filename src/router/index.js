@@ -25,26 +25,31 @@ const router = createRouter({
             path: "/joinform",      
             name: "JoinForm",      
             component: () => import("@/views/join/JoinForm.vue"),    
+            meta: { hideFooter: true } // Footer를 숨김 
         },
         {      
             path: "/joinend",      
             name: "JoinEnd",      
-            component: () => import("@/views/join/JoinEnd.vue"),    
+            component: () => import("@/views/join/JoinEnd.vue"),
+            meta: { hideFooter: true } // Footer를 숨김    
         },            
         {      
             path: "/findid",      
             name: "FindID",      
-            component: () => import("@/views/find/FindID.vue"),    
+            component: () => import("@/views/find/FindID.vue"), 
+            meta: { hideFooter: true } // Footer를 숨김
         },   
         {      
             path: "/yourid",      
             name: "YourID",      
-            component: () => import("@/views/find/YourID.vue"),    
+            component: () => import("@/views/find/YourID.vue"), 
+            meta: { hideFooter: true } // Footer를 숨김
         },    
         {      
             path: "/findpw",      
             name: "FindPW",      
-            component: () => import("@/views/find/FindPW.vue"),    
+            component: () => import("@/views/find/FindPW.vue"), 
+            meta: { hideFooter: true } // Footer를 숨김  
         },   
         {      
             path: "/main",      

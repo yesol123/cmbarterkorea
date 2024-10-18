@@ -1,11 +1,11 @@
 <template>
-    <div class="wrap">
+    <section>
         <div class="wrap_center">
             <p>회원가입 완료!</p>
             <p>씨엠바더 회원이 되신 것을 환영합니다.</p>
             <button type="button" @click="toHome()">확인</button>
         </div>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -30,37 +30,33 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    font-size: 1rem;
-    text-decoration: none;
-    color: #000;
-}
-.wrap {
-    position: relative;
-    width: 100%; height: 100vh;
-    border: 1px solid red;
-}
-.wrap_center {
-    position: absolute;
-    top: 50%; left: 0;
-    transform: translateY(-100%);
-    width: inherit;
-    /* border: 1px solid blue; */
-    text-align: center;
-}
-.wrap_center > p {
+
+*p{
+    padding: 0px;
     font-weight: bold;
     font-size: 1.2rem;
     margin-top: 30px;
 }
+.wrap_center {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ margin-top: 250px;
+
+}
 button {
-    width: 70%; height: 40px;
-    margin-top: 40px;
-    background-color: #1bce0b;
-    color: #fff;
-    border-radius: 10px;
-    border: none;
+    width: 95%; /* 적절한 너비로 조정 */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #1749C2;
+    background-color: #1749C2;
+    color: white;
+    font-size: 16px;
+    position: fixed; /* 부모 요소를 기준으로 절대 위치 설정 */
+    bottom: 60px;
+    left: 50%; /* 부모 요소의 가운데 위치로 설정 */
+    transform: translateX(-50%); /* 왼쪽으로 50% 이동하여 가운데 정렬 */
+    cursor: pointer;
 }
 </style>
