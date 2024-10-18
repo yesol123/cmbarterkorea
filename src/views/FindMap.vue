@@ -19,7 +19,7 @@
                 </ul>
             </div>
 
-            <div id="map" style="width: 100%; height: 100vh; margin-top: 10px;"></div>
+            <div id="map" style="width: 100%; height: 80vh; margin-top: 10px;"></div>
 
         </section>
 
@@ -134,7 +134,7 @@ export default {
 
                     circle.setMap(map);
 
-                    // map.panTo(new window.kakao.maps.LatLng(lat, lon));
+                    map.panTo(new window.kakao.maps.LatLng(lat, lon));
 
                     // 지도 영역 읽어오기
                     const bounds = circle.getBounds();
@@ -193,8 +193,8 @@ export default {
                             const bounds = circle.getBounds();
                             console.log('두번째 bounds');
                             console.log(bounds);
-                            await this.NearShop(bounds, map);
                             map.panTo(new window.kakao.maps.LatLng(lat, lon)); // 지정한 좌표로 부드럽게 이동
+                            await this.NearShop(bounds, map);
                         }
                         if(map.getLevel() == 7) {
                             // 내위치 주변으로 원생성
@@ -210,10 +210,11 @@ export default {
                             const bounds = circle.getBounds();
                             console.log('세번째 bounds');
                             console.log(bounds);
-                            await this.NearShop(bounds, map);
                             map.panTo(new window.kakao.maps.LatLng(lat, lon)); // 지정한 좌표로 부드럽게 이동
+                            await this.NearShop(bounds, map);
                         }
                         if(map.getLevel() > 7) {
+                            map.setLevel(7);
                             // 내위치 주변으로 원생성
                             const circle = new window.kakao.maps.Circle({
                                 center : new window.kakao.maps.LatLng(lat, lon),
@@ -225,10 +226,10 @@ export default {
                                 fillOpacity : 0.5,
                             });
                             const bounds = circle.getBounds();
-                            console.log('세번째 bounds');
+                            console.log('네번째 bounds');
                             console.log(bounds);
-                            await this.NearShop(bounds, map);
                             map.panTo(new window.kakao.maps.LatLng(lat, lon)); // 지정한 좌표로 부드럽게 이동
+                            await this.NearShop(bounds, map);
                         }
 
                     });
@@ -264,7 +265,6 @@ export default {
                         position : pos, // 마커를 표시할 위치
                         image : markerImage // 마커 이미지
                     })
-
                     marker.setMap(map); // 현재 위치 주변 가맹점에 마커 찍기
 
                 })
