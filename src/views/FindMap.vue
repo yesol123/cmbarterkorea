@@ -79,7 +79,7 @@ export default {
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 for(let i=0; i<data.msg.length; i++) {
                     this.categories.push(data.msg[i]);
                 }
@@ -143,40 +143,9 @@ export default {
 
                     await this.NearShop(bounds, map);
 
-                    // 내 주변 가맹점 표시하기
-                    // const formData = new FormData();
-                    // formData.set('type', 'store_select2');
-                    // formData.set('bounds', bounds);
-
-                    // const url = process.env.VUE_APP_API_URL;
-
-                    // fetch(url + 'api/store/store_map.php', {
-                    // method : 'POST',
-                    // body : formData
-                    // })
-                    // .then(response => response.json())
-                    // .then(data => {
-                    //     console.log('주변 가맹점 가져오기');
-                    //     console.log(data);
-
-                    //     data.msg.forEach((data_child) => {
-                    //         const imageSize = new window.kakao.maps.Size(24, 35);
-                    //         const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-                    //         const pos = new window.kakao.maps.LatLng(data_child.pos_latitude,data_child.pos_longitude);
-                    //         const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
-                    //         const marker = new window.kakao.maps.Marker({
-                    //             map : map, // 마커를 표시할 지도
-                    //             position : pos, // 마커를 표시할 위치
-                    //             image : markerImage // 마커 이미지
-                    //         })
-
-                    //         marker.setMap(map); // 현재 위치 주변 가맹점에 마커 찍기
-
-
-                    //     })
-                    // })
-
                     window.kakao.maps.event.addListener(map, 'zoom_changed', async() => {
+                        // circle.setMap(null);
+                        map.panTo(new window.kakao.maps.LatLng(lat, lon)); // 지정한 좌표로 부드럽게 이동
                         console.log('zoom changed!');
                         console.log(map.getLevel());
                         if(map.getLevel() == 6) {
@@ -190,6 +159,7 @@ export default {
                                 fillColor : '#98caff',
                                 fillOpacity : 0.5,
                             });
+                            // circle.setMap(map);
                             const bounds = circle.getBounds();
                             console.log('두번째 bounds');
                             console.log(bounds);
@@ -207,6 +177,7 @@ export default {
                                 fillColor : '#98caff',
                                 fillOpacity : 0.5,
                             });
+                            // circle.setMap(map);
                             const bounds = circle.getBounds();
                             console.log('세번째 bounds');
                             console.log(bounds);
@@ -215,21 +186,6 @@ export default {
                         }
                         if(map.getLevel() > 7) {
                             map.setLevel(7);
-                            // 내위치 주변으로 원생성
-                            const circle = new window.kakao.maps.Circle({
-                                center : new window.kakao.maps.LatLng(lat, lon),
-                                radius : 2000,
-                                strokeWeight : 2,
-                                strokeColor : '#1749C2',
-                                strokeOpacity : 0.8,
-                                fillColor : '#98caff',
-                                fillOpacity : 0.5,
-                            });
-                            const bounds = circle.getBounds();
-                            console.log('네번째 bounds');
-                            console.log(bounds);
-                            map.panTo(new window.kakao.maps.LatLng(lat, lon)); // 지정한 좌표로 부드럽게 이동
-                            await this.NearShop(bounds, map);
                         }
 
                     });
