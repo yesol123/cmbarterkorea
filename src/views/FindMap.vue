@@ -134,10 +134,12 @@ export default {
 
                     circle.setMap(map);
 
-                    map.panTo(new window.kakao.maps.LatLng(lat, lon));
+                    // map.panTo(new window.kakao.maps.LatLng(lat, lon));
 
                     // 지도 영역 읽어오기
                     const bounds = circle.getBounds();
+                    console.log('첫번째 bounds');
+                    console.log(bounds);
 
                     await this.NearShop(bounds, map);
 
@@ -176,8 +178,58 @@ export default {
 
                     window.kakao.maps.event.addListener(map, 'zoom_changed', async() => {
                         console.log('zoom changed!');
-
-                        await this.NearShop(bounds, map);
+                        console.log(map.getLevel());
+                        if(map.getLevel() == 6) {
+                            // 내위치 주변으로 원생성
+                            const circle = new window.kakao.maps.Circle({
+                                center : new window.kakao.maps.LatLng(lat, lon),
+                                radius : 1000,
+                                strokeWeight : 2,
+                                strokeColor : '#1749C2',
+                                strokeOpacity : 0.8,
+                                fillColor : '#98caff',
+                                fillOpacity : 0.5,
+                            });
+                            const bounds = circle.getBounds();
+                            console.log('두번째 bounds');
+                            console.log(bounds);
+                            await this.NearShop(bounds, map);
+                            map.panTo(new window.kakao.maps.LatLng(lat, lon)); // 지정한 좌표로 부드럽게 이동
+                        }
+                        if(map.getLevel() == 7) {
+                            // 내위치 주변으로 원생성
+                            const circle = new window.kakao.maps.Circle({
+                                center : new window.kakao.maps.LatLng(lat, lon),
+                                radius : 2000,
+                                strokeWeight : 2,
+                                strokeColor : '#1749C2',
+                                strokeOpacity : 0.8,
+                                fillColor : '#98caff',
+                                fillOpacity : 0.5,
+                            });
+                            const bounds = circle.getBounds();
+                            console.log('세번째 bounds');
+                            console.log(bounds);
+                            await this.NearShop(bounds, map);
+                            map.panTo(new window.kakao.maps.LatLng(lat, lon)); // 지정한 좌표로 부드럽게 이동
+                        }
+                        if(map.getLevel() > 7) {
+                            // 내위치 주변으로 원생성
+                            const circle = new window.kakao.maps.Circle({
+                                center : new window.kakao.maps.LatLng(lat, lon),
+                                radius : 2000,
+                                strokeWeight : 2,
+                                strokeColor : '#1749C2',
+                                strokeOpacity : 0.8,
+                                fillColor : '#98caff',
+                                fillOpacity : 0.5,
+                            });
+                            const bounds = circle.getBounds();
+                            console.log('세번째 bounds');
+                            console.log(bounds);
+                            await this.NearShop(bounds, map);
+                            map.panTo(new window.kakao.maps.LatLng(lat, lon)); // 지정한 좌표로 부드럽게 이동
+                        }
 
                     });
 
