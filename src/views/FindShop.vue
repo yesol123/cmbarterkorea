@@ -57,7 +57,7 @@
                 <div class="etc">
                     <button type="button">{{ post.user_cm_use }} CM 가능</button>
                     <div>
-                        <button type="button"></button>
+                        <button type="button"><a href="tel:01012341234" style="width: 100%; height: 100%"></a></button>
                         <button type="button" @click="GetStoreIndex(post.store_index)"></button>
                     </div>
                 </div>
@@ -424,6 +424,7 @@ main {
     background-size: cover;
     margin-right: 10px;
 }
+
 .info {
     display: flex;
     flex-direction: column;

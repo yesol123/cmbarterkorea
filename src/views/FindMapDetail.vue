@@ -20,7 +20,7 @@
 
             <div class="standard">
 
-                <div id="map" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
+                <div id="map" style="position: absolute; top: 0; left: 0; width: 100%; height: 90vh;"></div>
 
                 <div class="shop_info">
                     <div class="img" :style="{ backgroundImage : `url(${info.store_image})`}"></div>
