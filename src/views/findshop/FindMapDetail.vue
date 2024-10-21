@@ -27,27 +27,22 @@
                     <div class="info">
                         <p>{{ info.store_name }}</p>
                         <p>{{ info.store_address }}</p>
-                        <div>
-                            <button type="button"></button>
-                            <button type="button"></button>
+                        <div class="btns">
+                            <button type="button"><img src="@/assets/call.png" alt=""></button>
+                            <button type="button"><img src="@/assets/location.png" alt=""></button>
                         </div>
                     </div>
                 </div>
             </div>
 
         </section>
-
-    <Footer style="z-index: 10;" />
 </template>
 
 <script>
 import { useResponseStore } from '@/store/response.js'
-import Footer from '@/components/FooterPage.vue'
 
 export default {
-    components: {
-        Footer,
-    },
+ 
     data() {
         return {
             isOne : false,
@@ -285,17 +280,45 @@ section {
     width: 100%;
     /* border: 1px solid red; */
 }
-.info > div button {
-    width: 30px; height: 30px;
-    background-image: url(../assets/call.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-color: #fff;
-    border: 1px solid #ccc;
+
+.btns{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+
+.btns>button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10%;
+    padding: 5px;
+    border: 1px solid #1bce0b;
     border-radius: 50%;
+    background-color: transparent;
+    max-width: 50px;
+    /* 최대 크기 제한 */
+    max-height: 50px;
+    /* 최대 높이 제한 */
 }
-.info > div button:nth-of-type(2) {
-    margin-left: 10px;
-    background-image: url(../assets/location.png);
-}
+
+
+.btns button img {
+    width: 80%;
+    }
+
+    @media (max-width:600px) {
+        
+    .btns button {
+        width: 30%;
+        /* 작은 화면에서는 비율을 조금 더 크게 설정 */
+        max-width: 40px;
+        /* 작은 화면에서의 최대 크기 제한 */
+        max-height: 40px;
+
+    }
+        
+    }
 </style>

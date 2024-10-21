@@ -105,6 +105,7 @@ export default {
   height: 50px;
   background-color: #fff;
   border-radius: 5px;
+  z-index: 1000; /* 다른 요소 위에 나타나도록 z-index 설정 */
   border: 1px solid #ccc;
 }
 
