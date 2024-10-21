@@ -151,9 +151,36 @@ export default {
                         map.panTo(new window.kakao.maps.LatLng(lat, lon)); // 지정한 좌표로 부드럽게 이동
                         console.log('zoom changed!');
                         console.log(map.getLevel());
+                          // 지도 크기가 5 혹은 5보다 작을 경우
+                        if(map.getLevel() == 5 || map.getLevel() < 5) {
+                            for(let i=0; i<this.markers.length; i++) {
+                                this.markers[i].setMap(null);
+                            }
+                            this.markers = [];
+                            this.circle.setMap(null);
+                            this.circle = null;
+                            const circle = new window.kakao.maps.Circle({
+                                center : new window.kakao.maps.LatLng(lat, lon),
+                                radius : 500,
+                                strokeWeight : 2,
+                                strokeColor : '#1749C2',
+                                strokeOpacity : 0.8,
+                                fillColor : '#98caff',
+                                fillOpacity : 0.5,
+                            });
+                            this.circle = circle;
+                            this.circle.setMap(map);
+                            const bounds = circle.getBounds();
+                            map.panTo(new window.kakao.maps.LatLng(lat, lon)); // 지정한 좌표로 부드럽게 이동
+                            await this.NearShop(bounds, map);
+                        }
                         // 지도 크기가 6일 경우
                         if(map.getLevel() == 6) {
                             // 내위치 주변으로 원생성
+                            for(let i=0; i<this.markers.length; i++) {
+                                this.markers[i].setMap(null);
+                            }
+                            this.markers = [];
                             this.circle.setMap(null);
                             this.circle = null;
                             const circle = new window.kakao.maps.Circle({
@@ -230,7 +257,13 @@ export default {
                         position : pos, // 마커를 표시할 위치
                         image : markerImage // 마커 이미지
                     })
-                    marker.setMap(map); // 현재 위치 주변 가맹점에 마커 찍기
+                    this.markers.push(marker);
+                    // console.log(123245);
+                    // console.log(this.markers);
+
+                    for(let i=0; i<this.markers.length; i++) {
+                        this.markers[i].setMap(map); // 현재 위치 주변 가맹점에 마커 찍기
+                    }
                 })
 
             })
