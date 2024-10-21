@@ -74,37 +74,37 @@ const router = createRouter({
         {      
             path: "/cmlist",      
             name: "CMList",      
-            component: () => import("@/views/CMList.vue"),    
+            component: () => import("@/views/cm/CMList.vue"),    
         },   
         {      
             path: "/cmcancel",      
             name: "CMListCancel",      
-            component: () => import("@/views/CMListCancel.vue"),    
+            component: () => import("@/views/cm/CMListCancel.vue"),    
         },   
         {      
             path: "/cmpin",      
             name: "CMPin",      
-            component: () => import("@/views/CMPin.vue"),    
+            component: () => import("@/views/cm/CMPin.vue"),    
         },      
         {      
             path: "/cmqr",      
             name: "CMQr",      
-            component: () => import("@/views/CMQr.vue"),    
+            component: () => import("@/views/cm/CMQr.vue"),    
         },      
         {      
             path: "/cmake",      
             name: "CouponMake",      
-            component: () => import("@/views/CouponMake.vue"),    
+            component: () => import("@/views/coupon/CouponMake.vue"),    
         },    
         {      
             path: "/cevent",      
             name: "CouponEvent",      
-            component: () => import("@/views/CouponEvent.vue"),    
+            component: () => import("@/views/coupon/CouponEvent.vue"),    
         },      
         {      
             path: "/charge",      
             name: "CMCharge",      
-            component: () => import("@/views/CMCharge.vue"),    
+            component: () => import("@/views/cm/CMCharge.vue"),    
         },      
         {      
             path: "/event",      
@@ -119,17 +119,17 @@ const router = createRouter({
         {      
             path: "/shopin",      
             name: "ShopIn",      
-            component: () => import("@/views/ShopIn.vue"),    
+            component: () => import("@/views/shopin/ShopIn.vue"),    
         },     
         {      
             path: "/shopin2",      
             name: "ShopIn2",      
-            component: () => import("@/views/ShopIn2.vue"),    
+            component: () => import("@/views/shopin/ShopIn2.vue"),    
         },    
         {      
             path: "/shopin3",      
             name: "ShopIn3",      
-            component: () => import("@/views/ShopIn3.vue"),    
+            component: () => import("@/views/shopin/ShopIn3.vue"),    
         },
         {      
             path: "/complete",      
@@ -139,17 +139,17 @@ const router = createRouter({
         {      
             path: "/findshop",      
             name: "FindShop",      
-            component: () => import("@/views/FindShop.vue"),    
+            component: () => import("@/views/findshop/FindShop.vue"),    
         },
         {      
             path: "/findmap",      
             name: "FindMap",      
-            component: () => import("@/views/FindMap.vue"),    
+            component: () => import("@/views/findshop/FindMap.vue"),    
         },
         {      
             path: "/mapdetail",      
             name: "FindMapDetail",      
-            component: () => import("@/views/FindMapDetail.vue"),    
+            component: () => import("@/views/findshop/FindMapDetail.vue"),    
         },
         // {      
         //     path: "/shopin4",      
@@ -214,58 +214,58 @@ const router = createRouter({
         {      
             path: "/changepw",      
             name: "changePassword",      
-            component: () => import("@/views/ChangePw.vue"),    
+            component: () => import("@/views/change/ChangePw.vue"),    
         }, 
         {      
             path: "/ChangePin1",      
             name: "ChangePin1",      
-            component: () => import("@/views/ChangePin1.vue"),    
+            component: () => import("@/views/changePin/ChangePin1.vue"),    
         }  ,
         {      
             path: "/ChangePin2",      
             name: "ChangePin2",      
-            component: () => import("@/views/ChangePin2.vue"),    
+            component: () => import("@/views/changePin/ChangePin2.vue"),    
         } ,
         {      
             path: "/ChangePin3",      
             name: "ChangePin3",      
-            component: () => import("@/views/ChangePin3.vue"),    
+            component: () => import("@/views/changePin/ChangePin3.vue"),    
         }  ,
         {      
             path: "/ChangePin4",      
             name: "ChangePin4",      
-            component: () => import("@/views/ChangePin4.vue"),    
+            component: () => import("@/views/changePin/ChangePin4.vue"),    
         }  ,
         {      
             path: "/Notice",      
             name: "NoticePage",      
-            component: () => import("@/views/NoticePage.vue"),    
+            component: () => import("@/views/notice/NoticePage.vue"),    
         }  ,
         {      
             path: "/DetailPgae/:id",      
             name: "DetailPgae",      
-            component: () => import("@/views/DetailPgae.vue"),    
+            component: () => import("@/views/notice/DetailPgae.vue"),    
         }  ,
         {      
             path: "/Inquiry",      
             name: "InquiryPage",      
-            component: () => import("@/views/InquiryPage.vue"),    
+            component: () => import("@/views/inquiry/InquiryPage.vue"),    
         }  ,
         {      
             path: "/InquiryList",      
             name: "InquiryList",      
-            component: () => import("@/views/InquiryList.vue"),    
+            component: () => import("@/views/inquiry/InquiryList.vue"),    
         }  ,
         {      
             path: "/InquiryListDetail/:id",      
             name: "InquiryListDetail",      
-            component: () => import("@/views/InquiryListDetail.vue"),    
+            component: () => import("@/views/inquiry/InquiryListDetail.vue"),    
         }  ,
 
         {      
             path: "/Terms",      
             name: "TermsPage",      
-            component: () => import("@/views/TermsPage.vue"),    
+            component: () => import("@/views/franchisee/TermsPage.vue"),    
         }  ,
         {
             path: '/Terms/userService',
@@ -275,22 +275,22 @@ const router = createRouter({
         {
             path: '/Terms/Franchiseeprivacy',
             name:'franchisee_privacy',
-            component:()=> import("@/views/FranchiseePrivacy.vue")
+            component:()=> import("@/views/franchisee/FranchiseePrivacy.vue")
         },
         {
             path: '/Terms/FranchiseeMarketing',
             name:'franchisee_Marketing',
-            component:()=> import("@/views/FranchiseeMarketing.vue")
+            component:()=> import("@/views/franchisee/FranchiseeMarketing.vue")
         },
         {
             path: '/Terms/FranchiseeAdvertisement',
             name:'franchisee_Advertisement',
-            component:()=> import("@/views/franchiseeAdvertisement.vue")
+            component:()=> import("@/views/franchisee/FranchiseeAdvertisement.vue")
         },
         {
             path: '/Terms/FranchiseeLocation',
             name:'franchisee_location',
-            component:()=> import("@/views/franchiseeLocation.vue")
+            component:()=> import("@/views/franchisee/FranchiseeLocation.vue")
         },  
         {
             path: '/buisness',
@@ -300,30 +300,30 @@ const router = createRouter({
         {
             path: '/franchiseeInfo',
             name:'FranchiseeInfo',
-            component:()=> import("@/views/FranchiseeInfo.vue")
+            component:()=> import("@/views/franchisee/FranchiseeInfo.vue")
         },  
         {
             path: '/couponbox',
             name:'CouponBox',
-            component:()=> import("@/views/CouponBox.vue")
+            component:()=> import("@/views/coupon/CouponBox.vue")
         },  
 
         {
             path: '/subPw',
             name:'subPw',
-            component:()=> import("@/views/SubPw.vue")
+            component:()=> import("@/views/sub/SubPw.vue")
         },  
         
         {
             path: '/subId',
             name:'subId',
-            component:()=> import("@/views/SubId.vue")
+            component:()=> import("@/views/sub/SubId.vue")
         },  
         
         {
             path: '/ChangeFranchise',
             name:'ChangeFranchise',
-            component:()=> import("@/views/ChangeFranchise.vue")
+            component:()=> import("@/views/change/ChangeFranchise.vue")
         },  
         {
             path: '/CustomerManagement',
@@ -333,7 +333,7 @@ const router = createRouter({
         {
             path: '/couponDetail/:id',
             name:'couponDetail',
-            component:()=> import("@/views/CouponDetail.vue")
+            component:()=> import("@/views/coupon/CouponDetail.vue")
         },  
         {
             path: '/storeInformation',
@@ -343,17 +343,17 @@ const router = createRouter({
         {
             path: '/franchiseEdit',
             name:'franchiseEdit',
-            component:()=> import("@/views/FranchiseEdit.vue")
+            component:()=> import("@/views/franchisee/FranchiseEdit.vue")
         },  
         {
             path: '/changeImg',
             name:'changeImg',
-            component:()=> import("@/views/ChangeImg.vue")
+            component:()=> import("@/views/change/ChangeImg.vue")
         }, 
         {
             path: '/couponGift',
             name:'couponGift',
-            component:()=> import("@/views/CouponGift.vue"),
+            component:()=> import("@/views/coupon/CouponGift.vue"),
         },  
         {
             path: '/confirmpin',

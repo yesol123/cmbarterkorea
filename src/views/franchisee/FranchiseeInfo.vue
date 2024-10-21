@@ -166,7 +166,7 @@ ul > li > label {
 }
 
 .btn_basic button {
-    width: 95%;
+    width: 100%;
     align-items: center;
     padding: 10px;
     border-radius: 5px;
