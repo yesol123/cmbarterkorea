@@ -27,31 +27,31 @@
                     <Checkbox v-model="service" :binary="true" inputId="service_agreed" name="service_agreed"
                         @change="handleChange()" />
                     <label for="service_agreed"> [필수] 이용약관 동의 </label>
-                    <button type="button"><img src="@/assets/go_for_btn.png"></button>
+                    <button type="button" @click="SeeServiceDoc()"><img src="@/assets/go_for_btn.png"></button>
                 </div>
                 <div>
                     <Checkbox v-model="privacy" :binary="true" inputId="privacy_agreed" name="privacy_agreed"
                         @change="handleChange()" />
                     <label for="privacy_agreed"> [필수] 개인정보 수집 및 이용 동의 </label>
-                    <button type="button"><img src="@/assets/go_for_btn.png"></button>
+                    <button type="button" @click="SeePrivacyDoc()"><img src="@/assets/go_for_btn.png"></button>
                 </div>
                 <div>
                     <Checkbox v-model="location" :binary="true" inputId="location_agreed" name="location_agreed"
                         @change="handleChange()" />
                     <label for="location_agreed"> [필수] 위치기반 서비스 이용 약관 동의 </label>
-                    <button type="button"><img src="@/assets/go_for_btn.png"></button>
+                    <button type="button" @click="SeeLocationDoc()"><img src="@/assets/go_for_btn.png"></button>
                 </div>
                 <div>
                     <Checkbox v-model="marketing" :binary="true" inputId="marketing_agreed" name="marketing_agreed"
                         @change="handleChange()" />
                     <label for="marketing_agreed"> [선택] 마케팅 정보 수집/이용 동의 </label>
-                    <button type="button"><img src="@/assets/go_for_btn.png"></button>
+                    <button type="button" @click="SeeMarketingDoc()"><img src="@/assets/go_for_btn.png"></button>
                 </div>
                 <div>
                     <Checkbox v-model="advertise" :binary="true" inputId="advertise_agreed" name="advertise_agreed"
                         @change="handleChange()" />
                     <label for="advertise_agreed"> [선택] 광고성 정보 수신 동의 </label>
-                    <button type="button"><img src="@/assets/go_for_btn.png"></button>
+                    <button type="button" @click="SeeAdvertiseDoc()"><img src="@/assets/go_for_btn.png"></button>
                 </div>
             </div>
         </div>
@@ -172,6 +172,22 @@ export default {
             // 뒤로가기 눌렀을때 Pinia 비워주기
             // const store = useResponseStore();
             // store.datas = [];
+        },
+        SeeServiceDoc() {
+            // console.log(1234);
+            this.$router.push({ path : '/service_doc'});
+        },
+        SeePrivacyDoc() {
+            this.$router.push({ path : '/privacy_doc'});
+        },
+        SeeLocationDoc() {
+            this.$router.push({ path : '/location_doc'});
+        },
+        SeeMarketingDoc() {
+            this.$router.push({ path : '/marketing_doc'});
+        },
+        SeeAdvertiseDoc() {
+            this.$router.push({ path : '/advertise_doc'});
         }
     },
     computed: {

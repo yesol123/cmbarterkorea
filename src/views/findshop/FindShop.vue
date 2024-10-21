@@ -52,7 +52,7 @@
                     <p>{{ post.user_cm_use }} CM <br>가능</p>
                 </button>
                 <div class="call_map">
-                    <button type="button" @click="avv(post.store_phone)"><a :href="`tel:${post.store_phone}`"><img src="@/assets/call.png" alt=""></a></button>
+                    <button type="button"><a :href="`tel:${post.store_phone}`"><img src="@/assets/call.png" alt=""></a></button>
                     <button type="button" @click="GetStoreIndex(post.store_index)"><img src="@/assets/location.png"
                             alt=""></button>
                 </div>
@@ -101,9 +101,6 @@ export default {
         this.GetStoreList();
     },
     methods: {
-        avv(q) {
-            alert(q);
-        },
         All() {
             this.isAll = true;
             // this.isSelected = false;

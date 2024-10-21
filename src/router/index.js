@@ -370,7 +370,31 @@ const router = createRouter({
             name:'roulettePgae',
             component:()=> import("@/views/RoulettePage.vue")
         },  
-    
+        {      
+            path: "/service_doc",      
+            name: "ServiceDoc",      
+            component: () => import("@/views/join/ServiceDoc.vue"),    
+        },
+        {      
+            path: "/privacy_doc",      
+            name: "PrivacyDoc",      
+            component: () => import("@/views/join/PrivacyDoc.vue"),    
+        },
+        {      
+            path: "/location_doc",      
+            name: "LoacationDoc",      
+            component: () => import("@/views/join/LoacationDoc.vue"),    
+        },
+        {      
+            path: "/marketing_doc",      
+            name: "MarketingDoc",      
+            component: () => import("@/views/join/MarketingDoc.vue"),    
+        },
+        {      
+            path: "/advertise_doc",      
+            name: "AdvertiseDoc",      
+            component: () => import("@/views/join/AdvertiseDoc.vue"),    
+        },
 
     ],
 
