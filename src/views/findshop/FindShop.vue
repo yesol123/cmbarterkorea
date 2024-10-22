@@ -37,7 +37,7 @@
                 @click="SearchStore(this.value)">검색</button>
         </div>
 
-        <div class="list" v-for="(post, i) in showPosts" :key="i">
+        <div class="list" v-for="(post, i) in showPosts" :key="i" @click="StoreDetail(post.store_index)">
             <div class="img" :style="{ backgroundImage: `url(${post.store_image})` }"></div>
             <div class="info">
                 <p style="font-size: 0.9rem; font-weight: bold;">{{ post.store_name }}</p>
@@ -137,17 +137,17 @@ export default {
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    // this.cities = data.msg;
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // this.cities = data.msg;
 
-                    for (let i = 0; i < data.msg.length; i++) {
-                        console.log(data.msg[i].address1);
-                        this.states.push(data.msg[i].address1);
-                        // console.log(this.cities);
-                    }
-                })
+                for (let i = 0; i < data.msg.length; i++) {
+                    console.log(data.msg[i].address1);
+                    this.states.push(data.msg[i].address1);
+                    // console.log(this.cities);
+                }
+            })
         },
         GetCity(value) {
             // console.log(111);
@@ -263,6 +263,14 @@ export default {
             console.log(store_index);
 
             this.$router.push({ path: '/mapdetail' });
+        },
+        StoreDetail(index) {
+            console.log(index);
+            let store = useResponseStore();
+            store.store_index = '';
+            store.store_index = index;
+
+            this.$router.push({ path: '/shopdetail' });
         }
     },
     computed: {

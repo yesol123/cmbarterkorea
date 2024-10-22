@@ -142,6 +142,11 @@ const router = createRouter({
             component: () => import("@/views/findshop/FindShop.vue"),    
         },
         {      
+            path: "/shopdetail",      
+            name: "ShopDetail",      
+            component: () => import("@/views/findshop/ShopDetail.vue"),    
+        },
+        {      
             path: "/findmap",      
             name: "FindMap",      
             component: () => import("@/views/findshop/FindMap.vue"),    
