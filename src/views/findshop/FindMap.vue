@@ -121,7 +121,7 @@ export default {
                     
                     marker.setMap(map);  // 현재 내위치 마커
 
-                    // 내위치 주변으로 원생성
+                    // 현재 내위치 주변으로 원생성
                     const circle = new window.kakao.maps.Circle({
                         center : new window.kakao.maps.LatLng(lat, lon),
                         radius : 500,
@@ -134,8 +134,6 @@ export default {
                     });
 
                     this.circle = circle;
-                    // console.log(788);
-                    // console.log(this.circle);
                     this.circle.setMap(map);
                 
                     map.panTo(new window.kakao.maps.LatLng(lat, lon));
@@ -148,10 +146,9 @@ export default {
                     await this.NearShop(bounds, map);
 
                     window.kakao.maps.event.addListener(map, 'zoom_changed', async() => {
-                        map.panTo(new window.kakao.maps.LatLng(lat, lon)); // 지정한 좌표로 부드럽게 이동
                         console.log('zoom changed!');
                         console.log(map.getLevel());
-                          // 지도 크기가 5 혹은 5보다 작을 경우
+                        // 지도 크기가 5 혹은 5보다 작을 경우
                         if(map.getLevel() == 5 || map.getLevel() < 5) {
                             for(let i=0; i<this.markers.length; i++) {
                                 this.markers[i].setMap(null);
@@ -176,7 +173,6 @@ export default {
                         }
                         // 지도 크기가 6일 경우
                         if(map.getLevel() == 6) {
-                            // 내위치 주변으로 원생성
                             for(let i=0; i<this.markers.length; i++) {
                                 this.markers[i].setMap(null);
                             }
@@ -195,14 +191,13 @@ export default {
                             this.circle = circle;
                             this.circle.setMap(map);
                             const bounds = circle.getBounds();
-                            console.log('두번째 bounds');
-                            console.log(bounds);
+                            // console.log('두번째 bounds');
+                            // console.log(bounds);
                             map.panTo(new window.kakao.maps.LatLng(lat, lon)); // 지정한 좌표로 부드럽게 이동
                             await this.NearShop(bounds, map);
                         }
                         // 지도 크기가 7일 경우
                         if(map.getLevel() == 7) {
-                            // 내위치 주변으로 원생성
                             this.circle.setMap(null);
                             this.circle = null;
                             const circle = new window.kakao.maps.Circle({
@@ -217,8 +212,8 @@ export default {
                             this.circle = circle;
                             this.circle.setMap(map);
                             const bounds = circle.getBounds();
-                            console.log('세번째 bounds');
-                            console.log(bounds);
+                            // console.log('세번째 bounds');
+                            // console.log(bounds);
                             map.panTo(new window.kakao.maps.LatLng(lat, lon)); // 지정한 좌표로 부드럽게 이동
                             await this.NearShop(bounds, map);
                         }
@@ -246,7 +241,6 @@ export default {
             .then(data => {
                 console.log('주변 가맹점 가져오기');
                 console.log(data);
-
                 data.msg.forEach((data_child) => {
                     const imageSize = new window.kakao.maps.Size(24, 35);
                     const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
@@ -257,12 +251,11 @@ export default {
                         position : pos, // 마커를 표시할 위치
                         image : markerImage // 마커 이미지
                     })
-                    this.markers.push(marker);
-                    // console.log(123245);
-                    // console.log(this.markers);
 
+                    this.markers.push(marker);
+                    
                     for(let i=0; i<this.markers.length; i++) {
-                        this.markers[i].setMap(map); // 현재 위치 주변 가맹점에 마커 찍기
+                        this.markers[i].setMap(map); // 주변 가맹점에 마커 찍기
                     }
                 })
 

@@ -29,19 +29,6 @@
                 <li v-for="(c, i) in categories" :key="i" :value="c.store_category_index"
                     @click="Selected(c.store_category_index)"
                     :class="{ select: selectedCategory === c.store_category_index }">{{ c.store_category_name }}</li>
-                <!-- <li>레저</li>
-                    <li>미용/뷰티/위생</li>
-                    <li>병원/약국</li>
-                    <li>스포츠/헬스</li>
-                    <li>식품</li>
-                    <li>학원/교육</li>
-                    <li>서비스업</li>
-                    <li>가구/인테리어</li>
-                    <li>디지털/가전</li>
-                    <li>생활/주방용품</li>
-                    <li>음식점/카페</li>
-                    <li>패션잡화</li>
-                    <li>기타 도소매</li> -->
             </ul>
         </div>
 
@@ -65,7 +52,7 @@
                     <p>{{ post.user_cm_use }} CM <br>가능</p>
                 </button>
                 <div class="call_map">
-                    <button type="button"><img src="@/assets/call.png" alt=""></button>
+                    <button type="button"><a :href="`tel:${post.store_phone}`"><img src="@/assets/call.png" alt=""></a></button>
                     <button type="button" @click="GetStoreIndex(post.store_index)"><img src="@/assets/location.png"
                             alt=""></button>
                 </div>
@@ -423,7 +410,7 @@ main {
     margin: 5px 0;
 }
 
-.search>input {
+.search > input {
     width: 80%;
     height: 35px;
     font-size: 0.8rem;
@@ -513,7 +500,6 @@ main {
     max-height: 50px;
     /* 최대 높이 제한 */
 }
-
 .call_map button img {
     width: 80%;
 }
