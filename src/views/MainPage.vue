@@ -172,27 +172,27 @@ export default {
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('jsondata???');
-                    console.log(data);
+            .then(response => response.json())
+            .then(data => {
+                console.log('jsondata???');
+                console.log(data);
 
-                    let toJson = JSON.parse(data.msg);
-                    console.log(toJson);
+                let toJson = JSON.parse(data.msg);
+                console.log(toJson);
 
-                    // 유저CMP (null 걸러주기)
-                    this.user_cmp = (toJson.user_cmp ?? '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                // 유저CMP (null 걸러주기)
+                this.user_cmp = (toJson.user_cmp ?? '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-                    // 유저CM
-                    this.user_cm = (toJson.user_cm ?? '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                    this.user_cm = (toJson.user_cm ?? null).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                // 유저CM
+                this.user_cm = (toJson.user_cm ?? '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                this.user_cm = (toJson.user_cm ?? null).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-                    store.cm_amount = toJson.user_cm;
-                    store.cmp_amount = toJson.user_cmp;
+                store.cm_amount = toJson.user_cm;
+                store.cmp_amount = toJson.user_cmp;
 
-                    // 쿠폰갯수
-                    this.coupon_count = toJson.coupon_count;
-                })
+                // 쿠폰갯수
+                this.coupon_count = toJson.coupon_count;
+            })
 
             this.getBanner();
             this.getAd();
@@ -220,18 +220,18 @@ export default {
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    let toJson = JSON.parse(data.msg);
-                    console.log(toJson);
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                let toJson = JSON.parse(data.msg);
+                console.log(toJson);
 
-                    for (var i in toJson) {
-                        console.log(11111111);
-                        console.log(toJson[i]);
-                        this.bannerImg.push(toJson[i]);
-                    }
-                })
+                for (var i in toJson) {
+                    console.log(11111111);
+                    console.log(toJson[i]);
+                    this.bannerImg.push(toJson[i]);
+                }
+            })
 
         },
         // 광고 이미지 불러오기
@@ -246,18 +246,18 @@ export default {
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    let toJson = JSON.parse(data.msg);
-                    console.log(toJson);
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                let toJson = JSON.parse(data.msg);
+                console.log(toJson);
 
-                    for (var i in toJson) {
-                        console.log(100000000);
-                        console.log(toJson[i]);
-                        this.adImg.push(toJson[i]);
-                    }
-                })
+                for (var i in toJson) {
+                    console.log(100000000);
+                    console.log(toJson[i]);
+                    this.adImg.push(toJson[i]);
+                }
+            })
 
         },
         // 결제 페이지로 이동
@@ -340,8 +340,6 @@ export default {
         confirm2(){
             window.location.href = "https://cmbarter.com/mobile/game_init.php";
         },
-        
-
 
         // 로그아웃
         logout() {
@@ -359,11 +357,11 @@ export default {
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('로그아웃되었음');
-                    console.log(data);
-                })
+            .then(response => response.json())
+            .then(data => {
+                console.log('로그아웃되었음');
+                console.log(data);
+            })
 
             this.$router.push({ path: '/' });
         }
