@@ -13,7 +13,7 @@
             <p>{{ this.user_cmp }}<span>CMP</span></p>
             <p>{{ this.user_cm }}<span>CM</span></p>
         </div>
-        
+
         <!-- 충전할CM -->
         <p class="title">충전 할 CM</p>
         <div class="cm_charging">
@@ -42,7 +42,11 @@
         </div>
 
         <button type="button" :class="['charge_btn', buttonClass]" @change="charge" :disabled="!isChargeable"
-            @click="charge()">충전하기</button>
+            @click="showConfrimPin">충전하기</button>
+
+
+        <ConfirmPin v-if="isOpen" ref="confirmPin" @pinSuccess="handlePinSuccess" :sendType="'charge'" />
+
 
     </section>
 </template>
@@ -52,12 +56,17 @@
 <script>
 
 import { useResponseStore } from '@/store/response.js'
+import ConfirmPin from '@/components/ConfirmPin.vue';
 
 
 export default {
-   
+    components: {
+        ConfirmPin
+    },
+
     data() {
         return {
+            isOpen: false,
             user_cmp: '',//보유 CMP
             user_cm: '', // 보유 CM
             add_cm: '',//충전할 CM
@@ -86,8 +95,6 @@ export default {
         }
     },
     mounted() {
-        // var tag = document.createElement('script');
-        // tag.src = "https://api.thepayone.com/js/clientside.js";
 
         let store = useResponseStore();
         const formData1 = new FormData();
@@ -114,28 +121,6 @@ export default {
         this.fetchUserData()
 
 
-
-        //  const formData2 = new FormData();
-
-        //  formData2.append('type','user_get');
-        //  formData2.append('user_index',store.user_index);
-
-        // fetch(url+'api/common/user.php',{
-        //     method:'POST',
-        //     body:formData2
-        // })
-        // .then(response => response.json())
-        // .then(data => {
-        //     console.log('fdd',data.msg[0].user_name);
-        //     console.log('dfawefawef',data.msg[0].user_phone);
-
-        //     this.user_index = data.msg[0].user_name
-        //     this.user_phone = data.msg[0].user_phone
-        // })
-
-
-
-        // ThePayOne에서 전달받는 메시지를 처리하기 위해 message 이벤트 리스너를 추가
         window.addEventListener('message', (e) => {
             let recv;
 
@@ -158,23 +143,15 @@ export default {
                 this.handlePaymentResult(recv.data);
             }
         });
-        // const script = document.createElement('script');
-        // script.src = "https://api.thepayone.com/js/clientside.js";
-        // script.onload = () => {
-        // // 스크립트가 로드되면 TPO 객체를 사용할 수 있음
-        // console.log('ThePayOne API 로드 성공');
-        // };
-        // script.onerror = () => {
-        // console.error('ThePayOne API 로드 실패');
-        // };
-        // document.head.appendChild(script);
 
 
     },
 
 
     methods: {
-
+        showConfrimPin() {
+            this.isOpen = true; // ConfirmPin 컴포넌트를 보이게 함
+        },
         async fetchUserData() {
             const formData2 = new FormData();
             formData2.append('type', 'user_get');
@@ -201,7 +178,12 @@ export default {
                 console.error('데이터를 가져오는 중 오류 발생:', error);
             }
         },
+        handlePinSuccess() {
+            console.log('핀번호 성공, 선물하기 호출');
+            this.charge(); // PIN 검증 성공 시 charge 함수 호출
 
+            this.isOpen = false; // ConfirmPin 컴포넌트 닫기
+        },
 
         toMain() {
             this.$router.push({ path: '/main' });
@@ -222,30 +204,6 @@ export default {
             this.paymoney = Math.floor(addCM * 0.1 * 1.1).toLocaleString(); // 부가세 포함
             this.surtax = Math.floor(addCM * 0.1); // 부가세 제외
         },
-
-        // async sendChargeData(paymentData){
-        //     const formData = new FormData();
-        //     let store = useResponseStore();
-
-        //     formData.append('type','charge')
-        //     formData.append('user_index', store.user_index); // 유저 인덱스
-        //     formData.append('cash', this.surtax); // 결제 금액 (부가세 제외)
-        //     formData.append('amount', this.add_cm); // 충전된 CM 양
-        //     formData.append('data', JSON.stringify(paymentData)); 
-
-        //     const url = process.env.VUE_APP_API_URL;
-        //     fetch(url + 'api/store/charge.php', {
-        //     method : 'POST',
-        //     body : formData
-        //     })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //     console.log(data);
-
-        // })
-
-
-        // },
 
         charge() {
 
@@ -278,63 +236,8 @@ export default {
             }
 
 
-
-            // ThePayOne 스크립트를 로드
-            //this.$loadScript('https://api.thepayone.com/js/clientside.js')
-            // .then(() => {
-            //     // TPO 객체가 로드된 후에 호출 가능
-
-            //     // 결제 API 호출
-            //     this.TPO.pay({
-            //         amount: parseInt(this.add_cm), // 충전할 금액
-            //         publicKey: 'pk_1703-f7d8df-4f6-dff5a',
-            //         products: [{ name: 'CM 충전', desc: 'CM 충전 상품 설명' }],
-            //         trackId: 'tx123',  // 유저 ID 또는 트랜잭션 ID
-            //         responseFunction: this.eventFnc,  // 응답 받을 함수
-            //         redirectUrl: 'https://your-redirect-url.com',
-            //         webhookUrl: 'https://your-webhook-url.com',
-            //         tmnId: "cm0000", // 터미널 키
-            //         payerName: '사용자 이름',
-            //         payerEmail: '사용자 이메일',
-            //         payerTel: '사용자 전화번호',
-            //         mode: 'layer',   // 레이어 모드로 결제 창 표시
-            //         debugMode: 'live' // 실시간 모드
-            //     });
-            // })
-            // .catch(() => {
-            //     console.error('ThePayOne 스크립트 로드 실패');
-            // });
-            // if (this.TPO) {
-            //     this.TPO.pay({
-            //         amount: parseInt(this.add_cm), // 충전할 금액
-            //         publicKey: 'pk_1703-f7d8df-4f6-dff5a',
-            //         products: [{ name: 'CM 충전', desc: 'CM 충전 상품 설명' }],
-            //         trackId: 'tx123',  // 유저 ID 또는 트랜잭션 ID
-            //         responseFunction: this.eventFnc,  // 응답 받을 함수
-            //         redirectUrl: 'https://your-redirect-url.com',
-            //         webhookUrl: 'https://your-webhook-url.com',
-            //         tmnId: "cm0000", // 터미널 키
-            //         payerName: '사용자 이름',
-            //         payerEmail: '사용자 이메일',
-            //         payerTel: '사용자 전화번호',
-            //         mode: 'layer',   // 레이어 모드로 결제 창 표시
-            //         debugMode: 'live' // 실시간 모드
-            //     });
-            // } else {
-            //     console.error('TPO 객체가 없습니다. ThePayOne API가 로드되지 않았습니다.');
-            // }
         },
 
-        // handlePaymentResult(paymentData) {
-        //     console.log('결제 결과:', paymentData);
-
-        //     if (paymentData.success) {
-        //         // 결제 성공 시 서버로 결제 정보 전송
-        //         this.sendChargeData(paymentData);
-        //     } else {
-        //         alert('결제가 실패했습니다.');
-        //     }
-        // },
 
         async eventFnc(data) {
             let json_data = JSON.stringify(data);
@@ -361,6 +264,7 @@ export default {
                         console.log(data);
                         if (data.code == 200) {
                             alert('성공!')
+                            this.$router.push('/main'); // 메인 페이지로 이동
 
                         }
                     })
@@ -374,7 +278,7 @@ export default {
 </script>
 
 <style scoped>
-p{
+p {
     margin: 0;
 }
 

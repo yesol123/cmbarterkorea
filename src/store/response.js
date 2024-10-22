@@ -35,7 +35,8 @@ export const useResponseStore = defineStore('response', {
     user_phone: '', // 사용자 전화번호
     give_user_index: '', // 선물하는 유저의 인덱스
     take_user_index: '', // 선물 받는 유저의 인덱스
-    store_index : '' // 가맹점찾기
+    store_index : '', // 가맹점찾기
+
 
   }),
   // state: () => {
@@ -50,6 +51,7 @@ export const useResponseStore = defineStore('response', {
   //   }
   // },
   actions: {
+   
     setResponseData(jsonArr) {
       this.datas = jsonArr;
 
@@ -75,44 +77,38 @@ export const useResponseStore = defineStore('response', {
     },
 
     //핀번호 확인 로직
-    verifyPin(){
+    async verifyPin() {
       const formData = new FormData();
-      formData.append('type','pin_check');
-      formData.append('user_index',this.user_index); // 현재 사용자 정보
-      formData.append('user_pin',Number(this.inputPin)); // 입력한 PIN번호
-
-
+      formData.append('type', 'pin_check');
+      formData.append('user_index', this.user_index); // 현재 사용자 정보
+      formData.append('user_pin', Number(this.inputPin)); // 입력한 PIN번호
+    
       formData.forEach((value, key) => {
         console.log(`${key}: ${value}`);
-        });
-      
-        console.log('호출!!!');
-        const url = process.env.VUE_APP_API_URL;
-        fetch(url +'api/common/cm.php',{
+      });
+      const url = process.env.VUE_APP_API_URL;
+    
+      try {
+        const response = await fetch(url + 'api/common/cm.php', {
           method: 'POST',
-          body:formData
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('data',data);
-          
-        })
-
-
-        // if(data.code === 200 ){
-
-        //   console.log('일치!');
-          
-        //   this.isPinVerified = true;
-        // }else{
-        //   console.log('불일치!');
-      
-        //   this.isPinVerified = false;
-        //   this.clearPin();
-        // }
-        // return this.isPinVerified
-      
-      },
+          body: formData
+        });
+        const data = await response.json();
+    
+        if (data.code === 200) {
+          console.log('이거를 확인하라구');
+          this.isPinVerified = true;
+        } else {
+          this.isPinVerified = false;
+        }
+    
+        return this.isPinVerified; // 결과값 반환
+      } catch (error) {
+        console.error('PIN 검증 중 오류 발생:', error);
+        this.isPinVerified = false;
+        return false; // 오류 발생 시 false 반환
+      }
+    },
     clearPin(){
       this.inputPin = '';
       this.isPinVerified = false;

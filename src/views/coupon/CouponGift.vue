@@ -54,32 +54,18 @@
                 <li><p>잔여 CM</p><span>{{ this.rest_user_cm }} CM 머니</span></li>
             </ul>
             <div class="buttons">
-                <button @click="gift()">선물하기</button>
+                <button  @click="showConfrimPin">선물하기</button>
                 <button>취소</button>
             </div>
         </article>
 
-
-    <ConfirmPin
-      v-if="showPinInput"
-      :apiUrl="apiUrl"
-      :apiData="{ 
-            type: 'coupon_gift', 
-            user_index: store.user_index,  // Pinia store에서 직접 user_index 가져오기
-            coupon_price: cate,        // cate가 실제로 쿠폰 가격을 의미
-            coupon_limit: limit,       // limit이 쿠폰 기한을 의미
-            coupon_name: name,         // name이 쿠폰 이름을 의미
-            coupon_condition: condition, // condition이 쿠폰 조건을 의미
-            arr: selectedCustomers     // selectedCustomers는 이미 배열 형태로 있음
-        }"
-        :sendType="sendType"
-      @pinSuccess="handlePinSuccess"
-    />
+        <ConfirmPin v-if="isOpen" ref="confirmPin" @pinSuccess="handlePinSuccess"  :sendType="'coupon'" />
         
 
     </section>
 </template>
 <script>
+import {ref } from 'vue';
 import ConfirmPin from '@/components/ConfirmPin.vue';
 import { useResponseStore } from '@/store/response.js'
 //import router from '@/router/index.js';
@@ -87,10 +73,14 @@ import { useResponseStore } from '@/store/response.js'
 export default{
     name:'couponGift',
     components: { ConfirmPin },
+    setup() {
+    const confirmPin = ref(null); // ConfirmPin 컴포넌트를 참조하는 ref 선언
+    return { confirmPin };
+  },
     data(){
         return{
+            isOpen: false, // ConfirmPin 컴포넌트의 가시성 제어 변수
            // apiUrl: process.env.VUE_APP_API_URL + 'api/store/store_update.php',
-            sendType:'Coupon',
             user_cm:'', // 보유 CM
             cate:'', // 종류
             limit:'', //기한
@@ -186,7 +176,14 @@ export default{
      
     },
     methods:{
-
+        showConfrimPin() {
+            this.isOpen = true; // ConfirmPin 컴포넌트를 보이게 함
+    },
+    handlePinSuccess() {
+    console.log('핀번호 성공, 선물하기 호출');
+    this.gift(); // PIN 검증 성공 시 gift 함수 호출
+    this.isOpen = false; // ConfirmPin 컴포넌트 닫기
+  },
         updateNeedUserCm() {
             const cateValue = Number(this.cate);
             const lengthValue = parseInt(this.length,10);
@@ -276,10 +273,6 @@ export default{
         //    this.$router.push({ path: '/confirmpin' });
         },
 
-        handlePinSuccess(type){
-            this.sendType = type
-            this.showPinInput = false
-        }
     }
 
 
