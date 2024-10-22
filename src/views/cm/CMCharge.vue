@@ -82,7 +82,6 @@ export default {
     computed: {
         formattedPayMoney() {
             // paymoney를 3자리마다 콤마로 포맷팅
-
             return this.paymoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         },
         isChargeable() {
@@ -143,10 +142,7 @@ export default {
                 this.handlePaymentResult(recv.data);
             }
         });
-
-
     },
-
 
     methods: {
         showConfrimPin() {
@@ -206,8 +202,6 @@ export default {
         },
 
         charge() {
-
-
             if (this.isChargeable) {
                 console.log('앵?');
                 //timestampSecond = Math.floor(+ new Date() / 1000);
@@ -234,7 +228,6 @@ export default {
                     console.error('TPO 객체가 없습니다. ThePayOne API가 로드되지 않았습니다.');
                 }
             }
-
 
         },
 
@@ -327,7 +320,6 @@ p {
     text-align: left;
 }
 
-/* //// */
 .cm_fee {
     display: flex;
 

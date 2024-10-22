@@ -6,6 +6,7 @@
                 <p v-if="this.member === '1'">일반</p>
                 <p v-else-if="this.member === '2'">사업자</p>
                 <p v-else-if="this.member === '3'">가맹점</p>
+                <p v-else-if="this.member === '6'">서브계정</p>
             </div>
             <div>
                 <h1 style="font-size: 1.3rem; color: #fff;">씨엠바더</h1>
@@ -19,21 +20,28 @@
     <div class="main_content">
         <div class="pay_content" :style="{ backgroundColor: backColor }">
             <div class="pay_center">
-                <div class="pay_area" :style="{ backgroundColor: backColor }" @click="toPayment()">
+                <div class="pay_area" v-bind:style="[subAccountStlye, { backgroundColor: backColor }]"
+                    @click="toPayment()">
                     <p v-if="this.member === '1'">{{ user_cm }} CM</p>
                     <p v-if="this.member === '2'" style="margin: 10px 0;">{{ user_cm }} CM</p>
                     <p v-if="this.member === '3'" style="color: pink;">{{ user_cmp }} CMP</p>
 
+                    <p v-if="this.member === '6'" style="color: pink;"> {{ main_user_cmp }}CMP</p>
+
                     <p v-if="this.member === '1'">보유쿠폰 <span>{{ coupon_count }}</span>장</p>
                     <!-- <p v-if="this.member === '2'">보유쿠폰 <span>{{ coupon_count }}</span>장</p> -->
-                    <p v-if="this.member === '3'" style="font-size: 1.5rem; color: yellow;">{{ user_cm }} CM</p>
+                    <p v-if="this.member === '3'" style="font-size: 1.5rem; color: yellow;">{{
+                        user_cm }} CM</p>
+                    <p v-if="this.member === '6'" style="font-size: 1.5rem; color: yellow;">{{ user_cm }} CM</p>
 
-                    <p >여기를 탭하여 결제하세요.</p>
+                    <p>여기를 탭하여 결제하세요.</p>
                 </div>
                 <div class="pay_btn">
-                    <button type="button" @click="toCMList()">CM내역</button>
-                    <button type="button" v-if="this.member === '3'" @click="QrScan()">QR결제</button>
-                    <button type="button" v-if="this.member != '3'" @click="CouponBox()">쿠폰함</button>
+                    <button type="button" :style="subAccountStlye" @click="toCMList()">CM내역</button>
+                    <button type="button" v-if="this.member === '3' || this.member === '6'"
+                        @click="QrScan()">QR결제</button>
+                    <button type="button" v-if="this.member != '3' && this.member != '6'"
+                        @click="CouponBox()">쿠폰함</button>
                     <button type="button" v-if="this.member === '3'" @click="toCouponMake()">쿠폰발행함</button>
                 </div>
             </div>
@@ -45,15 +53,16 @@
             </div>
         </div>
         <div class="icons">
-            <div class="icon" v-if="this.member != '2'" @click="toEvent()">
+            <div class="icon" :style="subAccountStlye" v-if="this.member != '2'" @click="toEvent()">
                 <img src="@/assets/coupon_icon.svg">
                 <p>쿠폰이벤트</p>
             </div>
-            <div class="icon" v-if="this.member != '2'" @click="goGame()">
+            <div class="icon" :style="subAccountStlye" v-if="this.member != '2'" @click="goGame()">
                 <img src="@/assets/roulette_icon.svg">
                 <p>CM게임 보상</p>
             </div>
-            <div class="icon" v-if="this.member == '3'" @click="toCMCharge()">
+            <div class="icon" :style="subAccountStlye" v-if="this.member == '3' || this.member === '6'"
+                @click="toCMCharge()">
                 <img src="@/assets/charge_icon.svg">
                 <p>CM충전</p>
             </div>
@@ -77,15 +86,17 @@
                 <img src="@/assets/homepage_icon.svg">
                 <p>홈페이지</p>
             </div>
-            <div class="icon" v-if="this.member == '3'" @click="gomangestore()">
+            <div class="icon" :style="subAccountStlye" v-if="this.member == '3' || this.member === '6'"
+                @click="gomangestore()">
                 <img src="@/assets/store_icon.svg">
                 <p>매장관리</p>
             </div>
-            <div class="icon" v-if="this.member == '3'" @click="gocustomer()">
+            <div class="icon" :style="subAccountStlye" v-if="this.member == '3' || this.member === '6'"
+                @click="gocustomer()">
                 <img src="@/assets/management_icon.svg">
                 <p>고객관리</p>
             </div>
-            <div class="icon">
+            <div class="icon" :style="subAccountStlye">
                 <img src="@/assets/kakao_icon.svg">
                 <p>카톡상담</p>
             </div>
@@ -116,24 +127,24 @@
 
     <Payment ref="payment" />
 
-    <!-- <Footer /> -->
 </template>
 
 <script>
-//import Footer from '@/components/FooterPage.vue'
 import { useResponseStore } from '@/store/response.js'
 import Payment from '@/components/PopCoupon.vue'
 
 export default {
     components: {
         Payment,
-        //Footer,
     },
     data() {
         return {
             member: '',
+            main_index: '',
             user_cmp: '',
             user_cm: '',
+            main_user_cm: '',  // 메인 계정 CM
+            main_user_cmp: '', // 메인 계정 CMP
             coupon_count: '',
             bannerImg: [],
             bannerIndex: 0,
@@ -141,16 +152,26 @@ export default {
             adImg: [],
             adIndex: 0,
             timeTwo: null,
-            nickname:'',
+            nickname: '',
             showModal: false,
-            showModal2:false,
-            error_massage:'',
-            
+            showModal2: false,
+            error_massage: '',
+
         }
     },
+
     mounted() {
         let store = useResponseStore();
         this.member = store.member;
+        const mainUserIndex = sessionStorage.getItem('store_main_user_index');
+
+        console.log('mainUserIndex', mainUserIndex);
+        this.main_index = mainUserIndex
+
+        if (this.member === '6') {
+        // 서브 계정일 때 메인 계정의 CM, CMP 데이터를 가져옴
+        this.fetchMainAccountData(mainUserIndex);
+    }
 
         // 일반, 사업자, 가맹점 별 데이터 바인딩
         this.MainList();
@@ -159,7 +180,32 @@ export default {
         // 광고 슬라이드
         this.adSliding();
     },
+
+
     methods: {
+
+        fetchMainAccountData(mainUserIndex) {
+
+            const formData = new FormData();
+            formData.append('type', 'user_info');
+            formData.append('user_index', mainUserIndex);
+
+
+            const url = process.env.VUE_APP_API_URL;
+            fetch(url + 'api/common/main.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(result => {
+                    console.log('메인 계정 데이터 가져오기 성공:', result); // 추가된 콘솔 로그
+                    let toJson = JSON.parse(result.msg);
+                    // 메인 계정의 CM, CMP 값을 저장
+                    this.main_user_cm = (toJson.user_cm ?? '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                    this.main_user_cmp = (toJson.user_cmp ?? '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                })
+        },
+
         MainList() {
 
             let store = useResponseStore();
@@ -199,6 +245,7 @@ export default {
             this.getAd();
 
         },
+
         bannerSliding() {
             this.timeOne = setInterval(() => {
                 this.bannerIndex = (this.bannerIndex + 1) % this.bannerImg.length;
@@ -264,8 +311,10 @@ export default {
         // 결제 페이지로 이동
         toPayment() {
             // console.log(4444);
+            if (this.member !== '6') {
+                this.$refs.payment.openpopup();
+            }
 
-            this.$refs.payment.openpopup();
         },
         // QR결제 페이지로 이동
         QrScan() {
@@ -314,34 +363,34 @@ export default {
             let store = useResponseStore();
 
 
-        const formData = new FormData();
-        formData.append('type', 'roulette_take')
-        formData.append('user_index', store.user_index)
-        formData.append('nickname ',this.nickname)
+            const formData = new FormData();
+            formData.append('type', 'roulette_take')
+            formData.append('user_index', store.user_index)
+            formData.append('nickname ', this.nickname)
 
-        const url = process.env.VUE_APP_API_URL;
-            
-        fetch(url + 'api/coupon/coupon_event.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data=>{
-            console.log(data);
-            if(data.code == '404'){
-                this.showModal = false
-                this.showModal2 = true
-                 this.error_massage = data.msg;
-            }
-            
-        })
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/coupon/coupon_event.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.code == '404') {
+                        this.showModal = false
+                        this.showModal2 = true
+                        this.error_massage = data.msg;
+                    }
+
+                })
 
         },
 
-        confirm2(){
+        confirm2() {
             window.location.href = "https://cmbarter.com/mobile/game_init.php";
         },
-        
+
 
 
         // 로그아웃
@@ -370,11 +419,16 @@ export default {
         }
     },
     computed: {
+        subAccountStlye() {
+            return this.member === '6'
+                ? { pointerEvents: 'none', opacity: '0.5' } // 클릭 비활성화 + 시각적 효과
+                : {}; // 기본 스타일 유지
+        },
         // 회원별 색상 바꿔주기
         backColor() {
             return (this.member === '1') ? 'rgb(9, 9, 116)'
                 : (this.member === '2') ? '#0A6847'
-                    : (this.member === '3') ? '#E4003A'
+                    : (this.member === '3' || this.member === '6') ? '#E4003A'
                         : '#ccc'
         },
         // 메인배너
@@ -585,7 +639,8 @@ button {
     margin-bottom: 10px;
     font-weight: bold;
 }
-.modal input{
+
+.modal input {
     border: 1px solid #b1b1b1;
     border-radius: 5px;
     padding: 5px;
@@ -594,8 +649,10 @@ button {
 
 .modal button {
     display: flex;
-    justify-content: center; /* 이미지와 텍스트를 가로로 중앙 정렬 */
-    align-items: center; /* 이미지와 텍스트를 세로로 중앙 정렬 */
+    justify-content: center;
+    /* 이미지와 텍스트를 가로로 중앙 정렬 */
+    align-items: center;
+    /* 이미지와 텍스트를 세로로 중앙 정렬 */
     margin: 10px 0;
     padding: 10px 15px;
     background-color: #1749c2;

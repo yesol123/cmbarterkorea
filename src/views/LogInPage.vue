@@ -123,6 +123,7 @@ export default {
                             console.log('user_role_index 값 : ' + store.member);
                             console.log('user_index 값 : ' + store.user_index);
                             console.log('store_main_user_index 값 : ' + store.store_main_user_index);
+                            sessionStorage.setItem('store_main_user_index', jsonObject.store_main_user_index);
 
                             router.push({'path' : '/main'});
                         }
