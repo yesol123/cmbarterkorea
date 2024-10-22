@@ -8,7 +8,7 @@
             <div class="btn_list">
             <!-- 보유 포인트, 머니 보여주기 -->
             <div class="money" :style="{ backgroundColor: backColor }">
-                <div v-if="this.member == '3'">
+                <div v-if="this.member == '3' ||this.member == '6'" >
                     <p>보유</p>
                     <p>{{ cmp }}<span> CMP</span></p>
                 </div>
@@ -29,7 +29,7 @@
                     <option v-if="this.member == '2'">수당</option>
                 </select>
                 <!-- {{ selectlist }} -->
-                <button type="button" v-if="this.cancel == false" @click="toCMCancel()">결제 취소</button>
+                <button type="button" v-if="this.cancel == false && this.member !== '6'" @click="toCMCancel()">결제 취소</button>
                 <!-- <p v-if="this.cancel == true">취소할 내역을 클릭하세요.</p> -->
             </div>
         </div>
@@ -94,7 +94,7 @@ export default {
 
         this.cm = store.cm_amount.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-        if (this.member == '3') {
+        if (this.member == '3'||this.member == '6') {
             this.cmp = store.cmp_amount.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
 
@@ -262,7 +262,7 @@ export default {
         backColor() {
             return (this.member == '1') ? 'rgb(9, 9, 116)'
                 : (this.member === '2') ? '#0A6847'
-                    : (this.member === '3') ? '#E4003A'
+                    : (this.member === '3'||this.member=='6') ? '#E4003A'
                         : '#ccc'
         },
     }

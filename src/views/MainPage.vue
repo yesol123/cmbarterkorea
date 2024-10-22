@@ -37,7 +37,7 @@
                     <p>여기를 탭하여 결제하세요.</p>
                 </div>
                 <div class="pay_btn">
-                    <button type="button" :style="subAccountStlye" @click="toCMList()">CM내역</button>
+                    <button type="button" @click="toCMList()">CM내역</button>
                     <button type="button" v-if="this.member === '3' || this.member === '6'"
                         @click="QrScan()">QR결제</button>
                     <button type="button" v-if="this.member != '3' && this.member != '6'"
