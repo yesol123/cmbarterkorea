@@ -116,9 +116,16 @@ export default {
                         else {
                             let jsonObject = JSON.parse(data.msg);
                             store.member = jsonObject.user_role_index;
-                            store.user_id = jsonObject.user_id;
-                            store.user_index = jsonObject.user_index;
-                            store.store_main_user_index = jsonObject.store_main_user_index;
+                            //store.store_main_user_index = jsonObject.store_main_user_index;
+                            if(jsonObject.user_role_index == 6){
+                                let user_id = jsonObject.user_id;
+                                store.user_id = user_id.slice(0, -4);
+                                store.user_index = jsonObject.store_main_user_index;
+                            }
+                            else{
+                                store.user_id = jsonObject.user_id;
+                                store.user_index = jsonObject.user_index;
+                            }
                             console.log(jsonObject);
                             console.log('user_role_index 값 : ' + store.member);
                             console.log('user_index 값 : ' + store.user_index);

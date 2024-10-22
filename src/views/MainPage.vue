@@ -26,7 +26,7 @@
                     <p v-if="this.member === '2'" style="margin: 10px 0;">{{ user_cm }} CM</p>
                     <p v-if="this.member === '3'" style="color: pink;">{{ user_cmp }} CMP</p>
 
-                    <p v-if="this.member === '6'" style="color: pink;"> {{ main_user_cmp }}CMP</p>
+                    <p v-if="this.member === '6'" style="color: pink;"> {{ user_cmp }}CMP</p>
 
                     <p v-if="this.member === '1'">보유쿠폰 <span>{{ coupon_count }}</span>장</p>
                     <!-- <p v-if="this.member === '2'">보유쿠폰 <span>{{ coupon_count }}</span>장</p> -->
