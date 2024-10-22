@@ -144,7 +144,8 @@ export default {
             nickname:'',
             showModal: false,
             showModal2:false,
-            error_massage:''
+            error_massage:'',
+            
         }
     },
     mounted() {
