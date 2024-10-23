@@ -59,7 +59,7 @@
             </div>
             <div class="icon" :style="subAccountStlye" v-if="this.member != '2'" @click="goGame()">
                 <img src="@/assets/roulette_icon.svg">
-                <p>CM게임 보상</p>
+                <p>CM게임보상</p>
             </div>
             <div class="icon" :style="subAccountStlye" v-if="this.member == '3' || this.member === '6'"
                 @click="toCMCharge()">

@@ -46,8 +46,6 @@
                 <p style="font-weight: bold;">{{ list.user_cm_log_value }}</p>
             </div>
         </div>
-
-
         </section>
  
 
