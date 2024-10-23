@@ -51,7 +51,7 @@ export default {
         }
     },
     mounted() {
-        this.GetCategory();
+        this.GetCategory(); // 카테고리 불러오기
         this.GetLocation(); // 지도보여주기
     },
     methods : {
