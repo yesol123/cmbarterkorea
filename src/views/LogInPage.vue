@@ -192,6 +192,7 @@ input {
     margin-top: 5px;
     padding-left: 10px;
     background-color: #fff;
+    color: #000;
 }
 .login_btn {
     display: block;
