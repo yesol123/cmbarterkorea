@@ -182,7 +182,8 @@ section button, img {
     margin-top: 20px
 }
 .confirm_btn {
-    bottom: 80px;
+    position: fixed;
+    bottom: 70px;
     width: 90%; height: 35px;
     border-radius: 15px;
     color: #ccc;
