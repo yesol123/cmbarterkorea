@@ -177,6 +177,7 @@ export default {
         },
         // 결제확인
         Paying() {
+            console.log("결제 시도");
             let store = useResponseStore();
 
             const formData = new FormData();
@@ -190,7 +191,15 @@ export default {
             }
             formData.append('store_user_index', store.user_index);
             formData.append('customer_user_index', this.mb_index);
-            formData.append('user_role_index', store.member);
+
+            if(store.member == 6)
+                formData.append('user_role_index', 3);
+            else
+                formData.append('user_role_index', store.member);
+
+            for (let [key, value] of formData.entries()) {
+                console.log(key, value);
+            }
 
             const url = process.env.VUE_APP_API_URL;
 

@@ -35,8 +35,8 @@
 
   <div class="footer">
     <div class="btn_group">
-      <img @click="goHome()" src="@/assets/home.png">
-      <img @click="goGift()" src="@/assets/gift.png">
+      <img  @click="goHome()" src="@/assets/home.png">
+      <img  :style="subAccountStlye" @click="goGift()" src="@/assets/gift.png">
       <img @click="FindShop()" src="@/assets/search.png">
       <img @click="goMypage()" src="@/assets/my.png">
     </div>
@@ -57,8 +57,13 @@ export default {
   mounted() {
     let store = useResponseStore();
     this.member = store.member;
-
-
+  },
+  computed:{
+    subAccountStlye() {
+            return this.member === '6'
+                ? { pointerEvents: 'none', opacity: '0.5' } // 클릭 비활성화 + 시각적 효과
+                : {}; // 기본 스타일 유지
+        }
   },
   methods: {
     goHome() {

@@ -15,6 +15,11 @@
             <p>{{ this.name  }}</p>
             <p>{{this.id}}</p>
          </div>
+         
+         <div class="info"  v-if="this.member =='6'">
+            <p>{{ this.name  }}</p>
+            <p>{{this.id}}</p>
+         </div>
 
          
 
@@ -38,7 +43,7 @@
             <li><RouterLink to="/subId"><span class="flex_"><img class="img_f" src="@/assets/icon_pw.svg" alt=""><p class="sub_title">정보확인</p></span><img src="@/assets/icon_arrow_right.svg" alt=""></RouterLink></li>
          </ul>
 
-          <ul class="list1">
+          <ul class="list1" v-if="this.member !== '6'">
             <span class="title">보안 / 알림</span>
             <li><RouterLink to="/changepw"><span class="flex_"><img class="img_f" src="@/assets/icon_pw.svg" alt=""><p class="sub_title">비밀번호 번경</p></span><img src="@/assets/icon_arrow_right.svg" alt=""></RouterLink></li>
             <li><RouterLink to="/ChangePin1"><span class="flex_"><img  class="img_f" src="@/assets/icon_pin.svg" alt=""><p class="sub_title">핀번호 번경</p></span><img src="@/assets/icon_arrow_right.svg" alt=""></RouterLink></li>
