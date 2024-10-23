@@ -155,6 +155,9 @@ export default {
 
 <style scoped>
 
+
+
+
 .img_holder {
     text-align: center;
     width: 60%;
