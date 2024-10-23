@@ -112,6 +112,16 @@
         </div>
 
 
+        <div class="footer_div2">
+            <p>씨엠바더코리아(주) | 사업자 등록번호 364-86-03002</p>
+            <p>주소:서울 금천구 가산디지털1로 171, </p>
+            <p>601~606호(가산동,SKV1센터)<span class="ceo-name"> | 대표자 박재능</span></p>
+            <p>연락처:1566-1691</p>
+            <p>Copyright © CMBARTER KOREA All Rights Reserved.</p>
+        </div>
+
+
+
 
         <div v-if="showModal" class="modal">
             <p class="caution">알림</p>
@@ -302,6 +312,11 @@ a {
 
 }
 
+.footer_div2 {
+    display: none;
+
+}
+
 .footer_div>p {
     font-size: 13px;
 }
@@ -372,19 +387,22 @@ a {
 
 /* 작은 화면에서 스타일 변경 */
 @media (max-width: 600px) {
-    .ceo-name {
-        display: block;
-        /* 화면이 작아지면 block으로 바꿔서 줄바꿈 */
+   .footer_div{
+    display: none;
+   }
+
+
+    .footer_div2 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0px;
         font-size: 14px;
-        /* 필요에 따라 글씨 크기 조절 */
-        text-align: center;
+        bottom: 10px;
     }
 
-    .footer_div>p>span::before {
-        content: '';
-        /* content를 빈 값으로 설정해서 제거 */
-        padding: 0;
-        /* 필요에 따라 padding도 초기화 */
-    }
+
+
+
 }
 </style>
