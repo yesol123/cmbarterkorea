@@ -35,10 +35,22 @@
 
   <div class="footer">
     <div class="btn_group">
-      <img  @click="goHome()" src="@/assets/home.png">
-      <img  :style="subAccountStlye" @click="goGift()" src="@/assets/gift.png">
-      <img @click="FindShop()" src="@/assets/search.png">
-      <img @click="goMypage()" src="@/assets/my.png">
+      <div style="text-align: center;">
+        <img  @click="goHome()" src="@/assets/home.png">
+        <p style="font-size: 0.7rem; text-align: center;">홈</p>
+      </div>
+      <div style="text-align: center; margin-left: 15px;">
+        <img  :style="subAccountStlye" @click="goGift()" src="@/assets/gift.png">
+        <p style="font-size: 0.7rem; text-align: center;">선물</p>
+      </div>
+      <div style="text-align: center; margin-left: 10px;">
+        <img @click="FindShop()" src="@/assets/search.png">
+        <p style="font-size: 0.7rem; text-align: center;">가맹점찾기</p>
+      </div>
+      <div style="text-align: center;">
+        <img @click="goMypage()" src="@/assets/my.png">
+        <p style="font-size: 0.7rem;">나의 CM</p>
+      </div>
     </div>
   </div>
 
