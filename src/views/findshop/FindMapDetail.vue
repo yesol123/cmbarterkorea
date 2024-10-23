@@ -27,9 +27,9 @@
                     <div class="info">
                         <p>{{ info.store_name }}</p>
                         <p>{{ info.store_address }}</p>
-                        <div class="btns">
-                            <button type="button"><img src="@/assets/call.png" alt=""></button>
-                            <button type="button"><img src="@/assets/location.png" alt=""></button>
+                        <div class="btn">
+                            <button type="button"><a :href="`tel:${info.store_phone}`"><img src="@/assets/call.png" alt=""></a></button>
+                            <button type="button" @click="GetStoreIndex(info.store_index)"><img src="@/assets/location.png" alt=""></button>
                         </div>
                     </div>
                 </div>
@@ -54,8 +54,8 @@ export default {
         }
     },
     mounted() {
-        this.GetCategory();
-        this.GetInfo();
+        this.GetCategory(); // 카테고리 불러오기
+        this.GetInfo(); // 가맹점 정보 불러오기
     },
     methods : {
         toFindShop() {
@@ -122,6 +122,7 @@ export default {
             })
 
         },
+        // 가맹점 위치 불러오기
         GetLocation() {
             const container = document.getElementById('map');
 
@@ -145,7 +146,16 @@ export default {
 
             marker.setMap(map);
 
-        }
+        },
+        // // 가맹점위치찾기
+        // GetStoreIndex(store_index) {
+        //     let store = useResponseStore();
+        //     store.store_index = '';
+        //     store.store_index = store_index;
+        //     console.log(store_index);
+
+        //     this.$router.push({ path: '/mapdetail' });
+        // },
     }
 }
 </script>
@@ -281,15 +291,13 @@ section {
     /* border: 1px solid red; */
 }
 
-.btns{
+.btn{
     width: 100%;
     display: flex;
     justify-content: flex-end;
     gap: 10px;
 }
-
-
-.btns>button {
+.btn>button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -303,15 +311,18 @@ section {
     max-height: 50px;
     /* 최대 높이 제한 */
 }
+.btn a {
+    display: block;
+    width: 100%;
+}
 
-
-.btns button img {
+.btn button img {
     width: 80%;
     }
 
     @media (max-width:600px) {
         
-    .btns button {
+    .btn button {
         width: 30%;
         /* 작은 화면에서는 비율을 조금 더 크게 설정 */
         max-width: 40px;

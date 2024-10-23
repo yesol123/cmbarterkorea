@@ -37,9 +37,9 @@
                 @click="SearchStore(this.value)">검색</button>
         </div>
 
-        <div class="list" v-for="(post, i) in showPosts" :key="i" @click="StoreDetail(post.store_index)">
-            <div class="img" :style="{ backgroundImage: `url(${post.store_image})` }"></div>
-            <div class="info">
+        <div class="list" v-for="(post, i) in showPosts" :key="i">
+            <div class="img" :style="{ backgroundImage: `url(${post.store_image})` }" @click="StoreDetail(post.store_index)"></div>
+            <div class="info" @click="StoreDetail(post.store_index)">
                 <p style="font-size: 0.9rem; font-weight: bold;">{{ post.store_name }}</p>
                 <p style="font-size: 0.7rem;">{{ post.store_address }}</p>
                 <p style="font-size: 0.7rem;">{{ post.store_category_name }}</p>
@@ -96,9 +96,9 @@ export default {
         }
     },
     mounted() {
-        this.GetStates();
-        this.GetCategory();
-        this.GetStoreList();
+        this.GetStates(); // 시/도 목록 불러오기
+        this.GetCategory(); // 카테고리 불러오기
+        this.GetStoreList(); // 가맹점리스트 불러오기
     },
     methods: {
         All() {
@@ -149,6 +149,7 @@ export default {
                 }
             })
         },
+        // 구/군 목록 불러오기
         GetCity(value) {
             // console.log(111);
             this.address1 = '';
@@ -256,6 +257,7 @@ export default {
 
             this.GetStoreList();
         },
+        // 가맹점 위지찾기
         GetStoreIndex(store_index) {
             let store = useResponseStore();
             store.store_index = '';
@@ -264,6 +266,7 @@ export default {
 
             this.$router.push({ path: '/mapdetail' });
         },
+        // 가맹점 상세보기
         StoreDetail(index) {
             console.log(index);
             let store = useResponseStore();
