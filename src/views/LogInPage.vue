@@ -23,8 +23,8 @@
             <button type="button" class="login_btn" @click="toLogin()">로그인</button>
 
             <div class="link_holder">
-                <a href="#"><router-link to="/findid">아이디 및 비밀번호 찾기 | </router-link></a>
-                <a href="#"><router-link to="/join">회원가입</router-link></a>
+                <a href="#" style="color: #000;"><router-link to="/findid">아이디 및 비밀번호 찾기 | </router-link></a>
+                <a href="#" style="color: #000;"><router-link to="/join">회원가입</router-link></a>
             </div>
         </section>
 
@@ -184,6 +184,7 @@ label {
     height: 22px;
     text-align: center;
     display: block;
+    color: #000;
 }
 input {
     width: 100%; height: 40px;
