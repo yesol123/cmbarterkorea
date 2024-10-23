@@ -460,6 +460,7 @@ export default {
     left: 0;
     width: 100%;
     height: 70px;
+    z-index: 99999;
     /* background-color: rgb(9, 9, 116); */
     /* border: 1px solid red; */
 }
