@@ -1,11 +1,11 @@
 <template>
-    <div class="wrap">
+   
         <header>
             <button type="button" class="goback_btn" @click="toShopIn()"><img src="@/assets/go_back_btn.png"></button>
             <p>가맹점 신청</p>
         </header>
 
-        <main>
+        <section>
             <div class="index">
                 <div>1</div><span></span><div>2</div><span></span><div>3</div>
             </div>
@@ -49,8 +49,8 @@
             </div>
 
             <button type="button" class="confirm_btn" @click="confirmCheck()" :style="{ backgroundColor : buttonColor, color : fontColor}">확인</button>
-        </main>
-    </div>
+        </section>
+   
 </template>
 
 <script>
@@ -145,37 +145,7 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: hsl(0, 0%, 0%);
-}
-.wrap {
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    /* border: 1px solid red; */
-    margin-bottom: 70px;
-}
-header {
-    position: fixed;
-    top: 0; left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; height: 40px;
-    padding: 0 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-header > p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
-}
+
 .goback_btn {
     width: 30px; height: 30px;
     background-color: #fff;
@@ -184,24 +154,24 @@ header > p {
 .goback_btn img {
     width: 100%; height: 100%;
 }
-main {
+section {
     width: 100%;
     margin-top: 50px;
     padding: 10px;
     /* border: 1px solid red; */
 }
-main > div {
+section > div {
     position: relative;
     width: 100%;
     margin: 30px 0;
     padding: 0 10px;
     /* border: 1px solid blue; */
 }
-main button {
+section button {
     position: absolute;
     right: 15px;
 }
-main button, img {
+section button, img {
     width: 20px; height: 20px;
     border: none;
     background-color: #fff;
@@ -212,7 +182,7 @@ main button, img {
     margin-top: 20px
 }
 .confirm_btn {
-    bottom: -50px;
+    bottom: 80px;
     width: 90%; height: 35px;
     border-radius: 15px;
     color: #ccc;
@@ -243,4 +213,6 @@ main button, img {
     width: 20px; height: 1px;
     border: 1px solid #ccc;
 }
+
+
 </style>

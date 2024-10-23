@@ -1,11 +1,11 @@
 <template>
-    <div class="wrap">
+   
         <header>
             <button type="button" class="goback_btn" @click="toShopIn2()"><img src="@/assets/go_back_btn.png"></button>
             <p>가맹점 신청</p>
         </header>
 
-        <main>
+        <section>
             <div class="index">
                 <div>1</div><span></span><div>2</div><span></span><div>3</div>
             </div>
@@ -148,8 +148,8 @@
             </div>
 
             <button type="button" class="nextbtn" @click="ShopIn()">가맹점 신청하기</button>
-        </main>
-    </div>
+        </section>
+    
 </template>
 
 <script>
@@ -516,37 +516,7 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: hsl(0, 0%, 0%);
-}
-.wrap {
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    /* border: 1px solid red; */
-    margin-bottom: 70px;
-}
-header {
-    position: fixed;
-    top: 0; left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; height: 40px;
-    padding: 0 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-header > p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
-}
+
 .goback_btn {
     width: 30px; height: 30px;
     background-color: #fff;
