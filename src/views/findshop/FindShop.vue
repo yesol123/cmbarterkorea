@@ -168,16 +168,16 @@ export default {
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json())
-                .then(data => {
-                    // console.log(data);
+            .then(response => response.json())
+            .then(data => {
+                // console.log(data);
 
-                    for (let i = 0; i < data.msg.length; i++) {
-                        // console.log(data.msg[i].address2);
-                        this.cities.push(data.msg[i].address2);
-                        // console.log(this.cities);
-                    }
-                })
+                for (let i = 0; i < data.msg.length; i++) {
+                    // console.log(data.msg[i].address2);
+                    this.cities.push(data.msg[i].address2);
+                    // console.log(this.cities);
+                }
+            })
 
         },
         GetStoreList() {
@@ -195,21 +195,21 @@ export default {
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(333);
-                    console.log(data);
+            .then(response => response.json())
+            .then(data => {
+                console.log(333);
+                console.log(data);
 
-                    this.posts = [];
+                this.posts = [];
 
-                    for (let i = 0; i < data.msg.length; i++) {
-                        // console.log(data.msg[i].address2);
-                        this.posts.push(data.msg[i]);
-                        // console.log(typeof this.posts.length);
-                        // store.store_index = data.msg[i].store_index;
-                        // console.log(store.store_index);
-                    }
-                })
+                for (let i = 0; i < data.msg.length; i++) {
+                    // console.log(data.msg[i].address2);
+                    this.posts.push(data.msg[i]);
+                    // console.log(typeof this.posts.length);
+                    // store.store_index = data.msg[i].store_index;
+                    // console.log(store.store_index);
+                }
+            })
         },
         GetCategory() {
             const formData = new FormData();
@@ -221,15 +221,15 @@ export default {
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    for (let i = 0; i < data.msg.length; i++) {
-                        // console.log(data.msg[i].address2);
-                        this.categories.push(data.msg[i]);
-                        // console.log(typeof this.posts.length);
-                    }
-                })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                for (let i = 0; i < data.msg.length; i++) {
+                    // console.log(data.msg[i].address2);
+                    this.categories.push(data.msg[i]);
+                    // console.log(typeof this.posts.length);
+                }
+            })
         },
         SearchByCity(value) {
             this.address2 = '';

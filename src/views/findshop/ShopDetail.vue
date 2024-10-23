@@ -65,6 +65,7 @@ export default {
         toFindShop() {
             this.$router.push({ path : '/findshop' });
         },
+        // 가맹점정보 불러오기
         GetShopInfo() {
             let store = useResponseStore();
             const formData = new FormData();
@@ -83,6 +84,7 @@ export default {
                 this.shopinfo = data.msg[0];
             })
         },
+        // 가맹점이미지 불러오기
         GetImage() {
             let store = useResponseStore();
             const formData = new FormData();
@@ -104,11 +106,13 @@ export default {
                 }
             })
         },
+        // 이미지 슬라이드
         bannerSliding() {
             this.timeOne = setInterval(() => {
                 this.bannerIndex = (this.bannerIndex + 1) % this.imglist.length;
             }, 3000);
         },
+        // 가맹점위치찾기
         GetStoreIndex(store_index) {
             let store = useResponseStore();
             store.store_index = '';
