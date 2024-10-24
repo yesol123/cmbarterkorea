@@ -532,6 +532,9 @@ input {
     color: #000;
     background-color: #fff;
 }
+label {
+    color: #000;
+}
 main {
     width: 100%;
     margin-top: 50px;
