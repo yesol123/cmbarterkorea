@@ -89,7 +89,7 @@
                 <div class="address">
                     <p>주소</p>
                     <input type="number" placeholder="우편번호" v-model="postcode">
-                    <button type="button" @click="GetPostCode()">우편번호 검색</button>
+                    <button type="button" @click="GetPostCode()" style="color: #000;">우편번호 검색</button>
                     <input type="text" placeholder="주소" v-model="address">
                     <input type="text" placeholder="상세주소 입력" v-model="extra_address">
                 </div>
@@ -534,6 +534,9 @@ input {
 }
 label {
     color: #000;
+}
+select {
+    background-color: #fff;
 }
 main {
     width: 100%;
