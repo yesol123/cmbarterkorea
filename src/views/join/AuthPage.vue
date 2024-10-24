@@ -230,4 +230,7 @@ export default {
     border: none; border-radius: 10px;
     /* border: 1px solid red; */
 }
+p {
+    color: #000;
+}
 </style>

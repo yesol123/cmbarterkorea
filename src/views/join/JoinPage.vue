@@ -204,6 +204,7 @@ export default {
 <style scoped>
 p{
     margin: 0;
+    color: #000;
 }
 .goback_btn {
     width: 30px;
@@ -287,5 +288,8 @@ img {
     border: none;
     border-radius: 10px;
     /* border: 1px solid red; */
+}
+label {
+    color: #000;
 }
 </style>
