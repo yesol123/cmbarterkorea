@@ -525,6 +525,13 @@ export default {
 .goback_btn img {
     width: 100%; height: 100%;
 }
+p {
+    color: #000;
+}
+input {
+    color: #000;
+    background-color: #fff;
+}
 main {
     width: 100%;
     margin-top: 50px;

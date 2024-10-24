@@ -2,20 +2,20 @@
    
         <header>
             <button type="button" class="goback_btn" @click="toShopIn()"><img src="@/assets/go_back_btn.png"></button>
-            <p>가맹점 신청</p>
+            <p style="color: #000;">가맹점 신청</p>
         </header>
 
         <section>
             <div class="index">
                 <div>1</div><span></span><div>2</div><span></span><div>3</div>
             </div>
-            <p style="font-weight: bold;">지금 바로 씨엠바더를 시작해 보세요!</p>
-            <p style="font-size: 0.9rem; margin: 20px 0;">모두 동의해주셔야 다음 페이지로 이동 가능합니다.</p>
+            <p style="font-weight: bold; color: #000;">지금 바로 씨엠바더를 시작해 보세요!</p>
+            <p style="font-size: 0.9rem; margin: 20px 0; color: #000;">모두 동의해주셔야 다음 페이지로 이동 가능합니다.</p>
 
             <div style="margin-top: 50px;">
                 <Checkbox v-model="AllCheck" :binary="true" inputId="all_agreed" @click="checkAll()"></Checkbox>
                 <label for="all_agreed"> 모든 약관 동의 </label>
-                <p style="font-size: 0.8rem; margin-top: 10px;">
+                <p style="font-size: 0.8rem; margin-top: 10px; color: #000;">
                     전체동의는 필수 및 선택정보에 대한 동의도 포함되어 있으며, 개별적으로도 동의를 선택하실 수 있습니다. 선택항목에 대한 동의를 거부하시는 경우에도 서비스는 이용이 가능합니다.
                 </p>
 
@@ -214,6 +214,8 @@ section button, img {
     width: 20px; height: 1px;
     border: 1px solid #ccc;
 }
-
+label {
+    color: #000;
+}
 
 </style>
