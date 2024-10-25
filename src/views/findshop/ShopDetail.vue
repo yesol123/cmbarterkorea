@@ -139,8 +139,8 @@ export default {
         getShowImg(){
         let store = useResponseStore();
         const formData= new FormData();
-        formData.append('type', 'store_image_select');
-        formData.append('user_index', store.user_index);
+        formData.append('type', 'store_image_select2');
+        formData.append('store_index', store.store_index);
         
         const url = process.env.VUE_APP_API_URL;
         fetch(url + 'api/store/store_update.php', {
