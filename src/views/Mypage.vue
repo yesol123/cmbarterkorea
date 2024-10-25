@@ -211,7 +211,6 @@ export default {
 
 .info>p {
     font-weight: 900;
-
 }
 
 .info>p:nth-child(1) {
@@ -402,7 +401,22 @@ a {
     }
 
 
-
-
 }
+
+
+@media (max-width: 360px) {
+    .mypage_1 p {
+    font-size: 14px;
+  }
+
+  .footer_div2 p{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0px;
+        font-size: 12px;
+        bottom: 10px;
+    }
+}
+
 </style>

@@ -116,14 +116,14 @@ export default {
 
 .footer {
   position: fixed;
-  bottom: 0;
+  bottom: 5px;
   left: 0;
   width: 100%;
   height: 50px;
   background-color: #fff;
-  border-radius: 5px;
   z-index: 1000; /* 다른 요소 위에 나타나도록 z-index 설정 */
-  border: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  padding: 5px;
 }
 
 .btn_group {
