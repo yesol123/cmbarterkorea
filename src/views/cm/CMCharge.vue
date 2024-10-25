@@ -42,10 +42,8 @@
         </div>
 
         <button type="button" :class="['charge_btn', buttonClass]" @change="charge" :disabled="!isChargeable"
-            @click="showConfrimPin">충전하기</button>
+            @click="charge">충전하기</button>
 
-
-        <ConfirmPin v-if="isOpen" ref="confirmPin" @pinSuccess="handlePinSuccess" :sendType="'charge'" />
 
 
     </section>
@@ -56,13 +54,9 @@
 <script>
 
 import { useResponseStore } from '@/store/response.js'
-import ConfirmPin from '@/components/ConfirmPin.vue';
 
 
 export default {
-    components: {
-        ConfirmPin
-    },
 
     data() {
         return {
@@ -145,9 +139,6 @@ export default {
     },
 
     methods: {
-        showConfrimPin() {
-            this.isOpen = true; // ConfirmPin 컴포넌트를 보이게 함
-        },
         async fetchUserData() {
             const formData2 = new FormData();
             formData2.append('type', 'user_get');
@@ -194,7 +185,7 @@ export default {
             this.all_cm = (userCM + addCM).toLocaleString();
 
             // 보유 CMP와 충전한 CM을 더한 값 (충전 후 CMP)
-            this.current_cmp = (userCMP + addCM).toLocaleString(); // CMP도 더해서 계산
+            this.current_cmp = (userCMP - addCM).toLocaleString(); // CMP도 더해서 계산
 
             // 충전 수수료 계산 (충전할 CM의 10%)
             this.paymoney = Math.floor(addCM * 0.1 * 1.1).toLocaleString(); // 부가세 포함
@@ -207,10 +198,12 @@ export default {
                 //timestampSecond = Math.floor(+ new Date() / 1000);
                 let store = useResponseStore();
                 let tx = store.user_id + Math.floor(+ new Date() / 1000);
+                console.log(this.paymoney);
+                let result = this.paymoney.replace(/,/g, '');
 
                 if (this.TPO) {
                     this.TPO.pay({
-                        amount: parseInt(1000), // 충전할 금액
+                        amount: parseInt(result), // 충전할 금액
                         publicKey: 'pk_1703-f7d8df-4f6-dff5a',
                         products: [{ name: 'cm', desc: 'description' }],
                         trackId: tx,  // 유저 ID 또는 트랜잭션 ID
