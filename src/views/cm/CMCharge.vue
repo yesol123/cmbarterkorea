@@ -29,6 +29,7 @@
             <p>{{ this.current_cmp }}<span>CMP</span></p>
             <p>{{ this.all_cm }}<span>CM</span></p>
         </div>
+
         <!-- 충전수수료 -->
         <div class="charge_money">
             <p class="title">충전 수수료</p>
@@ -38,15 +39,31 @@
                     <p class="red">* 충전 수수료는 충전 CM의 10% 입니다.</p>
                 </div>
             </div>
-
         </div>
 
-        <button type="button" :class="['charge_btn', buttonClass]" @change="charge" :disabled="!isChargeable"
-            @click="charge">충전하기</button>
+        <button type="button" :class="['charge_btn', buttonClass]" @change="charge"
+            @click="handleChargeClick">충전하기</button>
 
+
+
+        <div v-if="showModal" class="modal">
+            <p class="caution">알림</p>
+            <p>충전 금액은 최소 100,000CM <br>이상이어야 합니다.</p>
+            <button @click="confirm">확인</button>
+        </div>
+
+
+
+        <div v-if="showModal2" class="modal">
+            <p class="caution">알림</p>
+            <p>보유 CMP가 부족합니다.</p>
+            <button @click="confirm">확인</button>
+        </div>
 
 
     </section>
+
+
 </template>
 
 
@@ -60,7 +77,8 @@ export default {
 
     data() {
         return {
-            isOpen: false,
+            showModal: false,
+            showModal2: false,
             user_cmp: '',//보유 CMP
             user_cm: '', // 보유 CM
             add_cm: '',//충전할 CM
@@ -79,8 +97,8 @@ export default {
             return this.paymoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         },
         isChargeable() {
-           // add_cm이 100,000 이상이고, user_cmp가 0이 아닐 때만 true 반환
-        return this.add_cm >= 100000 && parseInt(this.user_cmp.replace(/,/g, ''), 10) > 0;
+            // add_cm이 100,000 이상이고, user_cmp가 0이 아닐 때만 true 반환
+            return this.add_cm >= 100000 && parseInt(this.user_cmp.replace(/,/g, ''), 10) > 0;
         },
         buttonClass() {
             // 충전 가능한 상태일 때 버튼 클래스 설정
@@ -139,6 +157,25 @@ export default {
     },
 
     methods: {
+
+        handleChargeClick() {
+            const userCMP = parseInt(this.user_cmp.replace(/,/g, ''), 10);
+            const futureCMP = parseInt(this.current_cmp.replace(/,/g, ''), 10);
+
+            // 보유 CMP 또는 충전 후 CMP가 음수일 때 showModal2를 true로 설정
+            if (userCMP < 0 || futureCMP < 0) {
+                this.showModal2 = true;
+            } else if (this.isChargeable) {
+                this.charge(); // 조건이 충족되면 charge 함수를 실행
+            } else {
+                this.showModal = true; // 최소 금액이 충족되지 않으면 첫 번째 모달을 표시
+            }
+        },
+        confirm() {
+            this.showModal = false
+            this.showModal2 = false
+        },
+
         async fetchUserData() {
             const formData2 = new FormData();
             formData2.append('type', 'user_get');
@@ -165,12 +202,6 @@ export default {
                 console.error('데이터를 가져오는 중 오류 발생:', error);
             }
         },
-        handlePinSuccess() {
-            console.log('핀번호 성공, 선물하기 호출');
-            this.charge(); // PIN 검증 성공 시 charge 함수 호출
-
-            this.isOpen = false; // ConfirmPin 컴포넌트 닫기
-        },
 
         toMain() {
             this.$router.push({ path: '/main' });
@@ -184,7 +215,7 @@ export default {
             // 보유 CM과 충전할 CM 더한 값
             this.all_cm = (userCM + addCM).toLocaleString();
 
-            // 보유 CMP와 충전한 CM을 더한 값 (충전 후 CMP)
+            // 보유 CMP와 충전한 CM을 뺀 값 (충전 후 CMP)
             this.current_cmp = (userCMP - addCM).toLocaleString(); // CMP도 더해서 계산
 
             // 충전 수수료 계산 (충전할 CM의 10%)
@@ -344,11 +375,64 @@ p {
     border-radius: 10px;
 }
 
+.charge_btn_disabled {
+    background-color: white;
+    color: #b1b1b1;
+    border: 1px solid #b1b1b1;
+    cursor: not-allowed;
+}
 
 .charge_btn_enabled {
     background-color: #1bce0b;
     color: white;
     border: 1px solid #1bce0b;
     cursor: pointer;
+}
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    position: fixed;
+    /* 고정 위치 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+    /* 화면의 중앙에 위치 */
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 400px;
+    max-width: 90%;
+    padding: 30px 20px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.caution {
+    margin-bottom: 20px;
+}
+
+.modal button {
+    margin: 10px auto 0;
+    padding: 10px 20px;
+    background-color: #1bce0b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 30%;
 }
 </style>
