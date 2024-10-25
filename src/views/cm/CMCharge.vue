@@ -79,8 +79,8 @@ export default {
             return this.paymoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         },
         isChargeable() {
-            // add_cm 값이 100,000 이상일 때 true
-            return this.add_cm >= 100000;
+           // add_cm이 100,000 이상이고, user_cmp가 0이 아닐 때만 true 반환
+        return this.add_cm >= 100000 && parseInt(this.user_cmp.replace(/,/g, ''), 10) > 0;
         },
         buttonClass() {
             // 충전 가능한 상태일 때 버튼 클래스 설정
