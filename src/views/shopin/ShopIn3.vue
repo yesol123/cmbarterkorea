@@ -83,7 +83,7 @@
                         <option value="14">기타 도소매</option>
                     </select>
                     <p style="margin-top: 20px;">가게대표 전화번호</p>
-                    <input type="number" placeholder="숫자만 입력(-제외)" v-model="shop_tel">
+                    <input type="text" placeholder="숫자만 입력(-제외)" v-model="shop_tel">
                 </div>
 
                 <div class="address">
@@ -379,6 +379,11 @@ export default {
                 alert('가게 전화번호를 입력해주세요.');
                 return false;
             }
+            const isNumber = /^[0-9]*$/;
+            if(!(isNumber.test(this.shop_tel))) {
+                alert('전화번호는 숫자로만 입력해주세요.');
+                return false;
+            }
             if(this.postcode == '') {
                 alert('우편번호를 입력해주세요.');
                 return false;
@@ -391,10 +396,10 @@ export default {
                 alert('상세주소를 입력해주세요.');
                 return false;
             }
-            if(this.website == '') {
-                alert('대표 사이트를 입력해주세요.');
-                return false;
-            }
+            // if(this.website == '') {
+            //     alert('대표 사이트를 입력해주세요.');
+            //     return false;
+            // }
             if(this.board_img == '') {
                 alert('가맹점 간판 사진을 업로드해주세요.');
                 return false;
