@@ -1,8 +1,8 @@
 <template>
-     <header class="changePw_header_title">
-            <RouterLink :to="`/mypage/${this.member}`"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
-            <h3> 비밀번호 변경</h3>
-        </header>
+    <header class="changePw_header_title">
+        <RouterLink :to="`/mypage/${this.member}`"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
+        <h3> 비밀번호 변경</h3>
+    </header>
 
     <section class="changePw_seciotn">
 
@@ -14,11 +14,13 @@
         <div>
             <label for="newpassword_">새 비밀번호</label>
             <input v-model="newpassword" id="newpassword_" type="password" placeholder="새로운 비밀번호를 입력해주세요">
-            
+
         </div>
         <div>
-        <label for="newpassword_confirm_">비밀번호 확인  <span v-if="!isPasswordMatching && newpassword_confirm !== ''" class="error">*비밀번호가 일치하지 않습니다.</span></label> 
-        <input v-model=" newpassword_confirm" id="newpassword_confirm_" type="password" placeholder="새로운 비밀번호를 다시한번 입력해주세요">
+            <label for="newpassword_confirm_">비밀번호 확인 <span v-if="!isPasswordMatching && newpassword_confirm !== ''"
+                    class="error">*비밀번호가 일치하지 않습니다.</span></label>
+            <input v-model="newpassword_confirm" id="newpassword_confirm_" type="password"
+                placeholder="새로운 비밀번호를 다시한번 입력해주세요">
         </div>
 
         <div class="text">
@@ -28,18 +30,18 @@
 
 
         <div>
-            <button :class="[{'active': isButtonActive}, 'origin']" @click="showModal = true">확인</button>
+            <button :class="[{ 'active': isButtonActive }, 'origin']" @click="showModal = true">확인</button>
         </div>
 
 
-    
 
-        
+
+
         <div v-if="showModal" class="modal">
-  <p class="caution">알림</p>
-      <p>비밀번호를 수정하였습니다.</p>
-      <button @click="confirm()">확인</button>
-  </div>
+            <p class="caution">알림</p>
+            <p>비밀번호를 수정하였습니다.</p>
+            <button @click="confirm()">확인</button>
+        </div>
 
     </section>
 
@@ -52,46 +54,46 @@ import router from '@/router/index.js';
 
 export default {
     name: 'changePassword',
-    data(){
-        return{
-            member:'',
-            password:'',//현재비밀번호
-            newpassword:'', //새로운 비밀번호
-            newpassword_confirm:'', //새로운 비밀번호 확인
-            isbuttonActive:false,
-            showModal : false
+    data() {
+        return {
+            member: '',
+            password: '',//현재비밀번호
+            newpassword: '', //새로운 비밀번호
+            newpassword_confirm: '', //새로운 비밀번호 확인
+            isbuttonActive: false,
+            showModal: false
         }
     },
 
-    
+
     mounted() {
         // store에서 member 값을 가져와서 data에 할당
         let store = useResponseStore();
         this.member = store.member;
     },
-    computed:{
+    computed: {
         isPasswordMatching() {
             return this.newpassword === this.newpassword_confirm;
         },
-        isButtonActive(){
+        isButtonActive() {
             return this.password !== '' && this.newpassword !== '' && this.newpassword_confirm != ''
         }
 
     },
 
-    
-    methods:{
-        
-        confirm(){
-            if(this.password==''){
+
+    methods: {
+
+        confirm() {
+            if (this.password == '') {
                 alert("현재 비밀번호를 입력해주세요.");
-                 return
+                return
             }
 
             if (!this.isPasswordMatching) {
-            alert("새 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-            return;
-        }
+                alert("새 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+                return;
+            }
 
             let store = useResponseStore();
 
@@ -105,70 +107,72 @@ export default {
             const url = process.env.VUE_APP_API_URL;
 
             fetch(url + 'api/setting/user_pw_change.php', {
-            method: 'POST',
-            body: formData
+                method: 'POST',
+                body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
 
-            if( data.code == 500){
-                alert(data.msg)
-            }
-            
-            if(data.code == 200 ){
-               // alert(data.msg)
-                 router.push({path:'/main'})
-            }
-            
-            
-            });
-            
+                    if (data.code == 500) {
+                        alert(data.msg)
+                    }
+
+                    if (data.code == 200) {
+                        // alert(data.msg)
+                        router.push({ path: '/main' })
+                    }
+
+
+                });
+
         },
- 
+
     }
 }
 
 </script>
 
 <style scoped>
-
-*p,label{
+*p,
+label {
     margin-bottom: 10px;
 }
 
 
-div{
+div {
     display: flex;
     flex-direction: column;
     margin: 20px auto;
 }
-div > input{
+
+div>input {
     width: 100%;
     padding: 10px;
     border: 1px solid #B1B1B1;
     border-radius: 5px;
 }
 
-div > input:focus {
-   outline: 1px solid #4A9EFA;
+div>input:focus {
+    outline: 1px solid #4A9EFA;
 }
 
-.text{
+.text {
     margin-top: 10px;
 }
-.text > p{
+
+.text>p {
     margin: 0;
     font-size: 12px;
     color: #555555;
     font-weight: 400;
 }
 
-.text > p:nth-child(2){
+.text>p:nth-child(2) {
     margin-top: 5px;
 }
 
-.origin{
+.origin {
     width: 95%;
     align-items: center;
     padding: 10px;
@@ -179,14 +183,16 @@ div > input:focus {
     font-size: 16px;
     position: fixed;
     bottom: 60px;
-    cursor: pointer; /* 비활성화 시 마우스 커서 */
+    cursor: pointer;
+    /* 비활성화 시 마우스 커서 */
 }
 
 
 .origin.active {
     background-color: #4A9EFA;
     border-color: #4A9EFA;
-    cursor: pointer; /* 활성화 시 마우스 커서 */
+    cursor: pointer;
+    /* 활성화 시 마우스 커서 */
 }
 
 .error {
@@ -196,45 +202,48 @@ div > input:focus {
 }
 
 .modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .modal {
-  position: fixed; /* 고정 위치 */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -70%); /* 화면의 중앙에 위치 */
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  width: 400px;
-  max-width: 90%;
-  padding: 30px 20px;
-  text-align: center;
-  box-sizing: border-box;
+    position: fixed;
+    /* 고정 위치 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+    /* 화면의 중앙에 위치 */
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 400px;
+    max-width: 90%;
+    padding: 30px 20px;
+    text-align: center;
+    box-sizing: border-box;
 }
-.caution{
+
+.caution {
     margin-bottom: 20px;
- }
+}
 
 .modal button {
-  margin: 10px auto 0;
-  padding: 10px 20px;
-  background-color: #1749c2;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  width: 30%;
+    margin: 10px auto 0;
+    padding: 10px 20px;
+    background-color: #1749c2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 30%;
 }
 </style>

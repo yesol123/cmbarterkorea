@@ -1,25 +1,37 @@
 <template>
-    <div class="main_header" :style="{ backgroundColor: backColor }">
+    <div class="main_header">
         <div class="header_center">
             <div class="main_logo">
-                <img src="@/assets/mypage.png">
-                <p v-if="this.member === '1'">일반</p>
-                <p v-else-if="this.member === '2'">사업자</p>
-                <p v-else-if="this.member === '3'">가맹점</p>
-                <p v-else-if="this.member === '6'">서브계정</p>
+                <div class="img_contain">
+
+<svg width="35" height="35" viewBox="0 0 48 48" fill="none">
+<circle cx="24" cy="17" r="5" :stroke="fontColor" stroke-width="3"/>
+<path d="M19.5 27H28.5C33.1944 27 37 30.8056 37 35.5V37H11V35.5C11 30.8056 14.8056 27 19.5 27Z" :stroke="fontColor" stroke-width="3"/>
+</svg>
+                </div>
+               
+                <p v-if="this.member === '1'" :style="{ color: fontColor }">일반</p>
+                <p v-else-if="this.member === '2'" :style="{ color: fontColor }">사업자</p>
+                <p v-else-if="this.member === '3'" :style="{ color: fontColor }">가맹점</p>
+                <p v-else-if="this.member === '6'" :style="{ color: fontColor }">서브계정</p>
             </div>
             <div>
-                <h1 style="font-size: 1.3rem; color: #fff;">씨엠바더</h1>
+                <h1 :style="{ color: fontColor }">씨엠바더</h1>
             </div>
             <div @click="logout()">
-                <img src="@/assets/logout.png">
+             
+
+<svg width="40" height="40" viewBox="0 0 48 48" fill="none" >
+<path d="M24.6316 12H13C12.4477 12 12 12.4477 12 13V35C12 35.5523 12.4477 36 13 36H24.6316M20.8421 24.6316H36M36 24.6316L29.6842 18.3158M36 24.6316L29.6842 30.9474" :stroke="fontColor" stroke-width="3" stroke-linejoin="round"/>
+</svg>
             </div>
         </div>
     </div>
 
     <div class="main_content">
         <div class="pay_content" :style="{ backgroundColor: backColor }">
-            <div class="pay_center">
+            <div class="pay_center"
+                :style="{ borderTop: `3px solid ${borderColor}`, borderBottom: `3px solid ${borderColor} !important` }">
                 <div class="pay_area" v-bind:style="[subAccountStlye, { backgroundColor: backColor }]"
                     @click="toPayment()">
                     <p v-if="this.member === '1'">{{ user_cm }} CM</p>
@@ -37,12 +49,12 @@
                     <p>여기를 탭하여 결제하세요.</p>
                 </div>
                 <div class="pay_btn">
-                    <button type="button" @click="toCMList()">CM내역</button>
-                    <button type="button" v-if="this.member === '3' || this.member === '6'"
+                    <button :style="{ color: fontColor }" type="button" @click="toCMList()">CM내역</button>
+                    <button :style="{ color: fontColor }" type="button" v-if="this.member === '3' || this.member === '6'"
                         @click="QrScan()">QR결제</button>
-                    <button type="button" v-if="this.member != '3' && this.member != '6'"
+                    <button :style="{ color: fontColor }" type="button" v-if="this.member != '3' && this.member != '6'"
                         @click="CouponBox()">쿠폰함</button>
-                    <button type="button" v-if="this.member === '3'" @click="toCouponMake()">쿠폰발행함</button>
+                    <button :style="{ color: fontColor }" type="button" v-if="this.member === '3'" @click="toCouponMake()">쿠폰발행함</button>
                 </div>
             </div>
         </div>
@@ -54,20 +66,20 @@
         </div>
         <div class="icons">
             <div class="icon" :style="subAccountStlye" v-if="this.member != '2'" @click="toEvent()">
-                <img src="@/assets/coupon_icon.svg">
+                <img src="@/assets/common_couponEvent.png">
                 <p>쿠폰이벤트</p>
             </div>
             <div class="icon" :style="subAccountStlye" v-if="this.member != '2'" @click="goGame()">
-                <img src="@/assets/roulette_icon.svg">
+                <img src="@/assets/common_cmgame.png">
                 <p>CM게임보상</p>
             </div>
             <div class="icon" :style="subAccountStlye" v-if="this.member == '3' || this.member === '6'"
                 @click="toCMCharge()">
-                <img src="@/assets/charge_icon.svg">
+                <img src="@/assets/cm_charge.png">
                 <p>CM충전</p>
             </div>
             <div class="icon" v-if="this.member == '1'" @click="toShopIn()">
-                <img src="@/assets/application.png">
+                <img src="@/assets/normal_application.png">
                 <p>가맹점신청</p>
             </div>
             <div class="icon" v-if="this.member == '2'">
@@ -83,25 +95,25 @@
                 <p>산하 가맹점</p>
             </div>
             <div class="icon" @click="goHomePage()">
-                <img src="@/assets/homepage_icon.svg">
+                <img src="@/assets/common_CMHomepage.png">
                 <p>홈페이지</p>
             </div>
             <div class="icon" :style="subAccountStlye" v-if="this.member == '3' || this.member === '6'"
                 @click="gomangestore()">
-                <img src="@/assets/store_icon.svg">
+                <img src="@/assets/store_manage.png">
                 <p>매장관리</p>
             </div>
             <div class="icon" :style="subAccountStlye" v-if="this.member == '3' || this.member === '6'"
                 @click="gocustomer()">
-                <img src="@/assets/management_icon.svg">
+                <img src="@/assets/customer_manage.png">
                 <p>고객관리</p>
             </div>
             <div class="icon" :style="subAccountStlye">
-                <img src="@/assets/kakao_icon.svg">
+                <img src="@/assets/common_kakao.png">
                 <p>카톡상담</p>
             </div>
             <div class="icon">
-                <img src="@/assets/shoppingmall_icon.svg">
+                <img src="@/assets/common_shoppingmall.png">
                 <p>쇼핑몰</p>
             </div>
         </div>
@@ -169,9 +181,9 @@ export default {
         this.main_index = mainUserIndex
 
         if (this.member === '6') {
-        // 서브 계정일 때 메인 계정의 CM, CMP 데이터를 가져옴
-        this.fetchMainAccountData(mainUserIndex);
-    }
+            // 서브 계정일 때 메인 계정의 CM, CMP 데이터를 가져옴
+            this.fetchMainAccountData(mainUserIndex);
+        }
 
         // 일반, 사업자, 가맹점 별 데이터 바인딩
         this.MainList();
@@ -219,27 +231,27 @@ export default {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log('jsondata???');
-                console.log(data);
+                .then(response => response.json())
+                .then(data => {
+                    console.log('jsondata???');
+                    console.log(data);
 
-                let toJson = JSON.parse(data.msg);
-                console.log(toJson);
+                    let toJson = JSON.parse(data.msg);
+                    console.log(toJson);
 
-                // 유저CMP (null 걸러주기)
-                this.user_cmp = (toJson.user_cmp ?? '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                    // 유저CMP (null 걸러주기)
+                    this.user_cmp = (toJson.user_cmp ?? '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-                // 유저CM
-                this.user_cm = (toJson.user_cm ?? '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                this.user_cm = (toJson.user_cm ?? null).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                    // 유저CM
+                    this.user_cm = (toJson.user_cm ?? '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                    this.user_cm = (toJson.user_cm ?? null).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-                store.cm_amount = toJson.user_cm;
-                store.cmp_amount = toJson.user_cmp;
+                    store.cm_amount = toJson.user_cm;
+                    store.cmp_amount = toJson.user_cmp;
 
-                // 쿠폰갯수
-                this.coupon_count = toJson.coupon_count;
-            })
+                    // 쿠폰갯수
+                    this.coupon_count = toJson.coupon_count;
+                })
 
             this.getBanner();
             this.getAd();
@@ -268,18 +280,18 @@ export default {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                let toJson = JSON.parse(data.msg);
-                console.log(toJson);
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    let toJson = JSON.parse(data.msg);
+                    console.log(toJson);
 
-                for (var i in toJson) {
-                    console.log(11111111);
-                    console.log(toJson[i]);
-                    this.bannerImg.push(toJson[i]);
-                }
-            })
+                    for (var i in toJson) {
+                        console.log(11111111);
+                        console.log(toJson[i]);
+                        this.bannerImg.push(toJson[i]);
+                    }
+                })
 
         },
         // 광고 이미지 불러오기
@@ -294,18 +306,18 @@ export default {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                let toJson = JSON.parse(data.msg);
-                console.log(toJson);
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    let toJson = JSON.parse(data.msg);
+                    console.log(toJson);
 
-                for (var i in toJson) {
-                    console.log(100000000);
-                    console.log(toJson[i]);
-                    this.adImg.push(toJson[i]);
-                }
-            })
+                    for (var i in toJson) {
+                        console.log(100000000);
+                        console.log(toJson[i]);
+                        this.adImg.push(toJson[i]);
+                    }
+                })
 
         },
         // 결제 페이지로 이동
@@ -390,7 +402,7 @@ export default {
         confirm2() {
             window.location.href = "https://cmbarter.com/mobile/game_init.php";
         },
-        
+
 
 
         // 로그아웃
@@ -409,11 +421,11 @@ export default {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log('로그아웃되었음');
-                console.log(data);
-            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('로그아웃되었음');
+                    console.log(data);
+                })
 
             this.$router.push({ path: '/' });
         }
@@ -426,10 +438,25 @@ export default {
         },
         // 회원별 색상 바꿔주기
         backColor() {
-            return (this.member === '1') ? 'rgb(9, 9, 116)'
+            return (this.member === '1') ? '#589CF6'
                 : (this.member === '2') ? '#0A6847'
-                    : (this.member === '3' || this.member === '6') ? '#E4003A'
+                    : (this.member === '3' || this.member === '6') ? '#F05F5F'
                         : '#ccc'
+        },
+        //회원별 색상 바꿔주기2
+        borderColor() {
+            return (this.member === '1') ? '#598ACB'
+                : (this.member === '2') ? '#5BA349'
+                    : (this.member === '3' || this.member === '6') ? '#C06363'
+                        : '#ccc'
+        },
+        //회원별 색상 바꿔주기3 
+        fontColor() {
+            return (this.member === '1') ? '#2868BD'
+                : (this.member === '2') ? '#1D8521'
+                    : (this.member === '3' || this.member === '6') ? '#D23C3C'
+                        : '#ccc'
+
         },
         // 메인배너
         currentBanner() {
@@ -456,6 +483,7 @@ export default {
 
 .main_header {
     position: fixed;
+    background: white;
     top: 0;
     left: 0;
     width: 100%;
@@ -468,8 +496,8 @@ export default {
 .header_center {
     display: flex;
     justify-content: space-between;
-    width: inherit;
-    height: inherit;
+    align-items: center;
+
 }
 
 .header_center>div {
@@ -479,16 +507,15 @@ export default {
     /* border: 1px solid blue; */
 }
 
-.header_center>div:nth-of-type(2) {
-    padding-top: 20px;
-}
-
-.header_center>div:nth-of-type(3) {
-    padding-top: 18px;
-}
 
 img {
     width: 30px;
+}
+.main_logo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .main_logo>p {
@@ -505,7 +532,6 @@ img {
 
 .pay_content {
     width: 100%;
-    height: 200px;
     /* border: 2px solid blue; */
     /* background-color: rgb(9, 9, 116); */
 }
@@ -521,6 +547,8 @@ img {
     border-radius: 10px;
     border: 3px solid #fff;
     padding: 5px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
 }
 
 .pay_area>p {
@@ -548,9 +576,23 @@ img {
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
+
     /* border: 1px solid orange; */
 }
 
+
+.pay_btn > button{
+    width: 32%;
+    height: 30px;
+    background-color: #fff;
+    color: rgb(9, 9, 116);
+    font-weight: bold;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+/* 
 button {
     width: 32%;
     height: 30px;
@@ -560,7 +602,7 @@ button {
     font-size: 0.9rem;
     border-radius: 10px;
     border: none;
-}
+} */
 
 .commercial {
     width: 90%;
@@ -592,7 +634,7 @@ button {
 
 .icon {
     width: 33%;
-    padding: 8px;
+    padding: 15px;
     text-align: center;
     /* border: 1px solid red; */
 }
@@ -661,6 +703,11 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 16p
+    
 }
+.img_contain{
+    display: flex;
+}
+
 </style>
