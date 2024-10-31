@@ -4,12 +4,13 @@
             <div class="main_logo">
                 <div class="img_contain">
 
-<svg width="35" height="35" viewBox="0 0 48 48" fill="none">
-<circle cx="24" cy="17" r="5" :stroke="fontColor" stroke-width="3"/>
-<path d="M19.5 27H28.5C33.1944 27 37 30.8056 37 35.5V37H11V35.5C11 30.8056 14.8056 27 19.5 27Z" :stroke="fontColor" stroke-width="3"/>
-</svg>
+                    <svg width="35" height="35" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="17" r="5" :stroke="fontColor" stroke-width="3" />
+                        <path d="M19.5 27H28.5C33.1944 27 37 30.8056 37 35.5V37H11V35.5C11 30.8056 14.8056 27 19.5 27Z"
+                            :stroke="fontColor" stroke-width="3" />
+                    </svg>
                 </div>
-               
+
                 <p v-if="this.member === '1'" :style="{ color: fontColor }">일반</p>
                 <p v-else-if="this.member === '2'" :style="{ color: fontColor }">사업자</p>
                 <p v-else-if="this.member === '3'" :style="{ color: fontColor }">가맹점</p>
@@ -19,11 +20,13 @@
                 <h1 :style="{ color: fontColor }">씨엠바더</h1>
             </div>
             <div @click="logout()">
-             
 
-<svg width="40" height="40" viewBox="0 0 48 48" fill="none" >
-<path d="M24.6316 12H13C12.4477 12 12 12.4477 12 13V35C12 35.5523 12.4477 36 13 36H24.6316M20.8421 24.6316H36M36 24.6316L29.6842 18.3158M36 24.6316L29.6842 30.9474" :stroke="fontColor" stroke-width="3" stroke-linejoin="round"/>
-</svg>
+
+                <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+                    <path
+                        d="M24.6316 12H13C12.4477 12 12 12.4477 12 13V35C12 35.5523 12.4477 36 13 36H24.6316M20.8421 24.6316H36M36 24.6316L29.6842 18.3158M36 24.6316L29.6842 30.9474"
+                        :stroke="fontColor" stroke-width="3" stroke-linejoin="round" />
+                </svg>
             </div>
         </div>
     </div>
@@ -50,11 +53,12 @@
                 </div>
                 <div class="pay_btn">
                     <button :style="{ color: fontColor }" type="button" @click="toCMList()">CM내역</button>
-                    <button :style="{ color: fontColor }" type="button" v-if="this.member === '3' || this.member === '6'"
-                        @click="QrScan()">QR결제</button>
+                    <button :style="{ color: fontColor }" type="button"
+                        v-if="this.member === '3' || this.member === '6'" @click="QrScan()">QR결제</button>
                     <button :style="{ color: fontColor }" type="button" v-if="this.member != '3' && this.member != '6'"
                         @click="CouponBox()">쿠폰함</button>
-                    <button :style="{ color: fontColor }" type="button" v-if="this.member === '3'" @click="toCouponMake()">쿠폰발행함</button>
+                    <button :style="{ color: fontColor }" type="button" v-if="this.member === '3'"
+                        @click="toCouponMake()">쿠폰발행함</button>
                 </div>
             </div>
         </div>
@@ -123,12 +127,14 @@
             </div>
         </div>
     </div>
+    <div v-if="showModal" class="modal-overlay" @click="closeModal">
 
-    <div v-if="showModal" class="modal">
-        <p class="caution">CM게임 보상</p>
-        <p>닉네임 입력</p>
-        <input type="text" v-model="nickname" placeholder="닉네임을 입력해주세요.">
-        <button @click="confirm">확인</button>
+        <div class="modal" @click.stop>
+            <p class="caution">CM게임 보상</p>
+            <p>닉네임 입력</p>
+            <input type="text" v-model="nickname" placeholder="닉네임을 입력해주세요.">
+            <button @click="confirm">확인</button>
+        </div>
     </div>
 
     <div v-if="showModal2" class="modal">
@@ -369,6 +375,9 @@ export default {
         goGame() {
             this.showModal = true
         },
+        closeModal() {
+            this.showModal = false; // 모달 닫기
+        },
         //cm게임보상 닉네임 입력 모달
         confirm() {
             //this.showModal = false
@@ -511,7 +520,8 @@ export default {
 img {
     width: 30px;
 }
-.main_logo{
+
+.main_logo {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -581,7 +591,7 @@ img {
 }
 
 
-.pay_btn > button{
+.pay_btn>button {
     width: 32%;
     height: 30px;
     background-color: #fff;
@@ -592,6 +602,7 @@ img {
     border: none;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
+
 /* 
 button {
     width: 32%;
@@ -704,10 +715,9 @@ button {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16p
-    
-}
-.img_contain{
-    display: flex;
 }
 
+.img_contain {
+    display: flex;
+}
 </style>
