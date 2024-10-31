@@ -21,7 +21,7 @@
       <p class="title">영업정보</p>
     </div>
 
-    <article>
+    <article v-for="(workHours, index) in workHoursList" :key="index">
       <div class="business_hours">
         <div class="flex_between">
           <p class="title holiday_txt m_B20">영업 시간</p>
@@ -64,65 +64,12 @@
           </div>
         </div>
         <b class="info_note" id="timeError1">* 휴게시간은 운영시간 안으로만 설정가능합니다.</b>
+
+        <b class="info_note" v-if="workHours.hasDuplicate" style="color: red;">* 중복된 요일이 선택되었습니다.</b>
         <ul class="join_state" id="day1">
           <li v-for="day in days" :key="day.value">
             <label class="join_obj">
-              <input type="checkbox" v-model="selectedDays1" :value="day.value">
-              <span>{{ day.label }}</span>
-            </label>
-          </li>
-        </ul>
-      </div>
-    </article>
-
-    <article style="margin-top: 20px;">
-      <div class="business_hours">
-        <div class="flex_between">
-
-          <p class="title holiday_txt m_B20">영업 시간</p>
-        </div>
-        <div class="flex_between">
-          <div class="hours_box">
-
-            <a-config-provider :locale="locale">
-              <a-time-picker class="timepicker hours_time" v-model:value="workHours2.openTime" :format="format"
-                dropdown-class-name="custom-time-picker-dropdown" />
-            </a-config-provider>
-          </div>
-          <div class="hours_box">
-
-            <a-config-provider :locale="locale">
-              <a-time-picker class="timepicker hours_time" v-model:value="workHours2.closeTime" :format="format"
-                dropdown-class-name="custom-time-picker-dropdown" />
-            </a-config-provider>
-          </div>
-        </div>
-
-        <div class="flex_between">
-          <p class="title holiday_txt m_B20">휴게 시간</p>
-        </div>
-        <div class="flex_between time_rest d_none">
-          <div class="hours_box">
-            <a-config-provider :locale="locale">
-              <a-time-picker class="timepicker hours_time" v-model:value="workHours2.restStartTime" :format="format"
-                dropdown-class-name="custom-time-picker-dropdown" />
-            </a-config-provider>
-          </div>
-          <div class="hours_box">
-
-            <a-config-provider :locale="locale">
-              <a-time-picker class="timepicker hours_time" v-model:value="workHours2.restEndTime" :format="format"
-                dropdown-class-name="custom-time-picker-dropdown" />
-            </a-config-provider>
-          </div>
-        </div>
-        <b class="info_note" id="timeError1">* 휴게시간은 운영시간 안으로만 설정가능합니다.</b>
-
-
-        <ul class="join_state" id="day2">
-          <li v-for="day in days" :key="day.value">
-            <label class="join_obj">
-              <input type="checkbox" v-model="selectedDays2" :value="day.value">
+              <input type="checkbox" v-model="workHours.selectedDays" :value="day.value" @change="checkDuplicateDays">
               <span>{{ day.label }}</span>
             </label>
           </li>
@@ -213,50 +160,46 @@ export default {
         console.log('1', data);
         console.log('1번째 박스 요일', data.msg[0].store_business_date); //1번째 박스 요일
 
-        this.selectedDays1 = data.msg[0].store_business_date.split(','); // "월,화,수"를 배열로 변환
+        this.workHoursList[0].selectedDays = data.msg[0].store_business_date.split(','); // "월,화,수"를 배열로 변환
         console.log('1번째 박스 시작시간', data.msg[0].store_start_business_hour); // 시작시간
-       
+
         if (data.msg[0].store_start_business_hour) {
           this.workHours1.openTime = dayjs(data.msg[0].store_start_business_hour, 'HH:mm');
         }
 
         console.log('1번째 박스 끝나는 시간', data.msg[0].store_end_business_hour); //끝나는 시간
-       
+
 
         if (data.msg[0].store_end_business_hour) {
           this.workHours1.closeTime = dayjs(data.msg[0].store_end_business_hour, 'HH:mm');
         }
-
         console.log('1번째 박스 쉬는 시간 시작', data.msg[0].store_rest_start_hour); //쉬는시간 시작
-       
-
-
         if (data.msg[0].store_rest_start_hour) {
           this.workHours1.restStartTime = dayjs(data.msg[0].store_rest_start_hour, 'HH:mm');
         }
 
 
         console.log('1번째 박스 쉬는 시간 끝', data.msg[0].store_rest_end_hour); //쉬는시간 끝 
-       
+
         if (data.msg[0].store_rest_end_hour) {
           this.workHours1.restEndTime = dayjs(data.msg[0].store_rest_end_hour, 'HH:mm');
         }
 
 
         console.log('2번째 박스 요일', data.msg[1].store_business_date); //2번째 박스 요일
-        
-        this.selectedDays2 = data.msg[1].store_business_date.split(',');
+
+        this.workHoursList[1].selectedDays = data.msg[1].store_business_date.split(',');
 
 
 
         console.log('2번째 박스 시작시간', data.msg[1].store_start_business_hour); // 시작시간
-       
+
         // workHours2.openTime에 데이터 바인딩 (시간 형식을 dayjs로 변환)
         if (data.msg[1].store_start_business_hour) {
           this.workHours2.openTime = dayjs(data.msg[1].store_start_business_hour, 'HH:mm');
         }
         console.log('2번째 박스 끝나는 시간', data.msg[1].store_end_business_hour); //끝나는 시간
-       
+
 
         if (data.msg[1].store_end_business_hour) {
           this.workHours2.closeTime = dayjs(data.msg[1].store_end_business_hour, 'HH:mm');
@@ -264,7 +207,7 @@ export default {
 
 
         console.log('2번째 박스 쉬는 시간 시작', data.msg[1].store_rest_start_hour); //쉬는시간 시작
-       
+
 
         if (data.msg[1].store_rest_start_hour) {
           this.workHours2.restStartTime = dayjs(data.msg[1].store_rest_start_hour, 'HH:mm');
@@ -272,10 +215,12 @@ export default {
         }
 
         console.log('2번째 박스 쉬는 시간 끝', data.msg[1].store_rest_end_hour); //쉬는시간 끝 
-       
+
         if (data.msg[1].store_rest_end_hour) {
           this.workHours2.restEndTime = dayjs(data.msg[1].store_rest_end_hour, 'HH:mm');
         }
+
+        this.checkDuplicateDays();
       })
 
     const formData2 = new FormData();
@@ -327,25 +272,13 @@ export default {
 
   },
   watch: {
-    selectedDays1(newSelectedDays) {
-      // selectedDays2와 중복되는 요일이 있는지 확인
-      const duplicatedDay = newSelectedDays.find(day => this.selectedDays2.includes(day));
-
-      if (duplicatedDay) {
-        message.error('첫 번째와 두 번째 세트의 요일이 같을 수 없습니다.');
-        // 중복된 요일을 선택 해제
-        this.selectedDays1 = newSelectedDays.filter(day => day !== duplicatedDay);
-      }
-    },
-    selectedDays2(newSelectedDays) {
-      // selectedDays1과 중복되는 요일이 있는지 확인
-      const duplicatedDay = newSelectedDays.find(day => this.selectedDays1.includes(day));
-
-      if (duplicatedDay) {
-        message.error('첫 번째와 두 번째 세트의 요일이 같을 수 없습니다.');
-        // 중복된 요일을 선택 해제
-        this.selectedDays2 = newSelectedDays.filter(day => day !== duplicatedDay);
-      }
+    workHoursList:{
+      handler(){
+      
+          this.checkDuplicateDays();
+  
+      },
+      deep: true,
     },
     restStartTime() {
       this.validateRestTime();
@@ -365,8 +298,7 @@ export default {
         { value: '금', label: '금' },
         { value: '토', label: '토' }
       ],
-      selectedDays1: [], // 체크된 요일을 저장할 배열
-      selectedDays2: [], // 체크된 요일을 저장할 배열
+     
       workHours1: {
         day: '', // 첫 번째 시간 세트의 요일
         openTime: dayjs('00:00', 'HH:mm'), // 첫 번째 시간 세트 영업 시작 시간
@@ -395,10 +327,42 @@ export default {
       format: 'HH:mm',
       locale: koKR,
       showTimeError: false, // 오류 메시지 표시 여부
+      workHoursList: [
+        { openTime: null, closeTime: null, restStartTime: null, restEndTime: null, selectedDays: [], hasDuplicate: false },
+        { openTime: null, closeTime: null, restStartTime: null, restEndTime: null, selectedDays: [], hasDuplicate: false },
+        { openTime: null, closeTime: null, restStartTime: null, restEndTime: null, selectedDays: [], hasDuplicate: false }
+      ]
+
     };
   },
 
   methods: {
+    checkDuplicateDays() {
+      // 모든 선택된 요일을 합쳐서 중복된 요일을 확인합니다.
+      const allSelectedDays = this.workHoursList.reduce((acc, workHours) => {
+        return acc.concat(workHours.selectedDays);
+      }, []);
+
+        // 각 요일이 몇 번 선택되었는지 확인합니다.
+    const dayCount = {};
+    allSelectedDays.forEach(day => {
+      dayCount[day] = (dayCount[day] || 0) + 1;
+    });
+
+
+    // 중복된 요일 목록을 추출합니다.
+    const duplicateDays = Object.keys(dayCount).filter(day => dayCount[day] > 1);
+
+    // 각 workHours의 selectedDays에서 중복된 요일을 검사하고 해제합니다.
+    this.workHoursList.forEach(workHours => {
+      workHours.hasDuplicate = workHours.selectedDays.some(day => duplicateDays.includes(day));
+      if(workHours.hasDuplicate){
+        workHours.selectedDays = workHours.selectedDays.filter(day => !duplicateDays.includes(day))
+        message.error('다른 박스에서 이미 선택된 요일은 선택할 수 없습니다.');
+      }
+    })
+
+    },
     onRangeChange(dates) {
       if (dates && dates.length === 2) {
         this.businessInfo.temporaryClosure.startDate = dates[0];
@@ -459,13 +423,13 @@ export default {
       formData.append('work_end_time1', this.workHours1.closeTime.format(this.format)); //끝나는 시간
       formData.append('rest_start_time1', this.workHours1.restStartTime.format(this.format)); // 휴게시간 시작
       formData.append('rest_end_time1', this.workHours1.restEndTime.format(this.format)); //휴게시간 끝
-      formData.append('day1', this.selectedDays1.join(',')); //날짜 선택 
+      formData.append('day1', this.workHoursList[0].selectedDays.join(',')); //날짜 선택 
 
       formData.append('work_start_time2', this.workHours2.openTime.format(this.format)); //시작시간
       formData.append('work_end_time2', this.workHours2.closeTime.format(this.format)); //끝나는 시간
       formData.append('rest_start_time2', this.workHours2.restStartTime.format(this.format)); // 휴게시간 시작
       formData.append('rest_end_time2', this.workHours2.restEndTime.format(this.format)); //휴게시간 끝
-      formData.append('day2', this.selectedDays2.join(',')); //날짜 선택 
+      formData.append('day2', this.workHoursList[1].selectedDays.join(',')); //날짜 선택 
 
       formData.append('holi', this.businessInfo.holiday ? 'Y' : 'N'); //공휴일 유무
       formData.append('reg_type', this.businessInfo.regularHoliday.frequency); //정기휴무 주기
@@ -513,7 +477,9 @@ a {
   margin: 8px 0;
 }
 
-
+article {
+  margin-bottom: 20px; /* 각 article 태그 사이에 20px의 마진을 줍니다 */
+}
 
 .store_info_area>ul:nth-child(1) {
   display: flex;

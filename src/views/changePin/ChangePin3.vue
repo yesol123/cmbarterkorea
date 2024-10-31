@@ -5,7 +5,7 @@
             <img src="@/assets/icon_arrow_left.svg" alt="Back">
         </RouterLink>
         <h3>PIN 번호 변경</h3>
-        <RouterLink to="/mypage1">
+        <RouterLink :to="`/mypage/${this.member}`">
             <img src="@/assets/icon_close.svg" alt="Close">
         </RouterLink>
     </header>
@@ -19,12 +19,18 @@
                 </ul>
 
                 <div class="pinnumber">
-                    <input :class="{ 'active': pinnums[0] }" type="password" v-model="pinnums[0]">
-                    <input :class="{ 'active': pinnums[1] }" type="password" v-model="pinnums[1]">
-                    <input :class="{ 'active': pinnums[2] }" type="password" v-model="pinnums[2]">
-                    <input :class="{ 'active': pinnums[3] }" type="password" v-model="pinnums[3]">
-                    <input :class="{ 'active': pinnums[4] }" type="password" v-model="pinnums[4]">
-                    <input :class="{ 'active': pinnums[5] }" type="password" v-model="pinnums[5]">
+                    <input :class="{ 'active': pinnums[0] !== undefined && pinnums[0] !== '' }" type="password"
+                        v-model="pinnums[0]">
+                    <input :class="{ 'active': pinnums[1] !== undefined && pinnums[1] !== '' }" type="password"
+                        v-model="pinnums[1]">
+                    <input :class="{ 'active': pinnums[2] !== undefined && pinnums[2] !== '' }" type="password"
+                        v-model="pinnums[2]">
+                    <input :class="{ 'active': pinnums[3] !== undefined && pinnums[3] !== '' }" type="password"
+                        v-model="pinnums[3]">
+                    <input :class="{ 'active': pinnums[4] !== undefined && pinnums[4] !== '' }" type="password"
+                        v-model="pinnums[4]">
+                    <input :class="{ 'active': pinnums[5] !== undefined && pinnums[5] !== '' }" type="password"
+                        v-model="pinnums[5]">
                 </div>
 
             </form>
@@ -61,17 +67,18 @@ export default {
 
 
     mounted() {
+
+        let store = useResponseStore();
+        this.member = store.member;
         const savedPin = JSON.parse(localStorage.getItem('pinnumber'))
         if (savedPin) {
             this.carrypinsnum = savedPin;
         }
 
     },
-    unmounted() {
-
-    },
     data() {
         return {
+            member: '',
             pinnums: [],
             one: 1,
             two: 2,

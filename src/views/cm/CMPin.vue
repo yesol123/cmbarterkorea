@@ -1,20 +1,20 @@
 <template>
-    <div class="wrap">
+   
         <header>
             <button type="button" class="goback_btn" @click="toCMList()"><img src="@/assets/go_back_btn.png"></button>
-            <p>PIN 번호 입력</p>
+            <h3>PIN 번호 입력</h3>
         </header>
 
-        <div>
+        <section>
             <div class="pin_word">
                 <p>결제를 위해 PIN 번호를 입력해주세요.</p>
                 <div class="boxes">
-                    <div>{{ pinnums[0] }}</div>
-                    <div>{{ pinnums[1] }}</div>
-                    <div>{{ pinnums[2] }}</div>
-                    <div>{{ pinnums[3] }}</div>
-                    <div>{{ pinnums[4] }}</div>
-                    <div>{{ pinnums[5] }}</div>
+                    <div :class="{ active: pinnums.length > 0 }">{{ pinnums[0] != null ? '*' : '' }}</div>
+  <div :class="{ active: pinnums.length > 1 }">{{ pinnums[1] != null ? '*' : '' }}</div>
+  <div :class="{ active: pinnums.length > 2 }">{{ pinnums[2] != null ? '*' : '' }}</div>
+  <div :class="{ active: pinnums.length > 3 }">{{ pinnums[3] != null ? '*' : '' }}</div>
+  <div :class="{ active: pinnums.length > 4 }">{{ pinnums[4] != null ? '*' : '' }}</div>
+  <div :class="{ active: pinnums.length > 5 }">{{ pinnums[5] != null ? '*' : '' }}</div>
                 </div>
             </div>
             <div class="numbers">
@@ -31,8 +31,8 @@
                 <div @click="InsertPin(zero)">0</div>
                 <div @click="DeletePin()">취소</div>
             </div>
-        </div>
-    </div>
+        </section>
+  
 </template>
 
 <script>
@@ -110,37 +110,7 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: hsl(0, 0%, 0%);
-}
-.wrap {
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    /* border: 1px solid red; */
-    margin-bottom: 70px;
-}
-header {
-    position: fixed;
-    top: 0; left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; height: 40px;
-    padding: 0 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-header > p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
-}
+
 .goback_btn {
     width: 30px; height: 30px;
     background-color: #fff;
@@ -196,4 +166,17 @@ header > p {
     text-align: center; line-height: 60px;
     /* border: 1px solid blue; */
 }
+
+.boxes > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.boxes > div.active {
+    background-color: #1e90ff; /* 파란색 배경 */
+    color: white; /* 텍스트 색상 흰색 */
+}
+
 </style>

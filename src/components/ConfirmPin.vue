@@ -22,7 +22,7 @@
 
             <div class="pinnumber">
               <input v-for="(pin, index) in pinnums" :key="index" type="password" v-model="pinnums[index]"
-                :class="{ active: pinnums[index] }" />
+              :class="{ active: pinnums[index] !== '' }"  />
             </div>
           </form>
         </div>

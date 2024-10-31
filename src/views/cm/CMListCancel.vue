@@ -1,41 +1,43 @@
 <template>
-    <div class="wrap">
+    
         <header>
             <button type="button" class="goback_btn" @click="toCMList()"><img src="@/assets/go_back_btn.png"></button>
-            <p>CM내역</p>
+            <h3>CM내역</h3>
         </header>
+<section>
 
-        <div class="btn_list">
-            <!-- 보유 포인트, 머니 보여주기 -->
-            <div class="money" :style="{backgroundColor : backColor}">
-                <div v-if="this.member == '3'">
-                    <p>보유</p> 
-                    <p>{{ cmp }}<span> CMP</span></p>
-                </div>
-                <div style="margin-top: 10px;">
-                    <p>사용가능</p> 
-                    <p>{{ cm }}<span> CM</span></p>
-                </div>
+    <div class="btn_list">
+        <!-- 보유 포인트, 머니 보여주기 -->
+        <div class="money" :style="{backgroundColor : backColor}">
+            <div v-if="this.member == '3'">
+                <p>보유</p> 
+                <p>{{ cmp }}<span> CMP</span></p>
             </div>
-
-            <!-- 셀렉트 및 결제취소 버튼 -->
-            <div class="select">
-                <p>취소할 내역을 클릭하세요.</p>
+            <div style="margin-top: 10px;">
+                <p>사용가능</p> 
+                <p>{{ cm }}<span> CM</span></p>
             </div>
         </div>
 
-        <!-- CM 내역 리스트 -->
-        <div class="cm_list" v-for="(list, i) in this.cancellist" :key="i" @click="SelectCancel(list.user_cm_log_value, list.user_cm_log_index)">
-            <div>
-                <p>{{ list.user_cm_log_create_time }}</p> 
-                <p style="color: red; font-weight: bold">{{ list.user_cm_log_transaction_type_name }}</p>
-            </div>
-            <div>
-                <p>{{ list.store_name }}</p> 
-                <p style="font-weight: bold;">{{ list.user_cm_log_value_o }} CM</p>
-            </div>
+        <!-- 셀렉트 및 결제취소 버튼 -->
+        <div class="select">
+            <p>취소할 내역을 클릭하세요.</p>
         </div>
     </div>
+
+    <!-- CM 내역 리스트 -->
+    <div class="cm_list" v-for="(list, i) in this.cancellist" :key="i" @click="SelectCancel(list.user_cm_log_value, list.user_cm_log_index)">
+        <div>
+            <p>{{ list.user_cm_log_create_time }}</p> 
+            <p style="color: red; font-weight: bold">{{ list.user_cm_log_transaction_type_name }}</p>
+        </div>
+        <div>
+            <p>{{ list.store_name }}</p> 
+            <p style="font-weight: bold;">{{ list.user_cm_log_value_o }} CM</p>
+        </div>
+    </div>
+</section>
+
 
     <!-- 결제취소 창 -->
     <div id="popup" class="popup">
@@ -52,18 +54,13 @@
             </div>
         </div>
     </div>
-
-    <Footer />
 </template>
 
 <script>
-import Footer from '@/components/FooterPage.vue';
 import { useResponseStore } from '@/store/response.js';
 
 export default {
-    components : {
-        Footer,
-    },
+
     data() {
         return {
             member : '',
@@ -145,37 +142,7 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: hsl(0, 0%, 0%);
-}
-.wrap {
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    /* border: 1px solid red; */
-    margin-bottom: 70px;
-}
-header {
-    position: fixed;
-    top: 0; left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; height: 40px;
-    padding: 0 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-header > p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
-}
+
 .goback_btn {
     width: 30px; height: 30px;
     background-color: #fff;

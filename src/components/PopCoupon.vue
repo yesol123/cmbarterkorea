@@ -39,12 +39,12 @@
                     <p>결제를 위해 PIN 번호를 입력해주세요.</p>
 
                     <div class="boxes">
-                        <div :class="{ active: pinnums.length > 0 }">{{ pinnums[0] ? '*' : '' }}</div>
-                        <div :class="{ active: pinnums.length > 1 }">{{ pinnums[1] ? '*' : '' }}</div>
-                        <div :class="{ active: pinnums.length > 2 }">{{ pinnums[2] ? '*' : '' }}</div>
-                        <div :class="{ active: pinnums.length > 3 }">{{ pinnums[3] ? '*' : '' }}</div>
-                        <div :class="{ active: pinnums.length > 4 }">{{ pinnums[4] ? '*' : '' }}</div>
-                        <div :class="{ active: pinnums.length > 5 }">{{ pinnums[5] ? '*' : '' }}</div>
+                        <div :class="{ active: pinnums.length > 0 }">{{ pinnums[0] != null ? '*' : '' }}</div>
+  <div :class="{ active: pinnums.length > 1 }">{{ pinnums[1] != null ? '*' : '' }}</div>
+  <div :class="{ active: pinnums.length > 2 }">{{ pinnums[2] != null ? '*' : '' }}</div>
+  <div :class="{ active: pinnums.length > 3 }">{{ pinnums[3] != null ? '*' : '' }}</div>
+  <div :class="{ active: pinnums.length > 4 }">{{ pinnums[4] != null ? '*' : '' }}</div>
+  <div :class="{ active: pinnums.length > 5 }">{{ pinnums[5] != null ? '*' : '' }}</div>
                     </div>
                 </div>
                 <div class="numbers">
