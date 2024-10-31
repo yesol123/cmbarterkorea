@@ -1,11 +1,12 @@
 <template>
-    <div class="wrap">
+    
         <header>
             <button type="button" class="goback_btn" @click="toQRPin()"><img src="@/assets/go_back_btn.png"></button>
-            <p>결제 취소</p>
+            <h3>결제 취소</h3>
         </header>
 
-        <div class="qr_wrap">
+        <section>
+            <div class="qr_wrap">
             <p>가맹점에 해당 QR코드를 보여주세요.</p>
             <p>{{ id }}</p>
             <img :src="`https://quickchart.io/chart?chs=200x200&cht=qr&chl=${qrdigit}`" alt="QR코드">
@@ -17,7 +18,9 @@
             <p>{{ price }}</p>
             <button type="button" @click="toCMList()">확인</button>
         </div>
-    </div>
+        </section>
+     
+   
 </template>
 
 <script>
@@ -81,37 +84,7 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: hsl(0, 0%, 0%);
-}
-.wrap {
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    /* border: 1px solid red; */
-    margin-bottom: 70px;
-}
-header {
-    position: fixed;
-    top: 0; left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; height: 40px;
-    padding: 0 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-header > p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
-}
+
 .goback_btn {
     width: 30px; height: 30px;
     background-color: #fff;
@@ -161,7 +134,7 @@ header > p {
 }
 .qr_wrap > button {
     position: fixed;
-    bottom: 10px; left: 50%;
+    bottom: 60px; left: 50%;
     transform: translateX(-50%);
     width: 95%; height: 40px;
     border-radius: 7px;

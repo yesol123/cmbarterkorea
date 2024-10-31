@@ -143,6 +143,11 @@ export default {
 
 <style scoped>
 
+
+P{
+    margin: 0;
+}
+
 .goback_btn {
     width: 30px; height: 30px;
     background-color: #fff;
