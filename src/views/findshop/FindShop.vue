@@ -45,10 +45,10 @@
                 <p style="font-size: 0.7rem;">{{ post.store_category_name }}</p>
             </div>
             <div class="etc">
-                <button type="button">
+                <!-- <button type="button">
                     <p>{{ post.user_cm_use }} CM 가능</p>
-                </button>
-                <button type="button" class="media">
+                </button> -->
+                <button type="button" class="media" @click="StoreDetail(post.store_index)">
                     <p>{{ post.user_cm_use }} CM <br>가능</p>
                 </button>
                 <div class="call_map">
