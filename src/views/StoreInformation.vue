@@ -30,7 +30,7 @@
         <div class="flex_between">
           <div class="hours_box">
             <a-config-provider :locale="locale">
-              <a-time-picker class="timepicker hours_time" v-model:value="workHours1.openTime" :format="format"
+              <a-time-picker class="timepicker hours_time" v-model:value="workHours.openTime" :format="format"
                 dropdown-class-name="custom-time-picker-dropdown" />
             </a-config-provider>
             <!-- 
@@ -39,7 +39,7 @@
           <div class="hours_box">
 
             <a-config-provider :locale="locale">
-              <a-time-picker class="timepicker hours_time" v-model:value="workHours1.closeTime" :format="format"
+              <a-time-picker class="timepicker hours_time" v-model:value="workHours.closeTime" :format="format"
                 dropdown-class-name="custom-time-picker-dropdown" />
             </a-config-provider>
           </div>
@@ -51,14 +51,14 @@
         <div class="flex_between time_rest d_none">
           <div class="hours_box">
             <a-config-provider :locale="locale">
-              <a-time-picker class="timepicker hours_time" v-model:value="workHours1.restStartTime" :format="format"
+              <a-time-picker class="timepicker hours_time" v-model:value="workHours.restStartTime" :format="format"
                 dropdown-class-name="custom-time-picker-dropdown" />
             </a-config-provider>
           </div>
           <div class="hours_box">
 
             <a-config-provider :locale="locale">
-              <a-time-picker class="timepicker hours_time" v-model:value="workHours1.restEndTime" :format="format"
+              <a-time-picker class="timepicker hours_time" v-model:value="workHours.restEndTime" :format="format"
                 dropdown-class-name="custom-time-picker-dropdown" />
             </a-config-provider>
           </div>
@@ -133,6 +133,7 @@
 <script>
 import { message } from 'ant-design-vue'
 import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
 import koKR from 'ant-design-vue/es/locale/ko_KR';
 import { useResponseStore } from '@/store/response.js'
 import router from '@/router/index.js';
@@ -157,70 +158,115 @@ export default {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('1', data);
-        console.log('1번째 박스 요일', data.msg[0].store_business_date); //1번째 박스 요일
-
-        this.workHoursList[0].selectedDays = data.msg[0].store_business_date.split(','); // "월,화,수"를 배열로 변환
-        console.log('1번째 박스 시작시간', data.msg[0].store_start_business_hour); // 시작시간
-
-        if (data.msg[0].store_start_business_hour) {
-          this.workHours1.openTime = dayjs(data.msg[0].store_start_business_hour, 'HH:mm');
-        }
-
-        console.log('1번째 박스 끝나는 시간', data.msg[0].store_end_business_hour); //끝나는 시간
-
-
-        if (data.msg[0].store_end_business_hour) {
-          this.workHours1.closeTime = dayjs(data.msg[0].store_end_business_hour, 'HH:mm');
-        }
-        console.log('1번째 박스 쉬는 시간 시작', data.msg[0].store_rest_start_hour); //쉬는시간 시작
-        if (data.msg[0].store_rest_start_hour) {
-          this.workHours1.restStartTime = dayjs(data.msg[0].store_rest_start_hour, 'HH:mm');
-        }
-
-
-        console.log('1번째 박스 쉬는 시간 끝', data.msg[0].store_rest_end_hour); //쉬는시간 끝 
-
-        if (data.msg[0].store_rest_end_hour) {
-          this.workHours1.restEndTime = dayjs(data.msg[0].store_rest_end_hour, 'HH:mm');
-        }
-
-
-        console.log('2번째 박스 요일', data.msg[1].store_business_date); //2번째 박스 요일
-
-        this.workHoursList[1].selectedDays = data.msg[1].store_business_date.split(',');
-
-
-
-        console.log('2번째 박스 시작시간', data.msg[1].store_start_business_hour); // 시작시간
-
-        // workHours2.openTime에 데이터 바인딩 (시간 형식을 dayjs로 변환)
-        if (data.msg[1].store_start_business_hour) {
-          this.workHours2.openTime = dayjs(data.msg[1].store_start_business_hour, 'HH:mm');
-        }
-        console.log('2번째 박스 끝나는 시간', data.msg[1].store_end_business_hour); //끝나는 시간
-
-
-        if (data.msg[1].store_end_business_hour) {
-          this.workHours2.closeTime = dayjs(data.msg[1].store_end_business_hour, 'HH:mm');
-        }
-
-
-        console.log('2번째 박스 쉬는 시간 시작', data.msg[1].store_rest_start_hour); //쉬는시간 시작
-
-
-        if (data.msg[1].store_rest_start_hour) {
-          this.workHours2.restStartTime = dayjs(data.msg[1].store_rest_start_hour, 'HH:mm');
-
-        }
-
-        console.log('2번째 박스 쉬는 시간 끝', data.msg[1].store_rest_end_hour); //쉬는시간 끝 
-
-        if (data.msg[1].store_rest_end_hour) {
-          this.workHours2.restEndTime = dayjs(data.msg[1].store_rest_end_hour, 'HH:mm');
-        }
+        console.log('저장내역@@@@@@@@!!!!!', data);
+        this.workHoursList = data.msg.map(storeData => ({
+          openTime: dayjs(storeData.store_start_business_hour, 'HH:mm'),
+          closeTime: dayjs(storeData.store_end_business_hour, 'HH:mm'),
+          restStartTime: dayjs(storeData.store_rest_start_hour, 'HH:mm'),
+          restEndTime: dayjs(storeData.store_rest_end_hour, 'HH:mm'),
+          selectedDays: storeData.store_business_date.split(','),
+          hasDuplicate: false
+        }));
 
         this.checkDuplicateDays();
+
+        // console.log('1번째 박스 요일', data.msg[0].store_business_date); //1번째 박스 요일
+        // this.workHoursList[0].selectedDays = data.msg[0].store_business_date.split(','); // 요일을 배열로 변환
+        // console.log('1번째 박스 시작시간', data.msg[0].store_start_business_hour); // 시작시간
+        // if (data.msg[0].store_start_business_hour) {
+        //   this.workHours1.openTime = dayjs(data.msg[0].store_start_business_hour, 'HH:mm');
+        // }
+        // console.log('1번째 박스 끝나는 시간', data.msg[0].store_end_business_hour); //끝나는 시간
+
+        // if (data.msg[0].store_end_business_hour) {
+        //   this.workHours1.closeTime = dayjs(data.msg[0].store_end_business_hour, 'HH:mm');
+        // }
+        // console.log('1번째 박스 쉬는 시간 시작', data.msg[0].store_rest_start_hour); //쉬는시간 시작
+        // if (data.msg[0].store_rest_start_hour) {
+        //   this.workHours1.restStartTime = dayjs(data.msg[0].store_rest_start_hour, 'HH:mm');
+        // }
+
+
+        // console.log('1번째 박스 쉬는 시간 끝', data.msg[0].store_rest_end_hour); //쉬는시간 끝 
+
+        // if (data.msg[0].store_rest_end_hour) {
+        //   this.workHours1.restEndTime = dayjs(data.msg[0].store_rest_end_hour, 'HH:mm');
+        // }
+
+        // console.log('2222222222222222222222222222222222222,2',data.msg[1]);
+
+        // console.log('2번째 박스 요일', data.msg[1].store_business_date); //2번째 박스 요일
+
+        // this.workHoursList[1].selectedDays = data.msg[1].store_business_date.split(',');
+
+
+
+        // console.log('2번째 박스 시작시간', data.msg[1].store_start_business_hour); // 시작시간
+
+        // // workHours2.openTime에 데이터 바인딩 (시간 형식을 dayjs로 변환)
+        // if (data.msg[1].store_start_business_hour) {
+        //   this.workHours2.openTime = dayjs(data.msg[1].store_start_business_hour, 'HH:mm');
+        // }
+        // console.log('2번째 박스 끝나는 시간', data.msg[1].store_end_business_hour); //끝나는 시간
+
+
+        // if (data.msg[1].store_end_business_hour) {
+        //   this.workHours2.closeTime = dayjs(data.msg[1].store_end_business_hour, 'HH:mm');
+        // }
+
+
+        // console.log('2번째 박스 쉬는 시간 시작', data.msg[1].store_rest_start_hour); //쉬는시간 시작
+
+
+        // if (data.msg[1].store_rest_start_hour) {
+        //   this.workHours2.restStartTime = dayjs(data.msg[1].store_rest_start_hour, 'HH:mm');
+
+        // }
+
+        // console.log('2번째 박스 쉬는 시간 끝', data.msg[1].store_rest_end_hour); //쉬는시간 끝 
+
+        // if (data.msg[1].store_rest_end_hour) {
+        //   this.workHours2.restEndTime = dayjs(data.msg[1].store_rest_end_hour, 'HH:mm');
+        // }
+
+
+
+
+        // console.log('3번째 박스 요일', data.msg[2].store_business_date); //3번째 박스 요일
+
+        // this.workHoursList[2].selectedDays = data.msg[2].store_business_date.split(',');
+
+
+
+        // console.log('3번째 박스 시작시간', data.msg[2].store_start_business_hour); // 시작시간
+
+        // // workHours3.openTime에 데이터 바인딩 (시간 형식을 dayjs로 변환)
+        // if (data.msg[2].store_start_business_hour) {
+        //   this.workHours3.openTime = dayjs(data.msg[2].store_start_business_hour, 'HH:mm');
+        // }
+        // console.log('3번째 박스 끝나는 시간', data.msg[2].store_end_business_hour); //끝나는 시간
+
+
+        // if (data.msg[2].store_end_business_hour) {
+        //   this.workHours3.closeTime = dayjs(data.msg[2].store_end_business_hour, 'HH:mm');
+        // }
+
+
+        // console.log('3번째 박스 쉬는 시간 시작', data.msg[2].store_rest_start_hour); //쉬는시간 시작
+
+
+        // if (data.msg[2].store_rest_start_hour) {
+        //   this.workHours3.restStartTime = dayjs(data.msg[2].store_rest_start_hour, 'HH:mm');
+
+        // }
+
+        // console.log('3번째 박스 쉬는 시간 끝', data.msg[2].store_rest_end_hour); //쉬는시간 끝 
+
+        // if (data.msg[2].store_rest_end_hour) {
+        //   this.workHours3.restEndTime = dayjs(data.msg[2].store_rest_end_hour, 'HH:mm');
+        // }
+
+        // 
       })
 
     const formData2 = new FormData();
@@ -272,11 +318,11 @@ export default {
 
   },
   watch: {
-    workHoursList:{
-      handler(){
-      
-          this.checkDuplicateDays();
-  
+    workHoursList: {
+      handler() {
+
+        this.checkDuplicateDays();
+
       },
       deep: true,
     },
@@ -298,7 +344,7 @@ export default {
         { value: '금', label: '금' },
         { value: '토', label: '토' }
       ],
-     
+
       workHours1: {
         day: '', // 첫 번째 시간 세트의 요일
         openTime: dayjs('00:00', 'HH:mm'), // 첫 번째 시간 세트 영업 시작 시간
@@ -307,12 +353,21 @@ export default {
         restEndTime: dayjs('00:00', 'HH:mm'), // 첫 번째 시간 세트 휴게 종료 시간
       },
       workHours2: {
-        day: '', // 첫 번째 시간 세트의 요일
-        openTime: dayjs('00:00', 'HH:mm'), // 첫 번째 시간 세트 영업 시작 시간
-        closeTime: dayjs('00:00', 'HH:mm'), // 첫 번째 시간 세트 영업 종료 시간
-        restStartTime: dayjs('00:00', 'HH:mm'), // 첫 번째 시간 세트 휴게 시작 시간
-        restEndTime: dayjs('00:00', 'HH:mm'), // 첫 번째 시간 세트 휴게 종료 시간
+        day: '', // 두 번째 시간 세트의 요일
+        openTime: dayjs('00:00', 'HH:mm'), // 두 번째 시간 세트 영업 시작 시간
+        closeTime: dayjs('00:00', 'HH:mm'), // 두 번째 시간 세트 영업 종료 시간
+        restStartTime: dayjs('00:00', 'HH:mm'), // 두 번째 시간 세트 휴게 시작 시간
+        restEndTime: dayjs('00:00', 'HH:mm'), // 두 번째 시간 세트 휴게 종료 시간
       },
+
+      workHours3: {
+        day: '', // 세 번째 시간 세트의 요일
+        openTime: dayjs('00:00', 'HH:mm'), // 세 번째 시간 세트 영업 시작 시간
+        closeTime: dayjs('00:00', 'HH:mm'), // 세 번째 시간 세트 영업 종료 시간
+        restStartTime: dayjs('00:00', 'HH:mm'), // 세 번째 시간 세트 휴게 시작 시간
+        restEndTime: dayjs('00:00', 'HH:mm'), // 세 번째 시간 세트 휴게 종료 시간
+      },
+
       businessInfo: {
         holiday: false, // 공휴일 유무
         regularHoliday: {   //정기휴무
@@ -343,24 +398,24 @@ export default {
         return acc.concat(workHours.selectedDays);
       }, []);
 
-        // 각 요일이 몇 번 선택되었는지 확인합니다.
-    const dayCount = {};
-    allSelectedDays.forEach(day => {
-      dayCount[day] = (dayCount[day] || 0) + 1;
-    });
+      // 각 요일이 몇 번 선택되었는지 확인합니다.
+      const dayCount = {};
+      allSelectedDays.forEach(day => {
+        dayCount[day] = (dayCount[day] || 0) + 1;
+      });
 
 
-    // 중복된 요일 목록을 추출합니다.
-    const duplicateDays = Object.keys(dayCount).filter(day => dayCount[day] > 1);
+      // 중복된 요일 목록을 추출합니다.
+      const duplicateDays = Object.keys(dayCount).filter(day => dayCount[day] > 1);
 
-    // 각 workHours의 selectedDays에서 중복된 요일을 검사하고 해제합니다.
-    this.workHoursList.forEach(workHours => {
-      workHours.hasDuplicate = workHours.selectedDays.some(day => duplicateDays.includes(day));
-      if(workHours.hasDuplicate){
-        workHours.selectedDays = workHours.selectedDays.filter(day => !duplicateDays.includes(day))
-        message.error('다른 박스에서 이미 선택된 요일은 선택할 수 없습니다.');
-      }
-    })
+      // 각 workHours의 selectedDays에서 중복된 요일을 검사하고 해제합니다.
+      this.workHoursList.forEach(workHours => {
+        workHours.hasDuplicate = workHours.selectedDays.some(day => duplicateDays.includes(day));
+        if (workHours.hasDuplicate) {
+          workHours.selectedDays = workHours.selectedDays.filter(day => !duplicateDays.includes(day))
+          message.error('다른 박스에서 이미 선택된 요일은 선택할 수 없습니다.');
+        }
+      })
 
     },
     onRangeChange(dates) {
@@ -416,26 +471,54 @@ export default {
       let endDate = dayjs(this.businessInfo.temporaryClosure.endDate).format('YYYY-MM-DD');
       let dateRangeStr = `${startDate} ~ ${endDate}`;
 
-
       formData.append('type', 'store_update3');
       formData.append('user_index', store.user_index);
-      formData.append('work_start_time1', this.workHours1.openTime.format(this.format)); //시작시간
-      formData.append('work_end_time1', this.workHours1.closeTime.format(this.format)); //끝나는 시간
-      formData.append('rest_start_time1', this.workHours1.restStartTime.format(this.format)); // 휴게시간 시작
-      formData.append('rest_end_time1', this.workHours1.restEndTime.format(this.format)); //휴게시간 끝
-      formData.append('day1', this.workHoursList[0].selectedDays.join(',')); //날짜 선택 
 
-      formData.append('work_start_time2', this.workHours2.openTime.format(this.format)); //시작시간
-      formData.append('work_end_time2', this.workHours2.closeTime.format(this.format)); //끝나는 시간
-      formData.append('rest_start_time2', this.workHours2.restStartTime.format(this.format)); // 휴게시간 시작
-      formData.append('rest_end_time2', this.workHours2.restEndTime.format(this.format)); //휴게시간 끝
-      formData.append('day2', this.workHoursList[1].selectedDays.join(',')); //날짜 선택 
+      this.workHoursList.forEach((workHours, index) => {
+        formData.append(`work_start_time${index + 1}`, workHours.openTime.format(this.format));
+        formData.append(`work_end_time${index + 1}`, workHours.closeTime.format(this.format));
+        formData.append(`rest_start_time${index + 1}`, workHours.restStartTime.format(this.format));
+        formData.append(`rest_end_time${index + 1}`, workHours.restEndTime.format(this.format));
+        formData.append(`day${index + 1}`, workHours.selectedDays.join(','));
+      });
+
 
       formData.append('holi', this.businessInfo.holiday ? 'Y' : 'N'); //공휴일 유무
       formData.append('reg_type', this.businessInfo.regularHoliday.frequency); //정기휴무 주기
       formData.append('reg_day', this.businessInfo.regularHoliday.day); //정기휴무 요일
       formData.append('datetimes', dateRangeStr)// 임시휴무 날짜지정
+      formData.append('datetimes', dateRangeStr)// 임시휴무 날짜지정
       formData.append('holiday_txt', this.businessInfo.temporaryClosure.comment)// 임시휴무 코멘트
+
+
+
+
+      // formData.append('type', 'store_update3');
+      // formData.append('user_index', store.user_index);
+      // formData.append('work_start_time1', this.workHours1.openTime.format(this.format)); //시작시간
+      // formData.append('work_end_time1', this.workHours1.closeTime.format(this.format)); //끝나는 시간
+      // formData.append('rest_start_time1', this.workHours1.restStartTime.format(this.format)); // 휴게시간 시작
+      // formData.append('rest_end_time1', this.workHours1.restEndTime.format(this.format)); //휴게시간 끝
+      // formData.append('day1', this.workHoursList[0].selectedDays.join(',')); //날짜 선택 
+
+      // formData.append('work_start_time2', this.workHours2.openTime.format(this.format)); //시작시간
+      // formData.append('work_end_time2', this.workHours2.closeTime.format(this.format)); //끝나는 시간
+      // formData.append('rest_start_time2', this.workHours2.restStartTime.format(this.format)); // 휴게시간 시작
+      // formData.append('rest_end_time2', this.workHours2.restEndTime.format(this.format)); //휴게시간 끝
+      // formData.append('day2', this.workHoursList[1].selectedDays.join(',')); //날짜 선택 
+
+      // formData.append('work_start_time3', this.workHours3.openTime.format(this.format)); //시작시간
+      // formData.append('work_end_time3', this.workHours3.closeTime.format(this.format)); //끝나는 시간
+      // formData.append('rest_start_time3', this.workHours3.restStartTime.format(this.format)); // 휴게시간 시작
+      // formData.append('rest_end_time3', this.workHours3.restEndTime.format(this.format)); //휴게시간 끝
+      // formData.append('day3', this.workHoursList[2].selectedDays.join(',')); //날짜 선택 
+
+      // formData.append('holi', this.businessInfo.holiday ? 'Y' : 'N'); //공휴일 유무
+      // formData.append('reg_type', this.businessInfo.regularHoliday.frequency); //정기휴무 주기
+      // formData.append('reg_day', this.businessInfo.regularHoliday.day); //정기휴무 요일
+      // formData.append('datetimes', dateRangeStr)// 임시휴무 날짜지정
+      // formData.append('holiday_txt', this.businessInfo.temporaryClosure.comment)// 임시휴무 코멘트
+
 
       for (let [key, value] of formData.entries()) {
         console.log(`${key}: ${value}`);
@@ -478,7 +561,8 @@ a {
 }
 
 article {
-  margin-bottom: 20px; /* 각 article 태그 사이에 20px의 마진을 줍니다 */
+  margin-bottom: 20px;
+  /* 각 article 태그 사이에 20px의 마진을 줍니다 */
 }
 
 .store_info_area>ul:nth-child(1) {
