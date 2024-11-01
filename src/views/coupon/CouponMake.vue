@@ -199,8 +199,7 @@ export default {
             nine: 9,
             zero: 0,
             pinnums: [],
-            name: ''
-
+            name: '',
         }
     },
     computed: {
@@ -447,12 +446,24 @@ export default {
         },
         // 선물취소
         NoGift() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    checkbox.checked = false;
+                }
+            });
+            this.phone_num = '';
+            this.giftlist = '';
             document.getElementById('popup2').style.display = 'none';
 
             let store = useResponseStore();
             store.coupon_index = '';
             this.coupon_index = [];
+
+            store.coupon_user_index = '';
+            this.isUser = false;
             // console.log(store.coupon_index);
+            
         },
         // 쿠폰선물검색
         SearchNumber() {
