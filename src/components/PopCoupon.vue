@@ -164,7 +164,7 @@ export default {
                             formData.append('coupon_issuance_index_list', strcouponindex);
                             formData.append('user_index', store.user_index);
                             formData.append('user_role_index', store.member);
-                            const finalprice = this.price + this.coupon_price;
+                            const finalprice = this.price;
                             // console.log('빼기')
                             // console.log(finalprice);
                             formData.append('user_amount', finalprice);
