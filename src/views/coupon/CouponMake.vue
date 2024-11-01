@@ -564,10 +564,10 @@ export default {
 </script>
 
 <style scoped>
-ul{
-    padding: 0;
-}
 
+p{
+    margin: 0;
+}
 .goback_btn {
     width: 30px;
     height: 30px;
@@ -583,6 +583,10 @@ ul{
 .couponbox_section {
     margin: 70px auto 0;
     width: 95%;
+    height: calc(100vh - 70px); /* 전체 화면 높이에서 header 제외 */
+    overflow: hidden; /* 전체 페이지 스크롤 방지 */
+    display: flex;
+    flex-direction: column;
 }
 
 .couponbox_section label {
@@ -632,23 +636,21 @@ label button {
 }
 
 .coupon_current {
-    margin-top: 10px;
     font-size: 0.9rem;
     font-weight: bold;
     flex-shrink: 0;
     /* 쿠폰 개수 표시 고정 */
 }
 
-.flex_direction {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.flex_direction{
     overflow-y: auto;
-    /* 내용이 넘칠 때 세로 스크롤 추가 */
-    max-height: 100%;
-    /* 쿠폰 목록만 스크롤 */
     flex-grow: 1;
-    /* 남은 공간을 모두 차지 */
+    padding-bottom: 50px;
+}
+
+
+.flex_direction>  li{
+    margin-bottom: 10px;
 }
 
 

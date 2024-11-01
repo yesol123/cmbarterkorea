@@ -341,6 +341,11 @@ const router = createRouter({
             component:()=> import("@/views/coupon/CouponDetail.vue")
         },  
         {
+            path: '/couponDetail2/:id',
+            name:'couponDetail2',
+            component:()=> import("@/views/coupon/CouponDetail2.vue")
+        },  
+        {
             path: '/storeInformation',
             name:'storeInformation',
             component:()=> import("@/views/StoreInformation.vue")

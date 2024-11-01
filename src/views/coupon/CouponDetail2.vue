@@ -1,6 +1,6 @@
 <template>
     <header class="couponbox_Detail_title">
-        <RouterLink to="/couponbox"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
+        <RouterLink to="/cmake"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
         <h3>쿠폰 상세보기</h3>
     </header>
 
@@ -57,7 +57,7 @@
 import { useResponseStore } from '@/store/response.js'
 
 export default{
-    name:'couponDetail',
+    name:'couponDetail2',
     data(){
         return{
             member:'',
@@ -87,12 +87,14 @@ export default{
         formData.append('coupon_issuance_index',this.id);
 
         const url = process.env.VUE_APP_API_URL;
-        fetch( url + 'api/coupon/coupon_provided.php',{
+        fetch( url + 'api/coupon/coupon_issuance.php',{
             method:'POST',
             body:formData
         })
         .then(response => response.json())
         .then(result => {
+            console.log('디테일2',result);
+            
             console.log('ddddgggg',result.msg[0].coupon_index);
             console.log(result.msg[0].coupon_index);
 

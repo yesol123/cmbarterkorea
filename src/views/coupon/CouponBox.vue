@@ -225,46 +225,6 @@ export default{
 
 <style scoped>
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-
-*{
-    font-family: "Noto Sans KR", sans-serif;
-}
-ul,li{
-    list-style: none;
-    padding: 0;
-}
-.couponbox_header_title{
-    display: flex;
-    align-items: center;
-    justify-content: center; /* 가운데 정렬 */
-    position: fixed;
-    top: 0;
-    left: 50%;
-    width: 100%;
-    /* max-width: 768px; */
-    transform: translateX(-50%);
-    height: 60px;
-    background-color: #fff;
-    font-size: 18px;
-    font-weight: 800;
-    border-bottom: 1px solid var(--line);
-    z-index: 100;
-}
-
-.couponbox_header_title > a {
-    position: absolute; /* 왼쪽 버튼을 절대 위치로 */
-    left: 10px; /* 왼쪽으로부터의 거리 */
-    top: 50%; /* 세로 가운데 정렬 */
-    transform: translateY(-50%); /* 세로 가운데 정렬 보정 */
-}
-
-.couponbox_header_title > h3 {
-    margin: 0;
-    text-align: center; /* 텍스트 가운데 정렬 */
-    color: #1749C2;
-    font-weight: 900;
-}
 
 .couponbox_section{
     margin: 100px auto 0;
@@ -340,6 +300,7 @@ label button{
 .flex_direction{
     overflow-y: auto;
     flex-grow: 1;
+    padding-bottom: 50px;
 }
 
 .flex_direction>  li{
