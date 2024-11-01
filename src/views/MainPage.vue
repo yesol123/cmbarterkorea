@@ -112,7 +112,7 @@
                 <img src="@/assets/customer_manage.png">
                 <p>고객관리</p>
             </div>
-            <div class="icon" :style="subAccountStlye">
+            <div class="icon" :style="subAccountStlye" @click="gokakao()">
                 <img src="@/assets/common_kakao.png">
                 <p>카톡상담</p>
             </div>
@@ -410,6 +410,10 @@ export default {
 
         confirm2() {
             window.location.href = "https://cmbarter.com/mobile/game_init.php";
+        },
+
+        gokakao(){
+            window.location.href = "http://pf.kakao.com/_zFjGG/chat";
         },
 
 
