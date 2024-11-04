@@ -215,9 +215,6 @@ export default {
         this.businessInfo.temporaryClosure.comment = data.msg[0].store_temporary_closing_comment;
       })
 
-
-
-
   },
   watch: {
     workHoursList: {

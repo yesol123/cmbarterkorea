@@ -60,6 +60,13 @@
             <button @click="confirm">확인</button>
         </div>
 
+        
+
+        <div v-if="showModal3" class="modal">
+            <p class="caution">알림</p>
+            <p>사업자가 아닙니다</p>
+            <button @click="confirm">확인</button>
+        </div>
 
     </section>
 
@@ -79,6 +86,8 @@ export default {
         return {
             showModal: false,
             showModal2: false,
+            showModal3:false,
+            business_man_flag: false,
             user_cmp: '',//보유 CMP
             user_cm: '', // 보유 CM
             add_cm: '',//충전할 CM
@@ -174,6 +183,7 @@ export default {
         confirm() {
             this.showModal = false
             this.showModal2 = false
+            this.showModal3 = false
         },
 
         async fetchUserData() {
@@ -225,34 +235,55 @@ export default {
 
         charge() {
             if (this.isChargeable) {
-                console.log('앵?');
-                //timestampSecond = Math.floor(+ new Date() / 1000);
                 let store = useResponseStore();
-                let tx = store.user_id + Math.floor(+ new Date() / 1000);
-                console.log(this.paymoney);
-                let result = this.paymoney.replace(/,/g, '');
+                const formData = new FormData();
 
-                if (this.TPO) {
-                    this.TPO.pay({
-                        amount: parseInt(result), // 충전할 금액
-                        publicKey: 'pk_1703-f7d8df-4f6-dff5a',
-                        products: [{ name: 'cm', desc: 'description' }],
-                        trackId: tx,  // 유저 ID 또는 트랜잭션 ID
-                        responseFunction: this.eventFnc,  // 응답 받을 함수
-                        redirectUrl: 'https://your-redirect-url.com',
-                        webhookUrl: 'https://your-webhook-url.com',
-                        tmnId: "cm0000", // 터미널 키
-                        payerName: this.user_index,
-                        payerEmail: '',
-                        payerTel: this.user_phone,
-                        mode: 'layer',   // 레이어 모드로 결제 창 표시
-                        debugMode: 'live' // 실시간 모드
+                formData.append('type', 'business_man_flag');
+                formData.append('user_index', store.user_index);
+
+                const url = process.env.VUE_APP_API_URL;
+                fetch(url + 'api/store/charge.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('사업자 확인', data);
+
+                        if (data.msg === "사업자") {
+                            this.business_man_flag = true;
+
+                            // 사업자 확인 후 TPO 결제 로직 실행
+                            let tx = store.user_id + Math.floor(+ new Date() / 1000);
+                            let result = this.paymoney.replace(/,/g, '');
+
+                            if (this.TPO) {
+                                this.TPO.pay({
+                                    amount: parseInt(result),
+                                    publicKey: 'pk_1703-f7d8df-4f6-dff5a',
+                                    products: [{ name: 'cm', desc: 'description' }],
+                                    trackId: tx,
+                                    responseFunction: this.eventFnc,
+                                    redirectUrl: 'https://your-redirect-url.com',
+                                    webhookUrl: 'https://your-webhook-url.com',
+                                    tmnId: "cm0000",
+                                    payerName: this.user_index,
+                                    payerEmail: '',
+                                    payerTel: this.user_phone,
+                                    mode: 'layer',
+                                    debugMode: 'live'
+                                });
+                            } else {
+                                console.error('TPO 객체가 없습니다. ThePayOne API가 로드되지 않았습니다.');
+                            }
+                        } else {
+                            this.showModal3 = true
+                        }
+                    })
+                    .catch(error => {
+                        console.error('사업자 확인 오류:', error);
                     });
-                } else {
-                    console.error('TPO 객체가 없습니다. ThePayOne API가 로드되지 않았습니다.');
-                }
             }
-
         },
 
 
