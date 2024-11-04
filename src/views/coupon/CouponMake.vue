@@ -537,22 +537,24 @@ export default {
                     method: 'POST',
                     body: formData
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                        if (data.code == 200) {
-                            alert(data.msg);
-                            document.getElementById('popup3').style.display = 'none';
-                            this.pinnums = [];
-                            return false;
-                        }
-                        if (data.code == 500) {
-                            alert(data.msg);
-                            document.getElementById('popup3').style.display = 'none';
-                            this.pinnums = [];
-                            return false;
-                        }
-                    })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.code == 200) {
+                        alert(data.msg);
+                        document.getElementById('popup3').style.display = 'none';
+                        
+                        this.pinnums = [];
+                        return false;
+                    }
+                    if (data.code == 500) {
+                        alert(data.msg);
+                        document.getElementById('popup3').style.display = 'none';
+                        
+                        this.pinnums = [];
+                        return false;
+                    }
+                })
 
                 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
                 checkboxes.forEach(checkbox => {
@@ -560,6 +562,15 @@ export default {
                         checkbox.checked = false;
                     }
                 });
+
+                this.phone_num = '';
+                this.giftlist = '';
+
+                store.coupon_index = '';
+                this.coupon_index = [];
+                
+                store.coupon_user_index = '';
+                this.isUser = false;
             }
         },
         // 핀번호 입력 취소
