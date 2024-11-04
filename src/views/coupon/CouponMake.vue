@@ -368,6 +368,10 @@ export default {
                 alert('쿠폰조건은 30글자 이내로 작성해주세요');
                 return false;
             }
+            if(this.cm < this.price) {
+                alert('보유한 CM보다 큰 금액의 쿠폰은 발행할 수 없습니다.');
+                return false;
+            }
 
             let store = useResponseStore();
 

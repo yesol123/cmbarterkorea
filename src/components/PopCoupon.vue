@@ -40,11 +40,11 @@
 
                     <div class="boxes">
                         <div :class="{ active: pinnums.length > 0 }">{{ pinnums[0] != null ? '*' : '' }}</div>
-  <div :class="{ active: pinnums.length > 1 }">{{ pinnums[1] != null ? '*' : '' }}</div>
-  <div :class="{ active: pinnums.length > 2 }">{{ pinnums[2] != null ? '*' : '' }}</div>
-  <div :class="{ active: pinnums.length > 3 }">{{ pinnums[3] != null ? '*' : '' }}</div>
-  <div :class="{ active: pinnums.length > 4 }">{{ pinnums[4] != null ? '*' : '' }}</div>
-  <div :class="{ active: pinnums.length > 5 }">{{ pinnums[5] != null ? '*' : '' }}</div>
+                        <div :class="{ active: pinnums.length > 1 }">{{ pinnums[1] != null ? '*' : '' }}</div>
+                        <div :class="{ active: pinnums.length > 2 }">{{ pinnums[2] != null ? '*' : '' }}</div>
+                        <div :class="{ active: pinnums.length > 3 }">{{ pinnums[3] != null ? '*' : '' }}</div>
+                        <div :class="{ active: pinnums.length > 4 }">{{ pinnums[4] != null ? '*' : '' }}</div>
+                        <div :class="{ active: pinnums.length > 5 }">{{ pinnums[5] != null ? '*' : '' }}</div>
                     </div>
                 </div>
                 <div class="numbers">
@@ -144,53 +144,53 @@ export default {
                     method: 'POST',
                     body: formData
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
 
-                        // 핀번호 인증 완료
-                        if (data.code == 200) {
-                            alert(data.msg);
-                            this.showPin = false;
-                            this.showQR = true;
+                    // 핀번호 인증 완료
+                    if (data.code == 200) {
+                        alert(data.msg);
+                        this.showPin = false;
+                        this.showQR = true;
 
-                            // QR코드 이동
-                            let store = useResponseStore();
+                        // QR코드 이동
+                        let store = useResponseStore();
 
-                            const strcouponindex = this.coupon_index.toString();
+                        const strcouponindex = this.coupon_index.toString();
 
-                            let formData = new FormData();
-                            formData.append('type', 'qr_number');
-                            formData.append('coupon_issuance_index_list', strcouponindex);
-                            formData.append('user_index', store.user_index);
-                            formData.append('user_role_index', store.member);
-                            const finalprice = this.price;
-                            // console.log('빼기')
-                            // console.log(finalprice);
-                            formData.append('user_amount', finalprice);
+                        let formData = new FormData();
+                        formData.append('type', 'qr_number');
+                        formData.append('coupon_issuance_index_list', strcouponindex);
+                        formData.append('user_index', store.user_index);
+                        formData.append('user_role_index', store.member);
+                        const finalprice = this.price;
+                        // console.log('빼기')
+                        // console.log(finalprice);
+                        formData.append('user_amount', finalprice);
 
-                            const url = process.env.VUE_APP_API_URL;
+                        const url = process.env.VUE_APP_API_URL;
 
-                            fetch(url + 'api/pay/Pay.php', {
-                                method: 'POST',
-                                body: formData
-                            })
-                                .then(response => response.json())
-                                .then(data => {
-                                    console.log(data);
-                                    this.qrdigit = data.msg;
+                        fetch(url + 'api/pay/Pay.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            this.qrdigit = data.msg;
 
-                                    const finalprice = this.price + this.coupon_price;
-                                    this.commaprice = finalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                                })
+                            const finalprice = this.price + this.coupon_price;
+                            this.commaprice = finalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        })
 
-                        }
-                        if (data.code == 404) {
-                            alert(data.msg);
-                            this.ResetPin();
-                            return false;
-                        }
-                    })
+                    }
+                    if (data.code == 404) {
+                        alert(data.msg);
+                        this.ResetPin();
+                        return false;
+                    }
+                })
             }
         },
         // 핀번호 입력 취소
@@ -236,6 +236,14 @@ export default {
             } else {
                 // this.coupon_index = this.coupon_index.filter(index => index !== coupon_index);
                 // this.issuance_user_index = this.issuance_user_index.filter(index => index !== user_index);
+
+                this.arr.pop();
+                let sum = 0;
+                this.arr.forEach((num) => {
+                    sum += num;
+                });
+                console.log(sum);
+                this.coupon_price = sum;
             }
 
         },
@@ -307,13 +315,22 @@ export default {
 
             let store = useResponseStore();
 
-            if (this.price == '') {
+            if (this.price == '' && this.coupon_price == '') {
                 alert('결제금액을 입력해주세요.');
                 return false;
             }
             if (this.price > store.cm_amount) {
                 alert('보유CM보다 큰 금액은 입력할 수 없습니다.');
                 return false;
+            }
+            if (this.coupon_price != '') {
+                this.showCoupon = false;
+                this.showPin = true;
+                this.showQR = false;
+
+                console.log('결제금액 : ' + this.price);
+                console.log('쿠폰인덱스 : ' + this.coupon_index);
+                console.log('쿠폰가격 : ' + this.coupon_price);
             }
 
             this.showCoupon = false;
