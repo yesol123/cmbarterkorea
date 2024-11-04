@@ -61,13 +61,6 @@
         </div>
 
         
-
-        <div v-if="showModal3" class="modal">
-            <p class="caution">알림</p>
-            <p>사업자가 아닙니다</p>
-            <button @click="confirm">확인</button>
-        </div>
-
     </section>
 
 
@@ -86,7 +79,6 @@ export default {
         return {
             showModal: false,
             showModal2: false,
-            showModal3:false,
             business_man_flag: false,
             user_cmp: '',//보유 CMP
             user_cm: '', // 보유 CM
@@ -183,7 +175,6 @@ export default {
         confirm() {
             this.showModal = false
             this.showModal2 = false
-            this.showModal3 = false
         },
 
         async fetchUserData() {
@@ -276,8 +267,6 @@ export default {
                             } else {
                                 console.error('TPO 객체가 없습니다. ThePayOne API가 로드되지 않았습니다.');
                             }
-                        } else {
-                            this.showModal3 = true
                         }
                     })
                     .catch(error => {
