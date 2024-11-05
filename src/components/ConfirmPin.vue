@@ -315,6 +315,7 @@ const handleCharge = () => {
   padding: 20px 40px;
   font-size: 20px;
   font-weight: 500;
+  color: #000;
 }
 
 
