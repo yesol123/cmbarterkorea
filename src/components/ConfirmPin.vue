@@ -349,6 +349,10 @@ const handleCharge = () => {
   box-sizing: border-box;
 }
 
+.modal p{
+  color: #000;
+}
+
 .caution {
   display: flex;
   align-items: center;
