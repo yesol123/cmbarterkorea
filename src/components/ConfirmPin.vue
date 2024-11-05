@@ -59,6 +59,17 @@
     </div>
   </div>
 
+  
+    <!-- PIN번호 틀렸을 때 모달 표시 -->
+    <div v-if="showModal2" class="modal">
+      <p class="caution">
+        <img src="@/assets/accept.png" alt="" />
+      </p>
+      <p>핀번호가 일치하지 않습니다.</p>
+      <button @click="closeModal2">확인</button>
+    </div>
+ 
+
 </template>
 
 
@@ -68,6 +79,7 @@ import { useResponseStore } from '@/store/response';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+
 
 const emit = defineEmits(['pinSuccess']);
 const props = defineProps({
@@ -81,6 +93,7 @@ const pinnums = ref(['', '', '', '', '', '']); // 6자리 PIN 번호 배열
 const numbers = ref([1, 2, 3, 4, 5, 6, 7, 8, 9]); // 숫자 키패드 배열
 const errorMessage = ref('');
 const showModal = ref(false); // showModal을 ref로 선언
+const showModal2 = ref(false);
 
 // PIN 번호 입력 로직
 const InsertPin = (number) => {
@@ -140,6 +153,7 @@ const submitPin = async () => {
     console.log('핀번호 유효하지 않음');
     errorMessage.value = 'PIN 번호가 일치하지 않습니다.';
     ResetPin(); // 입력 초기화
+    showModal2.value = true
   }
 };
 
@@ -148,6 +162,13 @@ const closeModal = () => {
   emit('pinSuccess'); // 부모 컴포넌트로 이벤트 전달
   router.push('/main'); // 페이지 이동
 }
+
+
+const closeModal2 = () => {
+  showModal2.value = false;
+  
+}
+
 
 // 각 상황별 로직 처리 함수
 const handleCouponGift = () => {
