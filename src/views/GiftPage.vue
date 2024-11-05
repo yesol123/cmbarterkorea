@@ -229,6 +229,7 @@ export default {
 <style scoped>
 *p {
   margin: 5px;
+  color: #000;
 }
 
 .show_present_CM {
