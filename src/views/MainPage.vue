@@ -1,4 +1,6 @@
 <template>
+
+
     <div class="main_header">
         <div class="header_center">
             <div class="main_logo">
@@ -10,6 +12,7 @@
                             :stroke="fontColor" stroke-width="3" />
                     </svg>
                 </div>
+
 
                 <p v-if="this.member === '1'" :style="{ color: fontColor }">일반</p>
                 <p v-else-if="this.member === '2'" :style="{ color: fontColor }">사업자</p>
@@ -30,6 +33,8 @@
             </div>
         </div>
     </div>
+
+  
 
     <div class="main_content">
         <div class="pay_content" :style="{ backgroundColor: backColor }">
@@ -538,10 +543,11 @@ img {
 }
 
 .main_content {
+    margin-top: 70px;
+    padding-bottom: 60px;
     width: 100%;
-    height: 100%;
     background-color: #fff;
-    margin: 70px 0;
+   
 }
 
 .pay_content {
