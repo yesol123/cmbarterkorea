@@ -1,7 +1,7 @@
 <template>
    
         <header>
-            <button type="button" class="goback_btn" @click="toCMList()"><img src="@/assets/go_back_btn.png"></button>
+            <button type="button" class="goback_btn" @click="toCMList()"><img src="@/assets/icon_arrow_left.svg"></button>
             <h3>PIN 번호 입력</h3>
         </header>
 
@@ -171,7 +171,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 
 .boxes > div.active {

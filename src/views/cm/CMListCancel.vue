@@ -1,7 +1,7 @@
 <template>
     
         <header>
-            <button type="button" class="goback_btn" @click="toCMList()"><img src="@/assets/go_back_btn.png"></button>
+            <button type="button" class="goback_btn" @click="toCMList()"><img src="@/assets/icon_arrow_left.svg"></button>
             <h3>CM내역</h3>
         </header>
 <section>
