@@ -189,39 +189,40 @@ export default {
                             cm.trigger_name = cm.trigger_name.slice(0, 1) + '*'.repeat(cm.trigger_name.length - 2) + cm.trigger_name.slice(-1);
 
                             cm.user_cm_log_reason = cm.trigger_id + '(' + cm.trigger_name + ')';
+                        
+                            // 판매자 가게 이름
+                            // cm.user_cm_log_reason = cm.store_name;
+
+                            if (cm.user_cm_log_transaction_type_name == '판매') {
+
+                                // 사용 CM이 0일 경우,
+                                if (cm.user_cm_log_value_t == 0) {
+                                    // cm.user_cm_log_value = '쿠폰'; // + 어떤 단위?
+                                    cm.user_coupon_value = cm.user_coupon_value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                                    cm.user_cm_log_value = `'쿠폰'${cm.user_coupon_value}'CM'`;
+                                }
+                                else if (cm.user_coupon_value == 0) {
+                                    cm.user_cm_log_value;
+                                }
+                                else {
+                                    cm.user_coupon_value = cm.user_coupon_value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                                    cm.user_cm_log_value = `${cm.user_cm_log_value}'(쿠폰'${cm.user_coupon_value}'CM)'`;
+                                }
+                            }
+                            if (cm.user_cm_log_transaction_type_name == '판매(결제 취소)') {
+                                if (cm.user_cm_log_value_t == 0) {
+                                    cm.user_coupon_value = cm.user_coupon_value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                                    cm.user_cm_log_value = `'쿠폰'${cm.user_coupon_value}'CM'`;
+                                }
+                                else if (cm.user_coupon_value == 0) {
+                                    cm.user_cm_log_value;
+                                }
+                                else {
+                                    cm.user_coupon_value = cm.user_coupon_value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                                    cm.user_cm_log_value = `${cm.user_cm_log_value}'(쿠폰'${cm.user_coupon_value}'CM)'`;
+                                }
+                            }
                         }
-                        // 판매자 가게 이름
-                        // cm.user_cm_log_reason = cm.store_name;
-
-                        // if (cm.user_cm_log_transaction_type_name == '판매') {
-
-                        //     // 사용 CM이 0일 경우,
-                        //     if (cm.user_cm_log_value_t == 0) {
-                        //         // cm.user_cm_log_value = '쿠폰'; // + 어떤 단위?
-                        //         cm.user_coupon_value = cm.user_coupon_value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                        //         cm.user_cm_log_value = `'쿠폰'${cm.user_coupon_value}'CM'`;
-                        //     }
-                        //     else if (cm.user_coupon_value == 0) {
-                        //         cm.user_cm_log_value;
-                        //     }
-                        //     else {
-                        //         cm.user_coupon_value = cm.user_coupon_value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                        //         cm.user_cm_log_value = `${cm.user_cm_log_value}'(쿠폰'${cm.user_coupon_value}'CM)'`;
-                        //     }
-                        // }
-                        // if (cm.user_cm_log_transaction_type_name == '판매(결제 취소)') {
-                        //     if (cm.user_cm_log_value_t == 0) {
-                        //         cm.user_coupon_value = cm.user_coupon_value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                        //         cm.user_cm_log_value = `'쿠폰'${cm.user_coupon_value}'CM'`;
-                        //     }
-                        //     else if (cm.user_coupon_value == 0) {
-                        //         cm.user_cm_log_value;
-                        //     }
-                        //     else {
-                        //         cm.user_coupon_value = cm.user_coupon_value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                        //         cm.user_cm_log_value = `${cm.user_cm_log_value}'(쿠폰'${cm.user_coupon_value}'CM)'`;
-                        //     }
-                        // }
                         else if (cm.user_cm_log_transaction_type_name == '선물') {
                             cm.trigger_id = cm.trigger_id.slice(0, 1) + '*'.repeat(cm.trigger_id.length - 2) + cm.trigger_id.slice(-1);
                             cm.trigger_name = cm.trigger_name.slice(0, 1) + '*'.repeat(cm.trigger_name.length - 2) + cm.trigger_name.slice(-1);
