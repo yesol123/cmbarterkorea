@@ -116,7 +116,7 @@
                 <img src="@/assets/common_kakao.png">
                 <p>카톡상담</p>
             </div>
-            <div class="icon">
+            <div class="icon" v-if="this.member == '1'">
                 <img src="@/assets/common_shoppingmall.png">
                 <p>쇼핑몰</p>
             </div>

@@ -1,7 +1,7 @@
 <template>
     
         <header>
-            <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/go_back_btn.png"></button>
+            <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/icon_arrow_left.svg"></button>
             <h3>CM내역</h3>
         </header>
         <section>
@@ -89,6 +89,7 @@ export default {
     mounted() {
         let store = useResponseStore();
         this.member = store.member;
+      
 
         this.cm = store.cm_amount.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
@@ -110,6 +111,8 @@ export default {
 
             formData.append('type', 'cm_log');
             formData.append('user_index', store.user_index);
+           
+            
 
             // 선택검색
             if (this.selectlist == '구매') {
