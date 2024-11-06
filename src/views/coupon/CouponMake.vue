@@ -34,7 +34,7 @@
                         <ul class="coupon_conditions">
                             <div><input type="checkbox" @click="CouponIndex(list.coupon_index, $event)"></div>
                             <div>
-                                <li>{{ list.coupon_name }}</li>
+                                <li>{{ store_name }}</li>
                                 <li>{{ list.coupon_issuance_status }}</li>
                                 <li>{{ list.coupon_limit }}일</li>
                             </div>
@@ -90,7 +90,7 @@
 
                 <div>
                     <label>이름</label>
-                    <input type="text" placeholder="쿠폰이름을 입력해주세요(30자이내)" v-model="coupon_name">
+                    <input type="text" placeholder="쿠폰이름을 입력해주세요(30자이내)" v-model="store_name" readonly>
                 </div>
 
                 <div>
@@ -200,6 +200,7 @@ export default {
             zero: 0,
             pinnums: [],
             name: '',
+            store_name : ''
         }
     },
     computed: {
@@ -223,8 +224,33 @@ export default {
 
         let store = useResponseStore();
         this.cm = store.cm_amount;
+
+        this.GetStoreName();
     },
     methods: {
+        // 쿠폰발행시, 가맹점 이름 픽스
+        GetStoreName() {
+            let store = useResponseStore();
+
+            let formData = new FormData();
+            formData.append('type', 'store_name_select');
+            formData.append('user_index', store.user_index);
+
+            const url = process.env.VUE_APP_API_URL;
+
+            fetch(url + 'api/coupon/coupon_issuance.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('쿠폰발행시 가맹점이름');
+                console.log(data);
+
+                this.store_name = data.msg[0].store_name;
+                console.log(this.store_name.store_name);
+            })
+        },
         // 쿠폰발행 > 사용CM 계산식
         TotalPrice() {
             if (this.coupon_price != '쿠폰의 가격 선택' && this.coupon_count != '') {
@@ -266,7 +292,7 @@ export default {
             this.coupon_price = '쿠폰의 가격 선택';
             this.coupon_count = '';
             this.coupon_limit = '';
-            this.coupon_name = '';
+            // this.coupon_name = '';
             this.coupon_condition = '';
         },
         // 쿠폰이벤트 이동
@@ -289,13 +315,13 @@ export default {
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('쿠폰발행함');
-                    //console.log(data);
-                    this.cmakelist = data.msg;
-                    console.log(this.cmakelist);
-                })
+            .then(response => response.json())
+            .then(data => {
+                console.log('쿠폰발행함');
+                //console.log(data);
+                this.cmakelist = data.msg;
+                console.log(this.cmakelist);
+            })
         },
         // 쿠폰검색
         SearchCoupon() {
@@ -352,14 +378,14 @@ export default {
                 alert('쿠폰기한은 1일 ~ 90일사이로 입력할 수 있습니다.');
                 return false;
             }
-            if (this.coupon_name == '') {
-                alert('쿠폰이름을 입력해주세요.');
-                return false;
-            }
-            if (this.coupon_name.length > 30) {
-                alert('쿠폰이름은 30글자 이내로 작성해주세요');
-                return false;
-            }
+            // if (this.coupon_name == '') {
+            //     alert('쿠폰이름을 입력해주세요.');
+            //     return false;
+            // }
+            // if (this.coupon_name.length > 30) {
+            //     alert('쿠폰이름은 30글자 이내로 작성해주세요');
+            //     return false;
+            // }
             if (this.coupon_condition == '') {
                 alert('쿠폰조건을 입력해주세요.');
                 return false;
@@ -381,7 +407,7 @@ export default {
             formData.append('coupon_price', this.coupon_price);
             formData.append('coupon_count', this.coupon_count);
             formData.append('coupon_limit', this.coupon_limit);
-            formData.append('coupon_name', this.coupon_name);
+            formData.append('coupon_name', '');
             formData.append('coupon_condition', this.coupon_condition);
 
             const url = process.env.VUE_APP_API_URL;
@@ -399,7 +425,7 @@ export default {
                     this.coupon_price = '쿠폰의 가격 선택';
                     this.coupon_count = '';
                     this.coupon_limit = '';
-                    this.coupon_name = '';
+                    // this.coupon_name = '';
                     this.coupon_condition = '';
 
                     this.CouponMakeList();
