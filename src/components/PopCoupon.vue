@@ -22,7 +22,7 @@
                                 @change="showIndex(c.coupon_index, c.issuance_user_index, c.coupon_price, $event)">
                             <div class="coupon_value">
                                 <p>{{ c.coupon_name }}</p>
-                                <!-- <p>{{ c.coupon_provided_status }}</p> -->
+                                <p>{{ c.coupon_condition }}</p>
                                 <p>{{ c.coupon_limit_time }}</p>
                             </div>
                             <div class="coupon_img"
@@ -494,7 +494,7 @@ export default {
     background-color: #f1eded;
     border: 1px solid #ccc;
     font-size: 0.9rem;
-    margin: 12% auto 0;
+    margin: 5% auto 0;
     /* border: 2px solid red; */
     line-height: 30px;
 }
