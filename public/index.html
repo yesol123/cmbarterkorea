@@ -157,9 +157,29 @@
 
       <!-- 다크 모드 스크립트 -->
   <script>
-    // 다크 모드를 위해 화면 전체에 필터 적용
-    document.documentElement.style.filter = "invert(100%) hue-rotate(180deg)";
-    document.documentElement.style.webkitFilter = "invert(100%) hue-rotate(180deg)";
+     // 다크 모드 여부를 확인하는 함수
+  function applyDarkModeIfNeeded() {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.style.filter = "invert(100%) hue-rotate(180deg)";
+      document.documentElement.style.webkitFilter = "invert(100%) hue-rotate(180deg)";
+    }
+  }
+
+  // 페이지 로드 시 다크 모드 확인
+  applyDarkModeIfNeeded();
+
+  // 다크 모드 변경을 실시간으로 감지
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+    if (event.matches) {
+      // 다크 모드로 변경되었을 때
+      document.documentElement.style.filter = "invert(100%) hue-rotate(180deg)";
+      document.documentElement.style.webkitFilter = "invert(100%) hue-rotate(180deg)";
+    } else {
+      // 라이트 모드로 변경되었을 때 원래대로 돌림
+      document.documentElement.style.filter = "";
+      document.documentElement.style.webkitFilter = "";
+    }
+  });
   </script>
 </body>
 
