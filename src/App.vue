@@ -26,8 +26,46 @@ export default {
 </script>
 
 <style>
+ body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+
+    input {
+      color: #000;
+      background-color: white;
+    }
+
+    label {
+      color: #000;
+    }
+
+ @media (prefers-color-scheme: dark) {
+  body {
+    --text-color: #eee;
+    --bkg-color: #121212;
+  }
+  p{
+    color: #eee;
+  }
+
+  .modal > p{
+    color: #000;
+  }
+  .popup{
+    background: black;
+  }
+  .close-btn{
+    color: #eee;
+  }
+}
+
 
   button {
     cursor: pointer;
   }
+
+
 </style>

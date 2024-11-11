@@ -378,7 +378,7 @@ export default {
 
 .close-btn {
     position: absolute;
-    top: 10px;
+    top: 5px;
     right: 10px;
     font-size: 24px;
     cursor: pointer;
@@ -388,6 +388,7 @@ export default {
     font-weight: bold;
     font-size: 1.2rem;
     text-align: center;
+    margin-bottom: 10px;
 }
 
 .price {
@@ -606,4 +607,15 @@ export default {
     color: #fff;
     margin-top: 20px;
 }
+
+
+
+
+@media (prefers-color-scheme: dark) {
+    .popup-content{
+        background: #000;
+    }
+
+}
+
 </style>
