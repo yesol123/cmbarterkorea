@@ -903,11 +903,13 @@ option {
     color: #fff;
 }
 
+
 .popup2 {
     display: none;
     position: fixed;
-    left: 0;
-    top: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -916,17 +918,16 @@ option {
     align-items: center;
 }
 
-/* 팝업내용 */
 .popup-content2 {
     position: relative;
-    width: 100%;
+    width: 80%; /* 부모의 너비에 맞춤 */
     height: 60%;
     background-color: #fff;
     border-radius: 8px;
     text-align: center;
-    position: relative;
     overflow: scroll;
     color: #000;
+    padding: 10px;
 }
 
 .center2 {
@@ -1041,7 +1042,7 @@ option {
 /* 팝업내용 */
 .popup-content3 {
     position: relative;
-    width: 100%;
+    width: 80%;
     height: 70%;
     background-color: #fff;
     border-radius: 8px;
