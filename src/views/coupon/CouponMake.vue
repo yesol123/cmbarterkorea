@@ -1,58 +1,58 @@
 <template>
-    
-        <header>
-            <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/icon_arrow_left.svg"></button>
-            <h3>쿠폰발행함</h3>
-        </header>
 
-        <section class="couponbox_section">
-            <label for="search">
-                <input type="text" id="search" placeholder="쿠폰 이름을 입력하세요." v-model="name">
-                <button type="button" @click="SearchCoupon()"><img src="@/assets/icon_search.svg" alt=""></button>
-            </label>
+    <header>
+        <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/icon_arrow_left.svg"></button>
+        <h3>쿠폰발행함</h3>
+    </header>
+
+    <section class="couponbox_section">
+        <label for="search">
+            <input type="text" id="search" placeholder="쿠폰 이름을 입력하세요." v-model="name">
+            <button type="button" @click="SearchCoupon()"><img src="@/assets/icon_search.svg" alt=""></button>
+        </label>
 
 
-            <div class="buttons">
-                <button :class="{ 'active': selectedButton === '보유중' }" @click="possible()">보유중</button>
-                <button :class="{ 'active': selectedButton === '보내기완료' }" @click="complete()">보내기완료</button>
-                <button :class="{ 'active': selectedButton === '사용완료' }" @click="pass()">사용완료</button>
-                <button :class="{ 'active': selectedButton === '전체' }" @click="all()">전체</button>
-            </div>
-            <p class="coupon_current">'{{ selectedButton }}'에 해당하는 쿠폰의 개수는 '{{ couponCount }}'개 입니다.</p>
+        <div class="buttons">
+            <button :class="{ 'active': selectedButton === '보유중' }" @click="possible()">보유중</button>
+            <button :class="{ 'active': selectedButton === '보내기완료' }" @click="complete()">보내기완료</button>
+            <button :class="{ 'active': selectedButton === '사용완료' }" @click="pass()">사용완료</button>
+            <button :class="{ 'active': selectedButton === '전체' }" @click="all()">전체</button>
+        </div>
+        <p class="coupon_current">'{{ selectedButton }}'에 해당하는 쿠폰의 개수는 '{{ couponCount }}'개 입니다.</p>
 
-            <div class="coupon_btns">
-                <button type="button" @click="toCouponMake()">쿠폰발행</button>
-                <button type="button" @click="toCouponGift()">쿠폰선물</button>
-                <button type="button" @click="toCouponEvent()">쿠폰이벤트</button>
-            </div>
+        <div class="coupon_btns">
+            <button type="button" @click="toCouponMake()">쿠폰발행</button>
+            <button type="button" @click="toCouponGift()">쿠폰선물</button>
+            <button type="button" @click="toCouponEvent()">쿠폰이벤트</button>
+        </div>
 
-            <ul class="flex_direction">
-                <li class="coupon_com" v-for="(list, i) in filteredCoupons" :key="i">
-                    <!-- 쿠폰 리스트 렌더링 -->
-                    <div class="back_ground_coupon"
-                        :style="{ backgroundImage: `url('https://www.haruby.store/assets/img/money/${list.coupon_price}.jpg')` }">
-                        <ul class="coupon_conditions">
-                            <div><input type="checkbox" @click="CouponIndex(list.coupon_index, $event)"></div>
-                            <div>
-                                <li>{{ store_name }}</li>
-                                <li>{{ list.coupon_issuance_status }}</li>
-                                <li>{{ list.coupon_limit }}일</li>
+        <ul class="flex_direction">
+            <li class="coupon_com" v-for="(list, i) in filteredCoupons" :key="i">
+                <!-- 쿠폰 리스트 렌더링 -->
+                <div class="back_ground_coupon"
+                    :style="{ backgroundImage: `url('https://www.haruby.store/assets/img/money/${list.coupon_price}.jpg')` }">
+                    <ul class="coupon_conditions">
+                        <div><input type="checkbox" @click="CouponIndex(list.coupon_index, $event)"></div>
+                        <div>
+                            <li>{{ store_name }}</li>
+                            <li>{{ list.coupon_issuance_status }}</li>
+                            <li>{{ list.coupon_limit }}일</li>
+                        </div>
+                        <div class="t">
+                            <div
+                                :style="{ backgroundImage: `url('https://www.haruby.store/assets/img/money/${list.coupon_price}_t.png')` }">
                             </div>
-                            <div class="t">
-                                <div
-                                    :style="{ backgroundImage: `url('https://www.haruby.store/assets/img/money/${list.coupon_price}_t.png')` }">
-                                </div>
-                            </div>
-                        </ul>
-                    </div>
-                    <button @click="gotoDetail(list.coupon_index)">쿠폰 상세보기</button>
-                </li>
-            </ul>
-        </section>
-   
+                        </div>
+                    </ul>
+                </div>
+                <button @click="gotoDetail(list.coupon_index)">쿠폰 상세보기</button>
+            </li>
+        </ul>
+    </section>
+
 
     <!-- 쿠폰발행창 -->
-    <div id="popup" class="popup">
+    <div id="popup" class="popup" @click.self="closePopup">
         <div class="popup-content">
             <div class="center">
                 <p class="header">쿠폰 발행</p>
@@ -109,7 +109,7 @@
     </div>
 
     <!-- 쿠폰선물 창 -->
-    <div id="popup2" class="popup2">
+    <div id="popup2" class="popup2" @click.self="closePopup2">
         <div class="popup-content2">
             <div class="center2">
                 <p class="header2">쿠폰 선물</p>
@@ -134,7 +134,7 @@
         </div>
     </div>
 
-    <div id="popup3" class="popup3">
+    <div id="popup3" class="popup3" @click.self="closePopup3">
         <div class="popup-content3">
             <div class="center3">
                 <div class="pin_word">
@@ -142,12 +142,12 @@
                     <p>쿠폰선물을 위해 PIN 번호를 입력해주세요.</p>
 
                     <div class="boxes">
-                        <div>{{ pinnums[0] }}</div>
-                        <div>{{ pinnums[1] }}</div>
-                        <div>{{ pinnums[2] }}</div>
-                        <div>{{ pinnums[3] }}</div>
-                        <div>{{ pinnums[4] }}</div>
-                        <div>{{ pinnums[5] }}</div>
+                        <div :class="{ active: pinnums.length > 0 }">{{ pinnums[0] != null ? '*' : '' }}</div>
+                        <div :class="{ active: pinnums.length > 1 }">{{ pinnums[1] != null ? '*' : '' }}</div>
+                        <div :class="{ active: pinnums.length > 2 }">{{ pinnums[2] != null ? '*' : '' }}</div>
+                        <div :class="{ active: pinnums.length > 3 }">{{ pinnums[3] != null ? '*' : '' }}</div>
+                        <div :class="{ active: pinnums.length > 4 }">{{ pinnums[4] != null ? '*' : '' }}</div>
+                        <div :class="{ active: pinnums.length > 5 }">{{ pinnums[5] != null ? '*' : '' }}</div>
                     </div>
                 </div>
                 <div class="numbers">
@@ -202,7 +202,7 @@ export default {
             zero: 0,
             pinnums: [],
             name: '',
-            store_name : ''
+            store_name: ''
         }
     },
     computed: {
@@ -244,14 +244,14 @@ export default {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log('쿠폰발행시 가맹점이름');
-                console.log(data);
+                .then(response => response.json())
+                .then(data => {
+                    console.log('쿠폰발행시 가맹점이름');
+                    console.log(data);
 
-                this.store_name = data.msg[0].store_name;
-                console.log(this.store_name.store_name);
-            })
+                    this.store_name = data.msg[0].store_name;
+                    console.log(this.store_name.store_name);
+                })
         },
         // 쿠폰발행 > 사용CM 계산식
         TotalPrice() {
@@ -317,13 +317,13 @@ export default {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log('쿠폰발행함');
-                //console.log(data);
-                this.cmakelist = data.msg;
-                console.log(this.cmakelist);
-            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('쿠폰발행함');
+                    //console.log(data);
+                    this.cmakelist = data.msg;
+                    console.log(this.cmakelist);
+                })
         },
         // 쿠폰검색
         SearchCoupon() {
@@ -396,7 +396,7 @@ export default {
                 alert('쿠폰조건은 30글자 이내로 작성해주세요');
                 return false;
             }
-            if(this.cm < this.price) {
+            if (this.cm < this.price) {
                 alert('보유한 CM보다 큰 금액의 쿠폰은 발행할 수 없습니다.');
                 return false;
             }
@@ -495,7 +495,7 @@ export default {
             store.coupon_user_index = '';
             this.isUser = false;
             // console.log(store.coupon_index);
-            
+
         },
         // 쿠폰선물검색
         SearchNumber() {
@@ -569,24 +569,24 @@ export default {
                     method: 'POST',
                     body: formData
                 })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    if (data.code == 200) {
-                        alert(data.msg);
-                        document.getElementById('popup3').style.display = 'none';
-                        
-                        this.pinnums = [];
-                        return false;
-                    }
-                    if (data.code == 500) {
-                        alert(data.msg);
-                        document.getElementById('popup3').style.display = 'none';
-                        
-                        this.pinnums = [];
-                        return false;
-                    }
-                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.code == 200) {
+                            alert(data.msg);
+                            document.getElementById('popup3').style.display = 'none';
+
+                            this.pinnums = [];
+                            return false;
+                        }
+                        if (data.code == 500) {
+                            alert(data.msg);
+                            document.getElementById('popup3').style.display = 'none';
+
+                            this.pinnums = [];
+                            return false;
+                        }
+                    })
 
                 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
                 checkboxes.forEach(checkbox => {
@@ -600,7 +600,7 @@ export default {
 
                 store.coupon_index = '';
                 this.coupon_index = [];
-                
+
                 store.coupon_user_index = '';
                 this.isUser = false;
             }
@@ -613,15 +613,25 @@ export default {
         ResetPin() {
             this.pinnums = [];
         },
+
+        closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        },
+        closePopup2() {
+            document.getElementById('popup2').style.display = 'none';
+        },
+        closePopup3() {
+            document.getElementById('popup3').style.display = 'none';
+        },
     }
 }
 </script>
 
 <style scoped>
-
-p{
+p {
     margin: 0;
 }
+
 .goback_btn {
     width: 30px;
     height: 30px;
@@ -637,8 +647,10 @@ p{
 .couponbox_section {
     margin: 70px auto 0;
     width: 95%;
-    height: calc(100vh - 70px); /* 전체 화면 높이에서 header 제외 */
-    overflow: hidden; /* 전체 페이지 스크롤 방지 */
+    height: calc(100vh - 70px);
+    /* 전체 화면 높이에서 header 제외 */
+    overflow: hidden;
+    /* 전체 페이지 스크롤 방지 */
     display: flex;
     flex-direction: column;
 }
@@ -696,14 +708,14 @@ label button {
     /* 쿠폰 개수 표시 고정 */
 }
 
-.flex_direction{
+.flex_direction {
     overflow-y: auto;
     flex-grow: 1;
     padding-bottom: 50px;
 }
 
 
-.flex_direction>  li{
+.flex_direction>li {
     margin-bottom: 10px;
 }
 
@@ -893,11 +905,13 @@ option {
     color: #fff;
 }
 
+
 .popup2 {
     display: none;
     position: fixed;
-    left: 0;
-    top: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -906,17 +920,16 @@ option {
     align-items: center;
 }
 
-/* 팝업내용 */
 .popup-content2 {
     position: relative;
-    width: 100%;
+    width: 80%; /* 부모의 너비에 맞춤 */
     height: 60%;
     background-color: #fff;
     border-radius: 8px;
     text-align: center;
-    position: relative;
     overflow: scroll;
     color: #000;
+    padding: 10px;
 }
 
 .center2 {
@@ -1031,8 +1044,8 @@ option {
 /* 팝업내용 */
 .popup-content3 {
     position: relative;
-    width: 100%;
-    height: 80%;
+    width: 80%;
+    height: 70%;
     background-color: #fff;
     border-radius: 8px;
     text-align: center;
@@ -1082,11 +1095,28 @@ option {
 .boxes>div {
     width: 30px;
     height: 30px;
-    line-height: 30px;
+    display: flex;
+    /* Flexbox 사용 */
+    justify-content: center;
+    /* 수평 중앙 정렬 */
+    align-items: center;
+    /* 수직 중앙 정렬 */
     border: none;
     background-color: #e4e2e2;
     border-radius: 7px;
     margin-right: 5px;
+    text-align: center;
+    font-size: 32px;
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.boxes>div.active {
+    background-color: #1e90ff;
+    /* 파란색 배경 */
+    color: white;
+    /* 텍스트 색상 흰색 */
 }
 
 .numbers {
@@ -1105,6 +1135,4 @@ option {
     line-height: 60px;
     /* border: 1px solid blue; */
 }
-
-
 </style>

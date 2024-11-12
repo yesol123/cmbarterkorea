@@ -5,7 +5,6 @@
         <div class="header_center">
             <div class="main_logo">
                 <div class="img_contain">
-
                     <svg width="35" height="35" viewBox="0 0 48 48" fill="none">
                         <circle cx="24" cy="17" r="5" :stroke="fontColor" stroke-width="3" />
                         <path d="M19.5 27H28.5C33.1944 27 37 30.8056 37 35.5V37H11V35.5C11 30.8056 14.8056 27 19.5 27Z"
@@ -20,11 +19,9 @@
                 <p v-else-if="this.member === '6'" :style="{ color: fontColor }">서브계정</p>
             </div>
             <div>
-                <h1 :style="{ color: fontColor }">씨엠바더</h1>
+                <h3 :style="{ color: fontColor }">씨엠바더</h3>
             </div>
             <div @click="logout()">
-
-
                 <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
                     <path
                         d="M24.6316 12H13C12.4477 12 12 12.4477 12 13V35C12 35.5523 12.4477 36 13 36H24.6316M20.8421 24.6316H36M36 24.6316L29.6842 18.3158M36 24.6316L29.6842 30.9474"
@@ -184,6 +181,11 @@ export default {
     },
 
     mounted() {
+        this.adjustMainContentPadding();
+        window.addEventListener('resize', this.adjustMainContentPadding);
+
+
+
         let store = useResponseStore();
         this.member = store.member;
         const mainUserIndex = sessionStorage.getItem('store_main_user_index');
@@ -203,9 +205,21 @@ export default {
         // 광고 슬라이드
         this.adSliding();
     },
+    beforeUnmount() {
+    window.removeEventListener('resize', this.adjustMainContentPadding);
+},
 
 
     methods: {
+        adjustMainContentPadding() {
+        const header = document.querySelector('.main_header');
+        const mainContent = document.querySelector('.main_content');
+
+        if (header && mainContent) {
+            const headerHeight = header.offsetHeight;
+            mainContent.style.paddingTop = `${headerHeight}px`;
+        }
+    },
 
         fetchMainAccountData(mainUserIndex) {
 
@@ -491,14 +505,7 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-size: 1rem;
-    text-decoration: none;
-    color: #000;
-}
+
 
 .main_header {
     position: fixed;
@@ -506,10 +513,7 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
-    height: 70px;
     z-index: 99999;
-    /* background-color: rgb(9, 9, 116); */
-    /* border: 1px solid red; */
 }
 
 .header_center {
@@ -520,16 +524,10 @@ export default {
 }
 
 .header_center>div {
-    width: 90px;
+    width: 20%;
     text-align: center;
-    padding-top: 10px;
-    /* border: 1px solid blue; */
 }
 
-
-img {
-    width: 30px;
-}
 
 .main_logo {
     display: flex;
@@ -538,38 +536,26 @@ img {
     justify-content: center;
 }
 
-.main_logo>p {
-    color: #fff;
-    font-size: small;
-}
 
 .main_content {
-    margin-top: 70px;
     padding-bottom: 60px;
     width: 100%;
-    background-color: #fff;
-   
 }
 
 .pay_content {
     width: 100%;
-    /* border: 2px solid blue; */
-    /* background-color: rgb(9, 9, 116); */
 }
 
 .pay_center {
     padding: 20px;
-    /* border: 1px solid orange; */
 }
 
 .pay_area {
-    /* background-color: rgb(9, 9, 116); */
     text-align: center;
     border-radius: 10px;
     border: 3px solid #fff;
     padding: 5px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-
 }
 
 .pay_area>p {
@@ -614,17 +600,6 @@ img {
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* 
-button {
-    width: 32%;
-    height: 30px;
-    background-color: #fff;
-    color: rgb(9, 9, 116);
-    font-weight: bold;
-    font-size: 0.9rem;
-    border-radius: 10px;
-    border: none;
-} */
 
 .commercial {
     width: 90%;
@@ -651,18 +626,16 @@ button {
     width: 90%;
     margin: 20px auto;
     padding: 10px;
-    /* border: 1px solid red; */
 }
 
 .icon {
     width: 33%;
     padding: 15px;
     text-align: center;
-    /* border: 1px solid red; */
 }
 
 .icon>img {
-    width: 40px;
+    width: 50%;
 }
 
 
