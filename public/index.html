@@ -115,6 +115,27 @@ p{
     }
 
 
+    
+
+
+@media (prefers-color-scheme: dark) {
+    body{
+      background-color:  rgba(40, 38, 44, 1);
+    }
+    p,span,label{
+      color: rgba(255, 255, 255, 0.87);
+    }
+
+    header{
+      background-color:  rgba(40, 38, 44, 1);
+    }
+    header > h3{
+      color: rgba(89, 138, 255, 1);
+    }
+
+}
+
+
 
   </style>
 
@@ -145,39 +166,7 @@ p{
   <script type="text/javascript"
     src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8d59f29af383017905f070a4e3c61545&libraries=services"></script>
 
-  <!-- 다크 모드 스크립트 -->
-  <script>
-    // 다크 모드를 적용하는 함수
-    function enableDarkMode() {
-      document.documentElement.classList.add('dark-mode');
-    }
 
-    // 다크 모드를 해제하는 함수
-    function disableDarkMode() {
-      document.documentElement.classList.remove('dark-mode');
-    }
-
-    // 다크 모드 여부를 확인하고 적용하는 함수
-    function applyDarkModeIfNeeded() {
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        enableDarkMode();
-      } else {
-        disableDarkMode();
-      }
-    }
-
-    // 페이지 로드 시 다크 모드 확인
-    applyDarkModeIfNeeded();
-
-    // 다크 모드 변경을 실시간으로 감지
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-      if (event.matches) {
-        enableDarkMode();
-      } else {
-        disableDarkMode();
-      }
-    });
-  </script>
 </body>
 
 </html>

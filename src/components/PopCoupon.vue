@@ -612,8 +612,18 @@ export default {
 
 
 @media (prefers-color-scheme: dark) {
+    input{
+        background: rgba(255, 255, 255, 0.08);
+    }
+    label{
+        color: rgba(255, 255, 255, 0.87);
+    }
+    button{
+        color: rgba(255, 255, 255, 0.87);
+    }
     .popup-content{
-        background: #000;
+
+        background:  rgba(39, 38, 44, 1);
     }
 
 }

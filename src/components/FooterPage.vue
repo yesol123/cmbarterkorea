@@ -33,25 +33,25 @@
       </div>
     </nav> -->
 
-  <div class="footer">
-    <div class="btn_group">
-      <div style="text-align: center;">
-        <img  @click="goHome()" src="@/assets/footer_home.png">
+    <div class="footer">
+    <ul class="btn_group">
+      <li style="text-align: center;">
+        <img :src="homeIcon" @click="goHome">
         <p style="font-size: 0.7rem; text-align: center;">홈</p>
-      </div>
-      <div style="text-align: center; margin-left: 15px;">
-        <img  :style="subAccountStlye" @click="goGift()" src="@/assets/footer_gift.png">
+      </li>
+      <li style="text-align: center; margin-left: 15px;">
+        <img :src="giftIcon" :style="subAccountStlye" @click="goGift">
         <p style="font-size: 0.7rem; text-align: center;">선물</p>
-      </div>
-      <div style="text-align: center; margin-left: 10px;">
-        <img @click="FindShop()" src="@/assets/footer_findshop.png">
+      </li>
+      <li style="text-align: center; margin-left: 10px;">
+        <img :src="findShopIcon" @click="FindShop">
         <p style="font-size: 0.7rem; text-align: center;">가맹점찾기</p>
-      </div>
-      <div style="text-align: center;">
-        <img @click="goMypage()" src="@/assets/footer_mypage.png">
+      </li>
+      <li style="text-align: center;">
+        <img :src="myPageIcon" @click="goMypage">
         <p style="font-size: 0.7rem;">My CM</p>
-      </div>
-    </div>
+      </li>
+    </ul>
   </div>
 
 </template>
@@ -70,16 +70,41 @@ export default {
     let store = useResponseStore();
     this.member = store.member;
   },
-  computed:{
+  computed: {
     subAccountStlye() {
-            return this.member === '6'
-                ? { pointerEvents: 'none', opacity: '0.5' } // 클릭 비활성화 + 시각적 효과
-                : {}; // 기본 스타일 유지
-        }
+      return this.member === '6'
+        ? { pointerEvents: 'none', opacity: '0.5' } // 클릭 비활성화 + 시각적 효과
+        : {}; // 기본 스타일 유지
+    },
+    isDarkMode() {
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    },
+    homeIcon() {
+    return this.isDarkMode
+      ? require('@/assets/footer_home_white.png')
+      : require('@/assets/footer_home.png');
+  },
+  giftIcon() {
+    return this.isDarkMode
+      ? require('@/assets/footer_gift_white.png')
+      : require('@/assets/footer_gift.png');
+  },
+  findShopIcon() {
+    return this.isDarkMode
+      ? require('@/assets/footer_findshop_white.png')
+      : require('@/assets/footer_findshop.png');
+  },
+  myPageIcon() {
+    return this.isDarkMode
+      ? require('@/assets/footer_mypage_white.png')
+      : require('@/assets/footer_mypage.png');
+  }
+
+
   },
   methods: {
     goHome() {
-      this.$router.push( {path:'/main' })
+      this.$router.push({ path: '/main' })
     },
     goMypage() {
       router.push('/MyPage/' + this.member)
@@ -116,28 +141,73 @@ export default {
 
 .footer {
   position: fixed;
-  bottom: 5px;
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 50px;
+  height: 60px;
+  /* 필요한 높이로 설정 */
   background-color: #fff;
-  z-index: 1000; /* 다른 요소 위에 나타나도록 z-index 설정 */
+  z-index: 1000;
   border-top: 1px solid #ccc;
-  padding: 5px;
+  display: flex;
+  /* 내부 요소가 전체를 덮도록 설정 */
+  justify-content: center;
 }
 
 .btn_group {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: inherit;
-  height: inherit;
+  width: 100%;
+  height: 100%;
+  /* 부모 요소의 높이를 채우도록 설정 */
+  margin: 0;
+  padding: 0;
+}
+
+.btn_group li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  /* li가 전체 높이를 채우도록 설정 */
+  text-align: center;
 }
 
 .btn_group img {
   width: 25px;
   height: 25px;
-  /* border: 1px solid orange; */
   cursor: pointer;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  .footer {
+    background: rgba(22, 21, 27, 1);
+
+  }
+
+  .footer>.btn_group {
+    background: rgba(22, 21, 27, 1);
+
+  }
+
+  .footer>.btn_group>li {
+    background: rgba(22, 21, 27, 1);
+  }
+
+  .footer>.btn_group>li >img {
+    background: rgba(22, 21, 27, 1);
+  }
+
+  .footer>.btn_group>li>p {
+    color: #eee;
+    background: rgba(22, 21, 27, 1);
+
+  }
+
+
+
 }
 </style>

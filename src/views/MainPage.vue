@@ -21,7 +21,7 @@
             <div>
                 <h3 :style="{ color: fontColor }">씨엠바더</h3>
             </div>
-            <div @click="logout()">
+            <div class="logout" @click="logout()">
                 <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
                     <path
                         d="M24.6316 12H13C12.4477 12 12 12.4477 12 13V35C12 35.5523 12.4477 36 13 36H24.6316M20.8421 24.6316H36M36 24.6316L29.6842 18.3158M36 24.6316L29.6842 30.9474"
@@ -36,7 +36,7 @@
     <div class="main_content">
         <div class="pay_content" :style="{ backgroundColor: backColor }">
             <div class="pay_center"
-                :style="{ borderTop: `3px solid ${borderColor}`, borderBottom: `3px solid ${borderColor} !important` }">
+                :style="{ borderTop: `3px solid ${borderColor}`, borderBottom: `3px solid ${borderColor} ` }">
                 <div class="pay_area" v-bind:style="[subAccountStlye, { backgroundColor: backColor }]"
                     @click="toPayment()">
                     <p v-if="this.member === '1'">{{ user_cm }} CM</p>
@@ -129,8 +129,9 @@
             </div>
         </div>
     </div>
-    <div v-if="showModal" class="modal-overlay" @click="closeModal">
 
+    <!-- CM게임 팝업 -->
+    <div v-if="showModal" class="modal-overlay" @click="closeModal">
         <div class="modal" @click.stop>
             <p class="caution">CM게임 보상</p>
             <p>닉네임 입력</p>
@@ -139,6 +140,7 @@
         </div>
     </div>
 
+     <!-- CM게임 팝업 에러 모달 -->
     <div v-if="showModal2" class="modal">
         <p class="caution">{{ this.error_massage }}</p>
         <button @click="confirm2">확인</button>
@@ -702,5 +704,48 @@ export default {
 
 .img_contain {
     display: flex;
+}
+
+
+
+@media (prefers-color-scheme: dark) {
+    .main_header{
+        background: rgba(22, 21, 27, 1);
+    }
+    .header_center div >h3{
+        opacity: 0.8; 
+    }
+    .logout > svg{
+        opacity: 0.7;
+    }
+    .main_logo > p {
+        opacity: 0.8; 
+    }
+    .img_contain > svg{
+        opacity: 0.7; 
+    }
+    .pay_center {
+        background-color: rgba(40, 38, 44, 1);
+    }
+    .pay_center > .pay_area{
+       opacity: 0.8;
+
+    }
+
+    .pay_btn > button{
+        background: rgba(255, 255, 255, 0.08);
+        opacity: 0.9;
+    }
+    label{
+        color: rgba(255, 255, 255, 0.87);
+    }
+    button{
+        color: rgba(255, 255, 255, 0.87);
+    }
+    .popup-content{
+
+        background:  rgba(39, 38, 44, 1);
+    }
+
 }
 </style>

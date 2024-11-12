@@ -257,4 +257,14 @@ input {
     color: #000;
     font-size: 0.9rem;
 }
+
+
+
+@media (prefers-color-scheme: dark) {
+    label,a{
+        color:rgba(255, 255, 255, 0.87);
+    }
+}
+
+
 </style>

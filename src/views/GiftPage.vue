@@ -77,6 +77,14 @@
     <button @click="confirm()">확인</button>
   </div>
 
+  
+  <div v-if="showModal3" class="modal">
+    <p class="caution">알림</p>
+    <p>최소 선물 금액은 10,000 CM 입니다.
+    </p>
+    <button @click="confirm()">확인</button>
+  </div>
+
 </template>
 
 <script>
@@ -105,7 +113,9 @@ export default {
       take_user_index: '', //받는 사람 index
       showModal: false,
       showModal2: false,
+      showModal3:false,
       isOpen: false, // confirmPin 모달 상태
+      minGiftAmount: 10000, // 최소 선물 금액
 
     }
   },
@@ -134,16 +144,16 @@ export default {
   },
 
   methods: {
-    showConfrimPin() {
-      // 남은 CM이 음수일 경우
-      const remainingCm = parseInt(this.rest_cm.replace(/,/g, ''), 10); // 잔여 CM 값에서 쉼표 제거 후 숫자로 변환
+    // showConfrimPin() {
+    //   // 남은 CM이 음수일 경우
+    //   const remainingCm = parseInt(this.rest_cm.replace(/,/g, ''), 10); // 잔여 CM 값에서 쉼표 제거 후 숫자로 변환
 
-      if (remainingCm < 0) {
-        this.showModal2 = true; // 모달2를 띄움
-      } else {
-        this.isOpen = true; // ConfirmPin 컴포넌트를 보이게 함 (핀 번호 입력 모달)
-      }
-    },
+    //   if (remainingCm < 0) {
+    //     this.showModal2 = true; // 모달2를 띄움
+    //   } else {
+    //     this.isOpen = true; // ConfirmPin 컴포넌트를 보이게 함 (핀 번호 입력 모달)
+    //   }
+    // },
 
     handlePinSuccess() {
       console.log('핀번호 성공, 선물하기 호출');
@@ -185,8 +195,40 @@ export default {
     },
     calculate() {
       const userCM = parseInt(this.user_cm.replace(/,/g, ''));
+      const sendCM = parseInt(this.send_cm || 0); // send_cm이 비어있을 때 0으로 처리
+
       this.rest_cm = (userCM - this.send_cm).toLocaleString();
+
+      // 최소 금액 확인
+    if (sendCM < this.minGiftAmount) {
+      this.showMinAmountWarning = true;
+    } else {
+      this.showMinAmountWarning = false;
+    }
+
+    // 남은 CM 계산
+    this.rest_cm = (userCM - sendCM).toLocaleString();
     },
+
+    showConfrimPin() {
+    const sendCM = parseInt(this.send_cm);
+    
+    // 최소 금액을 만족하지 않으면 모달을 띄우지 않음
+    if (sendCM < this.minGiftAmount) {
+      this.showModal3 = true;
+      return;
+    }
+
+    const remainingCm = parseInt(this.rest_cm.replace(/,/g, ''), 10);
+    if (remainingCm < 0) {
+      this.showModal2 = true;
+    } else {
+      this.isOpen = true;
+    }
+  },
+
+
+
     sendGift() {
 
       const remainingCm = parseInt(this.rest_cm.replace(/,/g, ''));
@@ -218,6 +260,7 @@ export default {
     confirm() {
       this.showModal = false;
       this.showModal2 = false;
+      this.showModal3 = false;
     }
   }
 
