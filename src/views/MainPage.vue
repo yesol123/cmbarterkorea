@@ -336,6 +336,7 @@ export default {
             // console.log(4444);
             if (this.member !== '6') {
                 this.$refs.payment.openpopup();
+                this.$refs.payment.CouponList();
             }
 
         },

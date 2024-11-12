@@ -116,10 +116,12 @@ export default {
         }
     },
     mounted() {
-        this.CouponList();
+        // this.CouponList();
         // document.getElementById('popup').style.display = 'flex';
         let store = useResponseStore();
         this.id = store.user_id;
+
+        
     },
     methods: {
         // 핀번호 입력
