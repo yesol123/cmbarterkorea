@@ -100,7 +100,7 @@ export default{
 
             this.coupon.coupon_name = result.msg[0].coupon_name;
             this.coupon.coupon_price = result.msg[0].coupon_price;
-            this.coupon.coupon_condition = result.msg[0].coupon_price; //조건
+            this.coupon.coupon_condition = result.msg[0].coupon_condition; //조건
             this.coupon.coupon_deadline = result.msg[0].coupon_limit; //기한
             this.coupon.membership = result.msg[0].coupon_price; //멤버십
             this.coupon.status = result.msg[0].coupon_provided_status; //상태

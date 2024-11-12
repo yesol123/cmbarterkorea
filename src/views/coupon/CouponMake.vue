@@ -67,6 +67,8 @@
                     <input type="number" v-model="price" readonly>
                 </div>
 
+                <span style="display: block; width: 100%; margin-left: 15px; font-size: 0.7rem; color: red;">*가격과 개수 작성 후 자동으로 계산됩니다.</span>
+
                 <div>
                     <label>가격</label>
                     <select v-model="coupon_price">
@@ -90,8 +92,10 @@
 
                 <div>
                     <label>이름</label>
-                    <input type="text" placeholder="쿠폰이름을 입력해주세요(30자이내)" v-model="store_name" readonly>
+                    <input type="text" v-model="store_name" readonly>
                 </div>
+
+                <span style="display: block; width: 90%; font-size: 0.7rem; color: red;">*가맹점 이름으로 자동입력됩니다.</span>
 
                 <div>
                     <label>조건</label>
