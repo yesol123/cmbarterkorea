@@ -64,8 +64,10 @@
 
                 <div>
                     <label>사용CM</label>
-                    <input type="number" v-model="price" readonly placeholder="쿠폰가격과 개수 작성 후 자동계산">
+                    <input type="number" v-model="price" readonly>
                 </div>
+
+                <span style="display: block; width: 100%; margin-left: 15px; font-size: 0.7rem; color: red;">*가격과 개수 작성 후 자동으로 계산됩니다.</span>
 
                 <div>
                     <label>가격</label>
@@ -93,7 +95,7 @@
                     <input type="text" v-model="store_name" readonly>
                 </div>
 
-                <span style="display: block; width: 100%; font-size: 0.7rem; color: red;">*가맹점 이름으로 자동입력됩니다.</span>
+                <span style="display: block; width: 90%; font-size: 0.7rem; color: red;">*가맹점 이름으로 자동입력됩니다.</span>
 
                 <div>
                     <label>조건</label>
