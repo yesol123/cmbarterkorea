@@ -244,9 +244,6 @@ export default {
                 this.coupon_index.push(coupon_index);
                 this.issuance_user_index.push(user_index);
             } else {
-                // this.coupon_index = this.coupon_index.filter(index => index !== coupon_index);
-                // this.issuance_user_index = this.issuance_user_index.filter(index => index !== user_index);
-
                 const indexToRemove = this.arr.indexOf(Number(coupon_price));
                 if (indexToRemove !== -1) {
                     this.arr.splice(indexToRemove, 1);  // 해당 가격 값 제거
@@ -259,6 +256,10 @@ export default {
                 });
                 console.log(sum);
                 this.coupon_price = sum;
+
+                // 체크 해제 시, 해당 coupon_index와 issuance_user_index에서 해당 값을 제거
+                // this.coupon_index = this.coupon_index.filter(index => index !== coupon_index);
+                // this.issuance_user_index = this.issuance_user_index.filter(index => index !== user_index);
             }
 
         },
