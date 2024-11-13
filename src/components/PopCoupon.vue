@@ -500,8 +500,8 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 5px;
     width: 45%;
+    gap: 5px;
     text-align: center;
     /* border: 1px solid red; */
 }
