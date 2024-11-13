@@ -294,9 +294,9 @@ export default {
     },
     computed: {
         backColor() {
-            return (this.member == '1') ? 'rgb(9, 9, 116)'
+            return (this.member == '1') ? '#589CF6'
                 : (this.member === '2') ? '#0A6847'
-                    : (this.member === '3'||this.member=='6') ? '#E4003A'
+                    : (this.member === '3'||this.member=='6') ? '#F05F5F'
                         : '#ccc'
         },
     }
