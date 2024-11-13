@@ -18,15 +18,17 @@
                     <div class="coupon_list">
                         <div class="coupon_content" v-for="(c, i) in this.coupons" :key="i"
                             :style="{ backgroundImage: `url('https://www.haruby.store/assets/img/money/${c.coupon_price}.jpg')` }">
-                            <input type="checkbox" id="checkbox" v-model="c.checked"
+                            <div>
+                                <input type="checkbox" id="checkbox" v-model="c.checked"
                                 @change="showIndex(c.coupon_index, c.issuance_user_index, c.coupon_price, $event)">
+                            </div>
                             <div class="coupon_value">
                                 <p>{{ c.coupon_name }}</p>
                                 <p>{{ c.coupon_condition }}</p>
                                 <p>{{ c.coupon_limit_time }}</p>
                             </div>
-                            <div class="coupon_img"
-                                :style="{ backgroundImage: `url('https://www.haruby.store/assets/img/money/${c.coupon_price}_t.png')` }">
+                            <div class="coupon_img">
+                                <img :src="`https://www.haruby.store/assets/img/money/${c.coupon_price}_t.png`" alt="">
                             </div>
                         </div>
                     </div>
@@ -171,10 +173,6 @@ export default {
                         // console.log(finalprice);
                         formData.append('user_amount', finalprice);
 
-                        for (const [key, value] of formData.entries()) {
-                          console.log(key, value);
-                        }
-
                         const url = process.env.VUE_APP_API_URL;
 
                         fetch(url + 'api/pay/Pay.php', {
@@ -188,10 +186,6 @@ export default {
 
                             const finalprice = this.price + this.coupon_price;
                             this.commaprice = finalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                            // console.log('테스트');
-                            // console.log(typeof this.price)
-                            // console.log(typeof this.coupon_price)
-                            // this.commaprice = finalprice;
                         })
 
                     }
@@ -223,7 +217,7 @@ export default {
             console.log(event.target);
 
             if (isChecked) {
-                this.arr.push(Number(coupon_price));
+                this.arr.push(coupon_price);
                 let sum = 0;
                 this.arr.forEach((num) => {
                     sum += num;
@@ -247,12 +241,7 @@ export default {
                 // this.coupon_index = this.coupon_index.filter(index => index !== coupon_index);
                 // this.issuance_user_index = this.issuance_user_index.filter(index => index !== user_index);
 
-                const indexToRemove = this.arr.indexOf(Number(coupon_price));
-                if (indexToRemove !== -1) {
-                    this.arr.splice(indexToRemove, 1);  // 해당 가격 값 제거
-                }
-
-                // this.arr.pop();
+                this.arr.pop();
                 let sum = 0;
                 this.arr.forEach((num) => {
                     sum += num;
@@ -478,54 +467,57 @@ export default {
 
 .coupon_content {
     position: relative;
-
+    display: flex;
+    align-items: center;
+    gap: 20px;
     width: 100%;
-    height: 150px;
-    /* background-image: url('https://www.haruby.store/assets/img/money/1000.jpg'); */
+    background-size: cover; /* 변경된 부분 */
+    background-position: center; /* 이미지 중앙 정렬 */
     background-repeat: no-repeat;
-    background-size: contain;
     margin: 10px auto 0;
-    /* border: 1px solid red; */
 }
 
-.coupon_content>input {
-    position: absolute;
-    top: 40%;
-    left: 15px;
+
+
+
+.coupon_content > div:nth-child(1){
+    display: flex;
+    width: 20%;
+    align-items: center;
+    justify-content: center;
 }
+
+
+.coupon_content > div:nth-child(3){
+    width: 40%;
+}
+
+
+
 
 .coupon_value {
-    position: absolute;
-    top: 5%;
-    left: 13%;
-    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 45%;
     text-align: center;
     /* border: 1px solid red; */
 }
 
 .coupon_value>p {
     width: 80%;
-    height: 30px;
     border-radius: 10px;
     background-color: #f1eded;
     border: 1px solid #ccc;
     font-size: 0.9rem;
-    margin: 5% auto 0;
     /* border: 2px solid red; */
     line-height: 30px;
     overflow: hidden;
 }
-
-.coupon_img {
-    position: absolute;
-    top: 15%;
-    right: 15px;
-    width: 100px;
-    height: 150px;
-    /* background-image: url('https://www.haruby.store/assets/img/money/1000_t.png'); */
-    background-repeat: no-repeat;
-    background-size: contain;
-    /* border: 1px solid red; */
+.coupon_img > img {
+    width: 100%;
 }
 
 .pin_wrap {
