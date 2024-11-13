@@ -105,8 +105,19 @@ onMounted(function () {
   margin-top: 100px;
 }
 
-
-
+@media (prefers-color-scheme: dark) {
+  .datatable_wrapper label,
+  .datatable_wrapper .dataTables_info,
+  .datatable_wrapper .dataTables_length,
+  .datatable_wrapper .dataTables_filter,
+  .datatable_wrapper .dataTables_paginate {
+    color: #eee !important; /* 다크 모드에서 텍스트를 흰색으로 변경 */
+  }
+  
+  .dataTables_wrapper table {
+    color: #eee !important; /* 데이터 테이블의 기본 텍스트 색상 변경 */
+  }
+}
 
 
 </style>

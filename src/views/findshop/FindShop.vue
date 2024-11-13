@@ -567,4 +567,11 @@ main {
 
     }
 }
+
+
+@media (prefers-color-scheme: dark) {
+  .btns div{
+    color: #eee;
+  }
+}
 </style>

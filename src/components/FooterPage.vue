@@ -69,6 +69,8 @@ export default {
   mounted() {
     let store = useResponseStore();
     this.member = store.member;
+
+    
   },
   computed: {
     subAccountStlye() {
@@ -198,6 +200,7 @@ export default {
   }
 
   .footer>.btn_group>li >img {
+    color: #eee;
     background: rgba(22, 21, 27, 1);
   }
 

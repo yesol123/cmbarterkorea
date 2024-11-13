@@ -140,4 +140,12 @@ export default{
 
 
 
+@media (prefers-color-scheme: dark) {
+  
+  .couponbox_Detail_section ul li label{
+      color: #eee;
+  }
+  }
+
+
 </style>
