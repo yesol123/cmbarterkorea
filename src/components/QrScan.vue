@@ -139,6 +139,7 @@ export default {
                                         this.id = data.hash_mb.mb_id;
                                         const num = data.price;
                                         this.cm = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                        // this.cm = data.price;
                                         this.mb_index = data.hash_mb.mb_index;
 
                                         // 결제취소
@@ -258,6 +259,7 @@ export default {
                         this.id = data.hash_mb.mb_id;
                         const num = data.price;
                         this.cm = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        // this.cm = data.price;
                         this.mb_index = data.hash_mb.mb_index;
 
                         if(data.qr_state == 'C') {

@@ -171,6 +171,10 @@ export default {
                         // console.log(finalprice);
                         formData.append('user_amount', finalprice);
 
+                        for (const [key, value] of formData.entries()) {
+                          console.log(key, value);
+                        }
+
                         const url = process.env.VUE_APP_API_URL;
 
                         fetch(url + 'api/pay/Pay.php', {
@@ -184,6 +188,10 @@ export default {
 
                             const finalprice = this.price + this.coupon_price;
                             this.commaprice = finalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                            // console.log('테스트');
+                            // console.log(typeof this.price)
+                            // console.log(typeof this.coupon_price)
+                            // this.commaprice = finalprice;
                         })
 
                     }
@@ -215,7 +223,7 @@ export default {
             console.log(event.target);
 
             if (isChecked) {
-                this.arr.push(coupon_price);
+                this.arr.push(Number(coupon_price));
                 let sum = 0;
                 this.arr.forEach((num) => {
                     sum += num;
@@ -239,7 +247,12 @@ export default {
                 // this.coupon_index = this.coupon_index.filter(index => index !== coupon_index);
                 // this.issuance_user_index = this.issuance_user_index.filter(index => index !== user_index);
 
-                this.arr.pop();
+                const indexToRemove = this.arr.indexOf(Number(coupon_price));
+                if (indexToRemove !== -1) {
+                    this.arr.splice(indexToRemove, 1);  // 해당 가격 값 제거
+                }
+
+                // this.arr.pop();
                 let sum = 0;
                 this.arr.forEach((num) => {
                     sum += num;
