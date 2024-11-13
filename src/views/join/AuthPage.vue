@@ -233,4 +233,15 @@ export default {
 p {
     color: #000;
 }
+
+
+
+@media (prefers-color-scheme: dark) {
+    
+p {
+    color: rgba(255, 255, 255, 0.87);
+
+}
+
+}
 </style>

@@ -292,4 +292,16 @@ img {
 label {
     color: #000;
 }
+
+
+@media (prefers-color-scheme: dark) {
+ 
+  p,label {
+    color: #eee;
+  }
+  .agreement button,img{
+    background-color:  rgba(40, 38, 44, 1);
+  }
+
+}
 </style>
