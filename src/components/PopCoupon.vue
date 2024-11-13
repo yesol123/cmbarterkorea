@@ -17,7 +17,7 @@
                     <div class="btn_box"><button type="button" @click="SearchCoupon()">검 색</button></div>
                     <div class="coupon_list">
                         <div class="coupon_content" v-for="(c, i) in this.coupons" :key="i"
-                            :style="{ backgroundImage: `url('https://www.haruby.store/assets/img/money/${c.coupon_price}.jpg')` }">
+                            :style="{ backgroundImage: `url('https://www.cmbarter.com/assets/img/money/${c.coupon_price}.jpg')` }">
                             <input type="checkbox" id="checkbox" v-model="c.checked"
                                 @change="showIndex(c.coupon_index, c.issuance_user_index, c.coupon_price, $event)">
                             <div class="coupon_value">
@@ -26,7 +26,7 @@
                                 <p>{{ c.coupon_limit_time }}</p>
                             </div>
                             <div class="coupon_img"
-                                :style="{ backgroundImage: `url('https://www.haruby.store/assets/img/money/${c.coupon_price}_t.png')` }">
+                                :style="{ backgroundImage: `url('https://www.cmbarter.com/assets/img/money/${c.coupon_price}_t.png')` }">
                             </div>
                         </div>
                     </div>
