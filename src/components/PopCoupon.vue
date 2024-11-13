@@ -500,6 +500,7 @@ export default {
     margin: 5% auto 0;
     /* border: 2px solid red; */
     line-height: 30px;
+    overflow: hidden;
 }
 
 .coupon_img {

@@ -137,7 +137,8 @@ export default {
 
                                         this.name = data.hash_mb.mb_name;
                                         this.id = data.hash_mb.mb_id;
-                                        this.cm = data.price;
+                                        const num = data.price;
+                                        this.cm = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                                         this.mb_index = data.hash_mb.mb_index;
 
                                         // 결제취소
@@ -255,7 +256,8 @@ export default {
 
                         this.name = data.hash_mb.mb_name;
                         this.id = data.hash_mb.mb_id;
-                        this.cm = data.price;
+                        const num = data.price;
+                        this.cm = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                         this.mb_index = data.hash_mb.mb_index;
 
                         if(data.qr_state == 'C') {
