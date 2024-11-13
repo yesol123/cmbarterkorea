@@ -498,4 +498,14 @@ span {
     color: #fff;
     border: none;
 }
+
+
+
+@media (prefers-color-scheme: dark) {
+    .cm_list div > p{
+    color: #eee;
+ }
+}
+
+
 </style>

@@ -231,7 +231,7 @@ export default{
     width: 95%;
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 100px); /* 헤더를 제외한 나머지 영역에 맞게 설정 */
+    height: calc(100vh - 100px); 
     overflow: hidden;
 }
 
@@ -380,5 +380,22 @@ label button{
     }
   }
 }
+
+
+@media (prefers-color-scheme: dark) {
+  
+.coupon_conditions div:nth-child(1) li{
+    color: #eee;
+    background: rgba(22, 21, 27, 1);
+ }
+
+ input,label{
+    color: #eee;
+    background: rgba(22, 21, 27, 1);
+
+ }
+}
+
+
 
 </style>

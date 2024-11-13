@@ -638,8 +638,13 @@ export default {
         color: rgba(255, 255, 255, 0.87);
     }
     .popup-content{
-
         background:  rgba(39, 38, 44, 1);
+    }
+
+    .coupon_value > p{
+        background:  rgba(39, 38, 44, 1);
+        color: rgba(255, 255, 255, 0.87);
+
     }
 
 }

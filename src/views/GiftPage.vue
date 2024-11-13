@@ -20,7 +20,7 @@
           <img src="@/assets/icon_search.svg" alt="">
         </div>
       </div>
-      <!-- <small class="gray">* 아이디 입력 후 검색 버튼을 클릭해주세요.</small> -->
+      <p class="red">* 아이디 입력 후 검색 버튼을 클릭해주세요.</p>
 
       <p class="title">선물할 CM</p>
       <div class="gift_userbox_CM">
@@ -53,7 +53,7 @@
       </div>
 
       <div class="giftBtn">
-        <button @click="showConfrimPin">선물하기</button>
+        <button @click="showConfirmPin">선물하기</button>
       </div>
     </article>
   </section>
@@ -81,6 +81,13 @@
   <div v-if="showModal3" class="modal">
     <p class="caution">알림</p>
     <p>최소 선물 금액은 10,000 CM 입니다.
+    </p>
+    <button @click="confirm()">확인</button>
+  </div>
+
+  <div v-if="showModal4" class="modal">
+    <p class="caution">알림</p>
+    <p>회원정보를 조회해주세요.
     </p>
     <button @click="confirm()">확인</button>
   </div>
@@ -114,6 +121,7 @@ export default {
       showModal: false,
       showModal2: false,
       showModal3:false,
+      showModal4:false,
       isOpen: false, // confirmPin 모달 상태
       minGiftAmount: 10000, // 최소 선물 금액
 
@@ -188,9 +196,13 @@ export default {
             take_user_index: this.take_user_index,
           });
 
-          if (data.code == 500) {
-            this.showModal = true;
-          }
+           // user_id가 없으면 모달을 표시
+        if (!this.user_id) {
+          this.showModal = true;
+          this.error_massage = "회원 정보를 찾을 수 없습니다.";
+        } else if (data.code == 500) {
+          this.showModal = true;
+        }
         });
     },
     calculate() {
@@ -210,7 +222,11 @@ export default {
     this.rest_cm = (userCM - sendCM).toLocaleString();
     },
 
-    showConfrimPin() {
+    showConfirmPin() {
+      if (!this.user_id) {
+      this.showModal4 = true; // 회원정보를 조회하라는 모달을 띄움
+      return;
+    }
     const sendCM = parseInt(this.send_cm);
     
     // 최소 금액을 만족하지 않으면 모달을 띄우지 않음
@@ -226,7 +242,6 @@ export default {
       this.isOpen = true;
     }
   },
-
 
 
     sendGift() {
@@ -261,6 +276,7 @@ export default {
       this.showModal = false;
       this.showModal2 = false;
       this.showModal3 = false;
+      this.showModal4 = false;
     }
   }
 
