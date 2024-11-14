@@ -1,48 +1,48 @@
 <template>
    
         <header>
-            <button type="button" class="goback_btn" @click="toShopIn()"><img src="@/assets/go_back_btn.png"></button>
-            <p style="color: #000;">가맹점 신청</p>
+        <RouterLink to="/shopin"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
+            <h3>가맹점 신청</h3>
         </header>
 
         <section>
             <div class="index">
                 <div>1</div><span></span><div>2</div><span></span><div>3</div>
             </div>
-            <p style="font-weight: bold; color: #000;">지금 바로 씨엠바더를 시작해 보세요!</p>
-            <p style="font-size: 0.9rem; margin: 20px 0; color: #000;">모두 동의해주셔야 다음 페이지로 이동 가능합니다.</p>
+            <p class="p">지금 바로 씨엠바더를 시작해 보세요!</p>
+            <p class="p_samll">모두 동의해주셔야 다음 페이지로 이동 가능합니다.</p>
 
             <div style="margin-top: 50px;">
                 <Checkbox v-model="AllCheck" :binary="true" inputId="all_agreed" @click="checkAll()"></Checkbox>
                 <label for="all_agreed"> 모든 약관 동의 </label>
-                <p style="font-size: 0.8rem; margin-top: 10px; color: #000;">
+                <p class="p_samll">
                     전체동의는 필수 및 선택정보에 대한 동의도 포함되어 있으며, 개별적으로도 동의를 선택하실 수 있습니다. 선택항목에 대한 동의를 거부하시는 경우에도 서비스는 이용이 가능합니다.
                 </p>
 
                 <div class="underline"></div>
             </div>            
 
-            <div>
+            <div class="check">
                 <Checkbox v-model="service" :binary="true" inputId="service_agreed"></Checkbox>
                 <label for="service_agreed" style="font-size: 0.9rem;"> [필수] CMBarter 가맹점 이용약관 동의</label>
                 <button type="button" @click="ServiceAgreement()"><img src="@/assets/go_for_btn.png"></button>
             </div>
-            <div>
+            <div class="check">
                 <Checkbox v-model="privacy" :binary="true" inputId="privacy_agreed"></Checkbox>
                 <label for="privacy_agreed" style="font-size: 0.9rem;"> [필수] 개인정보 수집 및 이용 동의</label>
                 <button type="button" @click="PrivacyAgreement()"><img src="@/assets/go_for_btn.png"></button>
             </div>
-            <div>
+            <div class="check">
                 <Checkbox v-model="marketing" :binary="true" inputId="marketing_agreed"></Checkbox>
                 <label for="marketing_agreed" style="font-size: 0.9rem;"> [선택] 마케팅 정보 수집 및 이용 동의</label>
                 <button type="button" @click="MarketingAgreement()"><img src="@/assets/go_for_btn.png"></button>
             </div>
-            <div>
+            <div class="check">
                 <Checkbox v-model="advertise" :binary="true" inputId="advertise_agreed"></Checkbox>
                 <label for="advertise_agreed" style="font-size: 0.9rem;"> [선택] 광고성 정보 수신 동의</label>
                 <button type="button" @click="AdvertiseAgreement()"><img src="@/assets/go_for_btn.png"></button>
             </div>
-            <div>
+            <div class="check">
                 <Checkbox v-model="location" :binary="true" inputId="location_agreed"></Checkbox>
                 <label for="location_agreed" style="font-size: 0.9rem;"> [필수] 위치기반서비스 이용약관 동의</label>
                 <button type="button" @click="LocationAgreement()"><img src="@/assets/go_for_btn.png"></button>
@@ -72,9 +72,6 @@ export default {
 
     },
     methods : {
-        toShopIn() {
-            this.$router.push({ path : '/shopin' });
-        },
         checkAll() {
             const allChecked = !this.AllCheck;
             this.service = allChecked;
@@ -145,15 +142,14 @@ export default {
 </script>
 
 <style scoped>
+.p{
+    font-weight: bold; 
+}
+.p_samll{
+    font-size: 0.8rem; 
+    margin-top: 10px; 
+}
 
-.goback_btn {
-    width: 30px; height: 30px;
-    background-color: #fff;
-    border: 1px solid #fff;
-}
-.goback_btn img {
-    width: 100%; height: 100%;
-}
 section {
     width: 100%;
     margin-top: 50px;
@@ -171,7 +167,7 @@ section button {
     position: absolute;
     right: 15px;
 }
-section button, img {
+section button, .check img{
     width: 20px; height: 20px;
     border: none;
     background-color: #fff;
@@ -184,7 +180,7 @@ section button, img {
 .confirm_btn {
     position: fixed;
     bottom: 70px;
-    width: 90%; height: 35px;
+    width: 95%; height: 35px;
     border-radius: 15px;
     color: #ccc;
     border: 1px solid #ccc;
@@ -216,6 +212,21 @@ section button, img {
 }
 label {
     color: #000;
+}
+
+
+
+@media (prefers-color-scheme: dark) {
+ 
+    p,span,label{
+      color: rgba(255, 255, 255, 0.87);
+    }
+
+    .check img , section button{
+      background-color:  rgba(40, 38, 44, 1);
+        
+    }
+
 }
 
 </style>

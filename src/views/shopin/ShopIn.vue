@@ -1,7 +1,8 @@
 <template>
     
         <header>
-            <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/go_back_btn.png"></button>
+
+        <RouterLink to="/main"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
             <h3>가맹점 신청</h3>
         </header>
 

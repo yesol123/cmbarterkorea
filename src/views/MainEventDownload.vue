@@ -1,19 +1,22 @@
 <template>
-    <div class="wrap">
+  
         <header>
-            <button type="button" class="goback_btn" @click="toMainCouponEvent()"><img src="@/assets/go_back_btn.png"></button>
-            <p>쿠폰 다운로드</p>
+           
+        <RouterLink to="/event"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
+            <h3>쿠폰 다운로드</h3>
         </header>
 
-        <main>
+        <section>
             <div class="store_info" v-for="(info,i) in couponinfo" :key="i">
                 <div class="store_img">
                     <div :style="{ backgroundImage: `url(${info.store_image})`}">
                     </div>
                 </div>
                 <div class="store_detail">
+                    <div class="store_detail_1">
                     <p>{{ info.store_name }}</p>
                     <button type="button">{{ info.user_cm_use }} CM 가능</button>
+                    </div>
                     <p>{{ info.store_address }}</p>
                     <p>{{ info.store_category_name }}</p>
                     <div>
@@ -37,9 +40,7 @@
                     </ul>
                 </div>
             </div>
-        </main>
-    </div>  
-
+        </section>
 
     <div id="popup" class="popup">
         <div class="popup-content">
@@ -85,9 +86,6 @@ export default {
         this.CouponList();
     },
     methods : {
-        toMainCouponEvent() {
-            this.$router.push({ path : '/event' });
-        },
         // 쿠폰리스트
         CouponList() {
             let store = useResponseStore();
@@ -168,46 +166,8 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-size: 1rem;
-    color: hsl(0, 0%, 0%);
-}
-.wrap {
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    /* border: 1px solid red; */
-    margin-bottom: 70px;
-}
-header {
-    position: fixed;
-    top: 0; left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; height: 40px;
-    padding: 0 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-header > p {
-    line-height: 40px;
-    color: blue;
-    /* border: 1px solid red; */
-    margin: 0 auto;
-}
-.goback_btn {
-    width: 30px; height: 30px;
-    background-color: #fff;
-    border: 1px solid #fff;
-}
-.goback_btn img {
-    width: 100%; height: 100%;
-}
-main {
+
+section {
     margin-top: 50px;
     /* border: 1px solid red; */
 }
@@ -216,7 +176,7 @@ main {
     /* border: 1px solid blue; */
 }
 .store_img {
-    width: 40%;
+    width: 60%;
     padding: 10px;
     /* border: 1px solid orange; */
 }
@@ -230,31 +190,40 @@ main {
 }
 .store_detail {
     width: 60%;
-    padding: 10px 10px 10px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
     /* border: 1px solid orange; */
 }
 .store_detail > p {
     font-size: 0.8rem;
 }
-.store_detail > p:nth-of-type(1) {
+.store_detail .store_detail_1  > p {
     font-size: 0.9rem;
     font-weight: bold;
 }
-.store_detail > p:nth-of-type(2) {
-    margin-top: 10px;
-}
 .store_detail > p:nth-of-type(3) {
     color: #9c9b9b;
-    margin-top: 10px;
 }
-.store_detail > button {
-    width: 100px; height: 30px;
-    font-size: 0.8rem;
+
+.store_detail .store_detail_1 {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.store_detail .store_detail_1 > button {
+    width: 45%;
+    font-size: 0.7rem;
     border-radius: 5px;
     border: none;
     color: #fff;
     background-color: #1bce0b;
-    margin-left: 50%;
+
 }
 .store_detail > div {
     text-align: right;

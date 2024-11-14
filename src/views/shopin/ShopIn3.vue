@@ -1,8 +1,9 @@
 <template>
    
         <header>
-            <button type="button" class="goback_btn" @click="toShopIn2()"><img src="@/assets/go_back_btn.png"></button>
-            <p>가맹점 신청</p>
+           
+        <RouterLink to="/shopin2"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
+            <h3>가맹점 신청</h3>
         </header>
 
         <section>
@@ -189,9 +190,6 @@ export default {
         // console.log(this.limit)
     },
     methods : {
-        toShopIn2() {
-            this.$router.push({ path : '/shopin2' });
-        },
         GetInfo() {
             let store = useResponseStore();
 
@@ -819,4 +817,20 @@ main {
 .limit {
     margin: 20px 0;
 }
+
+
+
+@media (prefers-color-scheme: dark) {
+ 
+ p,span,label{
+   color: rgba(255, 255, 255, 0.87);
+ }
+
+ .check img , section button{
+   background-color:  rgba(40, 38, 44, 1);
+     
+ }
+
+}
+
 </style>
