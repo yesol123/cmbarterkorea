@@ -1,7 +1,7 @@
 <template>
 
     <header>
-        <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/icon_arrow_left.svg"></button>
+        <RouterLink to="/main"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
         <h3>쿠폰발행함</h3>
     </header>
 
@@ -260,9 +260,6 @@ export default {
             if (this.coupon_price != '쿠폰의 가격 선택' && this.coupon_count != '') {
                 this.price = this.coupon_price * this.coupon_count;
             }
-        },
-        toMain() {
-            this.$router.push({ path: '/main' });
         },
         possible() {
             console.log('보유중');
@@ -634,17 +631,6 @@ p {
     margin: 0;
 }
 
-.goback_btn {
-    width: 30px;
-    height: 30px;
-    background-color: #fff;
-    border: 1px solid #fff;
-}
-
-.goback_btn img {
-    width: 100%;
-    height: 100%;
-}
 
 .couponbox_section {
     margin: 70px auto 0;

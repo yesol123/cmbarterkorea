@@ -1,7 +1,8 @@
 <template>
 
     <header>
-        <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/go_back_btn.png"></button>
+      
+        <RouterLink to="/main"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
         <h3>가맹점 찾기</h3>
     </header>
 
@@ -293,18 +294,6 @@ export default {
 <style scoped>
 *p {
     margin: 5px
-}
-
-.goback_btn {
-    width: 30px;
-    height: 30px;
-    background-color: #fff;
-    border: 1px solid #fff;
-}
-
-.goback_btn img {
-    width: 100%;
-    height: 100%;
 }
 
 main {

@@ -1,7 +1,7 @@
 <template>
   
         <header>
-            <button type="button" class="goback_btn" @click="toCouponMake()"><img src="@/assets/icon_arrow_left.svg"></button>
+            <RouterLink to="/cmake"><img src="@/assets/icon_arrow_left.svg"></RouterLink>
             <h3>쿠폰 이벤트 등록</h3>
         </header>
         <section>
@@ -64,6 +64,7 @@
 <script>
 
 import { useResponseStore } from '@/store/response.js'
+//import { RouterLink } from 'vue-router';
 
 export default {
     data() {
@@ -84,9 +85,9 @@ export default {
     },
     methods : {
         // 쿠폰발행함으로 이동
-        toCouponMake() {
-            this.$router.push({ path : '/cmake' });
-        },
+        // toCouponMake() {
+        //     this.$router.push({ path : '/cmake' });
+        // },
         // 쿠폰리스트
         CouponMakeList() {
             let store = useResponseStore();
@@ -253,14 +254,6 @@ export default {
 
 <style scoped>
 
-.goback_btn {
-    width: 30px; height: 30px;
-    background-color: #fff;
-    border: 1px solid #fff;
-}
-.goback_btn img {
-    width: 100%; height: 100%;
-}
 .main {
     width: 95%;
     margin: 50px auto 0;

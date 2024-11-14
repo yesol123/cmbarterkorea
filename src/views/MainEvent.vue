@@ -1,7 +1,7 @@
 <template>
 
         <header>
-            <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/icon_arrow_left.svg"></button>
+            <RouterLink to="/main"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
             <h3>쿠폰 이벤트</h3>
         </header>
 
@@ -144,17 +144,6 @@ export default {
 
 <style scoped>
 
-.goback_btn {
-    width: 30px; height: 30px;
-    background-color: #fff;
-    border: 1px solid #fff;
-}
-.goback_btn img {
-    width: 100%; height: 100%;
-}
-main {
-    /* border: 1px solid red; */
-}
 .buttons {
     display: flex;
     justify-content: space-between;

@@ -1,7 +1,7 @@
 <template>
     
         <header>
-            <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/icon_arrow_left.svg"></button>
+            <RouterLink to="/main"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
             <h3>CM내역</h3>
         </header>
         <section>
@@ -101,9 +101,6 @@ export default {
         this.CMList();
     },
     methods: {
-        toMain() {
-            this.$router.push({ path: '/main' });
-        },
         // CM내역
         CMList() {
             let store = useResponseStore();
@@ -309,17 +306,6 @@ P{
     margin: 0;
 }
 
-.goback_btn {
-    width: 30px;
-    height: 30px;
-    background-color: #fff;
-    border: 1px solid #fff;
-}
-
-.goback_btn img {
-    width: 100%;
-    height: 100%;
-}
 
 .btn_list {
     width: 100%;
@@ -440,14 +426,7 @@ span {
     text-align: center;
 }
 
-/* .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-    color: #000;
-    cursor: pointer;
-} */
+
 .center {
     position: absolute;
     top: 50%;

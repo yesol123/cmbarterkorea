@@ -1,7 +1,9 @@
 <template>
     
         <header>
-            <button type="button" class="goback_btn" @click="toFindShop()"><img src="@/assets/go_back_btn.png"></button>
+            
+        <RouterLink to="/findshop"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
+         
             <h3>가맹점 찾기</h3>
         </header>
 
@@ -55,9 +57,6 @@ export default {
         this.GetLocation(); // 지도보여주기
     },
     methods : {
-        toFindShop() {
-            this.$router.push({ path : '/findshop' });
-        },
         GetList() {
             this.isTwo = false;
             this.isOne = true;

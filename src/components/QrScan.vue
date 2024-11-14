@@ -1,7 +1,8 @@
 <template>
   
         <header>
-            <button type="button" class="goback_btn" @click="toMain()"><img src="@/assets/icon_arrow_left.svg"></button>
+          
+        <RouterLink to="/main"><img src="@/assets/icon_arrow_left.svg" alt=""></RouterLink>
             <h3>결제</h3>
         </header>
 <section>
@@ -278,24 +279,12 @@ export default {
                 })
             }
         },
-        toMain() {
-            this.$router.push({ path : '/main' });
-        }
     }
 }
 </script>
 
 <style scoped>
 
-
-.goback_btn {
-    width: 30px; height: 30px;
-    background-color: #fff;
-    border: 1px solid #fff;
-}
-.goback_btn img {
-    width: 100%; height: 100%;
-}
 .popup {
     display: none;
     position: fixed;

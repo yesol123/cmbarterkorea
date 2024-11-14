@@ -390,7 +390,7 @@ const handleCharge = () => {
     color: #eee;
   }
   .pins li > img{
-    color: #eee;
+    filter: brightness(0) invert(1); /* 흰색처럼 보이도록 설정 */
   }
 }
 </style>

@@ -13,8 +13,6 @@
         </div>
 
 
-
-
         <div>
             <button @click="goNext()">다음</button>
         </div>
