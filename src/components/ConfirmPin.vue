@@ -22,7 +22,7 @@
 
             <div class="pinnumber">
               <input v-for="(pin, index) in pinnums" :key="index" type="password" v-model="pinnums[index]"
-              :class="{ active: pinnums[index] !== '' }"  />
+                :class="{ active: pinnums[index] !== '' }" />
             </div>
           </form>
         </div>
@@ -59,16 +59,16 @@
     </div>
   </div>
 
-  
-    <!-- PIN번호 틀렸을 때 모달 표시 -->
-    <div v-if="showModal2" class="modal">
-      <p class="caution">
-        <img src="@/assets/accept.png" alt="" />
-      </p>
-      <p>핀번호가 일치하지 않습니다.</p>
-      <button @click="closeModal2">확인</button>
-    </div>
- 
+
+  <!-- PIN번호 틀렸을 때 모달 표시 -->
+  <div v-if="showModal2" class="modal">
+    <p class="caution">
+      <img src="@/assets/accept.png" alt="" />
+    </p>
+    <p>핀번호가 일치하지 않습니다.</p>
+    <button @click="closeModal2">확인</button>
+  </div>
+
 
 </template>
 
@@ -166,7 +166,7 @@ const closeModal = () => {
 
 const closeModal2 = () => {
   showModal2.value = false;
-  
+
 }
 
 
@@ -253,7 +253,6 @@ const handleCharge = () => {
 }
 
 .pinnumber {
-  margin-top: 60px;
   width: 20%;
   display: flex;
   justify-content: center;
@@ -349,7 +348,7 @@ const handleCharge = () => {
   box-sizing: border-box;
 }
 
-.modal p{
+.modal p {
   color: #000;
 }
 
@@ -376,4 +375,22 @@ const handleCharge = () => {
 }
 
 
+
+
+@media (prefers-color-scheme: dark) {
+
+
+  .confirm-pin-container {
+    color: #eee;
+    background: rgba(22, 21, 27, 1);
+  }
+
+
+  .pins li {
+    color: #eee;
+  }
+  .pins li > img{
+    color: #eee;
+  }
+}
 </style>
