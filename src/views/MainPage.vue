@@ -146,7 +146,6 @@
         <button @click="confirm2">확인</button>
     </div>
 
-
     <Payment ref="payment" />
 
 </template>
@@ -431,7 +430,7 @@ export default {
         },
 
         confirm2() {
-            window.location.href = "https://cmbarter.com/mobile/game_init.php";
+            window.location.href = "http://joro5291.dothome.co.kr/mobile/game_init.php";
         },
 
         gokakao(){
