@@ -1,24 +1,18 @@
-# project-exe
+트러블 이슈
 
-## Project setup
-```
-npm install
-```
+-pin번호 
+ 카드 결제시 보안상 pin 번호 값을 확인하는 절차 있음
+ pin번호 확인하는 과정에서 EventBus로 값을 전달하려 했으나 Vue.js 3.0버전에서는 지원되지 않음.
+ Pinia에 api를 통한 확인 절차를 넣어준 후, Pin번호 컴포넌트로 호출하여 최종 pin번호 확인 절차 해결.
+  
+-pg사
+ 연결시 vue.js에서 데이터가 제대로 들어가지 않음
+ data 값에 필수적으로 들어가야 할 pg사 명령어를 넣어준 후 this.로 불러주어 해결
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- global.css
+  이미 진행되고 있던 프로젝트에 투입되어 각자 작업한 페이지의 태그와 마크업이 달라서 css 작업시 비효율성이 높았음.
+  페이지의 틀을 태그 두 개<header>/<section>으로 잡아 준 후 index.html에서 css를 맞춰 줌.
+  
+- 다크모드
+  사람들이 사용하는 핸드폰 모드가 달라 input태그 등 글씨가 보이지 않는 이슈
+  index.html에서 다크모드의 제일 큰 부분들을 잡아 준 후, 각 페이지 별로 필요한 작업들 진행 
