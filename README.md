@@ -5,13 +5,21 @@ Database : HediSQL,MariaDB</br>
 ### 🚨트러블 이슈
 #### PIN 번호
 - 카드 결제 시 보안상 PIN 번호 값을 확인하는 절차가 필요했습니다.</br>
-이슈 : PIN 번호 확인 과정에서 EventBus를 사용하려 했으나 Vue.js 3.0 버전에서는 지원되지 않았습니다.</br>
-해결 : Pinia를 활용하여 API를 통한 확인 절차를 구현한 후, PIN 번호 확인 컴포넌트를 호출하여 최종적으로 문제를 해결했습니다.
+[이슈]
+- PIN 번호 확인 과정에서 EventBus를 사용하려 했으나 Vue.js 3.0 버전에서는 지원되지 않았습니다.</br>
+
+[해결] 
+1 . Pinia state 값에 사용자가 입력한 pin번호를 저장.
+2 . action에서 async/await을 활용한 api 호출 함수로 기존에 저장된 pin번호 확인.
+3 . 입력한 pin과 기존에 저장된 pin번호가 일치하는지 확인 후 결제가 진행 되도록 처리.
 
 #### PG사 연결
 
 이슈 : PG사 연결 시 Vue.js에서 데이터가 제대로 전달되지 않는 문제가 발생했습니다.</br>
 해결 : 필수 데이터인 PG사 명령어를 `data` 값에 추가하고 `this`를 통해 참조하도록 수정하여 문제를 해결했습니다.
+
+![image](https://github.com/user-attachments/assets/5231d75a-359b-4103-8800-ea34a415e9ce)
+
 
 #### Global.css
 
