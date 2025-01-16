@@ -9,9 +9,9 @@ Database : HediSQL,MariaDB</br>
 - PIN 번호 확인 과정에서 EventBus를 사용하려 했으나 Vue.js 3.0 버전에서는 지원되지 않았습니다.</br>
 
 [해결] 
-1 . Pinia state 값에 사용자가 입력한 pin번호를 저장.
-2 . action에서 async/await을 활용한 api 호출 함수로 기존에 저장된 pin번호 확인.
-3 . 입력한 pin과 기존에 저장된 pin번호가 일치하는지 확인 후 결제가 진행 되도록 처리.
+1 . Pinia state 값에 사용자가 입력한 pin번호를 저장.</br>
+2 . action에서 async/await을 활용한 api 호출 함수로 기존에 저장된 pin번호 확인.</br>
+3 . 입력한 pin과 기존에 저장된 pin번호가 일치하는지 확인 후 결제가 진행 되도록 처리.</br>
 
 #### PG사 연결
 
