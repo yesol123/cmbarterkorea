@@ -16,8 +16,15 @@ PIN 번호 확인 과정에서 EventBus를 사용하려 했으나 Vue.js 3.0 버
 
 #### PG사 연결
 
-이슈 : PG사 연결 시 Vue.js에서 데이터가 제대로 전달되지 않는 문제가 발생했습니다.</br>
-해결 : 필수 데이터인 PG사 명령어를 `data` 값에 추가하고 `this`를 통해 참조하도록 수정하여 문제를 해결했습니다.
+[이슈]</br>
+PG사 연결 시 Vue.js에서 데이터가 제대로 전달되지 않는 문제가 발생했습니다.</br>
+
+[해결] </br>
+Vue.js에서는 window.TPO로 불러와야지만 PG사 연동 API가 올바로 호출 가능함을 확인.</br>
+필수 데이터인 PG사 명령어를 `data` 값에 추가하고 `this`를 통해 참조하도록 수정하여 문제를 해결.
+
+![image](https://github.com/user-attachments/assets/9c89a0d0-732a-4110-8f3c-f0bf5e5ed8e7)
+
 
 ![image](https://github.com/user-attachments/assets/5231d75a-359b-4103-8800-ea34a415e9ce)
 
