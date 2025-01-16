@@ -1,7 +1,7 @@
-⚙ 개발환경
-Framework : Vue.js
-Database : HediSQL,MariaDB
-
+⚙ 개발환경</br>
+Framework : Vue.js</br>
+Database : HediSQL,MariaDB</br>
+</br>
 ### 🚨트러블 이슈
 #### PIN 번호
 - 카드 결제 시 보안상 PIN 번호 값을 확인하는 절차가 필요했습니다.</br>
