@@ -4,7 +4,7 @@ Database : HediSQL,MariaDB</br>
 </br>
 ## 🚨트러블 이슈 및 해결 방법
 
-## PIN 번호 확인
+### PIN 번호 확인
 
 | 설명 | 동영상 |
 |------|--------|
@@ -12,7 +12,7 @@ Database : HediSQL,MariaDB</br>
 
 ---
 
-## PG사 연결
+### PG사 연결
 
 | 설명 | 동영상 |
 |------|--------|
@@ -20,17 +20,22 @@ Database : HediSQL,MariaDB</br>
 
 ---
 
-## Global.css
 
-| 설명 | 이미지 |
-|------|--------|
-| **[이슈]**<br>이미 진행 중이던 프로젝트에 투입되었는데, 각 페이지의 태그와 마크업 스타일이 달라 CSS 작업 시 비효율성이 높았습니다.<br><br> **[해결]**<br> 페이지의 구조를 `<header>`와 `<section>` 태그로 통일한 후, `index.html`에서 CSS를 조정하여 해결했습니다. | ![image](https://github.com/user-attachments/assets/example-global-css) |
-
----
-
-## 다크모드
+### 다크모드
 
 | 설명 | 동영상 |
 |------|--------|
 | **[이슈]**<br>사람들이 사용하는 핸드폰 모드가 달라 `<input>` 태그 등 글씨가 보이지 않는 문제가 발생했습니다.<br><br> **[해결]**<br> `index.html`에서 다크모드의 주요 스타일을 수정한 후, 각 페이지별로 필요한 CSS 작업을 진행했습니다.<br> 개발자로서 프로젝트 구상 시 협업자들과의 회의가 초기 세팅을 위해 굉장히 중요하다는 점을 느꼈습니다. | ![다크모드](https://github.com/user-attachments/assets/108e776a-4f53-473e-8fdd-5ce2011b69f8) |
+
+---
+
+
+### Global.css
+
+[이슈]</br>이미 진행 중이던 프로젝트에 투입되었는데, 각 페이지의 태그와 마크업 스타일이 달라 CSS 작업 시 비효율성이 높았습니다.</br>
+
+[해결] </br>페이지의 구조를 아래와 같이 `<header>`와 `<section>` 태그로 통일한 후, `index.html`에서 CSS를 조정하여 해결했습니다.
+
+
+
 
