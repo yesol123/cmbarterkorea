@@ -41,15 +41,19 @@ Vue.js에서는 window.TPO로 불러와야지만 PG사 연동 API가 올바로 �
 
 [해결] </br>페이지의 구조를 아래와 같이 `<header>`와 `<section>` 태그로 통일한 후, `index.html`에서 CSS를 조정하여 해결했습니다.
 
-### 다크모드
 
-[이슈]</br>사람들이 사용하는 핸드폰 모드가 달라 `<inpu>`t태그 등 글씨가 보이지 않는 문제가 발생했습니다.</br>
+## 다크모드
 
-[해결] </br>`index.html`에서 다크모드의 제일 큰 부분들을 잡아 준 후, 각 페이지 별로 필요한 작업들 진행했습니다.
-
-
-개발자로서 프로젝트 구상 시 협업자들과의 회의가 초기 셋팅을 위해 굉장히 중요한 작업임을 느꼈습니다.  </br>
-
-![다크모드](https://github.com/user-attachments/assets/108e776a-4f53-473e-8fdd-5ce2011b69f8)
-
+<div style="display: flex; align-items: center;">
+  <div style="flex: 1;">
+    <h3>[이슈]</h3>
+    <p>사람들이 사용하는 핸드폰 모드가 달라 <code>&lt;input&gt;</code> 태그 등 글씨가 보이지 않는 문제가 발생했습니다.</p>
+    <h3>[해결]</h3>
+    <p><code>index.html</code>에서 다크모드의 제일 큰 부분들을 잡아 준 후, 각 페이지 별로 필요한 작업들 진행했습니다.</p>
+    <p>개발자로서 프로젝트 구상 시 협업자들과의 회의가 초기 셋팅을 위해 굉장히 중요한 작업임을 느꼈습니다.</p>
+  </div>
+  <div style="flex: 1;">
+    <img src="https://github.com/user-attachments/assets/108e776a-4f53-473e-8fdd-5ce2011b69f8" width="100%">
+  </div>
+</div>
 
