@@ -14,6 +14,10 @@ PIN 번호 확인 과정에서 EventBus를 사용하려 했으나 Vue.js 3.0 버
 2 . action에서 async/await을 활용한 api 호출 함수로 기존에 저장된 pin번호 확인.</br>
 3 . 입력한 pin과 기존에 저장된 pin번호가 일치하는지 확인 후 결제가 진행 되도록 처리.</br>
 
+
+
+![cm선물_핀번호 확인](https://github.com/user-attachments/assets/aad6de88-0730-442e-9bbe-604ebce4c068)
+
 #### PG사 연결
 
 [이슈]</br>
@@ -29,6 +33,8 @@ Vue.js에서는 window.TPO로 불러와야지만 PG사 연동 API가 올바로 �
 ![image](https://github.com/user-attachments/assets/5231d75a-359b-4103-8800-ea34a415e9ce)
 
 
+![pg사 붙이기 작업](https://github.com/user-attachments/assets/857822a0-e4ed-4ec4-a3e2-c1f8618083e5)
+
 #### Global.css
 
 [이슈]</br>이미 진행 중이던 프로젝트에 투입되었는데, 각 페이지의 태그와 마크업 스타일이 달라 CSS 작업 시 비효율성이 높았습니다.</br>
@@ -43,3 +49,6 @@ Vue.js에서는 window.TPO로 불러와야지만 PG사 연동 API가 올바로 �
 
 
 개발자로서 프로젝트 구상 시 협업자들과의 회의가 초기 셋팅을 위해 굉장히 중요한 작업임을 느꼈습니다.  
+![다크모드](https://github.com/user-attachments/assets/108e776a-4f53-473e-8fdd-5ce2011b69f8)
+
+
