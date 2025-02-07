@@ -2,8 +2,8 @@
 Framework : Vue.js</br>
 Database : HediSQL,MariaDB</br>
 </br>
-### 🚨트러블 이슈
-#### PIN 번호
+## 🚨트러블 이슈
+### PIN 번호
 - 카드 결제 시 보안상 PIN 번호 값을 확인하는 절차가 필요했습니다.</br>
 
 [이슈]</br>
@@ -18,7 +18,7 @@ PIN 번호 확인 과정에서 EventBus를 사용하려 했으나 Vue.js 3.0 버
 
 ![cm선물_핀번호 확인](https://github.com/user-attachments/assets/aad6de88-0730-442e-9bbe-604ebce4c068)
 
-#### PG사 연결
+### PG사 연결
 
 [이슈]</br>
 PG사 연결 시 Vue.js에서 데이터가 제대로 전달되지 않는 문제가 발생했습니다.</br>
@@ -35,20 +35,21 @@ Vue.js에서는 window.TPO로 불러와야지만 PG사 연동 API가 올바로 �
 
 ![pg사 붙이기 작업](https://github.com/user-attachments/assets/857822a0-e4ed-4ec4-a3e2-c1f8618083e5)
 
-#### Global.css
+### Global.css
 
 [이슈]</br>이미 진행 중이던 프로젝트에 투입되었는데, 각 페이지의 태그와 마크업 스타일이 달라 CSS 작업 시 비효율성이 높았습니다.</br>
 
 [해결] </br>페이지의 구조를 아래와 같이 `<header>`와 `<section>` 태그로 통일한 후, `index.html`에서 CSS를 조정하여 해결했습니다.
 
-#### 다크모드
+### 다크모드
 
 [이슈]</br>사람들이 사용하는 핸드폰 모드가 달라 `<inpu>`t태그 등 글씨가 보이지 않는 문제가 발생했습니다.</br>
 
 [해결] </br>`index.html`에서 다크모드의 제일 큰 부분들을 잡아 준 후, 각 페이지 별로 필요한 작업들 진행했습니다.
 
 
-개발자로서 프로젝트 구상 시 협업자들과의 회의가 초기 셋팅을 위해 굉장히 중요한 작업임을 느꼈습니다.  
+개발자로서 프로젝트 구상 시 협업자들과의 회의가 초기 셋팅을 위해 굉장히 중요한 작업임을 느꼈습니다.  </br>
+
 ![다크모드](https://github.com/user-attachments/assets/108e776a-4f53-473e-8fdd-5ce2011b69f8)
 
 
