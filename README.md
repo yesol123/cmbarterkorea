@@ -10,16 +10,21 @@ Database : HediSQL,MariaDB</br>
 |------|--------|
 | **[이슈]**<br>PIN 번호 확인 과정에서 EventBus를 사용하려 했으나 Vue.js 3.0 버전에서는 지원되지 않았습니다.<br><br> **[해결]** <br> 1. Pinia state 값에 사용자가 입력한 PIN 번호를 저장.<br> 2. action에서 async/await을 활용한 API 호출 함수로 기존에 저장된 PIN 번호 확인.<br> 3. 입력한 PIN과 기존에 저장된 PIN 번호가 일치하는지 확인 후 결제가 진행되도록 처리. <br><br>**[피드백]**<br> 이 과정을 개발하면서, 단순한 PIN 검증 기능이 아니라 재사용성과 보안성을 고려한 설계가 중요하다는 점을 깨달았습니다.<br> PIN 입력 로직을 독립적인 컴포넌트로 구성하여 다양한 인증 프로세스에서 쉽게 활용할 수 있도록 개선했습니다. <br>또한, 보안 강화를 위해 PIN 값을 state에서 저장 후 즉시 제거하는 방식으로 관리하여 불필요한 노출을 방지했습니다. <br> 이를 통해 향후 인증 관련 기능이 추가될 경우에도 확장성이 뛰어난 구조를 유지할 수 있도록 설계했습니다. | ![cm선물_핀번호 확인](https://github.com/user-attachments/assets/aad6de88-0730-442e-9bbe-604ebce4c068) |
 
+
+
 ---
 
 ### PG사 연결
 
 | 설명 | 동영상 |
 |------|--------|
-| **[이슈]**<br>PG사 연결 시 Vue.js에서 데이터가 제대로 전달되지 않는 문제가 발생했습니다.<br><br> **[해결]**<br> Vue.js에서는 `window.TPO`로 불러와야지만 PG사 연동 API가 올바로 호출 가능함을 확인.<br> 필수 데이터인 PG사 명령어를 `data` 값에 추가하고 `this`를 통해 참조하도록 수정하여 문제를 해결.<br>![image](https://github.com/user-attachments/assets/9c89a0d0-732a-4110-8f3c-f0bf5e5ed8e7) ![image](https://github.com/user-attachments/assets/5231d75a-359b-4103-8800-ea34a415e9ce)<br> |  |![스크린샷 2025-02-10 104945](https://github.com/user-attachments/assets/2608122e-472b-406d-875d-d5a573d4e4f6)
-
+| **[이슈]**<br>PG사 연결 시 Vue.js에서 데이터가 제대로 전달되지 않는 문제가 발생했습니다.<br><br> **[해결]**<br> Vue.js에서는 `window.TPO`로 불러와야지만 PG사 연동 API가 올바로 호출 가능함을 확인.<br> 필수 데이터인 PG사 명령어를 `data` 값에 추가하고 `this`를 통해 참조하도록 수정하여 문제를 해결.<br>![image](https://github.com/user-attachments/assets/9c89a0d0-732a-4110-8f3c-f0bf5e5ed8e7) |![스크린샷 2025-02-10 104945](https://github.com/user-attachments/assets/2608122e-472b-406d-875d-d5a573d4e4f6)<br> |  !![pg사 붙이기 작업](https://github.com/user-attachments/assets/904066d0-ebd5-4184-b790-5e47c52fcdaa)
 
 ---
+
+
+
+
 
 
 ### 다크모드
