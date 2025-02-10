@@ -18,7 +18,7 @@ Database : HediSQL,MariaDB</br>
 
 | 설명 | 동영상 |
 |------|--------|
-| **[이슈]**<br>PG사 연결 시 Vue.js에서 데이터가 제대로 전달되지 않는 문제가 발생했습니다.<br><br> **[해결]**<br> Vue.js에서는 `window.TPO`로 불러와야지만 PG사 연동 API가 올바로 호출 가능함을 확인.<br> 필수 데이터인 PG사 명령어를 `data` 값에 추가하고 `this`를 통해 참조하도록 수정하여 문제를 해결.<br>![image](https://github.com/user-attachments/assets/9c89a0d0-732a-4110-8f3c-f0bf5e5ed8e7) |![스크린샷 2025-02-10 104945](https://github.com/user-attachments/assets/2608122e-472b-406d-875d-d5a573d4e4f6)<br> |  !![pg사 붙이기 작업](https://github.com/user-attachments/assets/904066d0-ebd5-4184-b790-5e47c52fcdaa)
+| **[이슈]**<br>PG사 연결 시 Vue.js에서 데이터가 제대로 전달되지 않는 문제가 발생했습니다.<br><br> **[해결]**<br> Vue.js에서는 `window.TPO`로 불러와야지만 PG사 연동 API가 올바로 호출 가능함을 확인.<br> 필수 데이터인 PG사 명령어를 `data` 값에 추가하고 `this`를 통해 참조하도록 수정하여 문제를 해결.<br>![image](https://github.com/user-attachments/assets/9c89a0d0-732a-4110-8f3c-f0bf5e5ed8e7) <br>![스크린샷 2025-02-10 104945](https://github.com/user-attachments/assets/2608122e-472b-406d-875d-d5a573d4e4f6)<br>  |  !![pg사 붙이기 작업](https://github.com/user-attachments/assets/904066d0-ebd5-4184-b790-5e47c52fcdaa)
 
 ---
 
