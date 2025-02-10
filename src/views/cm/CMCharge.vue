@@ -251,7 +251,7 @@ export default {
                             if (this.TPO) {
                                 this.TPO.pay({
                                     amount: parseInt(result),
-                                    publicKey: 'pk_1703-f7d8df-4f6-dff5a',
+                                    publicKey: 'publicKey',
                                     products: [{ name: 'cm', desc: 'description' }],
                                     trackId: tx,
                                     responseFunction: this.eventFnc,
