@@ -257,7 +257,7 @@ export default {
                                     responseFunction: this.eventFnc,
                                     redirectUrl: 'https://your-redirect-url.com',
                                     webhookUrl: 'https://your-webhook-url.com',
-                                    tmnId: "cm0000",
+                                    tmnId: "tmnId",
                                     payerName: this.user_index,
                                     payerEmail: '',
                                     payerTel: this.user_phone,
